@@ -33,7 +33,7 @@
         $felhasznalonev = $_POST['username'];
         $jelszo = $_POST['password'];
     
-        $sql = "SELECT felhasznalo_nev, jelszo FROM felhasznalo WHERE felhasznalonev = {$felhasznalonev}";
+        $sql = "SELECT felhasznalo_nev, jelszo FROM felhasznalo WHERE felhasznalo_nev = ?";
         $stmt = $conn->prepare($sql);
         $stmt->bind_param("s", $felhasznalonev);
         $stmt->execute();
@@ -45,7 +45,8 @@
     
             if (password_verify($jelszo, $hashedPassword)) {
                 $_SESSION["username"] = $dbFelhasznalonev;
-                echo "Sikeres bejelentkezés!";
+                header("Location: welcome.php");
+                exit();
             } else {
                 echo "Hibás jelszó!";
             }

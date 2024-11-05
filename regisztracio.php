@@ -16,8 +16,12 @@
         <label for="password">Jelszó:</label>
         <input type="password" name="password" id="password" required><br><br>
 
+        <label for="phone">Telefonszám:</label>
+        <input type="text" name="phone" id="phone" required><br><br>
+
         <button type="submit">Regisztrálás</button>
     </form>
+
     <p>Ha már van fiókja, <a href="login.php">jelentkezzen be itt</a>.</p>
 
 <?php
@@ -35,17 +39,19 @@
         $felhasznalonev = $_POST['username'];
         $email = $_POST['email'];
         $jelszo = $_POST['password'];
+        $tel_szam = $_POST['phone'];
+        $lakcim = $_POST['address'];
         $hashedPassword = password_hash($jelszo, PASSWORD_DEFAULT);
 
-        $sql = "INSERT INTO felhasznalok (felhasznalo_nev, email_cim, jelszo) VALUES (?, ?, ?)";
+        $sql = "INSERT INTO felhasznalo (felhasznalo_nev, email_cim, jelszo, tel_szam) VALUES (?, ?, ?, ?)";
         $stmt = $conn->prepare($sql);
-        $stmt->bind_param("sss", $felhasznalonev, $email, $hashedPassword);
+        $stmt->bind_param("sssss", $felhasznalonev, $email, $hashedPassword, $tel_szam, $lakcim);
 
         if ($stmt->execute()) {
-            echo "Sikeres regisztráció!";
+            echo "Sikeres regisztráció! <a href='login.php'>Bejelentkezés</a>";
         } else {
             if ($stmt->errno == 1062) {
-                echo "Ez a felhasználónév vagy email már létezik!";
+                echo "Ez a felhasználónév már létezik!";
             } else {
                 echo "Hiba történt: " . $stmt->error;
             }
