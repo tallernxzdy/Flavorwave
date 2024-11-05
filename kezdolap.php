@@ -8,7 +8,7 @@
 </head>
 <body>
     
-<ul class="horizontal">
+<ul class="navbar_ul">
     <li>
         <a class="navbar" href="kezdolap.php">Főoldal</a>
     </li>
@@ -16,10 +16,10 @@
         <a class="navbar" href="menu.php">Menü</a>
     </li>
     <li>
-        <a class="navbar bejelentkezés float right" href="bejelentkezes.php">bejelentkezés</a>
+        <a class="navbar bejelentkezes float right" href="bejelentkezes.php">bejelentkezés</a>
     </li>
     <li>
-         <a class="navbar regisztráció float right" href="regisztracio.php">regisztráció</a>
+         <a class="navbar regisztracio float right" href="regisztracio.php">regisztráció</a>
     </li>
     <li>
         <a class="navbar kijelentkezés jobbra_csusztatas" href="kijelentkezes.php">kijelentkezés</a>
