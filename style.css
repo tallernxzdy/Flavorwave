@@ -15,3 +15,95 @@ li{
     text-align: center;
     float: right;
 }
+
+
+/* navbar design*/
+
+/* Alapbeállítások */
+* {
+    margin: 0;
+    padding: 0;
+    box-sizing: border-box;
+}
+
+body {
+    font-family: 'Arial', sans-serif;
+    background-color: #f0f2f5;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+}
+
+/* Navbar beállítások */
+.navbar {
+    width: 100%;
+    background: linear-gradient(90deg, #4a90e2, #007acc);
+    padding: 1em 0;
+    box-shadow: 0 4px 8px rgba(0, 0, 0, 0.2);
+    position: relative;
+}
+
+.navbar_ul {
+    list-style-type: none;
+    display: flex;
+    justify-content: flex-start;
+    align-items: center;
+    padding: 0;
+    max-width: 1200px;
+    margin: 0 auto;
+}
+
+/* Jobbra igazítás */
+.right_links {
+    margin-left: auto;
+    display: flex;
+    gap: 10px;
+}
+
+/* Linkek formázása */
+.navbar_link {
+    color: #fff;
+    text-decoration: none;
+    padding: 0.5em 1.5em;
+    font-weight: 600;
+    border-radius: 25px;
+    transition: background-color 0.3s ease, transform 0.2s ease;
+    font-size: 1em;
+}
+
+/* Sötétedés a :hover esetén */
+.navbar_link:hover {
+    filter: brightness(85%); /* Enyhén sötétebbé teszi */
+    transform: scale(1.05);
+}
+
+/* Speciális gomb színek */
+.navbar_link.login {
+    background-color: #3cb371;
+}
+
+.navbar_link.register {
+    background-color: #ff7f50;
+}
+
+.navbar_link.logout {
+    background-color: #f54242;
+}
+
+/* H2 és Üdvözlő szöveg */
+h2 {
+    margin-top: 2em;
+    color: #333;
+    font-size: 2em;
+}
+
+p {
+    color: #555;
+    margin-top: 1em;
+    font-size: 1.1em;
+}
+
+
+
+
+
