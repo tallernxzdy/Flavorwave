@@ -22,7 +22,7 @@
         <button type="submit">Regisztrálás</button>
     </form>
 
-    <p>Ha már van fiókja, <a href="login.php">jelentkezzen be itt</a>.</p>
+    <p>Ha már van fiókja, <a href="bejelentkezes.php">jelentkezzen be itt</a>.</p>
 
 <?php
     $servername = "localhost";
@@ -40,15 +40,19 @@
         $email = $_POST['email'];
         $jelszo = $_POST['password'];
         $tel_szam = $_POST['phone'];
-        $lakcim = $_POST['address'];
         $hashedPassword = password_hash($jelszo, PASSWORD_DEFAULT);
 
         $sql = "INSERT INTO felhasznalo (felhasznalo_nev, email_cim, jelszo, tel_szam) VALUES (?, ?, ?, ?)";
         $stmt = $conn->prepare($sql);
-        $stmt->bind_param("sssss", $felhasznalonev, $email, $hashedPassword, $tel_szam, $lakcim);
+        
+        if ($stmt === false) {
+            die("Hiba az előkészítés során: " . $conn->error);
+        }
+        
+        $stmt->bind_param("ssss", $felhasznalonev, $email, $hashedPassword, $tel_szam);
 
         if ($stmt->execute()) {
-            echo "Sikeres regisztráció! <a href='login.php'>Bejelentkezés</a>";
+            echo "Sikeres regisztráció! <a href='bejelentkezes.php'>Bejelentkezés</a>";
         } else {
             if ($stmt->errno == 1062) {
                 echo "Ez a felhasználónév már létezik!";

@@ -45,7 +45,7 @@
     
             if (password_verify($jelszo, $hashedPassword)) {
                 $_SESSION["username"] = $dbFelhasznalonev;
-                header("Location: welcome.php");
+                header("Location: kezdolap.php");
                 exit();
             } else {
                 echo "Hibás jelszó!";
