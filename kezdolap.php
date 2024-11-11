@@ -14,20 +14,21 @@ session_start();
 
     <!-- NAVBAR -->
     <nav class="navbar">
-        <ul class="navbar_ul">
-            <li><a class="navbar_link" href="kezdolap.php">Főoldal</a></li>
-            <li><a class="navbar_link" href="menu.php">Menü</a></li>
-            
-            <!-- Jobb oldal: Bejelentkezés/Regisztráció vagy Kijelentkezés -->
+        <div class="navbar-container">
+            <a href="kezdolap.php" class="logo">🌊 Flavorwave</a>
+            <ul class="navbar_ul">
+                <li><a class="navbar_link special_link" href="kezdolap.php">Főoldal</a></li>
+                <li><a class="navbar_link special_link" href="menu.php">Menü</a></li>
+            </ul>
             <div class="right_links">
                 <?php if (isset($_SESSION["username"])): ?>
-                    <li><a class="navbar_link logout" href="kijelentkezes.php">Kijelentkezés</a></li>
+                    <a class="navbar_link logout" href="kijelentkezes.php">Kijelentkezés</a>
                 <?php else: ?>
-                    <li><a class="navbar_link login" href="bejelentkezes.php">Bejelentkezés</a></li>
-                    <li><a class="navbar_link register" href="regisztracio.php">Regisztráció</a></li>
+                    <a class="navbar_link login" href="bejelentkezes.php">Bejelentkezés</a>
+                    <a class="navbar_link register" href="regisztracio.php">Regisztráció</a>
                 <?php endif; ?>
             </div>
-        </ul>
+        </div>
     </nav>
 
     <!-- Üdvözlő üzenet -->

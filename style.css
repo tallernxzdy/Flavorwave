@@ -19,6 +19,7 @@ li{
 
 /* navbar design*/
 
+
 /* Alapbeállítások */
 * {
     margin: 0;
@@ -28,71 +29,143 @@ li{
 
 body {
     font-family: 'Arial', sans-serif;
-    background-color: #f0f2f5;
+    background-color: #f3f4f6;
     display: flex;
     flex-direction: column;
     align-items: center;
+    padding-top: 5em;
 }
 
-/* Navbar beállítások */
+/* Navbar - háttérszínátmenet */
 .navbar {
     width: 100%;
-    background: linear-gradient(90deg, #4a90e2, #007acc);
-    padding: 1em 0;
-    box-shadow: 0 4px 8px rgba(0, 0, 0, 0.2);
-    position: relative;
+    background: linear-gradient(135deg, #1f4b78, #8e4a6b); /* Modernizált színátmenet */
+    box-shadow: 0 12px 20px rgba(0, 0, 0, 0.3);
+    position: fixed;
+    top: 0;
+    z-index: 10;
+    padding: 1.2em 0;
+    border-bottom: 3px solid rgba(255, 255, 255, 0.2);
 }
 
+.navbar-container {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    max-width: 1200px;
+    margin: 0 auto;
+    padding: 0 2em;
+}
+
+/* Logo stílus */
+.logo {
+    color: #ffffff;
+    font-size: 1.8em;
+    font-weight: bold;
+    text-decoration: none;
+    transition: color 0.3s, transform 0.3s;
+}
+
+.logo:hover {
+    color: #188834;
+    transform: scale(1.1);
+}
+
+/* Navbar linkek alap beállítás */
 .navbar_ul {
     list-style-type: none;
     display: flex;
-    justify-content: flex-start;
-    align-items: center;
-    padding: 0;
-    max-width: 1200px;
-    margin: 0 auto;
+    gap: 2em;
 }
 
-/* Jobbra igazítás */
-.right_links {
-    margin-left: auto;
-    display: flex;
-    gap: 10px;
-}
-
-/* Linkek formázása */
+/* Linkek - átmenetes háttér és fényhatás */
 .navbar_link {
-    color: #fff;
+    color: #ffffff;
     text-decoration: none;
-    padding: 0.5em 1.5em;
-    font-weight: 600;
-    border-radius: 25px;
-    transition: background-color 0.3s ease, transform 0.2s ease;
-    font-size: 1em;
+    padding: 0.6em 1.5em;
+    font-weight: bold;
+    border-radius: 30px;
+    font-size: 1.1em;
+    position: relative;
+    overflow: hidden;
+    background: linear-gradient(135deg, #ff416c, #ff4b2b);
+    background-size: 200% 200%;
+    animation: gradientShift 6s ease infinite;
+    box-shadow: inset 0 0 0 0 rgba(255, 255, 255, 0.5);
+    transition: all 0.3s ease;
 }
 
-/* Sötétedés a :hover esetén */
+.navbar_link::after {
+    content: "";
+    position: absolute;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    border-radius: 30px;
+    background: rgba(255, 255, 255, 0.3);
+    opacity: 0;
+    transition: opacity 0.3s ease;
+}
+
 .navbar_link:hover {
-    filter: brightness(85%); /* Enyhén sötétebbé teszi */
-    transform: scale(1.05);
+    transform: translateY(-5px);
+    box-shadow: 0px 4px 20px rgba(255, 100, 150, 0.7);
 }
 
-/* Speciális gomb színek */
-.navbar_link.login {
-    background-color: #3cb371;
+.navbar_link:hover::after {
+    opacity: 1;
 }
 
-.navbar_link.register {
-    background-color: #ff7f50;
+/* Animáció */
+@keyframes gradientShift {
+    0% { background-position: 0% 50%; }
+    50% { background-position: 100% 50%; }
+    100% { background-position: 0% 50%; }
 }
 
+/* Külön színek a középső két gombhoz */
+.navbar_link.login, .navbar_link.register {
+    background: linear-gradient(135deg, #00c6ff, #0072ff); /* Élénk kék */
+    color: #ffffff;
+    padding: 0.6em 1.5em;
+    border-radius: 25px;
+    font-weight: bold;
+    transition: transform 0.3s ease, box-shadow 0.3s ease;
+    box-shadow: inset 0 0 0 0 rgba(255, 255, 255, 0.5);
+}
+
+/* Hover animáció - Külön gombok */
+.navbar_link.login:hover, .navbar_link.register:hover {
+    transform: translateY(-6px);
+    box-shadow: inset 0 0 8px rgba(255, 255, 255, 0.6), 0 10px 15px rgba(0, 0, 0, 0.3);
+}
+
+/* Kijelentkezés gomb */
 .navbar_link.logout {
-    background-color: #f54242;
+    background: linear-gradient(135deg, #c0392b, #ff6b6b);
+    color: #ffffff;
+    padding: 0.6em 1.5em;
+    border-radius: 25px;
+    font-weight: bold;
+    transition: transform 0.3s ease, box-shadow 0.3s ease;
+    box-shadow: inset 0 0 0 0 rgba(255, 255, 255, 0.5);
 }
 
-/* H2 és Üdvözlő szöveg */
+.navbar_link.logout:hover {
+    transform: translateY(-6px);
+    box-shadow: inset 0 0 8px rgba(255, 255, 255, 0.6), 0 10px 15px rgba(0, 0, 0, 0.3);
+}
+
+/* Jobbra igazított linkek */
+.right_links {
+    display: flex;
+    gap: 15px;
+}
+
+/* Üdvözlő üzenet */
 h2 {
-    margin-top: 2em;
+    margin-top: 3em;
     color: #333;
     font-size: 2em;
 }
@@ -102,6 +175,7 @@ p {
     margin-top: 1em;
     font-size: 1.1em;
 }
+
 
 
 
