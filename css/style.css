@@ -3,8 +3,6 @@ li{
     
 }
 
- 
-
 
 .bejelentkezes{
     text-align: center;
@@ -29,7 +27,7 @@ li{
 
 body {
     font-family: 'Arial', sans-serif;
-    background-color: #f3f4f6;
+    background-color: #FFF8E1;
     display: flex;
     flex-direction: column;
     align-items: center;
@@ -39,7 +37,7 @@ body {
 /* Navbar - háttérszínátmenet */
 .navbar {
     width: 100%;
-    background: linear-gradient(135deg, #1f4b78, #8e4a6b); /* Modernizált színátmenet */
+    background: linear-gradient(135deg, #FF7043, #D32F2F); /* Modernizált színátmenet */
     box-shadow: 0 12px 20px rgba(0, 0, 0, 0.3);
     position: fixed;
     top: 0;
@@ -80,7 +78,7 @@ body {
 
 /* Linkek - átmenetes háttér és fényhatás */
 .navbar_link {
-    color: #ffffff;
+    color: #FFAB91;
     text-decoration: none;
     padding: 0.6em 1.5em;
     font-weight: bold;
@@ -171,7 +169,7 @@ h2 {
 }
 
 p {
-    color: #555;
+    color: #424242;
     margin-top: 1em;
     font-size: 1.1em;
 }
