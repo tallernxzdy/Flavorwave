@@ -22,7 +22,7 @@
         <button type="submit">Regisztrálás</button>
     </form>
 
-    <p>Ha már van fiókja, <a href="bejelentkezes.php">jelentkezzen be itt</a>.</p>
+    <p><a href="bejelentkezes.php">Van már fiókom!</a></p>
 
 <?php
     $servername = "localhost";
