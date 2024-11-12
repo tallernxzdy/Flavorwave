@@ -18,6 +18,12 @@ li{
 /* navbar design*/
 
 
+/* Google Font importálása */
+@import url('https://fonts.googleapis.com/css2?family=Poppins:wght@400;600&display=swap');
+
+/* navbar design*/
+
+
 /* Alapbeállítások */
 * {
     margin: 0;
@@ -32,6 +38,7 @@ body {
     flex-direction: column;
     align-items: center;
     padding-top: 5em;
+    min-height: 100vh; 
 }
 
 /* Navbar - háttérszínátmenet */
@@ -62,6 +69,7 @@ body {
     font-weight: bold;
     text-decoration: none;
     transition: color 0.3s, transform 0.3s;
+    text-shadow: -1px -1px 0 #000, 1px -1px 0 #000, -1px 1px 0 #000, 1px 1px 0 #000;
 }
 
 .logo:hover {
@@ -91,6 +99,7 @@ body {
     animation: gradientShift 6s ease infinite;
     box-shadow: inset 0 0 0 0 rgba(255, 255, 255, 0.5);
     transition: all 0.3s ease;
+    
 }
 
 .navbar_link::after {
@@ -173,6 +182,106 @@ p {
     margin-top: 1em;
     font-size: 1.1em;
 }
+@keyframes gradientShift {
+    0% { background-position: 0% 50%; }
+    50% { background-position: 100% 50%; }
+    100% { background-position: 0% 50%; }
+}
+
+
+
+
+
+
+
+
+
+
+/* Footer */
+
+/* Footer stílus */
+.footer {
+    width: 100%;
+    background: linear-gradient(135deg, #00796B, #80DEEA); /* Színátmenet */
+    color: #fff;
+    padding: 3em 0;
+    text-align: center;
+    font-family: 'Poppins', sans-serif;
+    box-shadow: 0 -12px 20px rgba(0, 0, 0, 0.3);
+    margin-top: auto;
+}
+
+.footer .footer-container {
+    max-width: 1200px;
+    margin: 0 auto;
+    padding: 0 2em;
+}
+
+.footer .footer-links {
+    list-style-type: none;
+    display: flex;
+    justify-content: center;
+    gap: 3em;
+    margin-bottom: 2em;
+}
+
+.footer .footer-links a {
+    color: #fff;
+    text-decoration: none;
+    font-weight: bold;
+    font-size: 1.2em;
+    text-transform: uppercase;
+    transition: color 0.3s, transform 0.3s;
+}
+
+.footer .footer-links a:hover {
+    color: #00c6ff;
+    transform: scale(1.1);
+}
+
+.footer .footer-socials {
+    display: flex;
+    justify-content: center;
+    gap: 2em;
+}
+
+.footer .footer-socials a {
+    font-size: 1.5em;
+    color: #fff;
+    transition: color 0.3s, transform 0.3s;
+}
+
+.footer .footer-socials a:hover {
+    color: #00c6ff;
+    transform: scale(1.2);
+}
+
+.footer .footer-copy {
+    margin-top: 2em;
+    font-size: 1em;
+    color: #ccc;
+}
+
+.footer .footer-copy a {
+    color: #ccc;
+    text-decoration: none;
+    transition: color 0.3s;
+}
+
+.footer .footer-copy a:hover {
+    color: #00c6ff;
+}
+
+/* Animációk */
+@keyframes fadeIn {
+    0% { opacity: 0; }
+    100% { opacity: 1; }
+}
+
+.footer {
+    animation: fadeIn 2s ease;
+}
+
 
 
 
