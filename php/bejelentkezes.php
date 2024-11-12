@@ -4,6 +4,7 @@
     <meta charset="UTF-8">
     <title>Bejelentkezés</title>
     <script src="https://www.google.com/recaptcha/api.js" async defer></script>
+    <link rel="stylesheet" href="../css/bejelentkezes.css">
 </head>
 <body>
     <h2>Bejelentkezés</h2>
