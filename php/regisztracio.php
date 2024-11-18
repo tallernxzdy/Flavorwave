@@ -110,9 +110,9 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
     <script type="text/javascript">
         // JavaScript felugró ablak a hibákhoz
         function showError(errors) {
+            // Ha van hiba, akkor az első hibát jelenítjük meg
             if (errors.length > 0) {
-                // Hibák megjelenítése egy felugró ablakban
-                alert(errors.join("\n"));
+                alert(errors[0]); // Csak az első hibaüzenetet jelenítjük meg
             }
         }
     </script>
