@@ -1,0 +1,133 @@
+/* Navbar és hamburger menü stílusok */
+.hamburger-menu {
+    display: none;
+    position: absolute;
+    top: 1rem;
+    right: 1rem;
+    flex-direction: column;
+    justify-content: space-between;
+    width: 30px;
+    height: 22px;
+    background: none;
+    border: none;
+    cursor: pointer;
+    z-index: 20;
+}
+
+.hamburger-menu span {
+    display: block;
+    height: 4px;
+    background-color: #333;
+    border-radius: 2px;
+}
+
+.dropdown-menu {
+    position: absolute;
+    top: 60px;
+    right: 1rem;
+    background-color: #ffffff;
+    border: 1px solid #ccc;
+    border-radius: 5px;
+    display: none;
+    flex-direction: column;
+    box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
+    z-index: 10;
+}
+
+.dropdown-menu a {
+    padding: 0.8em 1.2em;
+    color: #333;
+    text-decoration: none;
+    font-weight: bold;
+    transition: background-color 0.3s;
+}
+
+.dropdown-menu a:hover {
+    background-color: #f1f1f1;
+}
+
+/* Rejtett elem osztály */
+.hidden {
+    display: none;
+}
+
+@media (max-width: 768px) {
+    .hamburger-menu {
+        display: flex;
+    }
+
+    .navbar_ul,
+    .right_links {
+        display: none;
+    }
+
+    .dropdown-menu {
+        display: none;
+    }
+}
+
+/* Admin felület stílusai */
+.admin-container {
+    max-width: 800px;
+    margin: 2rem auto;
+    padding: 1.5rem;
+    border: 1px solid #ccc;
+    border-radius: 8px;
+    background-color: #f9f9f9;
+    box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
+}
+
+.admin-container h1 {
+    text-align: center;
+    margin-bottom: 1.5rem;
+}
+
+.form-group {
+    margin-bottom: 1rem;
+}
+
+.form-group label {
+    display: block;
+    font-weight: bold;
+    margin-bottom: 0.5rem;
+}
+
+.form-group input,
+.form-group select,
+.form-group textarea {
+    width: 100%;
+    padding: 0.5rem;
+    border: 1px solid #ccc;
+    border-radius: 5px;
+    font-size: 1rem;
+}
+
+.form-buttons {
+    display: flex;
+    justify-content: space-between;
+    margin-top: 1.5rem;
+}
+
+.form-buttons .btn {
+    padding: 0.8rem 1.5rem;
+    font-size: 1rem;
+    cursor: pointer;
+    border: none;
+    border-radius: 5px;
+    background-color: #007bff;
+    color: #fff;
+    transition: background-color 0.3s;
+}
+
+.form-buttons .btn:hover {
+    background-color: #0056b3;
+}
+
+.form-buttons .btn-secondary {
+    background-color: #6c757d;
+    color: #fff;
+}
+
+.form-buttons .btn-secondary:hover {
+    background-color: #5a6268;
+}
