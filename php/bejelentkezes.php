@@ -65,60 +65,62 @@
 
     <!-- PHP Bejelentkezési logika -->
     <?php
-        session_start();
+session_start();
 
-        $servername = "localhost";
-        $username = "root";
-        $password = "";
-        $dbname = "flavorwave";
+$servername = "localhost";
+$username = "root";
+$password = "";
+$dbname = "flavorwave";
 
-        $conn = new mysqli($servername, $username, $password, $dbname);
-        if ($conn->connect_error) {
-            die("Kapcsolódási hiba: " . $conn->connect_error);
-        }
+$conn = new mysqli($servername, $username, $password, $dbname);
+if ($conn->connect_error) {
+    die("Kapcsolódási hiba: " . $conn->connect_error);
+}
 
-        if ($_SERVER["REQUEST_METHOD"] == "POST") {
-            // reCAPTCHA ellenőrzés
-            $recaptchaSecret = '6LeLQ3wqAAAAAPwhFgGLO3yRPiqjDTRlm-dR3L5F'; 
-            $recaptchaResponse = $_POST['g-recaptcha-response'];
+if ($_SERVER["REQUEST_METHOD"] == "POST") {
+    $recaptchaSecret = '6LeLQ3wqAAAAAPwhFgGLO3yRPiqjDTRlm-dR3L5F';
+    $recaptchaResponse = $_POST['g-recaptcha-response'];
 
-            $response = file_get_contents("https://www.google.com/recaptcha/api/siteverify?secret=" . $recaptchaSecret . "&response=" . $recaptchaResponse);
-            $responseKeys = json_decode($response, true);
+    $response = file_get_contents("https://www.google.com/recaptcha/api/siteverify?secret=" . $recaptchaSecret . "&response=" . $recaptchaResponse);
+    $responseKeys = json_decode($response, true);
 
-            if (intval($responseKeys["success"]) !== 1) {
-                echo "<p class='error'>reCAPTCHA ellenőrzés sikertelen, próbáld újra!</p>";
+    if (intval($responseKeys["success"]) !== 1) {
+        echo "<p class='error'>reCAPTCHA ellenőrzés sikertelen, próbáld újra!</p>";
+    } else {
+        $felhasznalonev = $_POST['username'];
+        $jelszo = $_POST['password'];
+
+        $sql = "SELECT id, felhasznalo_nev, jelszo, jog_szint FROM felhasznalo WHERE felhasznalo_nev = ?";
+        $stmt = $conn->prepare($sql);
+        $stmt->bind_param("s", $felhasznalonev);
+        $stmt->execute();
+        $stmt->store_result();
+        $stmt->bind_result($felhasznaloId, $dbFelhasznalonev, $hashedPassword, $dbAdminJogosultsagEllenorzes);
+
+        if ($stmt->num_rows > 0) {
+            $stmt->fetch();
+
+            if (password_verify($jelszo, $hashedPassword)) {
+                // Session változók beállítása
+                $_SESSION["felhasznalo_id"] = $felhasznaloId; // ID a sessionbe
+                $_SESSION["username"] = $dbFelhasznalonev;
+                $_SESSION["jog_szint"] = $dbAdminJogosultsagEllenorzes;
+
+                echo "<script>window.location.href = 'kezdolap.php';</script>";
+                exit();
             } else {
-                // Felhasználói hitelesítés
-                $felhasznalonev = $_POST['username'];
-                $jelszo = $_POST['password'];
-            
-                $sql = "SELECT felhasznalo_nev, jelszo FROM felhasznalo WHERE felhasznalo_nev = ?";
-                $stmt = $conn->prepare($sql);
-                $stmt->bind_param("s", $felhasznalonev);
-                $stmt->execute();
-                $stmt->store_result();
-                $stmt->bind_result($dbFelhasznalonev, $hashedPassword);
-            
-                if ($stmt->num_rows > 0) {
-                    $stmt->fetch();
-            
-                    if (password_verify($jelszo, $hashedPassword)) {
-                        $_SESSION["username"] = $dbFelhasznalonev;
-                        echo "<script>window.location.href = 'kezdolap.php';</script>";
-                        exit();
-                    } else {
-                        echo "<p class='error'>Hibás jelszó!</p>";
-                    }
-                } else {
-                    echo "<p class='error'>Nem található felhasználó!</p>";
-                }
-            
-                $stmt->close();
+                echo "<p class='error'>Hibás jelszó!</p>";
             }
+        } else {
+            echo "<p class='error'>Nem található felhasználó!</p>";
         }
 
-        $conn->close();
-    ?>
+        $stmt->close();
+    }
+}
+
+$conn->close();
+?>
 
     <!-- Footer -->
     <div class="footer">

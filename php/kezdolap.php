@@ -1,9 +1,9 @@
-<?php 
+<?php
 session_start();
 ?>
 
 <!DOCTYPE html>
-<html lang="en">
+<html lang="hu">
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
@@ -19,7 +19,12 @@ session_start();
             <ul class="navbar_ul">
                 <li><a class="navbar_link special_link kozepso" href="kezdolap.php">Főoldal</a></li>
                 <li><a class="navbar_link special_link kozepso" href="menu.php">Menü</a></li>
+
+                <?php if (isset($_SESSION["jog_szint"]) && $_SESSION["jog_szint"] == 1): ?>
+                    <li><a class="navbar_link special_link kozepso" href="admin_felulet.php">Admin felület</a></li>
+                <?php endif; ?>
             </ul>
+
             <div class="right_links">
                 <?php if (isset($_SESSION["username"])): ?>
                     <a class="navbar_link logout" href="kijelentkezes.php">Kijelentkezés</a>
@@ -31,15 +36,15 @@ session_start();
         </div>
     </nav>
 
-<!-- Üdvözlő üzenet -->
-<h2>Üdvözöljük a Flavorwave oldalon</h2>
+    <!-- Debug (opcionális) -->
+
+
+    <h2>Üdvözöljük a Flavorwave oldalon</h2>
     <?php if (isset($_SESSION["username"])): ?>
         <p>Szia, <?php echo htmlspecialchars($_SESSION["username"]); ?>!</p>
     <?php else: ?>
         <p>Jelentkezz be vagy regisztrálj a fiókod eléréséhez!</p>
     <?php endif; ?>
-
-
 
 
     <!--Footer-->
