@@ -48,21 +48,21 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST' && isset($_POST['operation'])) {
 
         // Kép feltöltése
         if ($kepek_url) {
-            $target_dir = 'uploads/';
+            $target_dir = '../kepek/';
             $target_file = $target_dir . basename($kepek_url);
             if (!move_uploaded_file($_FILES['kepek_url']['tmp_name'], $target_file)) {
                 $message = "Hiba a kép feltöltése során!";
             } else {
                 $stmt = $pdo->prepare(
-                    "INSERT INTO etel (nev, egyseg_ar, leiras, kategoria_id, kepek_url) 
-                    VALUES (:nev, :egyseg_ar, :leiras, :kategoria_id, :kepek_url)"
+                    "INSERT INTO etel (nev, egyseg_ar, leiras, kategoria_id, kep_url) 
+                    VALUES (:nev, :egyseg_ar, :leiras, :kategoria_id, :kep_url)"
                 );
                 $stmt->execute([
                     ':nev' => $nev,
                     ':egyseg_ar' => $egyseg_ar,
                     ':leiras' => $leiras,
                     ':kategoria_id' => $kategoria_id,
-                    ':kepek_url' => $kepek_url
+                    ':kep_url' => $kepek_url
                 ]);
                 $message = "Sikeres hozzáadás!";
             }
@@ -82,7 +82,7 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST' && isset($_POST['operation'])) {
             $target_dir = 'uploads/';
             $target_file = $target_dir . basename($kepek_url);
             if (move_uploaded_file($_FILES['edit_kepek_url']['tmp_name'], $target_file)) {
-                $kepek_url_sql = ", kepek_url = :kepek_url";
+                $kepek_url_sql = ", kep_url = :kep_url";
             } else {
                 $message = "Hiba a kép feltöltése során!";
                 $kepek_url_sql = "";
@@ -104,7 +104,7 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST' && isset($_POST['operation'])) {
             ':kategoria_id' => $kategoria_id,
             ':id' => $id
         ];
-        if ($kepek_url_sql) $params[':kepek_url'] = $kepek_url;
+        if ($kepek_url_sql) $params[':kep_url'] = $kepek_url;
 
         if ($stmt->execute($params)) {
             $message = "Sikeres szerkesztés!";
