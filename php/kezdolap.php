@@ -25,14 +25,33 @@ session_start();
                 <?php endif; ?>
             </ul>
 
-            <div class="right_links">
-                <?php if (isset($_SESSION["username"])): ?>
-                    <a class="navbar_link logout" href="kijelentkezes.php">Kijelentkezés</a>
-                <?php else: ?>
-                    <a class="navbar_link login" href="bejelentkezes.php">Bejelentkezés</a>
-                    <a class="navbar_link register" href="regisztracio.php">Regisztráció</a>
-                <?php endif; ?>
+        <div class="right_links">
+            <?php if (isset($_SESSION["username"])): ?>
+                <a class="navbar_link logout" href="kijelentkezes.php">Kijelentkezés</a>
+            <?php else: ?>
+                <a class="navbar_link login" href="bejelentkezes.php">Bejelentkezés</a>
+                <a class="navbar_link register" href="regisztracio.php">Regisztráció</a>
+            <?php endif; ?>
+            
+            <!-- Hamburger menü -->
+            <div class="hamburger-menu" onclick="toggleMenu()">
+                <span></span>
+                <span></span>
+                <span></span>
             </div>
+            
+            <!-- Legördülő menü -->
+            <ul class="dropdown-menu">
+                <li><a href="profil.php">Profil</a></li>
+                <li><a href="beallitasok.php">Beállítások</a></li>
+                <li><a href="#" onclick="toggleDarkMode()">Sötét mód</a></li>
+                <li><a href="megrendelesek.php">Megrednelések</a></li>
+                <?php if (isset($_SESSION["username"])): ?>
+                    <li><a href="kijelentkezes.php">Kijelentkezés</a></li>
+                <?php endif; ?>
+            </ul>
+        </div>
+
         </div>
     </nav>
 
@@ -68,6 +87,15 @@ session_start();
             </div>
         </footer>
 
-    
+        <script>
+    function toggleMenu() {
+        const menu = document.querySelector('.dropdown-menu');
+        menu.classList.toggle('active'); // A "dropdown-menu" aktív állapotának váltása
+    }
+
+    function toggleDarkMode() {
+        document.body.classList.toggle('dark-mode'); // Sötét mód bekapcsolása
+    }
+</script>
 </body>
 </html>
