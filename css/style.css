@@ -292,3 +292,116 @@ p {
 
 
 
+
+
+
+
+/*lenyíló elemek*/
+
+/* Hamburger ikon a jobb felső sarokban */
+.hamburger-menu {
+    cursor: pointer;
+    display: flex;
+    flex-direction: column;
+    justify-content: space-between;
+    width: 25px;
+    height: 18px;
+    position: absolute;
+    top: 50%;
+    right: 10px; /* Jobb szélre igazítás */
+    transform: translateY(-60%); /* Függőleges középre igazítás a navbar magasságához */
+}
+
+.hamburger-menu span {
+    display: block;
+    height: 3px;
+    width: 100%;
+    background-color: #ffffff;
+    border-radius: 2px;
+    transition: all 0.3s ease;
+}
+
+/* Dropdown menü alapértelmezett elrejtése */
+.dropdown-menu {
+    display: none;
+    position: absolute;
+    right: 10px; /* Illeszkedjen a hamburger menüvel */
+    top: 45px;   /* A hamburger alatt helyezkedjen el */
+    background-color: #ffffff;
+    box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
+    border-radius: 5px;
+    overflow: hidden;
+    z-index: 10;
+    list-style-type: none;
+    padding: 0;
+    margin: 0;
+    width: 150px;
+}
+
+.dropdown-menu li {
+    border-bottom: 1px solid #ddd;
+}
+
+.dropdown-menu li:last-child {
+    border-bottom: none;
+}
+
+.dropdown-menu li a {
+    display: block;
+    padding: 10px 20px;
+    color: #333;
+    text-decoration: none;
+    transition: background-color 0.2s ease;
+}
+
+.dropdown-menu li a:hover {
+    background-color: #f0f0f0;
+}
+
+/* Aktív állapot (amikor a menü látható) */
+.dropdown-menu.active {
+    display: block;
+}
+
+/* Reszponzív biztosítás */
+@media (max-width: 768px) {
+    .hamburger-menu {
+        right: 5px;
+    }
+    .dropdown-menu {
+        right: 5px;
+    }
+}
+
+
+
+
+
+
+/*sötét mód*/
+body.dark-mode {
+    background-color: #1a1a1a;
+    color: #ffffff;
+}
+
+body.dark-mode .navbar {
+    background: linear-gradient(135deg, #2c3e50, #4ca1af);
+}
+
+body.dark-mode .dropdown-menu {
+    background-color: #333;
+}
+
+body.dark-mode .dropdown-menu li a {
+    color: #ffffff;
+}
+
+body.dark-mode .dropdown-menu li a:hover {
+    background-color: #444;
+}
+
+
+
+
+
+
