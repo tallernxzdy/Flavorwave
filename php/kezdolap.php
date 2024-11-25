@@ -7,6 +7,8 @@ session_start();
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.15.4/css/all.min.css">
+
     <title>Flavorwave</title>
     <link rel="stylesheet" href="../css/style.css">
 </head>
@@ -67,25 +69,32 @@ session_start();
 
 
     <!--Footer-->
-        <footer class="footer">
-            <div class="footer-container">
-                <ul class="footer-links">
-                    <li><a href="#">Rólunk</a></li>
-                    <li><a href="#">Szolgáltatások</a></li>
-                    <li><a href="#">Kapcsolat</a></li>
-                    <li><a href="#">Blog</a></li>
-                </ul>
-                <div class="footer-socials">
-                    <a href="#" target="_blank"><i class="fab fa-facebook"></i></a>
-                    <a href="#" target="_blank"><i class="fab fa-twitter"></i></a>
-                    <a href="#" target="_blank"><i class="fab fa-linkedin"></i></a>
-                    <a href="#" target="_blank"><i class="fab fa-instagram"></i></a>
-                </div>
-                <div class="footer-copy">
-                    <p>&copy; 2024 <a href="#">Flavorwave</a>. Minden jog fenntartva.</p>
-                </div>
-            </div>
-        </footer>
+    <div class="footer">
+    <div class="footer-container">
+        <!-- Footer linkek -->
+        <ul class="footer-links">
+            <li><a href="kezdolap.php">Kezdőlap</a></li>
+            <li><a href="menu.php">Menü</a></li>
+            <li><a href="rolunk.php">Rólunk</a></li>
+            <li><a href="kapcsolat.php">Kapcsolat</a></li>
+            <li><a href="adatvedelem.php">Adatvédelem</a></li>
+        </ul>
+
+        <!-- Social media ikonok -->
+        <div class="footer-socials">
+            <a href="#"><i class="fab fa-facebook"></i></a>
+            <a href="#"><i class="fab fa-instagram"></i></a>
+            <a href="#"><i class="fab fa-twitter"></i></a>
+            <a href="#"><i class="fab fa-youtube"></i></a>
+        </div>
+
+        <!-- Copyright rész -->
+        <div class="footer-copy">
+            &copy; 2024 FlavorWave - Minden jog fenntartva. | <a href="aszf.php">ÁSZF</a>
+        </div>
+    </div>
+</div>
+
 
         <script>
     function toggleMenu() {

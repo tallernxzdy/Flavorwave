@@ -5,6 +5,7 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Bejelentkezés</title>
     <script src="https://www.google.com/recaptcha/api.js" async defer></script>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.15.4/css/all.min.css">
     <link rel="stylesheet" href="../css/bejelentkezes.css">
     <link rel="stylesheet" href="../css/style.css">
 </head>
@@ -124,16 +125,29 @@ $conn->close();
 
     <!-- Footer -->
     <div class="footer">
-        <div class="footer-container">
-            <ul class="footer-links">
-                <li><a href="kezdolap.php">Kezdőlap</a></li>
-                <li><a href="regisztracio.php">Regisztráció</a></li>
-                <li><a href="bejelentkezes.php">Bejelentkezés</a></li>
-            </ul>
-            <div class="footer-copy">
-                &copy; 2024 FlavorWave - Minden jog fenntartva.
-            </div>
+    <div class="footer-container">
+        <!-- Footer linkek -->
+        <ul class="footer-links">
+            <li><a href="kezdolap.php">Kezdőlap</a></li>
+            <li><a href="menu.php">Menü</a></li>
+            <li><a href="rolunk.php">Rólunk</a></li>
+            <li><a href="kapcsolat.php">Kapcsolat</a></li>
+            <li><a href="adatvedelem.php">Adatvédelem</a></li>
+        </ul>
+
+        <!-- Social media ikonok -->
+        <div class="footer-socials">
+            <a href="#"><i class="fab fa-facebook"></i></a>
+            <a href="#"><i class="fab fa-instagram"></i></a>
+            <a href="#"><i class="fab fa-twitter"></i></a>
+            <a href="#"><i class="fab fa-youtube"></i></a>
+        </div>
+
+        <!-- Copyright rész -->
+        <div class="footer-copy">
+            &copy; 2024 FlavorWave - Minden jog fenntartva. | <a href="aszf.php">ÁSZF</a>
         </div>
     </div>
+</div>
 </body>
 </html>

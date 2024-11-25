@@ -286,6 +286,97 @@ p {
     animation: fadeIn 2s ease;
 }
 
+/* Alapértelmezett stílusok (nagy képernyőkre) */
+.navbar-container, .footer-container {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    padding: 20px;
+    max-width: 1200px;
+    margin: 0 auto;
+}
+
+.navbar_ul, .footer-links {
+    list-style: none;
+    display: flex;
+    gap: 20px;
+    margin: 0;
+    padding: 0;
+}
+
+.navbar_link, .footer-links a {
+    text-decoration: none;
+    color: #333;
+    font-weight: bold;
+}
+
+/* Footer szöveg */
+.footer-copy {
+    text-align: center;
+    margin-top: 10px;
+    color: #555;
+}
+
+/* Hamburger menü elrejtése alapból */
+.hamburger-menu, .dropdown-menu {
+    display: none;
+}
+
+/* Kis képernyők: navbar */
+@media (max-width: 768px) {
+    .navbar-container {
+        flex-direction: column;
+        align-items: flex-start;
+    }
+
+    .navbar_ul {
+        display: none; /* Elrejtett alapból */
+        flex-direction: column;
+        width: 100%;
+        text-align: left;
+    }
+
+    .navbar_ul.active {
+        display: flex; /* Menü megjelenítése kattintásra */
+    }
+
+    .hamburger-menu {
+        display: block; /* Megjelenik kis képernyőn */
+        cursor: pointer;
+    }
+
+    .dropdown-menu li {
+        padding: 15px;
+        text-align: center;
+        border-bottom: 1px solid #ddd;
+    }
+}
+
+/* Footer reszponzív stílus */
+@media (max-width: 768px) {
+    .footer-container {
+        flex-direction: column;
+        text-align: center;
+    }
+
+    .footer-links {
+        flex-direction: column;
+        gap: 10px;
+    }
+}
+
+/* Közepes képernyőre (768px - 1024px) */
+@media (min-width: 769px) and (max-width: 1024px) {
+    .navbar-container, .footer-container {
+        padding: 15px;
+    }
+
+    .navbar_ul, .footer-links {
+        gap: 15px;
+    }
+}
+
+
 
 
 
@@ -373,6 +464,56 @@ p {
     }
 }
 
+/* Alapértelmezett beállítások */
+.navbar_ul, .dropdown-menu {
+    display: none; /* Alapból rejtett */
+}
+
+.hamburger-menu {
+    display: none; /* Alapértelmezett képernyőn rejtett */
+    cursor: pointer;
+}
+
+/* Hamburger ikon stílus */
+.hamburger-menu span {
+    display: block;
+    width: 25px;
+    height: 3px;
+    background-color: #333;
+    margin: 5px;
+}
+
+/* Kis képernyők: Hamburger menü megjelenítése */
+@media (max-width: 768px) {
+    .navbar_ul {
+        display: none; /* Rejtett alapértelmezetten kis képernyőkön */
+    }
+    
+    .hamburger-menu {
+        display: block; /* Hamburger ikon megjelenítése */
+    }
+
+    .dropdown-menu {
+        display: none; /* Alapértelmezetten rejtett */
+        position: absolute;
+        background-color: white; /* Stílus */
+        width: 100%;
+        top: 60px; /* Igazítsd a navbar magasságához */
+        left: 0;
+        box-shadow: 0 8px 16px rgba(0,0,0,0.2);
+    }
+
+    .dropdown-menu.active {
+        display: block; /* Aktív állapotban jelenik meg */
+    }
+
+    .dropdown-menu li {
+        padding: 10px;
+        text-align: center;
+    }
+}
+
+
 
 
 
@@ -399,6 +540,8 @@ body.dark-mode .dropdown-menu li a {
 body.dark-mode .dropdown-menu li a:hover {
     background-color: #444;
 }
+
+
 
 
 
