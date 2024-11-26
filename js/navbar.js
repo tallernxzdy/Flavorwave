@@ -1,4 +1,8 @@
-function toggleMenu() {
-    const dropdown = document.querySelector('.dropdown-menu');
-    dropdown.classList.toggle('active');
-}
+const currentPage = window.location.pathname.split('/').pop();
+const links = document.querySelectorAll('.navbar_link a');
+
+links.forEach(link => {
+    if (link.getAttribute('href') === currentPage) {
+        link.classList.add('active');
+    }
+});

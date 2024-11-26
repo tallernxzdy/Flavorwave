@@ -32,38 +32,37 @@ a {
     box-shadow: 0 12px 20px rgba(0, 0, 0, 0.3);
     position: fixed;
     top: 0;
-    z-index: 10;
+    z-index: 1000; /* Magasabb érték */
     padding: 1.2em 0;
     border-bottom: 3px solid rgba(255, 255, 255, 0.2);
 }
 
 .navbar-container {
     display: flex;
-    justify-content: space-between;
-    align-items: center;
+    justify-content: space-between; /* Bal és jobb oldal szétválasztása */
+    align-items: center; /* Függőleges középre igazítás */
     max-width: 1200px;
     margin: 0 auto;
     padding: 0 2em;
 }
 
+.navbar_left {
+    display: flex;
+    align-items: center; /* Függőleges középre igazítás */
+    gap: 2em; /* Távolság a bal oldali elemek között */
+}
+
+.navbar_right {
+    display: flex;
+    align-items: center; /* Függőleges középre igazítás */
+}
+
 .navbar_ul {
     list-style-type: none;
     display: flex;
-    gap: 2em;
-}
-
-.logo {
-    color: #ffffff;
-    font-size: 1.8em;
-    font-weight: bold;
-    text-decoration: none;
-    transition: color 0.3s, transform 0.3s;
-    text-shadow: -1px -1px 0 #000, 1px -1px 0 #000, -1px 1px 0 #000, 1px 1px 0 #000;
-}
-
-.logo:hover {
-    color: #00c6ff;
-    transform: scale(1.1);
+    gap: 2em; /* Elemek közötti távolság */
+    margin: 0;
+    padding: 0;
 }
 
 .navbar_link {
@@ -79,6 +78,11 @@ a {
     animation: gradientShift 6s ease infinite;
     box-shadow: inset 0 0 0 0 rgba(255, 255, 255, 0.5);
     transition: all 0.3s ease;
+}
+
+.navbar_link.active {
+    font-weight: bold;
+    color: #ff6600;
 }
 
 .navbar_link::after {
@@ -111,7 +115,8 @@ a {
 }
 
 /* Külön színek a középső két gombhoz */
-.navbar_link.login, .navbar_link.register {
+.navbar_link.login, .navbar_link.register,
+.navbar_left .logo, .navbar_left .navbar_link {
     background: linear-gradient(30deg, #00c6ff, #0072ff); /* Élénk kék */
     color: #ffffff;
     padding: 0.6em 1.5em;
@@ -122,7 +127,8 @@ a {
 }
 
 /* Hover animáció - Külön gombok */
-.navbar_link.login:hover, .navbar_link.register:hover {
+.navbar_link.login:hover, .navbar_link.register:hover,
+.navbar_left .logo:hover, .navbar_left .navbar_link:hover {
     transform: translateY(-6px);
     box-shadow: inset 0 0 8px rgba(255, 255, 255, 0.6), 0 10px 15px rgba(0, 0, 0, 0.3);
 }
@@ -137,20 +143,11 @@ a {
     transition: transform 0.3s ease, box-shadow 0.3s ease;
 }
 
-/* Hamburger menü */
-.hamburger-menu {
-    display: none;
-    cursor: pointer;
+/* Margin hozzáadása a bejelentkezés és regisztráció gombok között */
+.navbar_link.login {
+    margin-right: 1em; /* Távolság a bejelentkezés és regisztráció között */
 }
 
-.hamburger-menu span {
-    display: block;
-    width: 25px;
-    height: 3px;
-    margin: 5px auto;
-    background-color: #fff;
-    transition: all 0.3s ease;
-}
 
 /* Footer */
 .footer {

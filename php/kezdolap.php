@@ -15,35 +15,32 @@ session_start();
 
     <!-- NAVBAR -->
     <nav class="navbar">
-        <div class="navbar-container">
+    <div class="navbar-container">
+        <!-- Bal oldali elemek: Flavorwave és Menü -->
+        <div class="navbar_left">
+            
             <ul class="navbar_ul">
                 <li><a href="kezdolap.php" class="logo">🌊 Flavorwave</a></li>
-                <li><a class="navbar_link" href="kezdolap.php">Főoldal</a></li>
                 <li><a class="navbar_link" href="menu.php">Menü</a></li>
-
+                
                 <?php if (isset($_SESSION["jog_szint"]) && $_SESSION["jog_szint"] == 1): ?>
                     <li><a class="navbar_link" href="admin_felulet.php">Admin felület</a></li>
                 <?php endif; ?>
-
-                <?php if (isset($_SESSION["username"])): ?>
-                    <li class="navbar_link logout"><a href="kijelentkezes.php">Kijelentkezés</a></li>
-                <?php else: ?>
-                    <li class="navbar_link login"><a href="bejelentkezes.php">Bejelentkezés</a></li>
-                    <li class="navbar_link register"><a href="regisztracio.php">Regisztráció</a></li>
-                <?php endif; ?>
-                
-                <!-- Hamburger menü -->
-                <li><div class="hamburger-menu" onclick="toggleMenu()">
-                    <span></span>
-                    <span></span>
-                    <span></span>
-                </div></li>
             </ul>
-
-            
-            </div>
         </div>
-    </nav>
+
+        <!-- Jobb oldali gombok: Bejelentkezés, Regisztráció, Kijelentkezés -->
+        <div class="navbar_right">
+            <?php if (isset($_SESSION["username"])): ?>
+                <a class="navbar_link logout" href="kijelentkezes.php">Kijelentkezés</a>
+            <?php else: ?>
+                <a class="navbar_link login" href="bejelentkezes.php">Bejelentkezés</a>
+                <a class="navbar_link register" href="regisztracio.php">Regisztráció</a>
+            <?php endif; ?>
+        </div>
+    </div>
+</nav>
+
 
     <!-- Main content -->
     <main>
