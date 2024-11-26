@@ -111,19 +111,18 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
 <body>
     <div class="container">
         <h1>Admin Felület</h1>
-
         <?php if ($message): ?>
             <div class="alert alert-info"><?= htmlspecialchars($message) ?></div>
-        <?php endif; ?>
-
-        <form method="POST" enctype="multipart/form-data">
-            <select name="operation" id="operation" class="form-select mb-3" required>
-                <option value="">Válasszon műveletet</option>
-                <option value="add">Hozzáadás</option>
-                <option value="edit">Szerkesztés</option>
-                <option value="delete">Törlés</option>
-            </select>
-
+            <?php endif; ?>
+            
+            <form method="POST" enctype="multipart/form-data">
+                <select name="operation" id="operation" class="form-select mb-3" required>
+                    <option value="">Válasszon műveletet</option>
+                    <option value="add">Hozzáadás</option>
+                    <option value="edit">Szerkesztés</option>
+                    <option value="delete">Törlés</option>
+                </select>
+                
             <!-- Hozzáadás -->
 
             <div id="add-form" class="form-section" style="display:none;">
@@ -141,6 +140,7 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
                 </select>
                 <input type="file" name="kepek_url" accept="image/*" class="form-control mb-2">
                 <button type="submit" class="btn btn-primary">Hozzáadás</button>
+                <p style="display:inline"><a style="float:right" href="kezdolap.php">Vissza a kezdőlapra</a></p>
             </div>
 
             <!-- Szerkesztés -->
@@ -160,6 +160,8 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
                 </select>
                 <input type="file" name="edit_kepek_url" accept="image/*" class="form-control mb-2">
                 <button type="submit" class="btn btn-primary">Szerkesztés</button>
+                <p style="display:inline"><a style="float:right" href="kezdolap.php">Vissza a kezdőlapra</a></p>
+
             </div>
 
             <!-- Törlés -->
@@ -167,6 +169,8 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
                 <h3>Törlés</h3>
                 <input type="number" name="delete_etel" placeholder="Étel ID" class="form-control mb-2" data-required>
                 <button type="submit" class="btn btn-danger">Törlés</button>
+                <p style="display:inline"><a style="float:right" href="kezdolap.php">Vissza a kezdőlapra</a></p>
+                
             </div>
 
         </form>
