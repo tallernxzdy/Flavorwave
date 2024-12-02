@@ -1,0 +1,55 @@
+/* Carousel alapbeállítás */
+.carousel {
+    width: 100%; /* A carousel szélessége teljes oldal */
+    height: 400px; /* Fix magasság a carouselhez */
+    overflow: hidden; /* Kilógó részek levágása */
+    position: relative; /* Navigációhoz szükséges */
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    background-color: #000; /* Opció: háttérszín képek között */
+}
+
+/* Képek stílusa */
+.carousel img {
+    width: 100%; /* A kép szélessége az egész containerhez igazodik */
+    height: 100%; /* A kép magassága fix, nem változik */
+    object-fit: fill; /* A kép kitölti a rendelkezésre álló helyet, még ha torzul is */
+    display: block;
+}
+
+/* Navigációs nyilak */
+.carousel .nav {
+    position: absolute;
+    top: 50%;
+    transform: translateY(-50%);
+    background-color: rgba(0, 0, 0, 0.5);
+    color: white;
+    border: none;
+    padding: 0.5em 1em;
+    cursor: pointer;
+    z-index: 10;
+}
+
+.carousel .nav.left {
+    left: 10px;
+}
+
+.carousel .nav.right {
+    right: 10px;
+}
+
+  
+  /* Mobilbarát dizájn */
+  @media (max-width: 768px) {
+    .carousel {
+      height: 60vh;
+    }
+  
+    .carousel-control-prev-icon,
+    .carousel-control-next-icon {
+      width: 40px;
+      height: 40px;
+    }
+  }
+  
