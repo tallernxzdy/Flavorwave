@@ -7,8 +7,10 @@ session_start();
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta http-equiv="X-UA-Compatible" content="ie=edge" />
+
     <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/css/bootstrap.min.css" rel="stylesheet">
-    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/js/bootstrap.bundle.min.js"></script>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.15.4/css/all.min.css">
     <title>Flavorwave</title>
     <link rel="stylesheet" href="../css/style.css">
     <link rel="stylesheet" href="../css/navbar.css">
@@ -17,36 +19,52 @@ session_start();
 <body>
 
     <!-- NAVBAR -->
-    <nav class="navbar">
-    <div class="navbar-container">
-        <!-- Bal oldali elemek: Flavorwave és Menü -->
-        <div class="navbar_left">
-            
-            <ul class="navbar_ul">
-                <li><a href="kezdolap.php" class="logo">🌊 Flavorwave</a></li>
-                <li><a class="navbar_link" href="menu.php">Menü</a></li>
-                
-                <?php if (isset($_SESSION["jog_szint"]) && $_SESSION["jog_szint"] == 1): ?>
-                    <li><a class="navbar_link" href="admin_felulet.php">Admin felület</a></li>
-                <?php endif; ?>
-            </ul>
-        </div>
+    <nav>
+  <div class="logo">
+    <a href="kezdolap.php" class="logo">🌊 Flavorwave</a>
+  </div>
+  <ul>
+    <li><a href="menu.php">Menü</a></li>
+    <?php if (isset($_SESSION["jog_szint"]) && $_SESSION["jog_szint"] == 1): ?>
+      <li><a href="admin_felulet.php">Admin felület</a></li>
+    <?php endif; ?>
 
-        <!-- Jobb oldali gombok: Bejelentkezés, Regisztráció, Kijelentkezés -->
-        <div class="navbar_right">
-            <?php if (isset($_SESSION["username"])): ?>
-                <a class="navbar_link logout" href="kijelentkezes.php">Kijelentkezés</a>
-            <?php else: ?>
-                <a class="navbar_link login" href="bejelentkezes.php">Bejelentkezés</a>
-                <a class="navbar_link register" href="regisztracio.php">Regisztráció</a>
-            <?php endif; ?>
-        </div>
-    </div>
-            
+    <?php if (isset($_SESSION["username"])): ?>
+      <li><a href="kijelentkezes.php">Kijelentkezés</a></li>
+    <?php else: ?>
+      <li><a href="bejelentkezes.php">Bejelentkezés</a></li>
+      <li><a href="regisztracio.php">Regisztráció</a></li>
+    <?php endif; ?>
+  </ul>
+  <div class="hamburger">
+    <span class="line"></span>
+    <span class="line"></span>
+    <span class="line"></span>
+  </div>
 </nav>
 
+<div class="menubar">
+  <ul>
+    <li><a href="menu.php">Menü</a></li>
+    <?php if (isset($_SESSION["jog_szint"]) && $_SESSION["jog_szint"] == 1): ?>
+      <li><a href="admin_felulet.php">Admin felület</a></li>
+    <?php endif; ?>
 
-<div id="carouselExampleCaptions" class="carousel slide">
+    <?php if (isset($_SESSION["username"])): ?>
+      <li><a href="kijelentkezes.php">Kijelentkezés</a></li>
+    <?php else: ?>
+      <li><a href="bejelentkezes.php">Bejelentkezés</a></li>
+      <li><a href="regisztracio.php">Regisztráció</a></li>
+    <?php endif; ?>
+  </ul>
+</div>
+
+
+
+
+
+
+<div id="carouselExampleCaptions" class="carousel slide" data-bs-ride="carousel" data-bs-interval="3000">
   <div class="carousel-indicators">
     <button type="button" data-bs-target="#carouselExampleCaptions" data-bs-slide-to="0" class="active" aria-current="true" aria-label="Slide 1"></button>
     <button type="button" data-bs-target="#carouselExampleCaptions" data-bs-slide-to="1" aria-label="Slide 2"></button>
@@ -54,24 +72,42 @@ session_start();
   </div>
   <div class="carousel-inner">
     <div class="carousel-item active">
-      <img src="../kepek/pizza2.jpg" class="d-block w-100" alt="...">
-      <div class="carousel-caption d-none d-md-block">
-        <h5>First slide label</h5>
-        <p>Some representative placeholder content for the first slide.</p>
+      <img src="../kepek/pizza.jpg" class="d-block w-100" alt="First slide">
+      <div class="carousel-caption d-flex align-items-center justify-content-center h-100">
+        <main>
+          <h2>Üdvözöljük a Flavorwave oldalon</h2>
+          <?php if (isset($_SESSION["username"])): ?>
+              <p>Szia, <?php echo htmlspecialchars($_SESSION["username"]); ?>!</p>
+          <?php else: ?>
+              <p>Jelentkezz be vagy regisztrálj a fiókod eléréséhez!</p>
+          <?php endif; ?>
+        </main>
       </div>
     </div>
     <div class="carousel-item">
-      <img src="../kepek/pizza2.jpg" class="d-block w-100" alt="...">
-      <div class="carousel-caption d-none d-md-block">
-        <h5>Second slide label</h5>
-        <p>Some representative placeholder content for the second slide.</p>
+      <img src="../kepek/pizza2.jpg" class="d-block w-100" alt="Second slide">
+      <div class="carousel-caption d-flex align-items-center justify-content-center h-100">
+        <main>
+          <h2>Üdvözöljük a Flavorwave oldalon</h2>
+          <?php if (isset($_SESSION["username"])): ?>
+              <p>Szia, <?php echo htmlspecialchars($_SESSION["username"]); ?>!</p>
+          <?php else: ?>
+              <p>Jelentkezz be vagy regisztrálj a fiókod eléréséhez!</p>
+          <?php endif; ?>
+        </main>
       </div>
     </div>
     <div class="carousel-item">
-      <img src="../kepek/pizza2.jpg" class="d-block w-100" alt="...">
-      <div class="carousel-caption d-none d-md-block">
-        <h5>Third slide label</h5>
-        <p>Some representative placeholder content for the third slide.</p>
+      <img src="../kepek/pizza3.jpg" class="d-block w-100" alt="Third slide">
+      <div class="carousel-caption d-flex align-items-center justify-content-center h-100">
+        <main>
+          <h2>Üdvözöljük a Flavorwave oldalon</h2>
+          <?php if (isset($_SESSION["username"])): ?>
+              <p>Szia, <?php echo htmlspecialchars($_SESSION["username"]); ?>!</p>
+          <?php else: ?>
+              <p>Jelentkezz be vagy regisztrálj a fiókod eléréséhez!</p>
+          <?php endif; ?>
+        </main>
       </div>
     </div>
   </div>
@@ -86,24 +122,8 @@ session_start();
 </div>
 
 
-
-
-
-
-
-
-
-
-
-    <!-- Main content -->
-    <main>
-        <h2>Üdvözöljük a Flavorwave oldalon</h2>
-        <?php if (isset($_SESSION["username"])): ?>
-            <p>Szia, <?php echo htmlspecialchars($_SESSION["username"]); ?>!</p>
-        <?php else: ?>
-            <p>Jelentkezz be vagy regisztrálj a fiókod eléréséhez!</p>
-        <?php endif; ?>
-    </main>
+<h1>Hello itt lesz valami!
+</h1>
 
     <!-- Footer -->
     <footer class="footer">
@@ -131,6 +151,7 @@ session_start();
             </div>
         </div>
     </footer>
-
+    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/js/bootstrap.bundle.min.js"></script>
+    <script src="../js/navbar.js"></script>
 </body>
 </html>

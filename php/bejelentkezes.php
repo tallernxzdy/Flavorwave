@@ -3,9 +3,12 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta http-equiv="X-UA-Compatible" content="ie=edge" />
     <title>Bejelentkezés</title>
     <script src="https://www.google.com/recaptcha/api.js" async defer></script>
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.15.4/css/all.min.css">
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/css/bootstrap.min.css" rel="stylesheet">
+    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/js/bootstrap.bundle.min.js"></script>
     <link rel="stylesheet" href="../css/bejelentkezes.css">
     <link rel="stylesheet" href="../css/style.css">
     <link rel="stylesheet" href="../css/navbar.css">
@@ -13,16 +16,48 @@
 </head>
 <body>
     <!-- Navbar -->
-    <div class="navbar">
-        <div class="navbar-container">
-            <a href="kezdolap.php" class="logo">FlavorWave</a>
-            <ul class="navbar_ul">
-                <li><a href="kezdolap.php" class="navbar_link">Kezdőlap</a></li>
-                <li><a href="regisztracio.php" class="navbar_link">Regisztráció</a></li>
-                <li><a href="bejelentkezes.php" class="navbar_link login">Bejelentkezés</a></li>
-            </ul>
-        </div>
-    </div>
+    
+    <nav>
+  <div class="logo">
+    <a href="kezdolap.php" class="logo">🌊 Flavorwave</a>
+  </div>
+  <ul>
+    <li><a href="menu.php">Menü</a></li>
+    <?php if (isset($_SESSION["jog_szint"]) && $_SESSION["jog_szint"] == 1): ?>
+      <li><a href="admin_felulet.php">Admin felület</a></li>
+    <?php endif; ?>
+
+    <?php if (isset($_SESSION["username"])): ?>
+      <li><a href="kijelentkezes.php">Kijelentkezés</a></li>
+    <?php else: ?>
+      <li><a href="bejelentkezes.php">Bejelentkezés</a></li>
+      <li><a href="regisztracio.php">Regisztráció</a></li>
+    <?php endif; ?>
+  </ul>
+  <div class="hamburger">
+    <span class="line"></span>
+    <span class="line"></span>
+    <span class="line"></span>
+  </div>
+</nav>
+
+<div class="menubar">
+  <ul>
+    <li><a href="menu.php">Menü</a></li>
+    <?php if (isset($_SESSION["jog_szint"]) && $_SESSION["jog_szint"] == 1): ?>
+      <li><a href="admin_felulet.php">Admin felület</a></li>
+    <?php endif; ?>
+
+    <?php if (isset($_SESSION["username"])): ?>
+      <li><a href="kijelentkezes.php">Kijelentkezés</a></li>
+    <?php else: ?>
+      <li><a href="bejelentkezes.php">Bejelentkezés</a></li>
+      <li><a href="regisztracio.php">Regisztráció</a></li>
+    <?php endif; ?>
+  </ul>
+</div>
+    
+    
 
     <!-- Bejelentkezés form -->
     <div class="container">
@@ -151,5 +186,7 @@ $conn->close();
         </div>
     </div>
 </div>
+<script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/js/bootstrap.bundle.min.js"></script>
+<script src="../js/navbar.js"></script>
 </body>
 </html>

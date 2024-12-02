@@ -1,55 +1,71 @@
-/* Carousel alapbeállítás */
+/* Carousel konténer méretezése és középre igazítása */
 .carousel {
-    width: 100%; /* A carousel szélessége teljes oldal */
-    height: 400px; /* Fix magasság a carouselhez */
-    overflow: hidden; /* Kilógó részek levágása */
-    position: relative; /* Navigációhoz szükséges */
-    display: flex;
-    align-items: center;
-    justify-content: center;
-    background-color: #000; /* Opció: háttérszín képek között */
+  width: 80%;                /* A carousel szélessége (pl. 80% az oldal szélességéből) */
+  max-width: 800px;          /* Maximális szélesség korlátozása */
+  height: 400px;             /* Fix magasság a carouselhez */
+  overflow: hidden;          /* Kilógó részek levágása */
+  margin: 30px auto;         /* Középre igazítás és felső margó */
+  position: relative;
+  background-color: #000;    /* Háttérszín */
 }
 
-/* Képek stílusa */
+/* A carousel belső elemeinek fix magassága */
+.carousel-inner {
+  height: 100%;              /* A carousel belső része a teljes magasságot kitölti */
+}
+
+/* Képek méretezése, hogy minden slide azonos magasságú legyen */
+.carousel-item {
+  height: 100%;              /* A carousel item teljes magassága */
+  display: flex;             /* Flexbox segítségével középre igazítjuk a képet */
+  align-items: center;       /* Kép függőleges középre igazítása */
+}
+
 .carousel img {
-    width: 100%; /* A kép szélessége az egész containerhez igazodik */
-    height: 100%; /* A kép magassága fix, nem változik */
-    object-fit: fill; /* A kép kitölti a rendelkezésre álló helyet, még ha torzul is */
-    display: block;
+  width: 100%;               /* Kép szélessége a carousel szélességéhez igazodik */
+  height: 100%;              /* Kép magasságának kitöltése a slide magasságával */
+  object-fit: cover;         /* Kép kitöltése torzítás nélkül, levágva a felesleges részeket */
+  display: block;
+}
+
+/* Szöveg doboz középre igazítása */
+.carousel-caption {
+  position: absolute;
+  top: 50%;
+  transform: translateY(-50%);
+  width: 100%;
+  background: rgba(0, 0, 0, 0.6);  /* Átlátszó fekete háttér */
+  padding: 20px;
+  text-align: center;
 }
 
 /* Navigációs nyilak */
-.carousel .nav {
-    position: absolute;
-    top: 50%;
-    transform: translateY(-50%);
-    background-color: rgba(0, 0, 0, 0.5);
-    color: white;
-    border: none;
-    padding: 0.5em 1em;
-    cursor: pointer;
-    z-index: 10;
+.carousel .carousel-control-prev,
+.carousel .carousel-control-next {
+  position: absolute;
+  top: 50%;
+  transform: translateY(-50%);
+  background-color: rgba(0, 0, 0, 0.5);  /* Átlátszó háttér a nyilakhoz */
+  color: white;
+  border: none;
+  padding: 10px;
+  z-index: 10;
 }
 
-.carousel .nav.left {
-    left: 10px;
-}
-
-.carousel .nav.right {
-    right: 10px;
-}
-
-  
-  /* Mobilbarát dizájn */
-  @media (max-width: 768px) {
-    .carousel {
-      height: 60vh;
-    }
-  
-    .carousel-control-prev-icon,
-    .carousel-control-next-icon {
-      width: 40px;
-      height: 40px;
-    }
+/* Mobilbarát dizájn */
+@media (max-width: 768px) {
+  .carousel {
+    width: 90%;             /* A szélesség növelése kisebb képernyőkön */
+    height: 300px;          /* A magasság csökkentése mobilon */
   }
-  
+
+  .carousel-caption {
+    padding: 10px;          /* Kisebb padding a szöveghez */
+  }
+
+  .carousel-control-prev-icon,
+  .carousel-control-next-icon {
+    width: 30px;            /* Kisebb navigációs nyilak mobilon */
+    height: 30px;
+  }
+}

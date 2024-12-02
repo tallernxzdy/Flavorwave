@@ -1,8 +1,8 @@
-const currentPage = window.location.pathname.split('/').pop();
-const links = document.querySelectorAll('.navbar_link a');
+const mobileNav = document.querySelector(".hamburger");
+const navbar = document.querySelector(".menubar");
 
-links.forEach(link => {
-    if (link.getAttribute('href') === currentPage) {
-        link.classList.add('active');
-    }
-});
+const toggleNav = () => {
+  navbar.classList.toggle("active");
+  mobileNav.classList.toggle("hamburger-active");
+};
+mobileNav.addEventListener("click", () => toggleNav());

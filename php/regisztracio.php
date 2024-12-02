@@ -104,10 +104,16 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
 <html lang="hu">
 <head>
     <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta http-equiv="X-UA-Compatible" content="ie=edge" />
     <title>Regisztráció</title>
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.15.4/css/all.min.css">
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/css/bootstrap.min.css" rel="stylesheet">
+    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/js/bootstrap.bundle.min.js"></script>
     <link rel="stylesheet" href="../css/regisztracio.css">
     <link rel="stylesheet" href="../css/style.css">
+    <link rel="stylesheet" href="../css/navbar.css">
+    <link rel="stylesheet" href="../css/footer.css">
     <script type="text/javascript">
         // JavaScript felugró ablak a hibákhoz
         function showError(errors) {
@@ -119,23 +125,47 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
     </script>
 </head>
 <body>
-    <nav class="navbar">
-        <div class="navbar-container">
-            <a href="kezdolap.php" class="logo">🌊 Flavorwave</a>
-            <ul class="navbar_ul">
-                <li><a class="navbar_link special_link kozepso" href="kezdolap.php">Főoldal</a></li>
-                <li><a class="navbar_link special_link kozepso" href="menu.php">Menü</a></li>
-            </ul>
-            <div class="right_links">
-                <?php if (isset($_SESSION["username"])): ?>
-                    <a class="navbar_link logout" href="kijelentkezes.php">Kijelentkezés</a>
-                <?php else: ?>
-                    <a class="navbar_link login" href="bejelentkezes.php">Bejelentkezés</a>
-                    <a class="navbar_link register" href="regisztracio.php">Regisztráció</a>
-                <?php endif; ?>
-            </div>
-        </div>
-    </nav>
+    
+    
+<nav>
+  <div class="logo">
+    <a href="kezdolap.php" class="logo">🌊 Flavorwave</a>
+  </div>
+  <ul>
+    <li><a href="menu.php">Menü</a></li>
+    <?php if (isset($_SESSION["jog_szint"]) && $_SESSION["jog_szint"] == 1): ?>
+      <li><a href="admin_felulet.php">Admin felület</a></li>
+    <?php endif; ?>
+
+    <?php if (isset($_SESSION["username"])): ?>
+      <li><a href="kijelentkezes.php">Kijelentkezés</a></li>
+    <?php else: ?>
+      <li><a href="bejelentkezes.php">Bejelentkezés</a></li>
+      <li><a href="regisztracio.php">Regisztráció</a></li>
+    <?php endif; ?>
+  </ul>
+  <div class="hamburger">
+    <span class="line"></span>
+    <span class="line"></span>
+    <span class="line"></span>
+  </div>
+</nav>
+
+<div class="menubar">
+  <ul>
+    <li><a href="menu.php">Menü</a></li>
+    <?php if (isset($_SESSION["jog_szint"]) && $_SESSION["jog_szint"] == 1): ?>
+      <li><a href="admin_felulet.php">Admin felület</a></li>
+    <?php endif; ?>
+
+    <?php if (isset($_SESSION["username"])): ?>
+      <li><a href="kijelentkezes.php">Kijelentkezés</a></li>
+    <?php else: ?>
+      <li><a href="bejelentkezes.php">Bejelentkezés</a></li>
+      <li><a href="regisztracio.php">Regisztráció</a></li>
+    <?php endif; ?>
+  </ul>
+</div>
 
     <div class="container">
         <h2>Regisztráció</h2>
@@ -182,5 +212,7 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
         </div>
     </div>
 </div>
+<script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/js/bootstrap.bundle.min.js"></script>
+<script src="../js/navbar.js"></script>
 </body>
 </html>

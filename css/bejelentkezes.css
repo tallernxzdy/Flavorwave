@@ -99,17 +99,6 @@ p a:hover {
     margin-top: 0.5em;
 }
 
-/* Footer mindig alul marad */
-.footer {
-    margin-top: auto; /* Dinamikus helykitöltés */
-    width: 100%;
-    background: linear-gradient(135deg, #00796B, #80DEEA);
-    color: white;
-    padding: 2em 0; /* Nagyobb padding */
-    text-align: center;
-    box-shadow: 0 -4px 12px rgba(0, 0, 0, 0.15);
-}
-
 /* Reszponzivitás */
 @media (max-width: 768px) {
     .container {
