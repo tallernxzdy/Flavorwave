@@ -43,44 +43,57 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
 
         // Adatbázisba mentés
         if ($kep_url || empty($_FILES['kepek_url']['name'])) {
-            $result = adatokValtoztatasa(
-                "INSERT INTO etel (nev, egyseg_ar, leiras, kategoria_id, kep_url)
-                 VALUES ('$nev', '$egyseg_ar', '$leiras', '$kategoria_id', '$kep_url')"
-            );
+            $muvelet = "INSERT INTO etel (nev, egyseg_ar, leiras, kategoria_id, kep_url) VALUES (?, ?, ?, ?, ?)";
+            $parameterek = ['sssis', $nev, $egyseg_ar, $leiras, $kategoria_id, $kep_url];
+            $result = adatokValtoztatasa($muvelet, $parameterek);
+
             $message = $result;
         }
     }
 
     // Szerkesztés
-    if ($operation === 'edit') {
+    if ($_SERVER['REQUEST_METHOD'] === 'POST' && $operation === 'edit') {
         $id = $_POST['edit_etel'];
         $nev = $_POST['edit_nev'];
         $egyseg_ar = $_POST['edit_egyseg_ar'];
         $leiras = $_POST['edit_leiras'];
         $kategoria_id = $_POST['edit_kategoria_id'];
-
+    
         // Kép frissítése, ha van új kép
-        $kep_url_sql = "";
+        $kep_url = ""; // Alapértelmezett változó inicializálása
+        $kep_url_sql = ""; // SQL részlet a kép frissítéséhez
         if (isset($_FILES['edit_kepek_url']['name']) && $_FILES['edit_kepek_url']['name'] !== "") {
             $target_dir = "../kepek/";
             $uniqueName = uniqid() . '-' . basename($_FILES['edit_kepek_url']['name']);
             $target_file = $target_dir . $uniqueName;
-
+    
             if (move_uploaded_file($_FILES['edit_kepek_url']['tmp_name'], $target_file)) {
-                $kep_url_sql = ", kep_url = '$uniqueName'";
+                $kep_url_sql = ", kep_url = ?";
+                $kep_url = $uniqueName; // Csak a fájl nevét mentjük
             } else {
                 $message = "Hiba a kép feltöltése során!";
             }
+        } else {
+            // Ha nincs új kép, lekérdezzük az aktuális URL-t az adatbázisból
+            $etel = adatokLekerdezese("SELECT kep_url FROM etel WHERE id = $id");
+            if (is_array($etel) && count($etel) > 0) {
+                $kep_url = $etel[0]['kep_url'];
+            }
         }
-
+    
         // Adatbázis frissítés
-        $result = adatokValtoztatasa(
-            "UPDATE etel 
-             SET nev = '$nev', egyseg_ar = $egyseg_ar, leiras = '$leiras', kategoria_id = $kategoria_id $kep_url_sql 
-             WHERE id = $id"
-        );
+        $muvelet = "UPDATE etel SET nev = ?, egyseg_ar = ?, leiras = ?, kategoria_id = ? $kep_url_sql WHERE id = ?";
+        $parameterek = ['ssssi', $nev, $egyseg_ar, $leiras, $kategoria_id];
+        
+        if ($kep_url_sql) {
+            $parameterek[0] .= 's'; // Típus stringhez hozzáadunk egy 's'-t
+            $parameterek[] = $kep_url;
+        }
+        $parameterek[] = $id; // Az ID hozzáadása a végén
+        $result = adatokValtoztatasa($muvelet, $parameterek);
         $message = $result;
     }
+    
 
     // Törlés
     if ($operation === 'delete') {
@@ -105,10 +118,51 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Admin Felület</title>
+    <link rel="stylesheet" href="../css/style.css">
     <link rel="stylesheet" href="../css/admin_felulet.css">
-    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/css/bootstrap.min.css" rel="stylesheet">
 </head>
 <body>
+
+    <nav>
+    <div class="logo">
+        <a href="kezdolap.php" class="logo">🌊 Flavorwave</a>
+    </div>
+    <ul>
+        <li><a href="menu.php">Menü</a></li>
+        <?php if (isset($_SESSION["jog_szint"]) && $_SESSION["jog_szint"] == 1): ?>
+        <li><a href="admin_felulet.php">Admin felület</a></li>
+        <?php endif; ?>
+
+        <?php if (isset($_SESSION["username"])): ?>
+        <li><a href="kijelentkezes.php">Kijelentkezés</a></li>
+        <?php else: ?>
+        <li><a href="bejelentkezes.php">Bejelentkezés</a></li>
+        <li><a href="regisztracio.php">Regisztráció</a></li>
+        <?php endif; ?>
+    </ul>
+    <div class="hamburger">
+        <span class="line"></span>
+        <span class="line"></span>
+        <span class="line"></span>
+    </div>
+    </nav>
+
+    <div class="menubar">
+    <ul>
+        <li><a href="menu.php">Menü</a></li>
+        <?php if (isset($_SESSION["jog_szint"]) && $_SESSION["jog_szint"] == 1): ?>
+        <li><a href="admin_felulet.php">Admin felület</a></li>
+        <?php endif; ?>
+
+        <?php if (isset($_SESSION["username"])): ?>
+        <li><a href="kijelentkezes.php">Kijelentkezés</a></li>
+        <?php else: ?>
+        <li><a href="bejelentkezes.php">Bejelentkezés</a></li>
+        <li><a href="regisztracio.php">Regisztráció</a></li>
+        <?php endif; ?>
+    </ul>
+    </div>
+
     <div class="container">
         <h1>Admin Felület</h1>
         <?php if ($message): ?>
@@ -196,5 +250,10 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
         }
     });
     </script>
+
+
+<link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/css/bootstrap.min.css" rel="stylesheet" integrity="sha384-QWTKZyjpPEjISv5WaRU9OFeRpok6YctnYmDr5pNlyT2bRjXh0JMhjY6hW+ALEwIH" crossorigin="anonymous">
+<script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/js/bootstrap.bundle.min.js" integrity="sha384-YvpcrYf0tY3lHB60NNkmXc5s9fDVZLESaAA55NDzOxhy9GkcIdslK1eN7N6jIeHz" crossorigin="anonymous"></script>
+    <script src="../js/navbar.js"></script>
 </body>
 </html>

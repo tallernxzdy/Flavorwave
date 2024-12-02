@@ -19,30 +19,34 @@ function adatokLekerdezese($muvelet) {
 }
 
 // SQL function módosításhoz:
-function adatokValtoztatasa($muvelet) {
-    $db = new mysqli ('localhost', 'root', '', 'flavorwave');
-    if ($db->connect_errno == 0 ) {
-        $db->query($muvelet);
-        if ($db->errno == 0) {
-            if ($db->affected_rows > 0) {
+function adatokValtoztatasa($muvelet, $parameterek) {
+    $db = new mysqli('localhost', 'root', '', 'flavorwave');
+    if ($db->connect_errno == 0) {
+        $stmt = $db->prepare($muvelet);
+        if ($stmt) {
+            $stmt->bind_param(...$parameterek); // Paramétereket köt hozzá
+            $stmt->execute();
+            if ($stmt->affected_rows > 0) {
                 return 'Sikeres művelet!';
-            } else if ($db->affected_rows == 0) {
+            } else if ($stmt->affected_rows == 0) {
                 return 'Sikertelen művelet!';
             } else {
-                return $db->error;
+                return $stmt->error;
             }
+        } else {
+            return $db->error;
         }
-        return $db->error;
     } else {
         return $db->connect_error;
     }
 }
 
+
 // SQL function törléshez:
 function adatokTorlese($feltetel) {
-    $db = new mysqli ('localhost', 'root', '', 'flavorwave');
-    if ($db->connect_errno == 0 ) {
-        $muvelet = "DELETE * FROM `etel` WHERE $feltetel";
+    $db = new mysqli('localhost', 'root', '', 'flavorwave');
+    if ($db->connect_errno == 0) {
+        $muvelet = "DELETE FROM `etel` WHERE $feltetel";
         $db->query($muvelet);
         if ($db->errno == 0) {
             if ($db->affected_rows > 0) {
@@ -56,6 +60,7 @@ function adatokTorlese($feltetel) {
         return $db->connect_error;
     }
 }
+
 
 // SQL function feltöltéshez:
 function adatokFeltoltese() {
