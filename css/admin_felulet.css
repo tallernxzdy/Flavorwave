@@ -1,4 +1,9 @@
 
+body{
+    background-color: #F1F8E9;
+}
+
+
 .hamburger-menu {
     display: none;
     position: absolute;
@@ -132,4 +137,6 @@
 .form-buttons .btn-secondary:hover {
     background-color: #5a6268;
 }
+
+
 
