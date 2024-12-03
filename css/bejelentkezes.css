@@ -1,7 +1,7 @@
 /* Alapvető stílusok */
 body {
     font-family: 'Poppins', sans-serif;
-    background: linear-gradient(135deg, #FFFDE7, #FFECB3); /* Világos, sárgás háttérszín */
+    background-color: #F1F8E9; /* Világos, sárgás háttérszín */
     display: flex;
     flex-direction: column;
     align-items: center;

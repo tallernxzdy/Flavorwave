@@ -165,8 +165,6 @@ $conn->close();
     <div class="footer-container">
         <!-- Footer linkek -->
         <ul class="footer-links">
-            <li><a href="kezdolap.php">Kezdőlap</a></li>
-            <li><a href="menu.php">Menü</a></li>
             <li><a href="rolunk.php">Rólunk</a></li>
             <li><a href="kapcsolat.php">Kapcsolat</a></li>
             <li><a href="adatvedelem.php">Adatvédelem</a></li>

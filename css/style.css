@@ -16,10 +16,6 @@ body {
     min-height: 100vh;
 }
 
-main {
-    height: 100vh;
-}
-
 /* Alapértelmezett link stílusok */
 a {
     text-decoration: none;

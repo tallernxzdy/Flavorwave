@@ -23,7 +23,8 @@
 
 .carousel img {
   width: 100%;               /* Kép szélessége a carousel szélességéhez igazodik */
-  height: 100%;              /* Kép magasságának kitöltése a slide magasságával */
+  height: 100%;
+  max-height: 800px;           /* Kép magasságának kitöltése a slide magasságával */
   object-fit: cover;         /* Kép kitöltése torzítás nélkül, levágva a felesleges részeket */
   display: block;
 }
@@ -36,7 +37,7 @@
   width: 100%;
   background: rgba(0, 0, 0, 0.6);  /* Átlátszó fekete háttér */
   padding: 20px;
-  text-align: center;
+  z-index: 10;
 }
 
 /* Navigációs nyilak */
