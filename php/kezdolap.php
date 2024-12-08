@@ -115,7 +115,7 @@ session_start();
             <ul class="footer-links">
                 <li><a href="rolunk.php">Rólunk</a></li>
                 <li><a href="kapcsolat.php">Kapcsolat</a></li>
-                <li><a href="adatvedelem.php">Adatvédelem</a></li>
+                <li><a href="../html/adatvedelem.html">Adatvédelem</a></li>
             </ul>
 
             <!-- Social media ikonok -->
