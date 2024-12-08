@@ -19,7 +19,10 @@
     
     <nav>
   <div class="logo">
-    <a href="kezdolap.php" class="logo">🌊 Flavorwave</a>
+    <a href="kezdolap.php" class="logo">
+      <img src="../kepek/logo.png" alt="Flavorwave logó" class="logo-img">
+      <h1>FlavorWave</h1>
+    </a>
   </div>
   <ul>
     <li><a href="menu.php">Menü</a></li>

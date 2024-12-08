@@ -2,8 +2,9 @@
 .footer {
     margin-top: auto; /* Dinamikus helykitöltés */
     width: 100%;
-    background: linear-gradient(135deg, #00796B, #80DEEA);
-    color: white;
+    
+    background-color: red; /* Háttérszín piros */
+    color: white; /* Betűszín fehér */
     padding: 2em 0; /* Nagyobb padding */
     text-align: center;
     box-shadow: 0 -4px 12px rgba(0, 0, 0, 0.15);
@@ -61,6 +62,7 @@
 .footer-copy a {
     color: #00c6ff;
 }
+
 /* Reszponzív változtatások */
 @media (max-width: 768px) {
     .navbar-container {
