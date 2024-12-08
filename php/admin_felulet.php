@@ -11,6 +11,20 @@ if (!isset($_SESSION['felhasznalo_id']) || $_SESSION['jog_szint'] != 1) {
 $message = "";
 
 // Kategóriák lekérdezése
+
+$kategoriak = adatokLekerdezese("SELECT id, kategoria_nev FROM kategoria");
+if (!is_array($kategoriak)) {
+    $message = "Hiba a kategóriák lekérdezése során: $kategoriak";
+}
+
+// Ételek lekérdezése
+$etelek = adatokLekerdezese("SELECT id, nev FROM etel");
+if (!is_array($etelek)) {
+    $message = "Hiba az ételek lekérdezése során: $etelek";
+}
+
+// nemfix
+
 $kategoriak = adatokLekerdezese("SELECT id, kategoria_nev FROM kategoria");
 if (!is_array($kategoriak)) {
     $message = "Hiba a kategóriák lekérdezése során: $kategoriak";
@@ -119,9 +133,6 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Admin Felület</title>
     <link rel="stylesheet" href="../css/style.css">
-    <link rel="stylesheet" href="../css/navbar.css">
-    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/css/bootstrap.min.css" rel="stylesheet" integrity="sha384-QWTKZyjpPEjISv5WaRU9OFeRpok6YctnYmDr5pNlyT2bRjXh0JMhjY6hW+ALEwIH" crossorigin="anonymous">
-    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/js/bootstrap.bundle.min.js" integrity="sha384-YvpcrYf0tY3lHB60NNkmXc5s9fDVZLESaAA55NDzOxhy9GkcIdslK1eN7N6jIeHz" crossorigin="anonymous"></script>
     <link rel="stylesheet" href="../css/admin_felulet.css">
 </head>
 <body>
@@ -203,7 +214,14 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
             <!-- Szerkesztés -->
             <div id="edit-form" class="form-section" style="display:none;">
                 <h3>Szerkesztés</h3>
-                <input type="number" name="edit_etel" placeholder="Étel ID" class="form-control mb-2" data-required>
+                <select name="edit_etel" class="form-select mb-2" data-required>
+                    <option value="">Válassz ételt</option>
+                    <?php foreach ($etelek as $etel): ?>
+                        <option value="<?= htmlspecialchars($etel['id']) ?>">
+                            <?= htmlspecialchars($etel['nev']) ?>
+                        </option>
+                    <?php endforeach; ?>
+                </select>
                 <input type="text" name="edit_nev" placeholder="Név" class="form-control mb-2">
                 <input type="number" name="edit_egyseg_ar" placeholder="Egységár" class="form-control mb-2">
                 <textarea name="edit_leiras" placeholder="Leírás" class="form-control mb-2"></textarea>
@@ -217,18 +235,24 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
                 </select>
                 <input type="file" name="edit_kepek_url" accept="image/*" class="form-control mb-2">
                 <button type="submit" class="btn btn-primary">Szerkesztés</button>
-                <p style="display:inline"><a style="float:right" href="kezdolap.php">Vissza a kezdőlapra</a></p>
-
             </div>
+
 
             <!-- Törlés -->
+
             <div id="delete-form" class="form-section" style="display:none;">
                 <h3>Törlés</h3>
-                <input type="number" name="delete_etel" placeholder="Étel ID" class="form-control mb-2" data-required>
+                <select name="delete_etel" class="form-select mb-2" data-required>
+                    <option value="">Válassz ételt</option>
+                    <?php foreach ($etelek as $etel): ?>
+                        <option value="<?= htmlspecialchars($etel['id']) ?>">
+                            <?= htmlspecialchars($etel['nev']) ?>
+                        </option>
+                    <?php endforeach; ?>
+                </select>
                 <button type="submit" class="btn btn-danger">Törlés</button>
-                <p style="display:inline"><a style="float:right" href="kezdolap.php">Vissza a kezdőlapra</a></p>
-                
             </div>
+
 
         </form>
     </div>
@@ -252,9 +276,13 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
             inputs.forEach(input => input.setAttribute('required', 'required'));
         }
     });
+
+
     </script>
 
 
+<link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/css/bootstrap.min.css" rel="stylesheet" integrity="sha384-QWTKZyjpPEjISv5WaRU9OFeRpok6YctnYmDr5pNlyT2bRjXh0JMhjY6hW+ALEwIH" crossorigin="anonymous">
+<script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/js/bootstrap.bundle.min.js" integrity="sha384-YvpcrYf0tY3lHB60NNkmXc5s9fDVZLESaAA55NDzOxhy9GkcIdslK1eN7N6jIeHz" crossorigin="anonymous"></script>
     <script src="../js/navbar.js"></script>
 </body>
 </html>
