@@ -61,51 +61,55 @@
 </div>
     
     
+<!-- Bejelentkezés form -->
+<div class="container">
+    <h2>Bejelentkezés</h2>
+    <form id="loginForm" method="POST">
+        <label for="username">Felhasználónév:</label>
+        <input type="text" name="username" id="username" required>
 
-    <!-- Bejelentkezés form -->
-    <div class="container">
-        <h2>Bejelentkezés</h2>
-        <form id="loginForm" method="POST">
-            <label for="username">Felhasználónév:</label>
-            <input type="text" name="username" id="username" required>
+        <label for="password">Jelszó:</label>
+        <input type="password" name="password" id="password" required>
 
-            <label for="password">Jelszó:</label>
-            <input type="password" name="password" id="password" required>
+        <div class="g-recaptcha" data-sitekey="6LeLQ3wqAAAAAHrRYE5lONuFxNYZOUmtENqlcgSf"></div><br>
 
-            <div class="g-recaptcha" data-sitekey="6LeLQ3wqAAAAAHrRYE5lONuFxNYZOUmtENqlcgSf"></div><br>
+        <div id="errorContainer" style="color: red; margin-top: 10px;"></div>
 
-            <button type="submit">Bejelentkezés</button>
-        </form>
-        <p>Nincs fiókod? <a href="regisztracio.php">Regisztrálj most!</a></p>
-    </div>
+        <button type="submit">Bejelentkezés</button>
+    </form>
+    <p>Nincs fiókod? <a href="regisztracio.php">Regisztrálj most!</a></p>
+</div>
 
-    <!-- JavaScript for error handling -->
-    <script>
-        document.getElementById('loginForm').addEventListener('submit', async function (event) {
-            event.preventDefault(); // Ne frissítse az oldalt
+<!-- JavaScript for error handling -->
+<script>
+    document.getElementById('loginForm').addEventListener('submit', async function (event) {
+        event.preventDefault(); // Ne frissítse az oldalt
 
-            const formData = new FormData(this);
-            const response = await fetch('', {
-                method: 'POST',
-                body: formData
-            });
+        const errorContainer = document.getElementById('errorContainer');
+        errorContainer.textContent = ""; // Hibák törlése
 
-            const text = await response.text();
-            const parser = new DOMParser();
-            const doc = parser.parseFromString(text, 'text/html');
-            const errorElement = doc.querySelector('.error');
-
-            if (errorElement) {
-                alert(errorElement.textContent.trim());
-            } else {
-                // Sikeres bejelentkezés esetén az oldal átirányítása
-                window.location.href = 'kezdolap.php';
-            }
+        const formData = new FormData(this);
+        const response = await fetch('', {
+            method: 'POST',
+            body: formData
         });
-    </script>
 
-    <!-- PHP Bejelentkezési logika -->
-    <?php
+        const text = await response.text();
+        const parser = new DOMParser();
+        const doc = parser.parseFromString(text, 'text/html');
+        const errorElement = doc.querySelector('.error');
+
+        if (errorElement) {
+            errorContainer.textContent = errorElement.textContent.trim(); // Hibák megjelenítése
+        } else {
+            // Sikeres bejelentkezés esetén az oldal átirányítása
+            window.location.href = 'kezdolap.php';
+        }
+    });
+</script>
+
+<!-- PHP Bejelentkezési logika -->
+<?php
 session_start();
 
 $servername = "localhost";
@@ -143,7 +147,7 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
 
             if (password_verify($jelszo, $hashedPassword)) {
                 // Session változók beállítása
-                $_SESSION["felhasznalo_id"] = $felhasznaloId; // ID a sessionbe
+                $_SESSION["felhasznalo_id"] = $felhasznaloId;
                 $_SESSION["username"] = $dbFelhasznalonev;
                 $_SESSION["jog_szint"] = $dbAdminJogosultsagEllenorzes;
 
@@ -162,6 +166,7 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
 
 $conn->close();
 ?>
+
 
     <!-- Footer -->
     <div class="footer">
