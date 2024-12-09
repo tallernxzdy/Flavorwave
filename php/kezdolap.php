@@ -15,6 +15,8 @@ session_start();
     <link rel="stylesheet" href="../css/style.css">
     <link rel="stylesheet" href="../css/navbar.css">
     <link rel="stylesheet" href="../css/footer.css">
+    <link rel="stylesheet" href="../css/carousel.css">
+
 </head>
 <body>
 
@@ -47,66 +49,62 @@ session_start();
 </nav>
 
 
-
-
-
-
-<div id="carouselExampleCaptions" class="carousel slide" data-bs-ride="carousel" data-bs-interval="3000">
-  <div class="carousel-indicators">
-    <button type="button" data-bs-target="#carouselExampleCaptions" data-bs-slide-to="0" class="active" aria-current="true" aria-label="Slide 1"></button>
-    <button type="button" data-bs-target="#carouselExampleCaptions" data-bs-slide-to="1" aria-label="Slide 2"></button>
-    <button type="button" data-bs-target="#carouselExampleCaptions" data-bs-slide-to="2" aria-label="Slide 3"></button>
-  </div>
-  <div class="carousel-inner">
-    <div class="carousel-item active">
-      <img src="../kepek/pizza2.jpg" class="d-block w-100" alt="First slide">
-      <div class="carousel-caption d-flex align-items-center justify-content-center h-100">
-        <main>
-          <h2>Üdvözöljük a Flavorwave oldalon</h2>
-          <?php if (isset($_SESSION["username"])): ?>
-              <p>Szia, <?php echo htmlspecialchars($_SESSION["username"]); ?>!</p>
-          <?php else: ?>
-              <p>Jelentkezz be vagy regisztrálj a fiókod eléréséhez!</p>
-          <?php endif; ?>
-        </main>
-      </div>
-    </div>
-    <div class="carousel-item">
-      <img src="../kepek/pizza2.jpg" class="d-block w-100" alt="Second slide">
-      <div class="carousel-caption d-flex align-items-center justify-content-center h-100">
-        <main>
-          <h2>Üdvözöljük a Flavorwave oldalon</h2>
-          <?php if (isset($_SESSION["username"])): ?>
-              <p>Szia, <?php echo htmlspecialchars($_SESSION["username"]); ?>!</p>
-          <?php else: ?>
-              <p>Jelentkezz be vagy regisztrálj a fiókod eléréséhez!</p>
-          <?php endif; ?>
-        </main>
-      </div>
-    </div>
-    <div class="carousel-item">
-      <img src="../kepek/pizza3.jpg" class="d-block w-100" alt="Third slide">
-      <div class="carousel-caption d-flex align-items-center justify-content-center h-100">
-        <main>
-          <h2>Üdvözöljük a Flavorwave oldalon</h2>
-          <?php if (isset($_SESSION["username"])): ?>
-              <p>Szia, <?php echo htmlspecialchars($_SESSION["username"]); ?>!</p>
-          <?php else: ?>
-              <p>Jelentkezz be vagy regisztrálj a fiókod eléréséhez!</p>
-          <?php endif; ?>
-        </main>
-      </div>
-    </div>
-  </div>
-  <button class="carousel-control-prev" type="button" data-bs-target="#carouselExampleCaptions" data-bs-slide="prev">
-    <span class="carousel-control-prev-icon" aria-hidden="true"></span>
-    <span class="visually-hidden">Previous</span>
-  </button>
-  <button class="carousel-control-next" type="button" data-bs-target="#carouselExampleCaptions" data-bs-slide="next">
-    <span class="carousel-control-next-icon" aria-hidden="true"></span>
-    <span class="visually-hidden">Next</span>
-  </button>
+<div class="main-content">
+  <h2>Üdvözöljük a Flavorwave oldalon</h2>
+  <?php if (isset($_SESSION["username"])): ?>
+    <p>Szia, <?php echo htmlspecialchars($_SESSION["username"]); ?>!</p>
+  <?php else: ?>
+    <p>Jelentkezz be vagy regisztrálj a fiókod eléréséhez!</p>
+  <?php endif; ?>
 </div>
+
+
+<div class="slider">
+  <input type="radio" name="toggle" id="btn-1" checked>
+  <input type="radio" name="toggle" id="btn-2">
+  <input type="radio" name="toggle" id="btn-3">
+
+  <div class="slider-controls">
+    <label for="btn-1"></label>
+    <label for="btn-2"></label>
+    <label for="btn-3"></label>
+  </div>
+
+  <ul class="slides">
+    <li class="slide">
+      <div class="slide-content">
+        <h2 class="slide-title">Slide #1</h2>
+        <p class="slide-text">Lorem ipsum dolor sit amet consectetur adipisicing elit. Quaerat dignissimos commodi eos totam perferendis possimus dolorem, deleniti vitae harum? Enim.</p>
+        <a href="#" class="slide-link">Learn more</a>
+      </div>
+      <p class="slide-image">
+        <img src="../kepek/pizza2.jpg" alt="stuff" width="320" height="240">
+      </p>
+    </li>
+    <li class="slide">
+      <div class="slide-content">
+        <h2 class="slide-title">Slide #2</h2>
+        <p class="slide-text">Nisi ratione magni ea quis animi incidunt velit voluptate dolorem enim possimus, nam provident excepturi ipsam nihil molestiae minus delectus!</p>
+        <a href="#" class="slide-link">Amazing deal</a>
+      </div>
+      <p class="slide-image">
+        <img src="../kepek/pizza2.jpg" alt="stuff" width="320" height="240">
+      </p>
+    </li>
+    <li class="slide">
+      <div class="slide-content">
+        <h2 class="slide-title">Slide #3</h2>
+        <p class="slide-text">Quisquam quod ut quasi, vero obcaecati laudantium asperiores corporis ad atque. Expedita fugit dicta maxime vel doloribus sequi, facilis dignissimos.</p>
+        <a href="#" class="slide-link">Get started</a>
+      </div>
+      <p class="slide-image">
+        <img src="../kepek/pizza2.jpg" alt="stuff" width="320" height="240">
+      </p>
+    </li>
+  </ul>
+</div>
+
+
 
     <!-- Footer -->
     <footer class="footer">

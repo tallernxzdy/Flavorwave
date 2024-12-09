@@ -20,3 +20,29 @@ body {
 a {
     text-decoration: none;
 }
+
+/* Központi tartalom stílusa */
+.main-content {
+    flex: 1; /* Kitölti a helyet a header és footer között */
+    display: flex;
+    flex-direction: column;
+    align-items: center; /* Vízszintes középre igazítás */
+    justify-content: center; /* Függőleges középre igazítás */
+    text-align: center; /* Szöveg középre igazítása */
+    padding: 20px;
+}
+
+/* Fejléc stílus */
+.main-content h2 {
+    font-size: 2rem; /* Nagyobb betűméret */
+    margin-bottom: 15px;
+    color: #333333; /* Alapszínek */
+}
+
+/* Bekezdés stílus */
+.main-content p {
+    font-size: 1.2rem; /* Közepes betűméret */
+    color: #555555; /* Halvány szöveg szín */
+    margin: 10px 0;
+}
+
