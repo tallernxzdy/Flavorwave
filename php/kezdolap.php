@@ -11,6 +11,7 @@ session_start();
 
     <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/css/bootstrap.min.css" rel="stylesheet">
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.15.4/css/all.min.css">
+    <link rel="icon" href="../kepek/logo.png" type="image/png">
     <title>FlavorWave</title>
     <link rel="stylesheet" href="../css/style.css">
     <link rel="stylesheet" href="../css/navbar.css">
@@ -107,29 +108,24 @@ session_start();
 
 
     <!-- Footer -->
-    <footer class="footer">
-        <div class="footer-container">
-            <!-- Footer linkek -->
-            <ul class="footer-links">
-                <li><a href="rolunk.php">Rólunk</a></li>
-                <li><a href="../html/kapcsolatok.html">Kapcsolat</a></li>
-                <li><a href="../html/adatvedelem.html">Adatvédelem</a></li>
-            </ul>
-
-            <!-- Social media ikonok -->
-            <div class="footer-socials">
-                <a href="#"><i class="fab fa-facebook"></i></a>
-                <a href="#"><i class="fab fa-instagram"></i></a>
-                <a href="#"><i class="fab fa-twitter"></i></a>
-                <a href="#"><i class="fab fa-youtube"></i></a>
-            </div>
-
-            <!-- Copyright rész -->
-            <div class="footer-copy">
-                &copy; 2024 FlavorWave - Minden jog fenntartva.
-            </div>
+    <div class="footer">
+    <div class="footer-container">
+        <ul class="footer-links">
+            <li><a href="rolunk.php">Rólunk</a></li>
+            <li><a href="../html/kapcsolatok.html">Kapcsolat</a></li>
+            <li><a href="../html/adatvedelem.html">Adatvédelem</a></li>
+        </ul>
+        <div class="footer-socials">
+            <a href="#"><i class="fab fa-facebook"></i></a>
+            <a href="#"><i class="fab fa-instagram"></i></a>
+            <a href="#"><i class="fab fa-twitter"></i></a>
+            <a href="#"><i class="fab fa-youtube"></i></a>
         </div>
-    </footer>
+        <div class="footer-copy">
+            &copy; 2024 FlavorWave - Minden jog fenntartva.
+        </div>
+    </div>
+</div>
     <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/js/bootstrap.bundle.min.js"></script>
     <script src="../js/navbar.js"></script>
 </body>

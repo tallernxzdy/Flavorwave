@@ -47,7 +47,7 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
                 $uzenet = "<p class='error'>Hibás jelszó vagy felhasználónév!</p>";
             }
         } else {
-            $uzenet = "<p class='error'>Nincs ilyen névvel rendelkező felhasználó</p>";
+            $uzenet = "<p class='error'>Nincs ilyen névvel rendelkező felhasználó!</p>";
         }
 
         $stmt->close();
@@ -63,6 +63,7 @@ $conn->close();
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <meta http-equiv="X-UA-Compatible" content="ie=edge" />
+    <link rel="icon" href="../kepek/logo.png" type="image/png">
     <title>FlavorWave | Bejelentkezés</title>
     <script src="https://www.google.com/recaptcha/api.js?hl=hu" async defer></script>
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.15.4/css/all.min.css">
