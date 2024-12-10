@@ -97,12 +97,13 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
     
         // Adatbázis frissítés
         $muvelet = "UPDATE etel SET nev = ?, egyseg_ar = ?, leiras = ?, kategoria_id = ? $kep_url_sql WHERE id = ?";
-        $parameterek = ['ssssi', $nev, $egyseg_ar, $leiras, $kategoria_id];
+        $parameterek = ['sisi', $nev, $egyseg_ar, $leiras, $kategoria_id];
         
-        if ($kep_url_sql) {
+        if ($kep_url_sql != "") {
             $parameterek[0] .= 's'; // Típus stringhez hozzáadunk egy 's'-t
-            $parameterek[] = $kep_url;
+            array_push($parameterek, $kep_url);
         }
+        $parameterek[0] .= "i";
         $parameterek[] = $id; // Az ID hozzáadása a végén
         $result = adatokValtoztatasa($muvelet, $parameterek);
         $message = $result;
@@ -133,13 +134,17 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Admin Felület</title>
     <link rel="stylesheet" href="../css/style.css">
+    <link rel="stylesheet" href="../css/navbar.css">
     <link rel="stylesheet" href="../css/admin_felulet.css">
 </head>
 <body>
 
     <nav>
     <div class="logo">
-        <a href="kezdolap.php" class="logo">🌊 Flavorwave</a>
+        <a href="kezdolap.php" class="logo">
+        <img src="../kepek/logo.png" alt="Flavorwave logó" class="logo-img">
+        <h1>FlavorWave</h1>
+        </a>
     </div>
     <ul>
         <li><a href="menu.php">Menü</a></li>
@@ -176,6 +181,7 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
         <?php endif; ?>
     </ul>
     </div>
+
 
     <div class="container">
         <h1>Admin Felület</h1>
@@ -281,8 +287,8 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
     </script>
 
 
-<link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/css/bootstrap.min.css" rel="stylesheet" integrity="sha384-QWTKZyjpPEjISv5WaRU9OFeRpok6YctnYmDr5pNlyT2bRjXh0JMhjY6hW+ALEwIH" crossorigin="anonymous">
-<script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/js/bootstrap.bundle.min.js" integrity="sha384-YvpcrYf0tY3lHB60NNkmXc5s9fDVZLESaAA55NDzOxhy9GkcIdslK1eN7N6jIeHz" crossorigin="anonymous"></script>
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/css/bootstrap.min.css" rel="stylesheet" integrity="sha384-QWTKZyjpPEjISv5WaRU9OFeRpok6YctnYmDr5pNlyT2bRjXh0JMhjY6hW+ALEwIH" crossorigin="anonymous">
+    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/js/bootstrap.bundle.min.js" integrity="sha384-YvpcrYf0tY3lHB60NNkmXc5s9fDVZLESaAA55NDzOxhy9GkcIdslK1eN7N6jIeHz" crossorigin="anonymous"></script>
     <script src="../js/navbar.js"></script>
 </body>
 </html>

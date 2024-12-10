@@ -1,9 +1,24 @@
-
-body{
-    background-color: #F1F8E9;
+/* Színek definiálása az egyszerűbb eléréshez */
+:root {
+    --hatter_szin_alap: #f9f2ea; /* Test háttérszíne */
+    --hamburger_szin: #333; /* Hamburger menü színe */
+    --lenyilo_szin_alap: #ffffff; /* Dropdown menü háttérszíne */
+    --lenyilo_szin_keret: #ccc; /* Dropdown menü keret színe */
+    --lenyilo_szin_hover: #f1f1f1; /* Dropdown menü hover színe */
+    --admin_szin_hatter: #f9f9f9; /* Admin felület háttérszíne */
+    --admin_szin_keret: #ccc; /* Admin felület keret színe */
+    --gomb_szin_alap: #007bff; /* Elsődleges gomb háttérszíne */
+    --gomb_szin_hover: #0056b3; /* Elsődleges gomb hover színe */
+    --gomb_szin_mellek: #6c757d; /* Másodlagos gomb háttérszíne */
+    --gomb_szin_mellek_hover: #5a6268; /* Másodlagos gomb hover színe */
 }
 
+/* Test háttérszín */
+html body {
+    background-color: var(--hatter_szin_alap);
+}
 
+/* Hamburger menü stílusai */
 .hamburger-menu {
     display: none;
     position: absolute;
@@ -22,16 +37,17 @@ body{
 .hamburger-menu span {
     display: block;
     height: 4px;
-    background-color: #333;
+    background-color: var(--hamburger_szin);
     border-radius: 2px;
 }
 
+/* Dropdown menü stílusai */
 .dropdown-menu {
     position: absolute;
     top: 60px;
     right: 1rem;
-    background-color: #ffffff;
-    border: 1px solid #ccc;
+    background-color: var(--lenyilo_szin_alap);
+    border: 1px solid var(--lenyilo_szin_keret);
     border-radius: 5px;
     display: none;
     flex-direction: column;
@@ -41,14 +57,14 @@ body{
 
 .dropdown-menu a {
     padding: 0.8em 1.2em;
-    color: #333;
+    color: var(--hamburger_szin);
     text-decoration: none;
     font-weight: bold;
     transition: background-color 0.3s;
 }
 
 .dropdown-menu a:hover {
-    background-color: #f1f1f1;
+    background-color: var(--lenyilo_szin_hover);
 }
 
 /* Rejtett elem osztály */
@@ -76,9 +92,9 @@ body{
     max-width: 800px;
     margin: 2rem auto;
     padding: 1.5rem;
-    border: 1px solid #ccc;
+    border: 1px solid var(--admin_szin_keret);
     border-radius: 8px;
-    background-color: #f9f9f9;
+    background-color: var(--admin_szin_hatter);
     box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
 }
 
@@ -102,7 +118,7 @@ body{
 .form-group textarea {
     width: 100%;
     padding: 0.5rem;
-    border: 1px solid #ccc;
+    border: 1px solid var(--admin_szin_keret);
     border-radius: 5px;
     font-size: 1rem;
 }
@@ -119,24 +135,20 @@ body{
     cursor: pointer;
     border: none;
     border-radius: 5px;
-    background-color: #007bff;
+    background-color: var(--gomb_szin_alap);
     color: #fff;
     transition: background-color 0.3s;
 }
 
 .form-buttons .btn:hover {
-    background-color: #0056b3;
+    background-color: var(--gomb_szin_hover);
 }
 
 .form-buttons .btn-secondary {
-    background-color: #6c757d;
+    background-color: var(--gomb_szin_mellek);
     color: #fff;
-
 }
 
 .form-buttons .btn-secondary:hover {
-    background-color: #5a6268;
+    background-color: var(--gomb_szin_mellek_hover);
 }
-
-
-
