@@ -44,10 +44,10 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
                 header('Location: kezdolap.php');
                 exit();
             } else {
-                $uzenet = "<p class='error'>Hibás jelszó!</p>";
+                $uzenet = "<p class='error'>Hibás jelszó vagy felhasználónév!</p>";
             }
         } else {
-            $uzenet = "<p class='error'>Nem található felhasználó!</p>";
+            $uzenet = "<p class='error'>Nincs ilyen névvel rendelkező felhasználó</p>";
         }
 
         $stmt->close();
@@ -63,7 +63,7 @@ $conn->close();
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <meta http-equiv="X-UA-Compatible" content="ie=edge" />
-    <title>Bejelentkezés</title>
+    <title>FlavorWave | Bejelentkezés</title>
     <script src="https://www.google.com/recaptcha/api.js?hl=hu" async defer></script>
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.15.4/css/all.min.css">
     <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/css/bootstrap.min.css" rel="stylesheet">
@@ -145,8 +145,8 @@ $conn->close();
         <!-- Footer linkek -->
         <ul class="footer-links">
             <li><a href="rolunk.php">Rólunk</a></li>
-            <li><a href="kapcsolat.php">Kapcsolat</a></li>
-            <li><a href="adatvedelem.php">Adatvédelem</a></li>
+            <li><a href="../html/kapcsolatok.html">Kapcsolat</a></li>
+            <li><a href="../html/adatvedelem.html">Adatvédelem</a></li>
         </ul>
 
         <!-- Social media ikonok -->
@@ -159,7 +159,7 @@ $conn->close();
 
         <!-- Copyright rész -->
         <div class="footer-copy">
-            &copy; 2024 FlavorWave - Minden jog fenntartva. | <a href="aszf.php">ÁSZF</a>
+            &copy; 2024 FlavorWave - Minden jog fenntartva.
         </div>
     </div>
 </div>

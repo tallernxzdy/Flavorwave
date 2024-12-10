@@ -3,7 +3,7 @@
     margin-top: auto; /* Dinamikus helykitöltés */
     width: 100%;
     
-    background-color: red; /* Háttérszín piros */
+    background-color: rgb(206, 22, 22); /* Háttérszín piros */
     color: white; /* Betűszín fehér */
     padding: 2em 0; /* Nagyobb padding */
     text-align: center;

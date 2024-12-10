@@ -1,50 +1,95 @@
+/* Alap stílusok */
 body {
-    font-family: "Segoe UI", Tahoma, Geneva, Verdana, sans-serif;
-    line-height: 1.8;
+    font-family: Arial, sans-serif;
     margin: 0;
     padding: 0;
-    background-color: #f5f5f5;
+    background-color: #f4f4f9;
     color: #333;
 }
-header {
-    background-color: #e60000;
+
+/* Fejléc */
+.header {
+    background-color: #b71c1c;
     color: white;
-    padding: 20px;
+    padding: 20px 0;
     text-align: center;
 }
-header h1 {
+
+.page-title {
     margin: 0;
-    font-size: 2.8rem;
+    font-size: 2rem;
+    font-weight: bold;
 }
-main {
-    max-width: 900px;
-    margin: 30px auto;
-    background: white;
-    padding: 25px;
+
+/* Törzs */
+.content {
+    padding: 30px;
+    max-width: 1000px;
+    margin: 0 auto;
+    background-color: white;
     border-radius: 8px;
     box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
 }
-h2, h3 {
-    color: #e60000;
-    margin-top: 20px;
+
+/* Szegmensek */
+.section {
+    margin-bottom: 30px;
 }
-ul {
-    padding-left: 20px;
-}
-li {
+
+.section h2 {
+    font-size: 1.5rem;
     margin-bottom: 10px;
 }
-p {
-    text-align: justify;
+
+.section h3 {
+    font-size: 1.2rem;
+    margin-top: 10px;
+    margin-bottom: 5px;
+    color: #333;
 }
-footer {
+
+.section ul {
+    list-style-type: none;
+    padding-left: 20px;
+}
+
+.section ul li {
+    margin-bottom: 8px;
+}
+
+/* Bevezetés szakasz */
+.intro p {
+    font-size: 1rem;
+    line-height: 1.6;
+}
+
+/* Lábléc */
+.footer {
+    background-color: #b71c1c;
+    color: white;
+    padding: 15px 0;
     text-align: center;
-    margin-top: 20px;
-    padding: 15px;
-    background-color: #e60000;
-    color: white;
+    position: relative;
+    bottom: 0;
+    width: 100%;
 }
-footer a {
+
+.footer a {
     color: white;
+    text-decoration: none;
+}
+
+.footer a:hover {
     text-decoration: underline;
+}
+
+/* Reszponzivitás */
+@media (max-width: 768px) {
+    .content {
+        padding: 20px;
+    }
+
+    .page-title {
+        font-size: 1.5rem;
+    }
 }

@@ -46,7 +46,7 @@ nav .logo a .logo-img {
 nav .logo h1 {
   font-size: 1.4rem; /* Nagyobb betűméret */
   font-weight: bold; /* Félkövér szöveg */
-  color: red; /* Piros szöveg */
+  color: rgb(206, 22, 22); /* Piros szöveg */
 }
 
 nav ul {

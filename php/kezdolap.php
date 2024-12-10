@@ -11,7 +11,7 @@ session_start();
 
     <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/css/bootstrap.min.css" rel="stylesheet">
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.15.4/css/all.min.css">
-    <title>Flavorwave</title>
+    <title>FlavorWave</title>
     <link rel="stylesheet" href="../css/style.css">
     <link rel="stylesheet" href="../css/navbar.css">
     <link rel="stylesheet" href="../css/footer.css">
@@ -112,7 +112,7 @@ session_start();
             <!-- Footer linkek -->
             <ul class="footer-links">
                 <li><a href="rolunk.php">Rólunk</a></li>
-                <li><a href="kapcsolat.php">Kapcsolat</a></li>
+                <li><a href="../html/kapcsolatok.html">Kapcsolat</a></li>
                 <li><a href="../html/adatvedelem.html">Adatvédelem</a></li>
             </ul>
 
@@ -126,7 +126,7 @@ session_start();
 
             <!-- Copyright rész -->
             <div class="footer-copy">
-                &copy; 2024 FlavorWave - Minden jog fenntartva. | <a href="aszf.php">ÁSZF</a>
+                &copy; 2024 FlavorWave - Minden jog fenntartva.
             </div>
         </div>
     </footer>
