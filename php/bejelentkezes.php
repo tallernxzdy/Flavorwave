@@ -85,6 +85,7 @@ $conn->close();
     </a>
   </div>
   <ul>
+  <li><a href="kategoria.php">Kategóriák</a></li>
     <li><a href="menu.php">Menü</a></li>
     <?php if (isset($_SESSION["jog_szint"]) && $_SESSION["jog_szint"] == 1): ?>
       <li><a href="admin_felulet.php">Admin felület</a></li>
@@ -106,6 +107,7 @@ $conn->close();
 
 <div class="menubar">
   <ul>
+    <li><a href="kategoria.php">Kategóriák</a></li>
     <li><a href="menu.php">Menü</a></li>
     <?php if (isset($_SESSION["jog_szint"]) && $_SESSION["jog_szint"] == 1): ?>
       <li><a href="admin_felulet.php">Admin felület</a></li>

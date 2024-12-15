@@ -1,8 +1,25 @@
+html, body {
+    height: 100%; /* Az oldal teljes magasságának kitöltése */
+    margin: 0; /* Margók eltávolítása */
+    display: flex;
+    flex-direction: column; /* Függőleges elrendezés */
+}
+
+.content-wrapper {
+    display: flex;
+    flex-direction: column;
+    min-height: 100vh; /* Teljes böngészőmagasságot lefedi */
+}
+
+main {
+    flex: 1; /* Dinamikusan kitölti a helyet a footer felett */
+    padding: 2em; /* Példa tartalomhoz padding */
+}
+
 /* Footer */
 .footer {
     margin-top: auto; /* Dinamikus helykitöltés */
     width: 100%;
-    
     background-color: rgb(206, 22, 22); /* Háttérszín piros */
     color: white; /* Betűszín fehér */
     padding: 2em 0; /* Nagyobb padding */
@@ -65,10 +82,6 @@
 
 /* Reszponzív változtatások */
 @media (max-width: 768px) {
-    .navbar-container {
-        padding: 0 1em;
-    }
-
     .footer-container {
         padding: 0 1em;
     }
