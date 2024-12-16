@@ -61,43 +61,43 @@
     <div class="menu flex-grid">
         <div class="flex-grid__row justify-content-center">
             <div class="flex-col-6 flex-col-md-4 flex-col-lg-3">
-                <a href="" class="menu__option">
+                <a href="hamburger.php" class="menu__option">
                     <img src="../kepek/pizza2.jpg" alt="Hamburgerek">
                     <h2>Hamburgerek</h2>
                 </a>
             </div>
             <div class="flex-col-6 flex-col-md-4 flex-col-lg-3">
-                <a href="" class="menu__option">
+                <a href="pizza.php" class="menu__option">
                     <img src="../kepek/pizza2.jpg" alt="Hamburgerek">
                     <h2>Pizzak</h2>
                 </a>
             </div>
             <div class="flex-col-6 flex-col-md-4 flex-col-lg-3">
-                <a href="" class="menu__option">
+                <a href="hotdog.php" class="menu__option">
                     <img src="../kepek/pizza2.jpg" alt="Hamburgerek">
                     <h2>Hot-dogok</h2>
                 </a>
             </div>
             <div class="flex-col-6 flex-col-md-4 flex-col-lg-3">
-                <a href="" class="menu__option">
+                <a href="koretek.php" class="menu__option">
                     <img src="../kepek/pizza2.jpg" alt="Hamburgerek">
                     <h2>Köretek</h2>
                 </a>
             </div>
             <div class="flex-col-6 flex-col-md-4 flex-col-lg-3">
-                <a href="" class="menu__option">
+                <a href="desszertek.php" class="menu__option">
                     <img src="../kepek/pizza2.jpg" alt="Hamburgerek">
                     <h2>Desszertek</h2>
                 </a>
             </div>
             <div class="flex-col-6 flex-col-md-4 flex-col-lg-3">
-                <a href="" class="menu__option">
+                <a href="shakek.php" class="menu__option">
                     <img src="../kepek/pizza2.jpg" alt="Hamburgerek">
                     <h2>Shakek</h2>
                 </a>
             </div>
             <div class="flex-col-6 flex-col-md-4 flex-col-lg-3">
-                <a href="" class="menu__option">
+                <a href="italok.php" class="menu__option">
                     <img src="../kepek/pizza2.jpg" alt="Hamburgerek">
                     <h2>Italok</h2>
                 </a>
