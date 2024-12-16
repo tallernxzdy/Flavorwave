@@ -129,7 +129,7 @@ session_start();
     <div class="footer">
     <div class="footer-container">
         <ul class="footer-links">
-            <li><a href="rolunk.php">Rólunk</a></li>
+            <li><a href="../html/rolunk.html">Rólunk</a></li>
             <li><a href="../html/kapcsolatok.html">Kapcsolat</a></li>
             <li><a href="../html/adatvedelem.html">Adatvédelem</a></li>
         </ul>
