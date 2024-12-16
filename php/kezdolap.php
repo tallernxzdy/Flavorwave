@@ -17,6 +17,7 @@ session_start();
     <link rel="stylesheet" href="../css/navbar.css">
     <link rel="stylesheet" href="../css/footer.css">
     <link rel="stylesheet" href="../css/carousel.css">
+    <link rel="stylesheet" href="../css/parallax.css">
 
 </head>
 <body>
@@ -49,6 +50,27 @@ session_start();
     <span class="line"></span>
   </div>
 </nav>
+
+
+
+<!-- gördülő kép -->
+<div class="parallax" id="parallax"></div>
+<div class="main-content">
+  <h2>Üdvözöljük a Flavorwave oldalon</h2>
+  <p>Itt találhatod a legjobb ételeket és ajánlatokat!</p>
+</div>
+
+
+<script>
+   document.addEventListener("scroll", function () {
+    const parallax = document.querySelector(".parallax");
+    const scrollOffset = window.pageYOffset; // Az aktuális görgetési pozíció
+    parallax.style.backgroundPositionY = `${scrollOffset * -0.25}px`; // Lassított mozgás
+    });
+
+</script>
+
+
 
 <div class="menubar">
   <ul>
@@ -146,5 +168,7 @@ session_start();
 </div>
     <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/js/bootstrap.bundle.min.js"></script>
     <script src="../js/navbar.js"></script>
+
+
 </body>
 </html>
