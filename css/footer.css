@@ -1,32 +1,35 @@
+/* Az alapmagasság beállítása az oldal teljes magasságára */
 html, body {
-    height: 100%; /* Az oldal teljes magasságának kitöltése */
-    margin: 0; /* Margók eltávolítása */
+    height: 100%; /* A teljes oldal magasság */
+    margin: 0; /* Nincs margó */
     display: flex;
     flex-direction: column; /* Függőleges elrendezés */
 }
 
+/* Tartalom konténer */
 .content-wrapper {
     display: flex;
     flex-direction: column;
-    min-height: 100vh; /* Teljes böngészőmagasságot lefedi */
+    flex: 1; /* Kitölti a rendelkezésre álló helyet */
 }
 
+/* Fő tartalom */
 main {
     flex: 1; /* Dinamikusan kitölti a helyet a footer felett */
-    padding: 2em; /* Példa tartalomhoz padding */
+    padding: 1em; /* Tartalomhoz padding */
 }
 
-/* Footer */
+/* Footer stílusok */
 .footer {
-    margin-top: auto; /* Dinamikus helykitöltés */
-    width: 100%;
     background-color: rgb(206, 22, 22); /* Háttérszín piros */
-    color: white; /* Betűszín fehér */
-    padding: 2em 0; /* Nagyobb padding */
-    text-align: center;
-    box-shadow: 0 -4px 12px rgba(0, 0, 0, 0.15);
+    color: white; /* Fehér szöveg */
+    padding: 1.5em 0; /* Függőleges padding */
+    text-align: center; /* Középre igazított tartalom */
+    box-shadow: 0 -4px 12px rgba(0, 0, 0, 0.15); /* Árnyék */
+    width: 100%; /* Szélesség a teljes képernyőhöz igazodik */
 }
 
+/* Footer belső konténer */
 .footer-container {
     display: flex;
     flex-direction: column;
@@ -35,10 +38,12 @@ main {
     margin: 0 auto;
 }
 
+/* Footer linkek */
 .footer-links {
     list-style-type: none;
     display: flex;
-    gap: 2em;
+    gap: 1em;
+    flex-wrap: wrap; /* Reszponzív sor törés */
     justify-content: center;
     margin-bottom: 1em;
 }
@@ -51,47 +56,44 @@ main {
 }
 
 .footer-links li a:hover {
-    color: #00c6ff;
+    color: #00c6ff; /* Hover szín */
 }
 
+/* Közösségi ikonok */
 .footer-socials {
     display: flex;
     gap: 1em;
+    flex-wrap: wrap; /* Ikonok törése kisebb képernyőn */
+    justify-content: center;
     margin-bottom: 1.5em;
 }
 
 .footer-socials i {
-    font-size: 2em;
+    font-size: 1.8em; /* Ikon méret */
     color: white;
     transition: color 0.3s ease;
 }
 
 .footer-socials a:hover i {
-    color: #00c6ff;
+    color: #00c6ff; /* Hover szín */
 }
 
+/* Copyright szöveg */
 .footer-copy {
     text-align: center;
     font-size: 0.9em;
     color: lightgray;
 }
 
-.footer-copy a {
-    color: #00c6ff;
-}
-
-/* Reszponzív változtatások */
+/* Reszponzív beállítások */
 @media (max-width: 768px) {
-    .footer-container {
-        padding: 0 1em;
-    }
-
     .footer-links {
-        flex-direction: column;
+        flex-direction: column; /* Linkek egymás alá kerülnek */
         text-align: center;
     }
 
     .footer-socials {
-        font-size: 1.8em;
+        font-size: 1.5em; /* Kisebb ikonok */
+        justify-content: center;
     }
 }

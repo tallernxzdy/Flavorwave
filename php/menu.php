@@ -161,7 +161,7 @@
         <div class="footer-container">
             <!-- Footer linkek -->
             <ul class="footer-links">
-                <li><a href="rolunk.php">Rólunk</a></li>
+                <li><a href="../html/rolunk.html">Rólunk</a></li>
                 <li><a href="../html/kapcsolat.html">Kapcsolat</a></li>
                 <li><a href="../html/adatvedelem.html">Adatvédelem</a></li>
             </ul>

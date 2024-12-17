@@ -59,57 +59,57 @@
     </div>
     
     <div class="menu flex-grid">
-        <div class="flex-grid__row justify-content-center">
-            <div class="flex-col-6 flex-col-md-4 flex-col-lg-3">
-                <a href="hamburger.php" class="menu__option">
-                    <img src="../kepek/pizza2.jpg" alt="Hamburgerek">
-                    <h2>Hamburgerek</h2>
-                </a>
-            </div>
-            <div class="flex-col-6 flex-col-md-4 flex-col-lg-3">
-                <a href="pizza.php" class="menu__option">
-                    <img src="../kepek/pizza2.jpg" alt="Hamburgerek">
-                    <h2>Pizzak</h2>
-                </a>
-            </div>
-            <div class="flex-col-6 flex-col-md-4 flex-col-lg-3">
-                <a href="hotdog.php" class="menu__option">
-                    <img src="../kepek/pizza2.jpg" alt="Hamburgerek">
-                    <h2>Hot-dogok</h2>
-                </a>
-            </div>
-            <div class="flex-col-6 flex-col-md-4 flex-col-lg-3">
-                <a href="koretek.php" class="menu__option">
-                    <img src="../kepek/pizza2.jpg" alt="Hamburgerek">
-                    <h2>Köretek</h2>
-                </a>
-            </div>
-            <div class="flex-col-6 flex-col-md-4 flex-col-lg-3">
-                <a href="desszertek.php" class="menu__option">
-                    <img src="../kepek/pizza2.jpg" alt="Hamburgerek">
-                    <h2>Desszertek</h2>
-                </a>
-            </div>
-            <div class="flex-col-6 flex-col-md-4 flex-col-lg-3">
-                <a href="shakek.php" class="menu__option">
-                    <img src="../kepek/pizza2.jpg" alt="Hamburgerek">
-                    <h2>Shakek</h2>
-                </a>
-            </div>
-            <div class="flex-col-6 flex-col-md-4 flex-col-lg-3">
-                <a href="italok.php" class="menu__option">
-                    <img src="../kepek/pizza2.jpg" alt="Hamburgerek">
-                    <h2>Italok</h2>
-                </a>
-            </div>
+    <div class="flex-grid__row justify-content-center">
+        <div class="flex-col-6 flex-col-md-4 flex-col-lg-3">
+            <a href="hamburger.php" class="menu__option">
+                <img src="../kepek/pizza2.jpg" alt="Hamburgerek">
+                <h2>Hamburgerek</h2>
+            </a>
+        </div>
+        <div class="flex-col-6 flex-col-md-4 flex-col-lg-3">
+            <a href="pizza.php" class="menu__option">
+                <img src="../kepek/pizza2.jpg" alt="Pizzák">
+                <h2>Pizzák</h2>
+            </a>
+        </div>
+        <div class="flex-col-6 flex-col-md-4 flex-col-lg-3">
+            <a href="hotdog.php" class="menu__option">
+                <img src="../kepek/pizza2.jpg" alt="Hot-dogok">
+                <h2>Hot-dogok</h2>
+            </a>
+        </div>
+        <div class="flex-col-6 flex-col-md-4 flex-col-lg-3">
+            <a href="koretek.php" class="menu__option">
+                <img src="../kepek/pizza2.jpg" alt="Köretek">
+                <h2>Köretek</h2>
+            </a>
+        </div>
+        <div class="flex-col-6 flex-col-md-4 flex-col-lg-3">
+            <a href="desszertek.php" class="menu__option">
+                <img src="../kepek/pizza2.jpg" alt="Desszertek">
+                <h2>Desszertek</h2>
+            </a>
+        </div>
+        <div class="flex-col-6 flex-col-md-4 flex-col-lg-3">
+            <a href="shakek.php" class="menu__option">
+                <img src="../kepek/pizza2.jpg" alt="Shakek">
+                <h2>Shakek</h2>
+            </a>
+        </div>
+        <div class="flex-col-6 flex-col-md-4 flex-col-lg-3">
+            <a href="italok.php" class="menu__option">
+                <img src="../kepek/pizza2.jpg" alt="Italok">
+                <h2>Italok</h2>
+            </a>
         </div>
     </div>
+</div>
 
 
     <div class="footer">
     <div class="footer-container">
         <ul class="footer-links">
-            <li><a href="rolunk.php">Rólunk</a></li>
+            <li><a href="../html/rolunk.html">Rólunk</a></li>
             <li><a href="../html/kapcsolatok.html">Kapcsolat</a></li>
             <li><a href="../html/adatvedelem.html">Adatvédelem</a></li>
         </ul>

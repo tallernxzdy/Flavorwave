@@ -114,43 +114,43 @@ nav ul li a:hover {
 .menubar {
   position: absolute;
   top: 0;
-  left: -60%;
+  left: -60%; /* Balra kisebb szélesség miatt jobban eltolva */
   display: flex;
-  justify-content: center;
+  justify-content: left;
   align-items: flex-start;
-  width: 60%;
+  width: 35%; /* Kisebb szélesség */
   height: 100vh;
-  padding: 20% 0;
-  background: rgba(255, 255, 255);
+  padding: 15% 0; /* Kisebb padding a tartalomhoz */
+  background: rgba(255, 255, 255, 0.9); /* Enyhén áttetsző háttér */
   transition: all 0.5s ease-in;
   z-index: 2;
 }
 
 .active {
-  left: 0;
+  left: 0; /* Az aktív állapotban is kisebb a szélesség, nincs túl széles balra */
   box-shadow: rgba(149, 157, 165, 0.2) 0px 8px 24px;
 }
 
 .menubar ul {
-  padding: 0;
+  padding: 2rem;
   list-style: none;
 }
 
 .menubar ul li {
-  margin-bottom: 32px;
+  margin-bottom: 24px; /* Kisebb margó az elemek között */
 }
 
 .menubar ul li a {
   text-decoration: none;
   color: #000;
-  font-size: 95%;
+  font-size: 90%; /* Kisebb betűméret */
   font-weight: 400;
   padding: 5px 10px;
   border-radius: 5px;
 }
 
 .menubar ul li a:hover {
-  background-color: #f5f5f5;
+  background-color: #f0f0f0; /* Enyhébb háttérszín hover-re */
 }
 
 @media screen and (max-width: 790px) {
@@ -161,3 +161,4 @@ nav ul li a:hover {
     display: none;
   }
 }
+
