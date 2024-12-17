@@ -1,5 +1,5 @@
 .parallax {
-    background-image: url('../kepek/67459f01c55ff-pizza3.jpg'); /* Cseréld a képfájlra */
+    background-image: url('../kepek/pizza3.jpg'); /* Cseréld a képfájlra */
     min-height: 100%; /* Minimum magasságot állíts be */
     height: 70%;
     width: 100%; /* Győződj meg róla, hogy teljes szélességet vesz fel */
@@ -8,4 +8,10 @@
     background-repeat: no-repeat;
     background-size: cover; /* A kép méretének helyes beállítása */
     display: block; /* Biztosítja, hogy rendesen megjelenjen blokkos elemként */
+}
+
+
+.parallax_content>h2{
+    text-align: left;
+    color: #f5e8aa;
 }
