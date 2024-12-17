@@ -71,10 +71,11 @@ session_start();
 
 
 <!-- gördülő kép -->
-<div class="parallax" id="parallax"></div>
-<div class="main-content">
-  <h2>Üdvözöljük a Flavorwave oldalon</h2>
-  <p>Itt találhatod a legjobb ételeket és ajánlatokat!</p>
+<div class="parallax" id="parallax">
+  <div class="parallax_content">
+    <h2>Üdvözöljük a Flavorwave oldalon</h2>
+    <p>Itt találhatod a legjobb ételeket és ajánlatokat!</p>
+  </div>
 </div>
 
 
