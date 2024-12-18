@@ -114,6 +114,22 @@ p a:hover {
     }
 }
 
-
-
+.input-container {
+    position: relative;
+    width: auto;
+  }
+  #password {
+    width: 100%;
+    padding-right: 40px;
+  }
+  .input_img {
+    position: absolute;
+    right: 10px;
+    top: 50%;
+    transform: translateY(-50%);
+    cursor: pointer;
+  }
+  .input_img svg {
+    fill: #333;
+  }
 
