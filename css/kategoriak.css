@@ -1,17 +1,14 @@
-body {
-    font-family: 'Arial', sans-serif;
-    background-color: #F1F8E9;
-}
 
 /* Grid rendszer alapok */
 .flex-grid {
     display: flex;
     flex-wrap: wrap;
-    gap: 0.8em; /* Kisebb térköz a gombok között */
+    gap: 1.2em; /* Gombok közötti térköz */
     justify-content: center; /* Középre igazítja a rácsot */
     padding: 2em; /* Külső távolság a rács körül */
-    align-items: center; /* Függőleges középre helyezés */
-    min-height: 70vh; /* A teljes rács a képernyő közepére tolódik */
+    align-items: flex-start; /* Függőleges elrendezés a tetejére */
+    box-sizing: border-box;
+    height: 100%;
 }
 
 /* Grid sorok */
@@ -19,23 +16,22 @@ body {
     display: flex;
     flex-wrap: wrap;
     justify-content: center;
-    gap: 0.8em; /* Kisebb térköz a sor elemek között */
-    margin-bottom: 2em;
+    gap: 1.2em; /* Sor elemek közötti térköz */
+    margin-bottom: 2em; /* Növeli a távolságot az első és második sor között */
 }
 
-/* Első sor: mindig 4 elem */
+/* Első sor: 4 elem (nagy képernyő) */
 .flex-grid__row:first-of-type .flex-col-md-4 {
     flex: 0 0 22%; /* Négy elem egy sorban */
     max-width: 22%;
 }
 
-/* Második sor: mindig 3 elem */
+/* Második sor: 3 elem (nagy képernyő) */
 .flex-grid__row:nth-of-type(2) .flex-col-md-4 {
     flex: 0 0 28%; /* Három elem egy sorban */
     max-width: 28%;
 }
 
-/* Menü opciók: link szélessége a képhez igazítva */
 /* Menü opciók: link szélessége a képhez igazítva */
 .menu__option {
     display: block;
@@ -43,14 +39,16 @@ body {
     text-decoration: none; /* Link aláhúzás eltávolítása */
     color: #333; /* Alapértelmezett szövegszín */
     transition: transform 0.3s ease, box-shadow 0.3s ease;
-    padding: 0.6em;
+    padding: 1.2em; /* Növelt padding a gombokon */
     background: #f9f9f9;
-    border-radius: 8px;
-    box-shadow: 0 2px 6px rgba(0, 0, 0, 0.1);
-    width: 75%;
-    border: none;
-    overflow: hidden;
+    border-radius: 12px; /* Lekerekített sarkok */
+    box-shadow: 0 2px 10px rgba(0, 0, 0, 0.1);
+    width: 100%;
+    max-width: 250px; /* A gombok maximális szélessége */
+    margin: 0 auto; /* Középre igazítás */
     background-color: #F1F8E9;
+    overflow: hidden;
+    border: none;
 }
 
 /* Kép stílusok: Tartsuk meg a kép szélességét a gombhoz */
@@ -58,13 +56,13 @@ body {
     width: 100%; /* Kép szélessége 100%, hogy a gomb szélességéhez igazodjon */
     height: auto; /* Megőrzi az arányokat */
     border-radius: 8px; /* Lekerekített sarkok */
-    margin-bottom: 0.5em; /* Távolság a cím előtt */
+    margin-bottom: 1em; /* Távolság a cím előtt */
 }
 
 /* Cím stílusok - nagyobb, félkövér és sötétebb szöveg */
 .menu__option h2 {
     margin-top: 0.5em;
-    font-size: 1.2em; /* Nagyobb betűméret */
+    font-size: 1.3em; /* Nagyobb betűméret */
     font-weight: bold; /* Félkövér betűstílus */
     color: #222; /* Sötétebb szöveg színe */
 }
@@ -73,19 +71,54 @@ body {
 .menu__option:hover {
     transform: translateY(-5px); /* Kiemelkedés az egérre */
     box-shadow: 0 8px 16px rgba(0, 0, 0, 0.2); /* Erősebb árnyék */
-    background-color: #F1F8E9;
+    background-color: #c8e6c9; /* Gomb háttérszínének módosítása */
 }
 
 /* Reszponzív viselkedés kisebb képernyőkre */
-@media (max-width: 768px) {
+
+/* Közepes képernyő (tabletek) */
+@media (max-width: 1024px) {
     .flex-col-md-4 {
-        flex: 0 0 40%; /* Kisebb képernyőkön két elem egy sorban */
-        max-width: 40%;
+        flex: 0 0 45%; /* Két elem egy sorban */
+        max-width: 45%;
+    }
+
+    /* Első sor: 2 elem */
+    .flex-grid__row:first-of-type .flex-col-md-4 {
+        flex: 0 0 45%; /* Két elem egy sorban */
+        max-width: 45%;
+    }
+
+    /* Második sor: 2 elem */
+    .flex-grid__row:nth-of-type(2) .flex-col-md-4 {
+        flex: 0 0 45%; /* Két elem egy sorban */
+        max-width: 45%;
     }
 }
 
+/* Kisebb képernyők (mobilok) */
+@media (max-width: 768px) {
+    .flex-col-md-4 {
+        flex: 0 0 48%; /* Két elem egy sorban */
+        max-width: 48%;
+    }
+
+    /* Első sor: 2 elem */
+    .flex-grid__row:first-of-type .flex-col-md-4 {
+        flex: 0 0 48%;
+        max-width: 48%;
+    }
+
+    /* Második sor: 2 elem */
+    .flex-grid__row:nth-of-type(2) .flex-col-md-4 {
+        flex: 0 0 48%;
+        max-width: 48%;
+    }
+}
+
+/* Mobil nézet teljes szélességen */
 @media (max-width: 480px) {
-    .flex-col-6, .flex-col-md-4, .flex-col-lg-3 {
+    .flex-col-6, .flex-col-md-4 {
         flex: 0 0 100%; /* Mobilon teljes szélesség */
         max-width: 100%;
     }
