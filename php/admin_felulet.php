@@ -29,7 +29,10 @@ $kategoriak = adatokLekerdezese("SELECT id, kategoria_nev FROM kategoria");
 if (!is_array($kategoriak)) {
     $message = "Hiba a kategóriák lekérdezése során: $kategoriak";
 }
+if ($_SERVER['REQUEST_METHOD'] === 'GET') {
+    $_SESSION[$message] = "";
 
+}
 // Művelet feldolgozása
 if ($_SERVER['REQUEST_METHOD'] === 'POST') {
     $operation = $_POST['operation'];
@@ -45,24 +48,29 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
         $kep_url = "";
         if (isset($_FILES['kepek_url']['name']) && $_FILES['kepek_url']['name'] !== "") {
             $target_dir = "../kepek/";
-            $uniqueName = uniqid() . '-' . basename($_FILES['kepek_url']['name']);
+            $uniqueName = basename($_FILES['kepek_url']['name']);
             $target_file = $target_dir . $uniqueName;
-
-            if (move_uploaded_file($_FILES['kepek_url']['tmp_name'], $target_file)) {
-                $kep_url = $uniqueName; // Csak a fájl nevét mentjük
-            } else {
-                $message = "Hiba a kép feltöltése során!";
+            if (is_file($target_file)){
+                $message = "Ez a fájl már létezik";
+            }
+            else{
+                if (move_uploaded_file($_FILES['kepek_url']['tmp_name'], $target_file)) {
+                    $kep_url = $uniqueName; // Csak a fájl nevét mentjük
+                } else {
+                    $message = "Hiba a kép feltöltése során!";
+                }
             }
         }
-
+        
         // Adatbázisba mentés
-        if ($kep_url || empty($_FILES['kepek_url']['name'])) {
+        if ($kep_url || !empty($_FILES['kepek_url']['name'])) {
             $muvelet = "INSERT INTO etel (nev, egyseg_ar, leiras, kategoria_id, kep_url) VALUES (?, ?, ?, ?, ?)";
             $parameterek = ['sssis', $nev, $egyseg_ar, $leiras, $kategoria_id, $kep_url];
             $result = adatokValtoztatasa($muvelet, $parameterek);
 
             $message = $result;
         }
+        
     }
 
     // Szerkesztés
