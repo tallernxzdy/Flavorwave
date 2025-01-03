@@ -131,7 +131,6 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
         <li><a href="kijelentkezes.php">Kijelentkezés</a></li>
         <?php else: ?>
         <li><a href="bejelentkezes.php">Bejelentkezés</a></li>
-        <li><a href="regisztracio.php">Regisztráció</a></li>
         <?php endif; ?>
     </ul>
     <div class="hamburger">
@@ -153,7 +152,6 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
         <li><a href="kijelentkezes.php">Kijelentkezés</a></li>
         <?php else: ?>
         <li><a href="bejelentkezes.php">Bejelentkezés</a></li>
-        <li><a href="regisztracio.php">Regisztráció</a></li>
         <?php endif; ?>
     </ul>
 </div>

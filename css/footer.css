@@ -17,6 +17,8 @@ html, body {
 main {
     flex: 1; /* Dinamikusan kitölti a helyet a footer felett */
     padding: 1em; /* Tartalomhoz padding */
+    display: flex; /* Biztosítja, hogy a main mindig kiterjedjen */
+    flex-direction: column; /* Tartalom egymás alá rendezve */
 }
 
 /* Footer stílusok */
@@ -27,6 +29,7 @@ main {
     text-align: center; /* Középre igazított tartalom */
     box-shadow: 0 -4px 12px rgba(0, 0, 0, 0.15); /* Árnyék */
     width: 100%; /* Szélesség a teljes képernyőhöz igazodik */
+    margin-top: auto; /* A flex doboz végére helyezi */
 }
 
 /* Footer belső konténer */
