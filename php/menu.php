@@ -73,11 +73,11 @@
     <!-- Kártya -->
     <div class="col-lg-3 col-md-4 col-sm-6">
       <div class="card hover-card" data-bs-toggle="modal" data-bs-target="#modal-1">
-        <img src="https://via.placeholder.com/300" class="card-img-top" alt="Étel kép">
+        <img src="../kepek/pizza.jpg" class="card-img-top" alt="Étel kép">
         <div class="card-body text-center">
           <h5 class="card-title">Étel neve</h5>
           <p class="card-text">Rövid leírás az ételről.</p>
-          <button class="modern-btn add-to-cart" data-item="Étel neve">Kosárba rakás</button>
+          <button class="modern-btn details-btn" data-bs-toggle="modal" data-bs-target="#modal-1">Részletek</button>
         </div>
       </div>
     </div>
@@ -93,13 +93,14 @@
         <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
       </div>
       <div class="modal-body">
-        <img src="https://via.placeholder.com/300" class="img-fluid mb-3" alt="Étel kép">
+        <img src="../kepek/pizza.jpg" class="img-fluid mb-3" alt="Étel kép">
         <p><strong>Kalória:</strong> 450 kcal</p>
         <p><strong>Összetevők:</strong> Paradicsom, Mozzarella, Bazsalikom</p>
         <p><strong>Allergének:</strong> Tejtermék</p>
         <p><strong>Ár:</strong> 2500 Ft</p>
       </div>
       <div class="modal-footer">
+        <button type="button" class="modern-btn add-to-cart" data-item="Étel neve">Kosárba rakás</button>
         <button type="button" class="modern-btn close-btn" data-bs-dismiss="modal">Bezárás</button>
       </div>
     </div>
@@ -118,32 +119,19 @@
   </div>
 </div>
 
-
-
-
-
 <script>
- document.addEventListener("DOMContentLoaded", function () {
-  // Kosárba rakás gomb kattintása
+document.addEventListener("DOMContentLoaded", function () {
+  // Kosárba rakás gomb kattintása a modálisban
   document.querySelectorAll(".add-to-cart").forEach(function (button) {
-    button.addEventListener("click", function (event) {
-      event.stopPropagation(); // Ne nyissa meg a modált
+    button.addEventListener("click", function () {
       const toastEl = document.getElementById("toast-added");
       const toast = new bootstrap.Toast(toastEl);
       toast.show();
     });
   });
-
-  // Kártya kattintás logikája
-  document.querySelectorAll(".hover-card").forEach(function (card) {
-    card.addEventListener("click", function () {
-      // A modális automatikusan megnyílik a data-bs-toggle attribútum miatt
-    });
-  });
 });
-
-
 </script>
+
 
 
 
