@@ -132,16 +132,6 @@ document.addEventListener("DOMContentLoaded", function () {
 });
 </script>
 
-
-
-
-
-
-
-
-
-
-
     <!-- Footer -->
     <footer class="footer">
         <div class="footer-container">

@@ -12,6 +12,7 @@
     <link rel="stylesheet" href="../css/navbar.css">
     <link rel="stylesheet" href="../css/footer.css">
     <link rel="stylesheet" href="../css/kategoriaelemek.css">
+    <link rel="stylesheet" href="../css/menu.css">
 </head>
 <body>
     <nav>
@@ -55,6 +56,80 @@
         <?php endif; ?>
     </ul>
     </div>
+
+    <?php
+        include './adatbazisra_csatlakozas.php';
+
+        $kategoriak_sql = "SELECT * FROM etel WHERE kategoria_id = 3;";
+        $kategoriak = adatokLekerdezese($kategoriak_sql);
+        if(is_array($kategoriak)){
+        foreach ($kategoriak as $k) {
+            echo '<div class="container my-5">
+                <div class="row g-4">
+                    <div class="col-lg-3 col-md-4 col-sm-6">
+                        <div class="card hover-card" data-bs-toggle="modal" data-bs-target="#modal-' . htmlspecialchars($k['id']) . '">
+                            <img src="' . htmlspecialchars($k['kep_url']) . '" class="card-img-top" alt="Étel kép">
+                            <div class="card-body text-center">
+                                <h5 class="card-title">' . htmlspecialchars($k['nev']) . '</h5>
+                                <p class="card-text">' . htmlspecialchars($k['leiras']) . '</p>
+                                <button class="modern-btn add-to-cart" data-item="' . htmlspecialchars($k['nev']) . '">Kosárba rakás</button>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+            
+            <div class="modal fade custom-fade" id="modal-' . htmlspecialchars($k['id']) . '" tabindex="-1" aria-labelledby="modalLabel-' . htmlspecialchars($k['id']) . '" aria-hidden="true">
+                <div class="modal-dialog modal-dialog-centered">
+                    <div class="modal-content">
+                        <div class="modal-header">
+                            <h5 class="modal-title" id="modalLabel-' . htmlspecialchars($k['id']) . '">' . htmlspecialchars($k['nev']) . ' - Részletek</h5>
+                            <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+                        </div>
+                        <div class="modal-body">
+                            <img src="' . htmlspecialchars($k['kep_url']) . '" class="img-fluid mb-3" alt="Étel kép">
+                            <p><strong>Kalória:</strong> ' . htmlspecialchars($k['kaloria']) . ' kcal</p>
+                            <p><strong>Összetevők:</strong> ' . htmlspecialchars($k['osszetevok']) . '</p>
+                            <p><strong>Allergének:</strong> ' . htmlspecialchars($k['allergenek']) . '</p>
+                            <p><strong>Ár:</strong> ' . htmlspecialchars($k['egyseg_ar']) . ' Ft</p>
+                        </div>
+                        <div class="modal-footer">
+                            <button type="button" class="modern-btn close-btn" data-bs-dismiss="modal">Bezárás</button>
+                        </div>
+                    </div>
+                </div>
+            </div>';
+        }
+    }
+        else {
+            echo "<p>Ehez a kategóriához nem tartozik étel!</p>";
+        }
+
+    ?>
+
+    <script>
+    document.addEventListener("DOMContentLoaded", function () {
+    // Kosárba rakás gomb kattintása
+    document.querySelectorAll(".add-to-cart").forEach(function (button) {
+        button.addEventListener("click", function (event) {
+        event.stopPropagation(); // Ne nyissa meg a modált
+        const toastEl = document.getElementById("toast-added");
+        const toast = new bootstrap.Toast(toastEl);
+        toast.show();
+        });
+    });
+
+    // Kártya kattintás logikája
+    document.querySelectorAll(".hover-card").forEach(function (card) {
+        card.addEventListener("click", function () {
+        // A modális automatikusan megnyílik a data-bs-toggle attribútum miatt
+        });
+    });
+    });
+
+
+    </script>
+
     
     
 
