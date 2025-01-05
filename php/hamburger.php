@@ -58,62 +58,79 @@
     </div>
 
     <?php
-    include './adatbazisra_csatlakozas.php';
+        include './adatbazisra_csatlakozas.php';
 
-    $kategoriak_sql = "SELECT * FROM etel WHERE kategoria_id = 3;";
-    $kategoriak = adatokLekerdezese($kategoriak_sql);
-    
-    echo '<div class="container my-5">';
-    echo '<div class="row g-4">';
-
-    if (is_array($kategoriak)) {
-        foreach ($kategoriak as $k) {
-            echo '<div class="col-lg-3 col-md-4 col-sm-6">
-                <div class="card hover-card" data-bs-toggle="modal" data-bs-target="#modal-' . htmlspecialchars($k['id']) . '">
-                    <img src="' . htmlspecialchars($k['kep_url']) . '" class="card-img-top" alt="Étel kép">
-                    <div class="card-body text-center">
-                        <h5 class="card-title">' . htmlspecialchars($k['nev']) . '</h5>
-                        <p class="card-text">' . htmlspecialchars($k['leiras']) . '</p>
-                        <button class="modern-btn add-to-cart" data-item="' . htmlspecialchars($k['nev']) . '">Kosárba rakás</button>
+        $kategoriak_sql = "SELECT * FROM etel WHERE kategoria_id = 3;";
+        $kategoriak = adatokLekerdezese($kategoriak_sql);
+        if (is_array($kategoriak)) {
+            echo '<div class="container my-5">';
+            echo '<div class="row g-4">';
+            foreach ($kategoriak as $k) {
+                echo '
+                <div class="col-lg-3 col-md-4 col-sm-6">
+                    <div class="card hover-card">
+                        <img src="' . htmlspecialchars($k['kep_url']) . '" class="card-img-top" alt="Étel kép">
+                        <div class="card-body text-center">
+                            <h5 class="card-title">' . htmlspecialchars($k['nev']) . '</h5>
+                            <p class="card-text">' . htmlspecialchars($k['leiras']) . '</p>
+                            <button class="modern-btn details-btn" data-bs-toggle="modal" data-bs-target="#modal-' . htmlspecialchars($k['id']) . '">Részletek</button>
+                        </div>
                     </div>
+                </div>
+
+                <div class="modal fade custom-fade" id="modal-' . htmlspecialchars($k['id']) . '" tabindex="-1" aria-labelledby="modalLabel-' . htmlspecialchars($k['id']) . '" aria-hidden="true">
+                    <div class="modal-dialog modal-dialog-centered">
+                        <div class="modal-content">
+                            <div class="modal-header">
+                                <h5 class="modal-title" id="modalLabel-' . htmlspecialchars($k['id']) . '">' . htmlspecialchars($k['nev']) . ' - Részletek</h5>
+                                <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+                            </div>
+                            <div class="modal-body">
+                                <img src="' . htmlspecialchars($k['kep_url']) . '" class="img-fluid mb-3" alt="Étel kép">
+                                <p><strong>Kalória:</strong> ' . htmlspecialchars($k['kaloria']) . ' kcal</p>
+                                <p><strong>Összetevők:</strong> ' . htmlspecialchars($k['osszetevok']) . '</p>
+                                <p><strong>Allergének:</strong> ' . htmlspecialchars($k['allergenek']) . '</p>
+                                <p><strong>Ár:</strong> ' . htmlspecialchars($k['egyseg_ar']) . ' Ft</p>
+                            </div>
+                            <div class="modal-footer">
+                                <button type="button" class="modern-btn add-to-cart" data-item="' . htmlspecialchars($k['nev']) . '">Kosárba rakás</button>
+                                <button type="button" class="modern-btn close-btn" data-bs-dismiss="modal">Bezárás</button>
+                            </div>
+                        </div>
+                    </div>
+                </div>';
+            }
+            echo '</div>';
+            echo '</div>';
+        } else {
+            echo "<p>Ehhez a kategóriához nem tartozik étel!</p>";
+        }
+    ?>
+
+        <!-- Toast értesítés HTML kód -->
+        <div class="toast-container position-fixed bottom-0 end-0 p-3">
+            <div id="toast-added" class="toast align-items-center text-bg-success border-0" role="alert" aria-live="assertive" aria-atomic="true">
+                <div class="d-flex">
+                    <div class="toast-body">
+                        Sikeresen hozzáadva a kosárhoz!
+                    </div>
+                    <button type="button" class="btn-close btn-close-white me-2 m-auto" data-bs-dismiss="toast" aria-label="Close"></button>
                 </div>
             </div>
-            
-            <div class="modal fade custom-fade" id="modal-' . htmlspecialchars($k['id']) . '" tabindex="-1" aria-labelledby="modalLabel-' . htmlspecialchars($k['id']) . '" aria-hidden="true">
-                <div class="modal-dialog modal-dialog-centered">
-                    <div class="modal-content">
-                        <div class="modal-header">
-                            <h5 class="modal-title" id="modalLabel-' . htmlspecialchars($k['id']) . '">' . htmlspecialchars($k['nev']) . ' - Részletek</h5>
-                            <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
-                        </div>
-                        <div class="modal-body">
-                            <img src="' . htmlspecialchars($k['kep_url']) . '" class="img-fluid mb-3" alt="Étel kép">
-                            <p><strong>Kalória:</strong> ' . htmlspecialchars($k['kaloria']) . ' kcal</p>
-                            <p><strong>Összetevők:</strong> ' . htmlspecialchars($k['osszetevok']) . '</p>
-                            <p><strong>Allergének:</strong> ' . htmlspecialchars($k['allergenek']) . '</p>
-                            <p><strong>Ár:</strong> ' . htmlspecialchars($k['egyseg_ar']) . ' Ft</p>
-                        </div>
-                        <div class="modal-footer">
-                            <button type="button" class="modern-btn close-btn" data-bs-dismiss="modal">Bezárás</button>
-                        </div>
-                    </div>
-                </div>
-            </div>';
-        }
-    } else {
-        echo '<p>Ehez a kategóriához nem tartozik étel!</p>';
-    }
+        </div>
 
-    echo '</div>'; 
-    echo '</div>'; 
-?>
-
+    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/js/bootstrap.bundle.min.js"></script>
     <script>
+        
         document.addEventListener("DOMContentLoaded", function () {
             // Kosárba rakás gomb kattintása
             document.querySelectorAll(".add-to-cart").forEach(function (button) {
                 button.addEventListener("click", function (event) {
                     event.stopPropagation(); 
+                    const itemName = this.getAttribute("data-item");
+                    const toastBody = document.querySelector("#toast-added .toast-body");
+                    toastBody.textContent = `${itemName} sikeresen hozzáadva a kosárhoz!`;
+                
                     const toastEl = document.getElementById("toast-added");
                     const toast = new bootstrap.Toast(toastEl);
                     toast.show();
@@ -127,6 +144,8 @@
             });
         });
     </script>
+
+
 
 
     
