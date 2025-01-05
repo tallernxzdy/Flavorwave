@@ -58,23 +58,23 @@
     </div>
 
     <?php
-        include './adatbazisra_csatlakozas.php';
+    include './adatbazisra_csatlakozas.php';
 
-        $kategoriak_sql = "SELECT * FROM etel WHERE kategoria_id = 3;";
-        $kategoriak = adatokLekerdezese($kategoriak_sql);
-        if(is_array($kategoriak)){
+    $kategoriak_sql = "SELECT * FROM etel WHERE kategoria_id = 3;";
+    $kategoriak = adatokLekerdezese($kategoriak_sql);
+    
+    echo '<div class="container my-5">';
+    echo '<div class="row g-4">';
+
+    if (is_array($kategoriak)) {
         foreach ($kategoriak as $k) {
-            echo '<div class="container my-5">
-                <div class="row g-4">
-                    <div class="col-lg-3 col-md-4 col-sm-6">
-                        <div class="card hover-card" data-bs-toggle="modal" data-bs-target="#modal-' . htmlspecialchars($k['id']) . '">
-                            <img src="' . htmlspecialchars($k['kep_url']) . '" class="card-img-top" alt="Étel kép">
-                            <div class="card-body text-center">
-                                <h5 class="card-title">' . htmlspecialchars($k['nev']) . '</h5>
-                                <p class="card-text">' . htmlspecialchars($k['leiras']) . '</p>
-                                <button class="modern-btn add-to-cart" data-item="' . htmlspecialchars($k['nev']) . '">Kosárba rakás</button>
-                            </div>
-                        </div>
+            echo '<div class="col-lg-3 col-md-4 col-sm-6">
+                <div class="card hover-card" data-bs-toggle="modal" data-bs-target="#modal-' . htmlspecialchars($k['id']) . '">
+                    <img src="' . htmlspecialchars($k['kep_url']) . '" class="card-img-top" alt="Étel kép">
+                    <div class="card-body text-center">
+                        <h5 class="card-title">' . htmlspecialchars($k['nev']) . '</h5>
+                        <p class="card-text">' . htmlspecialchars($k['leiras']) . '</p>
+                        <button class="modern-btn add-to-cart" data-item="' . htmlspecialchars($k['nev']) . '">Kosárba rakás</button>
                     </div>
                 </div>
             </div>
@@ -100,35 +100,34 @@
                 </div>
             </div>';
         }
+    } else {
+        echo '<p>Ehez a kategóriához nem tartozik étel!</p>';
     }
-        else {
-            echo "<p>Ehez a kategóriához nem tartozik étel!</p>";
-        }
 
-    ?>
+    echo '</div>'; 
+    echo '</div>'; 
+?>
 
     <script>
-    document.addEventListener("DOMContentLoaded", function () {
-    // Kosárba rakás gomb kattintása
-    document.querySelectorAll(".add-to-cart").forEach(function (button) {
-        button.addEventListener("click", function (event) {
-        event.stopPropagation(); // Ne nyissa meg a modált
-        const toastEl = document.getElementById("toast-added");
-        const toast = new bootstrap.Toast(toastEl);
-        toast.show();
+        document.addEventListener("DOMContentLoaded", function () {
+            // Kosárba rakás gomb kattintása
+            document.querySelectorAll(".add-to-cart").forEach(function (button) {
+                button.addEventListener("click", function (event) {
+                    event.stopPropagation(); 
+                    const toastEl = document.getElementById("toast-added");
+                    const toast = new bootstrap.Toast(toastEl);
+                    toast.show();
+                });
+            });
+        
+            // Kártya kattintás logikája
+            document.querySelectorAll(".hover-card").forEach(function (card) {
+                card.addEventListener("click", function () {
+                });
+            });
         });
-    });
-
-    // Kártya kattintás logikája
-    document.querySelectorAll(".hover-card").forEach(function (card) {
-        card.addEventListener("click", function () {
-        // A modális automatikusan megnyílik a data-bs-toggle attribútum miatt
-        });
-    });
-    });
-
-
     </script>
+
 
     
     

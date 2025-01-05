@@ -69,68 +69,141 @@
 
 
 <div class="container my-5">
-  <div class="row g-4">
-    <!-- Kártya -->
-    <div class="col-lg-3 col-md-4 col-sm-6">
-      <div class="card hover-card" data-bs-toggle="modal" data-bs-target="#modal-1">
-        <img src="../kepek/pizza.jpg" class="card-img-top" alt="Étel kép">
-        <div class="card-body text-center">
-          <h5 class="card-title">Étel neve</h5>
-          <p class="card-text">Rövid leírás az ételről.</p>
-          <button class="modern-btn details-btn" data-bs-toggle="modal" data-bs-target="#modal-1">Részletek</button>
+    <div class="row g-4">
+      <!-- Kártya 1 -->
+      <div class="col-lg-3 col-md-4 col-sm-6">
+        <div class="card hover-card">
+          <img src="../kepek/pizza.jpg" class="card-img-top" alt="Pizza kép">
+          <div class="card-body text-center">
+            <h5 class="card-title">Pizza</h5>
+            <p class="card-text">Rövid leírás az ételről.</p>
+            <button class="modern-btn details-btn" data-bs-toggle="modal" data-bs-target="#modal-1">Részletek</button>
+          </div>
+        </div>
+      </div>
+
+      <!-- Kártya 2 -->
+      <div class="col-lg-3 col-md-4 col-sm-6">
+        <div class="card hover-card">
+          <img src="../kepek/pizza.jpg" class="card-img-top" alt="Saláta kép">
+          <div class="card-body text-center">
+            <h5 class="card-title">Saláta</h5>
+            <p class="card-text">Friss saláták keveréke.</p>
+            <button class="modern-btn details-btn" data-bs-toggle="modal" data-bs-target="#modal-2">Részletek</button>
+          </div>
+        </div>
+      </div>
+
+      <!-- Kártya 3 -->
+      <div class="col-lg-3 col-md-4 col-sm-6">
+        <div class="card hover-card">
+          <img src="../kepek/pizza.jpg" class="card-img-top" alt="Szendvics kép">
+          <div class="card-body text-center">
+            <h5 class="card-title">Szendvics</h5>
+            <p class="card-text">Ropogós kenyérrel.</p>
+            <button class="modern-btn details-btn" data-bs-toggle="modal" data-bs-target="#modal-3">Részletek</button>
+          </div>
         </div>
       </div>
     </div>
   </div>
-</div>
 
-<!-- MODÁLIS ABLAK -->
-<div class="modal fade custom-fade" id="modal-1" tabindex="-1" aria-labelledby="modalLabel-1" aria-hidden="true">
-  <div class="modal-dialog modal-dialog-centered">
-    <div class="modal-content">
-      <div class="modal-header">
-        <h5 class="modal-title" id="modalLabel-1">Étel neve - Részletek</h5>
-        <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
-      </div>
-      <div class="modal-body">
-        <img src="../kepek/pizza.jpg" class="img-fluid mb-3" alt="Étel kép">
-        <p><strong>Kalória:</strong> 450 kcal</p>
-        <p><strong>Összetevők:</strong> Paradicsom, Mozzarella, Bazsalikom</p>
-        <p><strong>Allergének:</strong> Tejtermék</p>
-        <p><strong>Ár:</strong> 2500 Ft</p>
-      </div>
-      <div class="modal-footer">
-        <button type="button" class="modern-btn add-to-cart" data-item="Étel neve">Kosárba rakás</button>
-        <button type="button" class="modern-btn close-btn" data-bs-dismiss="modal">Bezárás</button>
+  <!-- MODÁLIS 1 -->
+  <div class="modal fade custom-fade" id="modal-1" tabindex="-1" aria-labelledby="modalLabel-1" aria-hidden="true">
+    <div class="modal-dialog modal-dialog-centered">
+      <div class="modal-content">
+        <div class="modal-header">
+          <h5 class="modal-title" id="modalLabel-1">Pizza - Részletek</h5>
+          <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+        </div>
+        <div class="modal-body">
+          <img src="../kepek/pizza.jpg" class="img-fluid mb-3" alt="Pizza kép">
+          <p><strong>Kalória:</strong> 450 kcal</p>
+          <p><strong>Összetevők:</strong> Paradicsom, Mozzarella, Bazsalikom</p>
+          <p><strong>Ár:</strong> 2500 Ft</p>
+        </div>
+        <div class="modal-footer">
+          <button type="button" class="modern-btn add-to-cart" data-item="Pizza">Kosárba rakás</button>
+          <button type="button" class="modern-btn close-btn" data-bs-dismiss="modal">Bezárás</button>
+        </div>
       </div>
     </div>
   </div>
-</div>
 
-<!-- KOSÁRBA RAKÁS ÜZENET -->
-<div class="toast-container position-fixed bottom-0 end-0 p-3">
-  <div id="toast-added" class="toast align-items-center text-bg-success border-0" role="alert" aria-live="assertive" aria-atomic="true">
-    <div class="d-flex">
-      <div class="toast-body">
-        Hozzáadva a kosárhoz!
+  <!-- MODÁLIS 2 -->
+  <div class="modal fade custom-fade" id="modal-2" tabindex="-1" aria-labelledby="modalLabel-2" aria-hidden="true">
+    <div class="modal-dialog modal-dialog-centered">
+      <div class="modal-content">
+        <div class="modal-header">
+          <h5 class="modal-title" id="modalLabel-2">Saláta - Részletek</h5>
+          <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+        </div>
+        <div class="modal-body">
+          <img src="../kepek/salata.jpg" class="img-fluid mb-3" alt="Saláta kép">
+          <p><strong>Kalória:</strong> 150 kcal</p>
+          <p><strong>Összetevők:</strong> Salátakeverék, Olívaolaj</p>
+          <p><strong>Ár:</strong> 1500 Ft</p>
+        </div>
+        <div class="modal-footer">
+          <button type="button" class="modern-btn add-to-cart" data-item="Saláta">Kosárba rakás</button>
+          <button type="button" class="modern-btn close-btn" data-bs-dismiss="modal">Bezárás</button>
+        </div>
       </div>
-      <button type="button" class="btn-close btn-close-white me-2 m-auto" data-bs-dismiss="toast" aria-label="Bezárás"></button>
     </div>
   </div>
-</div>
 
-<script>
-document.addEventListener("DOMContentLoaded", function () {
-  // Kosárba rakás gomb kattintása a modálisban
-  document.querySelectorAll(".add-to-cart").forEach(function (button) {
-    button.addEventListener("click", function () {
-      const toastEl = document.getElementById("toast-added");
-      const toast = new bootstrap.Toast(toastEl);
-      toast.show();
+  <!-- MODÁLIS 3 -->
+  <div class="modal fade custom-fade" id="modal-3" tabindex="-1" aria-labelledby="modalLabel-3" aria-hidden="true">
+    <div class="modal-dialog modal-dialog-centered">
+      <div class="modal-content">
+        <div class="modal-header">
+          <h5 class="modal-title" id="modalLabel-3">Szendvics - Részletek</h5>
+          <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+        </div>
+        <div class="modal-body">
+          <img src="../kepek/szendvics.jpg" class="img-fluid mb-3" alt="Szendvics kép">
+          <p><strong>Kalória:</strong> 300 kcal</p>
+          <p><strong>Összetevők:</strong> Kenyér, Sonka, Sajt</p>
+          <p><strong>Ár:</strong> 2000 Ft</p>
+        </div>
+        <div class="modal-footer">
+          <button type="button" class="modern-btn add-to-cart" data-item="Szendvics">Kosárba rakás</button>
+          <button type="button" class="modern-btn close-btn" data-bs-dismiss="modal">Bezárás</button>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <!-- KOSÁRBA RAKÁS ÜZENET -->
+  <div class="toast-container position-fixed bottom-0 end-0 p-3">
+    <div id="toast-added" class="toast align-items-center text-bg-success border-0" role="alert" aria-live="assertive" aria-atomic="true">
+      <div class="d-flex">
+        <div class="toast-body">
+          Hozzáadva a kosárhoz!
+        </div>
+        <button type="button" class="btn-close btn-close-white me-2 m-auto" data-bs-dismiss="toast" aria-label="Bezárás"></button>
+      </div>
+    </div>
+  </div>
+
+  <!-- Bootstrap JS -->
+  <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/js/bootstrap.bundle.min.js"></script>
+  <script>
+    document.addEventListener("DOMContentLoaded", function () {
+      // Kosárba rakás logika
+      document.querySelectorAll(".add-to-cart").forEach(function (button) {
+        button.addEventListener("click", function () {
+          const toastEl = document.getElementById("toast-added");
+          const toast = new bootstrap.Toast(toastEl);
+          toast.show();
+        });
+      });
     });
-  });
-});
-</script>
+  </script>
+
+
+
+
 
     <!-- Footer -->
     <footer class="footer">
