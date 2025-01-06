@@ -49,6 +49,7 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
         if (isset($_FILES['kepek_url']['name']) && $_FILES['kepek_url']['name'] !== "") {
             $target_dir = "../kepek/";
             $uniqueName = basename($_FILES['kepek_url']['name']);
+            $kep_url = $uniqueName;
             $target_file = $target_dir . $uniqueName;
             if (is_file($target_file)){
                 $message = "Ez a fájl már létezik";
