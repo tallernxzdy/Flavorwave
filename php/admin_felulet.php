@@ -49,7 +49,6 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
         if (isset($_FILES['kepek_url']['name']) && $_FILES['kepek_url']['name'] !== "") {
             $target_dir = "../kepek/";
             $uniqueName = basename($_FILES['kepek_url']['name']);
-            $kep_url = $uniqueName;
             $target_file = $target_dir . $uniqueName;
             if (is_file($target_file)){
                 $message = "Ez a fájl már létezik";
@@ -156,7 +155,6 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
         </a>
     </div>
     <ul>
-        <li><a href="menu.php">Menü</a></li>
         <?php if (isset($_SESSION["jog_szint"]) && $_SESSION["jog_szint"] == 1): ?>
         <li><a href="admin_felulet.php">Admin felület</a></li>
         <?php endif; ?>
@@ -176,7 +174,6 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
 
     <div class="menubar">
     <ul>
-        <li><a href="menu.php">Menü</a></li>
         <?php if (isset($_SESSION["jog_szint"]) && $_SESSION["jog_szint"] == 1): ?>
         <li><a href="admin_felulet.php">Admin felület</a></li>
         <?php endif; ?>

@@ -12,6 +12,7 @@
     <link rel="stylesheet" href="../css/navbar.css">
     <link rel="stylesheet" href="../css/footer.css">
     <link rel="stylesheet" href="../css/kategoriaelemek.css">
+    <link rel="stylesheet" href="../css/menu.css">
 </head>
 <body>
     <nav>
@@ -23,7 +24,6 @@
     </div>
     <ul>
         <li><a href="kategoria.php">Kategóriák</a></li>
-        <li><a href="menu.php">Menü</a></li>
         <?php if (isset($_SESSION["jog_szint"]) && $_SESSION["jog_szint"] == 1): ?>
         <li><a href="admin_felulet.php">Admin felület</a></li>
         <?php endif; ?>
@@ -43,7 +43,6 @@
 
     <div class="menubar">
     <ul>
-        <li><a href="menu.php">Menü</a></li>
         <?php if (isset($_SESSION["jog_szint"]) && $_SESSION["jog_szint"] == 1): ?>
         <li><a href="admin_felulet.php">Admin felület</a></li>
         <?php endif; ?>
@@ -69,7 +68,7 @@
                 echo '
                 <div class="col-lg-3 col-md-4 col-sm-6">
                     <div class="card hover-card">
-                        <img src="' . htmlspecialchars($k['kep_url']) . '" class="card-img-top" alt="Étel kép">
+                        <img src="../kepek/' . htmlspecialchars($k['kep_url']) . '" class="card-img-top" alt="Étel kép">
                         <div class="card-body text-center">
                             <h5 class="card-title">' . htmlspecialchars($k['nev']) . '</h5>
                             <p class="card-text">' . htmlspecialchars($k['leiras']) . '</p>
@@ -86,7 +85,7 @@
                                 <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
                             </div>
                             <div class="modal-body">
-                                <img src="' . htmlspecialchars($k['kep_url']) . '" class="img-fluid mb-3" alt="Étel kép">
+                                <img src="../kepek/' . htmlspecialchars($k['kep_url']) . '" class="img-fluid mb-3" alt="Étel kép">
                                 <p><strong>Kalória:</strong> ' . htmlspecialchars($k['kaloria']) . ' kcal</p>
                                 <p><strong>Összetevők:</strong> ' . htmlspecialchars($k['osszetevok']) . '</p>
                                 <p><strong>Allergének:</strong> ' . htmlspecialchars($k['allergenek']) . '</p>
