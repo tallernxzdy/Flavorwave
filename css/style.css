@@ -34,15 +34,17 @@ a {
 
 /* Fejléc stílus */
 .main-content h2 {
-    font-size: 2rem; /* Nagyobb betűméret */
+    font-size: 2rem;
     margin-bottom: 15px;
-    color: #333333; /* Alapszínek */
+    color: white; /* Fehér szín */
 }
+
 
 /* Bekezdés stílus */
 .main-content p {
-    font-size: 1.2rem; /* Közepes betűméret */
-    color: #555555; /* Halvány szöveg szín */
+    font-size: 1.2rem;
+    color: white; /* Fehér szín */
     margin: 10px 0;
 }
+
 

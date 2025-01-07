@@ -25,7 +25,7 @@ main {
 .footer {
     background-color: rgb(206, 22, 22); /* Háttérszín piros */
     color: white; /* Fehér szöveg */
-    padding: 1.5em 0; /* Függőleges padding */
+    padding: 15px; /* Függőleges padding */
     text-align: center; /* Középre igazított tartalom */
     box-shadow: 0 -4px 12px rgba(0, 0, 0, 0.15); /* Árnyék */
     width: 100%; /* Szélesség a teljes képernyőhöz igazodik */

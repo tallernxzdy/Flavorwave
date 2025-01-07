@@ -69,8 +69,14 @@ session_start();
 <!-- gördülő kép -->
 <div class="parallax" id="parallax">
   <div class="parallax_content">
+    <div class="main-content">
     <h2>Üdvözöljük a Flavorwave oldalon</h2>
-    <p>Itt találhatod a legjobb ételeket és ajánlatokat!</p>
+    <?php if (isset($_SESSION["username"])): ?>
+      <p>Szia, <?php echo htmlspecialchars($_SESSION["username"]); ?>!</p>
+    <?php else: ?>
+      <p>Jelentkezz be vagy regisztrálj a fiókod eléréséhez!</p>
+    <?php endif; ?>
+  </div>
   </div>
 </div>
 
@@ -89,14 +95,7 @@ session_start();
 
 
 
-<div class="main-content">
-  <h2>Üdvözöljük a Flavorwave oldalon</h2>
-  <?php if (isset($_SESSION["username"])): ?>
-    <p>Szia, <?php echo htmlspecialchars($_SESSION["username"]); ?>!</p>
-  <?php else: ?>
-    <p>Jelentkezz be vagy regisztrálj a fiókod eléréséhez!</p>
-  <?php endif; ?>
-</div>
+
 
 
 <div class="slider">
