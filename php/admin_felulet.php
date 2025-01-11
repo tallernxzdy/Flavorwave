@@ -23,16 +23,21 @@ if (!is_array($etelek)) {
     $message = "Hiba az ételek lekérdezése során: $etelek";
 }
 
-// nemfix
 
-$kategoriak = adatokLekerdezese("SELECT id, kategoria_nev FROM kategoria");
-if (!is_array($kategoriak)) {
-    $message = "Hiba a kategóriák lekérdezése során: $kategoriak";
-}
 if ($_SERVER['REQUEST_METHOD'] === 'GET') {
+    header("Cache-Control: no-store", true);
+    if (isset($_COOKIE["uploaded"])) {
+        $message = "Sikeres feltöltés!";
+    }
+    else if(isset($_COOKIE["updated"])){
+        $message = "Sikeres frissítés!";
+    }
+    else if(isset($_COOKIE["deleted"])){
+        $message = "Sikeres törlés!";
+    }
     $_SESSION[$message] = "";
-
 }
+
 // Művelet feldolgozása
 if ($_SERVER['REQUEST_METHOD'] === 'POST') {
     $operation = $_POST['operation'];
@@ -67,14 +72,15 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
             $muvelet = "INSERT INTO etel (nev, egyseg_ar, leiras, kategoria_id, kep_url) VALUES (?, ?, ?, ?, ?)";
             $parameterek = ['sssis', $nev, $egyseg_ar, $leiras, $kategoria_id, $kep_url];
             $result = adatokValtoztatasa($muvelet, $parameterek);
-
             $message = $result;
         }
-        
+        setcookie("uploaded", "true", time() + 1);
+        header("Location: " . $_SERVER['PHP_SELF']);
+        exit();
     }
 
     // Szerkesztés
-    if ($_SERVER['REQUEST_METHOD'] === 'POST' && $operation === 'edit') {
+    if ($_SERVER['REQUEST_METHOD'] === 'POST' && $operation === 'edit') { 
         $id = $_POST['edit_etel'];
         $nev = $_POST['edit_nev'];
         $egyseg_ar = $_POST['edit_egyseg_ar'];
@@ -115,8 +121,11 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
         $parameterek[] = $id; // Az ID hozzáadása a végén
         $result = adatokValtoztatasa($muvelet, $parameterek);
         $message = $result;
+        
+        setcookie("updated", "true", time() + 1);
+        header("Location: " . $_SERVER['PHP_SELF']);
+        exit();
     }
-    
 
     // Törlés
     if ($operation === 'delete') {
@@ -131,6 +140,9 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
         // Adatbázisból törlés
         $result = adatokTorlese("id = $id");
         $message = $result;
+        setcookie("deleted", "true", time() + 1);
+        header("Location: " . $_SERVER['PHP_SELF']);
+        exit();
     }
 }
 ?>
@@ -216,7 +228,7 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
                         </option>
                     <?php endforeach; ?>
                 </select>
-                <input type="file" name="kepek_url" accept="image/*" class="form-control mb-2">
+                <input type="file" name="kepek_url" accept="image/*" class="form-control mb-2" data-required>
                 <button type="submit" class="btn btn-primary">Hozzáadás</button>
                 <p style="display:inline"><a style="float:right" href="kezdolap.php">Vissza a kezdőlapra</a></p>
             </div>
