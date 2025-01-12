@@ -1,164 +1,158 @@
-@import url("https://fonts.googleapis.com/css2?family=Poppins:ital,wght@0,300;0,400;0,500;0,600;0,700;1,300;1,400;1,500;1,600;1,700&display=swap");
-
-* {
-  box-sizing: border-box;
-  -webkit-font-smoothing: antialiased;
-  -moz-osx-font-smoothing: grayscale;
-}
-
+/* Teljes alapbeállítások */
 body {
-  padding: 0;
   margin: 0;
-  font-family: "Poppins", sans-serif;
+  font-family: Arial, sans-serif;
+  padding-top: 70px; /* Helyet hagy a fix navbar-nak */
 }
 
+/* NAVBAR */
 nav {
-  padding: 5px 5%;
+  position: fixed;
+  top: 0;
+  left: 0;
+  width: 100%;
+  background-color: #ffffff;
+  box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
+  z-index: 1000;
   display: flex;
   justify-content: space-between;
   align-items: center;
-  box-shadow: rgba(50, 50, 93, 0.25) 0px 2px 5px -1px,
-    rgba(0, 0, 0, 0.3) 0px 1px 3px -1px;
-  z-index: 1;
-  padding: 25px;
+  padding: 10px 20px;
 }
 
+/* Logo */
 nav .logo {
   display: flex;
   align-items: center;
-  margin-left: 2rem;
 }
 
 nav .logo img {
-  height: 40px; /* Nagyobb méretű logó */
-  width: auto;
-  margin-right: 10px; /* Kis térköz a logó és a szöveg között */
-}
-
-nav .logo a {
-  text-decoration: none;
-}
-
-nav .logo a .logo-img {
-  vertical-align: middle;
+  height: 40px;
+  margin-right: 10px;
 }
 
 nav .logo h1 {
-  font-size: 1.4rem; /* Nagyobb betűméret */
+  font-size: 20px;
+  margin: 0;
+  color: #000; /* Fekete szín */
   font-weight: bold; /* Félkövér szöveg */
-  color: rgb(206, 22, 22); /* Piros szöveg */
 }
 
-nav ul {
-  list-style: none;
+/* Navbar középső elemek */
+.navbar-center {
   display: flex;
-  margin-bottom: 0px;
-  margin-right: 2rem;
+  gap: 20px;
 }
 
-nav ul li {
-  margin-left: 1.5rem;
-  align-self: center;
-}
-
-nav ul li a {
+.navbar-center a {
   text-decoration: none;
-  color: #000;
-  font-size: 95%;
-  font-weight: 400;
-  padding: 4px 8px;
+  color: #333;
+  font-size: 16px;
+  font-weight: 600;
+  transition: color 0.3s;
+}
+
+.navbar-center a:hover {
+  color: rgb(206, 22, 22);
+}
+
+/* Gombok (jobb oldalon) */
+.navbar-buttons {
+  display: flex;
+  gap: 10px;
+}
+
+.navbar-buttons a {
+  text-decoration: none;
+  font-size: 16px;
+  font-weight: 600;
+  padding: 5px 10px;
   border-radius: 5px;
+  transition: background-color 0.3s, color 0.3s;
 }
 
-nav ul li a:hover {
-  color: red;
+.navbar-buttons .login-btn {
+  color: #333;
+  border: 1px solid #333;
+  background-color: transparent;
 }
 
+.navbar-buttons .login-btn:hover {
+  background-color: #333;
+  color: #fff;
+}
+
+.navbar-buttons .cart-btn {
+  color: #fff;
+  background-color: rgb(206, 22, 22);
+  border: none;
+}
+
+.navbar-buttons .cart-btn:hover {
+  background-color: rgb(206, 22, 22);
+}
+
+/* Hamburger menü */
 .hamburger {
   display: none;
+  flex-direction: column;
   cursor: pointer;
+  z-index: 1001; /* Előrébb hozza, mint a menubar */
 }
 
-.hamburger .line {
+.hamburger span {
   width: 25px;
-  height: 1px;
-  background-color: #1f1f1f;
-  display: block;
-  margin: 7px auto;
-  transition: all 0.3s ease-in-out;
+  height: 3px;
+  background-color: #333;
+  margin: 4px 0;
+  transition: all 0.3s;
 }
 
-.hamburger-active {
-  transition: all 0.3s ease-in-out;
-  transition-delay: 0.6s;
-  transform: rotate(45deg);
-}
-
-.hamburger-active .line:nth-child(2) {
-  width: 0px;
-}
-
-.hamburger-active .line:nth-child(1),
-.hamburger-active .line:nth-child(3) {
-  transition-delay: 0.3s;
-}
-
-.hamburger-active .line:nth-child(1) {
-  transform: translateY(12px);
-}
-
-.hamburger-active .line:nth-child(3) {
-  transform: translateY(-5px) rotate(90deg);
-}
-
+/* Menubar alapállapot */
 .menubar {
-  position: absolute;
+  display: none;
+  flex-direction: column;
+  position: fixed;
   top: 0;
-  left: -60%; /* Balra kisebb szélesség miatt jobban eltolva */
-  display: flex;
-  justify-content: left;
-  align-items: flex-start;
-  width: 35%; /* Kisebb szélesség */
-  height: 100vh;
-  padding: 15% 0; /* Kisebb padding a tartalomhoz */
-  background: rgba(255, 255, 255, 0.9); /* Enyhén áttetsző háttér */
-  transition: all 0.5s ease-in;
-  z-index: 2;
+  left: 0;
+  background-color: #ffffff;
+  width: 250px;
+  height: 100%;
+  box-shadow: 2px 0 4px rgba(0, 0, 0, 0.1);
+  padding: 20px;
+  z-index: 999;
 }
 
-.active {
-  left: 0; /* Az aktív állapotban is kisebb a szélesség, nincs túl széles balra */
-  box-shadow: rgba(149, 157, 165, 0.2) 0px 8px 24px;
+/* Menubar aktív állapot */
+.menubar.show-menu {
+  display: flex;
 }
 
 .menubar ul {
-  padding: 2rem;
   list-style: none;
+  margin: 0;
+  padding: 0;
 }
 
 .menubar ul li {
-  margin-bottom: 24px; /* Kisebb margó az elemek között */
+  margin: 10px 0;
 }
 
 .menubar ul li a {
   text-decoration: none;
-  color: #000;
-  font-size: 90%; /* Kisebb betűméret */
-  font-weight: 400;
-  padding: 5px 10px;
-  border-radius: 5px;
+  color: #333;
+  font-size: 16px;
+  font-weight: 600;
 }
 
-.menubar ul li a:hover {
-  background-color: #f0f0f0; /* Enyhébb háttérszín hover-re */
-}
+/* Mobilbarát megjelenés */
+@media (max-width: 768px) {
+  .navbar-center,
+  .navbar-buttons {
+      display: none;
+  }
 
-@media screen and (max-width: 790px) {
   .hamburger {
-    display: block;
-  }
-  nav ul {
-    display: none;
+      display: flex;
   }
 }
-
