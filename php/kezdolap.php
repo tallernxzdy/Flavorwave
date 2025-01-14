@@ -24,15 +24,15 @@ session_start();
 
     <!-- NAVBAR -->
     <!DOCTYPE html>
-<html lang="en">
-<head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>FlavorWave Navbar</title>
-    <link rel="stylesheet" href="styles.css">
-</head>
-<body>
-<nav>
+    <html lang="en">
+    <head>
+        <meta charset="UTF-8">
+        <meta name="viewport" content="width=device-width, initial-scale=1.0">
+        <title>FlavorWave Navbar</title>
+        <link rel="stylesheet" href="styles.css">
+    </head>
+    <body>
+    <nav>
         <!-- Bal oldalon a logó -->
         <a href="kezdolap.php" class="logo">
             <img src="../kepek/logo.png" alt="Flavorwave Logo">
@@ -49,7 +49,11 @@ session_start();
 
         <!-- Jobb oldalon a gombok -->
         <div class="navbar-buttons">
-            <a href="bejelentkezes.php" class="login-btn">Bejelentkezés</a>
+            <?php if (isset($_SESSION["username"])): ?>
+                <a href="kijelentkezes.php" class="login-btn">Kijelentkezés</a>
+            <?php else: ?>
+                <a href="bejelentkezes.php" class="login-btn">Bejelentkezés</a>
+            <?php endif; ?>
             <a href="kosar.php" class="cart-btn">Kosár</a>
         </div>
 
@@ -63,18 +67,18 @@ session_start();
 
     <!-- Hamburger menü tartalma -->
     <div class="menubar" id="menubar">
-        <ul>
-            <li><a href="kategoria.php">Kategóriák</a></li>
-            <?php if (isset($_SESSION["jog_szint"]) && $_SESSION["jog_szint"] == 1): ?>
-                <li><a href="admin_felulet.php">Admin felület</a></li>
-            <?php endif; ?>
-            <li><a href="kosar.php">Kosár</a></li>
-            <?php if (isset($_SESSION["username"])): ?>
-                <li><a href="kijelentkezes.php">Kijelentkezés</a></li>
-            <?php else: ?>
-                <li><a href="bejelentkezes.php">Bejelentkezés</a></li>
-            <?php endif; ?>
-        </ul>
+      <ul>
+        <li><a href="kategoria.php">Kategóriák</a></li>
+        <?php if (isset($_SESSION["jog_szint"]) && $_SESSION["jog_szint"] == 1): ?>
+            <li><a href="admin_felulet.php">Admin felület</a></li>
+        <?php endif; ?>
+        <li><a href="kosar.php">Kosár</a></li>
+        <?php if (isset($_SESSION["username"])): ?>
+            <li><a href="kijelentkezes.php">Kijelentkezés</a></li>
+        <?php else: ?>
+            <li><a href="bejelentkezes.php">Bejelentkezés</a></li>
+        <?php endif; ?>
+      </ul>
     </div>
 
 

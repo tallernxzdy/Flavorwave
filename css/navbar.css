@@ -11,7 +11,7 @@ nav {
   top: 0;
   left: 0;
   width: 100%;
-  background-color: #ffffff;
+  background-color: rgb(206, 22, 22); /* Piros háttér */
   box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
   z-index: 1000;
   display: flex;
@@ -24,18 +24,21 @@ nav {
 nav .logo {
   display: flex;
   align-items: center;
+  text-decoration: none !important;
 }
 
 nav .logo img {
   height: 40px;
   margin-right: 10px;
+  text-decoration: none !important;
 }
 
 nav .logo h1 {
   font-size: 20px;
   margin: 0;
-  color: #000; /* Fekete szín */
+  color: #fff; /* Fehér szöveg */
   font-weight: bold; /* Félkövér szöveg */
+  text-decoration: none !important;
 }
 
 /* Navbar középső elemek */
@@ -46,14 +49,14 @@ nav .logo h1 {
 
 .navbar-center a {
   text-decoration: none;
-  color: #333;
+  color: #fff; /* Fehér szöveg */
   font-size: 16px;
   font-weight: 600;
   transition: color 0.3s;
 }
 
 .navbar-center a:hover {
-  color: rgb(206, 22, 22);
+  color: #ffcccc; /* Halvány piros szöveg hover állapotban */
 }
 
 /* Gombok (jobb oldalon) */
@@ -72,24 +75,25 @@ nav .logo h1 {
 }
 
 .navbar-buttons .login-btn {
-  color: #333;
-  border: 1px solid #333;
+  color: #fff; /* Fehér szöveg */
+  border: 1px solid #fff; /* Fehér szegély */
   background-color: transparent;
 }
 
 .navbar-buttons .login-btn:hover {
-  background-color: #333;
-  color: #fff;
+  background-color: #fff; /* Fehér háttér */
+  color: rgb(206, 22, 22); /* Piros szöveg */
 }
 
 .navbar-buttons .cart-btn {
-  color: #fff;
-  background-color: rgb(206, 22, 22);
-  border: none;
+  color: #fff; /* Fehér szöveg */
+  border: 1px solid #fff; /* Fehér szegély */
+  background-color: transparent;
 }
 
 .navbar-buttons .cart-btn:hover {
-  background-color: rgb(206, 22, 22);
+  background-color: #fff; /* Fehér háttér */
+  color: rgb(206, 22, 22); /* Piros szöveg */
 }
 
 /* Hamburger menü */
@@ -103,7 +107,7 @@ nav .logo h1 {
 .hamburger span {
   width: 25px;
   height: 3px;
-  background-color: #333;
+  background-color: #fff; /* Fehér szín */
   margin: 4px 0;
   transition: all 0.3s;
 }
