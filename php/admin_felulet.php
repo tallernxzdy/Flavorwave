@@ -14,31 +14,13 @@ $message = "";
 
 $kategoriak = adatokLekerdezese("SELECT id, kategoria_nev FROM kategoria");
 if (!is_array($kategoriak)) {
-    $message = "Hiba a kategóriák lekérdezése során: $kategoriak";
+    $message = "<div class='alert alert-warning'> Hiba a kategóriák lekérdezése során: $kategoriak </div>";
 }
 
 // Ételek lekérdezése
 $etelek = adatokLekerdezese("SELECT id, nev FROM etel");
 if (!is_array($etelek)) {
-    $message = "Hiba az ételek lekérdezése során: $etelek";
-}
-
-
-if ($_SERVER['REQUEST_METHOD'] === 'GET') {
-    header("Cache-Control: no-store", true);
-    if (isset($_COOKIE["uploaded"])) {
-        $message = "Sikeres feltöltés!";
-    }
-    else if(isset($_COOKIE["updated"])){
-        $message = "Sikeres frissítés!";
-    }
-    else if(isset($_COOKIE["deleted"])){
-        $message = "Sikeres törlés!";
-    }
-    else if(isset($_COOKIE["alreadyexist"])){
-        $message = "Ez a név már létezik az adatbázisban.";
-    }
-    $_SESSION[$message] = "";
+    $message = "<div class='alert alert-warning'> Hiba az ételek lekérdezése során: $etelek </div>";
 }
 
 // Művelet feldolgozása
@@ -59,23 +41,23 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
             $uniqueName = basename($_FILES['kepek_url']['name']);
             $target_file = $target_dir . $uniqueName;
             if (is_file($target_file)){
-                $message = "Ez a fájl már létezik";
+                $message = "<div class='alert alert-warning'>Ez a fájl már létezik</div>";
             }
             else{
                 if (move_uploaded_file($_FILES['kepek_url']['tmp_name'], $target_file)) {
                     $kep_url = $uniqueName; // Csak a fájl nevét mentjük
                 } else {
-                    $message = "Hiba a kép feltöltése során!";
+                    $message = "<div class='alert alert-warning'>Hiba a kép feltöltése során!</div>";
                 }
             }
         }
         // Ellenőrzés, hogy a név létezik-e már
         $lekerdezes = "SELECT COUNT(*) as count FROM etel WHERE nev = ?";
         $result = adatokLekerdezese($lekerdezes, ['s', $nev]);
+        $alreadyExitsts = false;
         if(is_array($result) && $result[0]['count'] > 0){
-            setcookie("alreadyexist", "true", time() + 1);
-            header("Location: " . $_SERVER['PHP_SELF']);
-            exit();
+            $alreadyExitsts = true;
+            $message = "<div class='alert alert-warning'>Ez az étel már létezik</div>";
         }
         
         else{
@@ -86,12 +68,9 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
                 $result = adatokValtoztatasa($muvelet, $parameterek);
                 $message = $result;
             }
-            setcookie("uploaded", "true", time() + 1);
-            header("Location: " . $_SERVER['PHP_SELF']);
-            exit();
+            $message = "<div class='alert alert-info'>Sikeres feltöltés!</div>";
         }
     }
-
 
     // Szerkesztés
     if ($_SERVER['REQUEST_METHOD'] === 'POST' && $operation === 'edit') { 
@@ -113,7 +92,7 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
                 $kep_url_sql = ", kep_url = ?";
                 $kep_url = $uniqueName; // Csak a fájl nevét mentjük
             } else {
-                $message = "Hiba a kép feltöltése során!";
+                $message = "<div class='alert alert-info'>Hiba a kép feltöltése során! </div>";
             }
         } else {
             // Ha nincs új kép, lekérdezzük az aktuális URL-t az adatbázisból
@@ -136,10 +115,6 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
         $parameterek[] = $id; // Az ID hozzáadása a végén
         $result = adatokValtoztatasa($muvelet, $parameterek);
         $message = $result;
-        
-        setcookie("updated", "true", time() + 1);
-        header("Location: " . $_SERVER['PHP_SELF']);
-        exit();
     }
 
     // Törlés
@@ -155,11 +130,9 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
         // Adatbázisból törlés
         $result = adatokTorlese("id = $id");
         $message = $result;
-        setcookie("deleted", "true", time() + 1);
-        header("Location: " . $_SERVER['PHP_SELF']);
-        exit();
     }
 }
+
 ?>
 
 <!DOCTYPE html>
@@ -171,6 +144,11 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
     <link rel="stylesheet" href="../css/style.css">
     <link rel="stylesheet" href="../css/navbar.css">
     <link rel="stylesheet" href="../css/admin_felulet.css">
+    <script>
+        if ( window.history.replaceState){
+            window.history.replaceState( null, null, window.location.href );
+        }
+    </script>
 </head>
 <body>
 
@@ -225,7 +203,7 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
         <h1>Admin Felület</h1>
 
         <?php if ($message): ?>
-            <div class="alert alert-info"><?= htmlspecialchars($message) ?></div>
+            <?php echo $message; ?>
             <?php endif; ?>
             <form method="POST" enctype="multipart/form-data">
                 <select name="operation" id="operation" class="form-select mb-3" required>
@@ -302,6 +280,7 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
     </div>
 
     <script>
+
     document.getElementById('operation').addEventListener('change', function () {
         const sections = document.querySelectorAll('.form-section');
         
