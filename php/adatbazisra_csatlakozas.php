@@ -1,15 +1,20 @@
 <?php
 
 // SQL function lekérdezésekhez:
-function adatokLekerdezese($muvelet) {
-    $db = new mysqli ('localhost', 'root', '', 'flavorwave');
-    if ($db->connect_errno == 0 ) {
-        $eredmeny = $db->query($muvelet);
-        if ($db->errno == 0) {
-            if ($eredmeny->num_rows != 0) {
-                return $adatok = $eredmeny->fetch_all(MYSQLI_ASSOC);
+function adatokLekerdezese($muvelet, $parameterek = []) {
+    $db = new mysqli('localhost', 'root', '', 'flavorwave');
+    if ($db->connect_errno == 0) {
+        $stmt = $db->prepare($muvelet);
+        if ($stmt) {
+            if (!empty($parameterek)) {
+                $stmt->bind_param(...$parameterek);
+            }
+            $stmt->execute();
+            $eredmeny = $stmt->get_result();
+            if ($eredmeny->num_rows > 0) {
+                return $eredmeny->fetch_all(MYSQLI_ASSOC);
             } else {
-                return 'Nincs találat!';
+                return [];
             }
         }
         return $db->error;
@@ -17,6 +22,7 @@ function adatokLekerdezese($muvelet) {
         return $db->connect_error;
     }
 }
+
 
 // SQL function módosításhoz:
 function adatokValtoztatasa($muvelet, $parameterek) {

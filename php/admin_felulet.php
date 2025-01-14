@@ -35,6 +35,9 @@ if ($_SERVER['REQUEST_METHOD'] === 'GET') {
     else if(isset($_COOKIE["deleted"])){
         $message = "Sikeres törlés!";
     }
+    else if(isset($_COOKIE["alreadyexist"])){
+        $message = "Ez a név már létezik az adatbázisban.";
+    }
     $_SESSION[$message] = "";
 }
 
@@ -66,18 +69,29 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
                 }
             }
         }
-        
-        // Adatbázisba mentés
-        if ($kep_url || !empty($_FILES['kepek_url']['name'])) {
-            $muvelet = "INSERT INTO etel (nev, egyseg_ar, leiras, kategoria_id, kep_url) VALUES (?, ?, ?, ?, ?)";
-            $parameterek = ['sssis', $nev, $egyseg_ar, $leiras, $kategoria_id, $kep_url];
-            $result = adatokValtoztatasa($muvelet, $parameterek);
-            $message = $result;
+        // Ellenőrzés, hogy a név létezik-e már
+        $lekerdezes = "SELECT COUNT(*) as count FROM etel WHERE nev = ?";
+        $result = adatokLekerdezese($lekerdezes, ['s', $nev]);
+        if(is_array($result) && $result[0]['count'] > 0){
+            setcookie("alreadyexist", "true", time() + 1);
+            header("Location: " . $_SERVER['PHP_SELF']);
+            exit();
         }
-        setcookie("uploaded", "true", time() + 1);
-        header("Location: " . $_SERVER['PHP_SELF']);
-        exit();
+        
+        else{
+            // Adatbázisba mentés
+            if ($kep_url || !empty($_FILES['kepek_url']['name'])) {
+                $muvelet = "INSERT INTO etel (nev, egyseg_ar, leiras, kategoria_id, kep_url) VALUES (?, ?, ?, ?, ?)";
+                $parameterek = ['sssis', $nev, $egyseg_ar, $leiras, $kategoria_id, $kep_url];
+                $result = adatokValtoztatasa($muvelet, $parameterek);
+                $message = $result;
+            }
+            setcookie("uploaded", "true", time() + 1);
+            header("Location: " . $_SERVER['PHP_SELF']);
+            exit();
+        }
     }
+
 
     // Szerkesztés
     if ($_SERVER['REQUEST_METHOD'] === 'POST' && $operation === 'edit') { 
@@ -110,6 +124,7 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
         }
     
         // Adatbázis frissítés
+        
         $muvelet = "UPDATE etel SET nev = ?, egyseg_ar = ?, leiras = ?, kategoria_id = ? $kep_url_sql WHERE id = ?";
         $parameterek = ['sisi', $nev, $egyseg_ar, $leiras, $kategoria_id];
         
@@ -208,10 +223,10 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
 
     <div class="container">
         <h1>Admin Felület</h1>
+
         <?php if ($message): ?>
             <div class="alert alert-info"><?= htmlspecialchars($message) ?></div>
             <?php endif; ?>
-            
             <form method="POST" enctype="multipart/form-data">
                 <select name="operation" id="operation" class="form-select mb-3" required>
                     <option value="">Válasszon műveletet</option>
@@ -262,7 +277,7 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
                         </option>
                     <?php endforeach; ?>
                 </select>
-                <input type="file" name="edit_kepek_url" accept="image/*" class="form-control mb-2">
+                <input type="file" name="edit_kepek_url" accept="image/*" class="form-control mb-2" data-required>
                 <button type="submit" class="btn btn-primary">Szerkesztés</button>
             </div>
 
