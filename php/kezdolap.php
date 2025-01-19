@@ -12,6 +12,7 @@ session_start();
     <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/css/bootstrap.min.css" rel="stylesheet">
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.15.4/css/all.min.css">
     <link rel="icon" href="../kepek/logo.png" type="image/png">
+    <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@400;600&display=swap" rel="stylesheet">
     <title>FlavorWave</title>
     <link rel="stylesheet" href="../css/style.css">
     <link rel="stylesheet" href="../css/navbar.css">
@@ -22,52 +23,52 @@ session_start();
 </head>
 <body>
 
-    <!-- NAVBAR -->
-    <!DOCTYPE html>
-    <html lang="en">
-    <head>
-        <meta charset="UTF-8">
-        <meta name="viewport" content="width=device-width, initial-scale=1.0">
-        <title>FlavorWave Navbar</title>
-        <link rel="stylesheet" href="styles.css">
-    </head>
-    <body>
-    <nav>
-        <!-- Bal oldalon a logó -->
-        <a href="kezdolap.php" class="logo">
-            <img src="../kepek/logo.png" alt="Flavorwave Logo">
-            <h1>FlavorWave</h1>
+
+
+
+
+
+
+
+<nav>
+    <!-- Bal oldalon a logó -->
+    <a href="kezdolap.php" class="logo">
+        <img src="../kepek/logo.png" alt="Flavorwave Logo">
+        <h1>FlavorWave</h1>
+    </a>
+
+    <!-- Középen a kategóriák (és Admin felület, ha jogosult) -->
+    <div class="navbar-center">
+        <a href="kategoria.php">Menü</a>
+        <?php if (isset($_SESSION["jog_szint"]) && $_SESSION["jog_szint"] == 1): ?>
+            <a href="admin_felulet.php">Admin felület</a>
+        <?php endif; ?>
+    </div>
+
+    <!-- Jobb oldalon a gombok -->
+    <div class="navbar-buttons">
+        <?php if (isset($_SESSION["username"])): ?>
+            <a href="kijelentkezes.php" class="login-btn">Kijelentkezés</a>
+        <?php else: ?>
+            <a href="bejelentkezes.php" class="login-btn">Bejelentkezés</a>
+        <?php endif; ?>
+        <a href="rendeles.php" class="order-btn">Rendelés</a>
+        <a href="kosar.php" class="cart-btn">
+            <img src="../kepek/kosar.png" alt="Kosár" class="cart-icon">
         </a>
+    </div>
 
-        <!-- Középen a kategóriák (és Admin felület, ha jogosult) -->
-        <div class="navbar-center">
-            <a href="kategoria.php">Kategóriák</a>
-            <?php if (isset($_SESSION["jog_szint"]) && $_SESSION["jog_szint"] == 1): ?>
-                <a href="admin_felulet.php">Admin felület</a>
-            <?php endif; ?>
-        </div>
+    <!-- Hamburger menü ikon -->
+    <div class="hamburger" onclick="toggleMenu()">
+        <span></span>
+        <span></span>
+        <span></span>
+    </div>
+</nav>
 
-        <!-- Jobb oldalon a gombok -->
-        <div class="navbar-buttons">
-            <?php if (isset($_SESSION["username"])): ?>
-                <a href="kijelentkezes.php" class="login-btn">Kijelentkezés</a>
-            <?php else: ?>
-                <a href="bejelentkezes.php" class="login-btn">Bejelentkezés</a>
-            <?php endif; ?>
-            <a href="kosar.php" class="cart-btn">Kosár</a>
-        </div>
-
-        <!-- Hamburger menü ikon -->
-        <div class="hamburger" onclick="toggleMenu()">
-            <span></span>
-            <span></span>
-            <span></span>
-        </div>
-    </nav>
-
-    <!-- Hamburger menü tartalma -->
-    <div class="menubar" id="menubar">
-      <ul>
+<!-- Hamburger menü tartalma -->
+<div class="menubar" id="menubar">
+    <ul>
         <li><a href="kategoria.php">Kategóriák</a></li>
         <?php if (isset($_SESSION["jog_szint"]) && $_SESSION["jog_szint"] == 1): ?>
             <li><a href="admin_felulet.php">Admin felület</a></li>
@@ -78,8 +79,18 @@ session_start();
         <?php else: ?>
             <li><a href="bejelentkezes.php">Bejelentkezés</a></li>
         <?php endif; ?>
-      </ul>
-    </div>
+    </ul>
+</div>
+
+<script>
+    function toggleMenu() {
+        const menu = document.getElementById('menubar');
+        menu.classList.toggle('show-menu');
+    }
+</script>
+
+
+
 
 
 
@@ -117,7 +128,7 @@ session_start();
 
 
 
-<div class="slider">
+<!--<div class="slider">
   <input type="radio" name="toggle" id="btn-1" checked>
   <input type="radio" name="toggle" id="btn-2">
   <input type="radio" name="toggle" id="btn-3">
@@ -160,7 +171,7 @@ session_start();
       </p>
     </li>
   </ul>
-</div>
+</div> -->
 
 
 
