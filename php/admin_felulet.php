@@ -152,7 +152,7 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
 </head>
 <body>
 
-<nav>
+
 <nav>
         <!-- Bal oldalon a logó -->
         <a href="kezdolap.php" class="logo">
@@ -198,8 +198,8 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
         </ul>
     </div>
 
-
     <div class="container">
+        <br><br>
         <h1>Admin Felület</h1>
 
         <?php if ($message): ?>

@@ -1,6 +1,6 @@
 /* Színek definiálása az egyszerűbb eléréshez */
 :root {
-    --hatter_szin_alap: #f9f2ea; /* Test háttérszíne */
+    --hatter_szin_alap: #f5e3ce; /* Test háttérszíne */
     --hamburger_szin: #333; /* Hamburger menü színe */
     --lenyilo_szin_alap: #ffffff; /* Dropdown menü háttérszíne */
     --lenyilo_szin_keret: #ccc; /* Dropdown menü keret színe */
