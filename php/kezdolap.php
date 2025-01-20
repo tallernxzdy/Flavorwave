@@ -69,7 +69,8 @@ session_start();
 <!-- Hamburger menü tartalma -->
 <div class="menubar" id="menubar">
     <ul>
-        <li><a href="kategoria.php">Kategóriák</a></li>
+        <li><a href="kezdolap.php">FlavorWave</a></li>
+        <li><a href="kategoria.php">Menü</a></li>
         <?php if (isset($_SESSION["jog_szint"]) && $_SESSION["jog_szint"] == 1): ?>
             <li><a href="admin_felulet.php">Admin felület</a></li>
         <?php endif; ?>
@@ -81,20 +82,6 @@ session_start();
         <?php endif; ?>
     </ul>
 </div>
-
-<script>
-    function toggleMenu() {
-        const menu = document.getElementById('menubar');
-        menu.classList.toggle('show-menu');
-    }
-</script>
-
-
-
-
-
-
-
 
 <!-- gördülő kép -->
 <div class="parallax" id="parallax">
@@ -114,9 +101,9 @@ session_start();
 <script>
    document.addEventListener("scroll", function () {
     const parallax = document.querySelector(".parallax");
-    const scrollOffset = window.pageYOffset; // Az aktuális görgetési pozíció
-    parallax.style.backgroundPositionY = `${scrollOffset * -0.25}px`; // Lassított mozgás
-    });
+    const scrollOffset = window.pageYOffset; /* Az aktuális görgetési pozíció */
+    parallax.style.backgroundPositionY = `${scrollOffset * -0.3}px`; /* Lassított mozgás */
+});
 
 </script>
 
@@ -128,7 +115,7 @@ session_start();
 
 
 
-<!--<div class="slider">
+<div class="slider">
   <input type="radio" name="toggle" id="btn-1" checked>
   <input type="radio" name="toggle" id="btn-2">
   <input type="radio" name="toggle" id="btn-3">
@@ -171,7 +158,7 @@ session_start();
       </p>
     </li>
   </ul>
-</div> -->
+</div>
 
 
 

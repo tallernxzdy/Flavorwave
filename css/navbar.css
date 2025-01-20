@@ -112,15 +112,32 @@ nav .logo h1 {
   transition: all 0.3s;
 }
 
+/* Hamburger menü nyitott állapot */
+.hamburger.active span:nth-child(1) {
+  transform: rotate(45deg);
+  position: relative;
+  top: 6px;
+}
+
+.hamburger.active span:nth-child(2) {
+  opacity: 0;
+}
+
+.hamburger.active span:nth-child(3) {
+  transform: rotate(-45deg);
+  position: relative;
+  top: -6px;
+}
+
 /* Mobil megjelenés */
 @media (max-width: 768px) {
   .navbar-center,
   .navbar-buttons {
-      display: none;
+    display: none;
   }
 
   .hamburger {
-      display: flex;
+    display: flex;
   }
 }
 
@@ -130,16 +147,27 @@ nav .logo h1 {
   position: fixed;
   top: 0;
   left: 0;
-  background: linear-gradient(to bottom, #b40d3f, #c02607);
+  background: #ba0b0b;
   width: 250px;
   height: 100%;
   box-shadow: 2px 0 4px rgba(0, 0, 0, 0.1);
   padding: 30px;
-  z-index: 999;
+  z-index: 1100; 
 }
 
 .menubar.show-menu {
   display: flex;
+  animation: slideIn 0.3s ease-out;
+}
+
+/* Animáció a menü előbukkanásához */
+@keyframes slideIn {
+  from {
+    transform: translateX(-100%);
+  }
+  to {
+    transform: translateX(0);
+  }
 }
 
 .menubar ul {
@@ -154,17 +182,17 @@ nav .logo h1 {
 
 .menubar ul li a {
   text-decoration: none;
-  color: #fff;
+  color: #333; 
   font-size: 18px;
   font-weight: 600;
   transition: color 0.3s;
 }
 
 .menubar ul li a:hover {
-  color: #ffd1dc;
+  color: #ba0b0b; 
 }
 
-
+/* Rendelés gomb */
 .order-btn {
   color: #fff;
   border: 2px solid #fff;
@@ -176,6 +204,7 @@ nav .logo h1 {
   color: #ba0b0b;
 }
 
+/* Kosár ikon */
 .cart-btn {
   position: relative;
   display: flex;

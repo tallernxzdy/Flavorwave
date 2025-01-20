@@ -1,17 +1,34 @@
+/* Parallax stílusok */
 .parallax {
-    background-image: url('../kepek/pizza3.jpg'); /* Cseréld a képfájlra */
-    min-height: 100%; /* Minimum magasságot állíts be */
-    height: 70%;
-    width: 100%; /* Győződj meg róla, hogy teljes szélességet vesz fel */
-    background-attachment: fixed;
-    background-position: center;
-    background-repeat: no-repeat;
-    background-size: cover; /* A kép méretének helyes beállítása */
-    display: block; /* Biztosítja, hogy rendesen megjelenjen blokkos elemként */
+    background-image: url('../kepek/pizza3.jpg'); /* A háttérkép elérési útja */
+    background-size: cover; /* A háttér teljes teret lefed */
+    background-position: center center; /* A háttér középre van igazítva */
+    background-attachment: fixed; /* A háttér mozdulatlan marad, miközben az oldal görget */
+    min-height: 100vh; /* A parallax a teljes képernyőt kitölti */
+    position: relative;
 }
 
+.parallax_content {
+    position: absolute;
+    top: 50%;
+    left: 50%;
+    transform: translate(-50%, -50%);
+    text-align: center;
+    color: white;
+}
 
-.parallax_content>h2{
-    text-align: left;
-    color: #f5e8aa;
+.main-content {
+    text-align: center;
+}
+
+.main-content h2 {
+    font-size: 2rem;
+    margin-bottom: 15px;
+    color: white;
+}
+
+.main-content p {
+    font-size: 1.2rem;
+    color: white;
+    margin: 10px 0;
 }
