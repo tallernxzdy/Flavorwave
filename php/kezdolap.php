@@ -20,6 +20,8 @@ session_start();
     <link rel="stylesheet" href="../css/footer.css">
     <link rel="stylesheet" href="../css/carousel.css">
     <link rel="stylesheet" href="../css/parallax.css">
+    <link rel="stylesheet" href="../css/kezdolap.css">
+
 
 </head>
 <body>
@@ -84,30 +86,186 @@ session_start();
     </ul>
 </div>
 
-<!-- gördülő kép -->
-<div class="parallax" id="parallax">
-  <div class="parallax_content">
-    <div class="main-content">
-    <h2>Üdvözöljük a Flavorwave oldalon</h2>
-    <?php if (isset($_SESSION["username"])): ?>
-      <p>Szia, <?php echo htmlspecialchars($_SESSION["username"]); ?>!</p>
-    <?php else: ?>
-      <p>Jelentkezz be vagy regisztrálj a fiókod eléréséhez!</p>
-    <?php endif; ?>
-  </div>
-  </div>
-</div>
+<br><br><br><br>
 
 
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+<section id="weekly-deals">
+    <h2>Heti Ajánlat Vége:</h2>
+    <div class="countdown" id="countdown">
+        <span class="days">00</span> nap
+        <span class="hours">00</span> óra
+        <span class="minutes">00</span> perc
+        <span class="seconds">00</span> másodperc
+    </div>
+    <div class="sliders-container">
+        <div class="image-slider" id="image-slider-1">
+            <img src="../kepek/pizza4.jpg" alt="Ajánlat 1">
+            <img src="../kepek/pizza2.jpg" alt="Ajánlat 2">
+            <img src="../kepek/pizza3.jpg" alt="Ajánlat 3">
+        </div>
+        <div class="image-slider" id="image-slider-2">
+            <img src="../kepek/pizza4.jpg" alt="Ajánlat 4">
+            <img src="../kepek/pizza2.jpg" alt="Ajánlat 5">
+            <img src="../kepek/pizza3.jpg" alt="Ajánlat 6">
+        </div>
+    </div>
+    <p>Ne maradj le! Az ajánlat visszaszámlálás alatt érhető el.</p>
+    <a href="menu.php" class="cta-button">Fedezd fel az ajánlatokat!</a>
+</section>
+
+<style>
+  .sliders-container {
+    display: flex;
+    justify-content: flex-start; /* A slider-ek egymás mellé helyezése */
+    gap: 20px; /* Nincs távolság a slider-ek között */
+    margin: 0 auto; /* Középre igazítás */
+    width: 60%; /* A konténer szélessége 100% */
+}
+
+/* Slider stílus */
+.image-slider {
+    position: relative;
+    width: 50%; /* A slider szélességét 50%-ra állítjuk */
+    max-width: none; /* Ne legyen max szélesség */
+    margin: 20px 0; /* Ne legyen margó */
+    overflow: hidden;
+    border-radius: 15px;
+    box-shadow: 0 10px 20px rgba(0, 0, 0, 0.2);
+}
+/* Kép stílus */
+.image-slider img {
+    width: 100%;
+    height: auto;
+    display: none;
+    animation: fadeIn 1s ease-in-out;
+}
+
+.image-slider img.active {
+    display: block;
+}
+
+@keyframes fadeIn {
+    from {
+        opacity: 0;
+    }
+    to {
+        opacity: 1;
+    }
+}
+
+/* Gomb stílus */
+.cta-button {
+    display: inline-block;
+    margin-top: 20px;
+    padding: 15px 30px;
+    font-size: 18px;
+    font-weight: bold;
+    color: #fff;
+    background: linear-gradient(45deg, #ff7e5f, #feb47b);
+    border: none;
+    border-radius: 50px;
+    text-decoration: none;
+    box-shadow: 0 10px 20px rgba(0, 0, 0, 0.2);
+    transition: transform 0.3s, box-shadow 0.3s;
+}
+
+.cta-button:hover {
+    transform: translateY(-5px);
+    box-shadow: 0 15px 25px rgba(0, 0, 0, 0.3);
+    background: linear-gradient(45deg, #feb47b, #ff7e5f);
+}
+
+.cta-button:active {
+    transform: translateY(0);
+    box-shadow: 0 8px 15px rgba(0, 0, 0, 0.2);
+}
+
+</style>
 
 <script>
-   document.addEventListener("scroll", function () {
-    const parallax = document.querySelector(".parallax");
-    const scrollOffset = window.pageYOffset; /* Az aktuális görgetési pozíció */
-    parallax.style.backgroundPositionY = `${scrollOffset * -0.3}px`; /* Lassított mozgás */
-});
+// Visszaszámláló logika
+const countdown = document.getElementById('countdown');
+const endDate = new Date();
+endDate.setDate(endDate.getDate() + 7); // Heti ajánlat 7 nap múlva véget ér
+
+function updateCountdown() {
+    const now = new Date();
+    const timeLeft = endDate - now;
+
+    if (timeLeft <= 0) {
+        countdown.innerHTML = '<strong>Az ajánlat véget ért!</strong>';
+        return;
+    }
+
+    const days = Math.floor(timeLeft / (1000 * 60 * 60 * 24));
+    const hours = Math.floor((timeLeft % (1000 * 60 * 60 * 24)) / (1000 * 60 * 60));
+    const minutes = Math.floor((timeLeft % (1000 * 60 * 60)) / (1000 * 60));
+    const seconds = Math.floor((timeLeft % (1000 * 60)) / 1000);
+
+    countdown.querySelector('.days').textContent = String(days).padStart(2, '0');
+    countdown.querySelector('.hours').textContent = String(hours).padStart(2, '0');
+    countdown.querySelector('.minutes').textContent = String(minutes).padStart(2, '0');
+    countdown.querySelector('.seconds').textContent = String(seconds).padStart(2, '0');
+}
+
+setInterval(updateCountdown, 1000);
+
+// Váltakozó képek logika
+function changeImage(sliderId) {
+    const images = document.querySelectorAll(`#${sliderId} img`);
+    let currentIndex = 0;
+
+    function switchImage() {
+        images[currentIndex].classList.remove('active');
+        currentIndex = (currentIndex + 1) % images.length;
+        images[currentIndex].classList.add('active');
+    }
+
+    images[currentIndex].classList.add('active'); // Induló kép
+    setInterval(switchImage, 3000); // 3 másodpercenként vált
+}
+
+// Kezdés a két sliderrel
+changeImage('image-slider-1');
+changeImage('image-slider-2');
 
 </script>
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
 
 
 
