@@ -1,5 +1,6 @@
 <?php
 session_start();
+
 ?>
 
 <!DOCTYPE html>
@@ -98,6 +99,7 @@ session_start();
 </div>
 
 
+
 <script>
    document.addEventListener("scroll", function () {
     const parallax = document.querySelector(".parallax");
@@ -159,6 +161,142 @@ session_start();
     </li>
   </ul>
 </div>
+
+
+<!-- próba innentől -->
+
+<div class="container mt-5 text-center">
+    <button id="feedbackBtn" class="btn btn-primary">Vélemény írása</button>
+  </div>
+
+  <!-- Vélemény kártya -->
+  <div id="feedbackCard" class="card shadow p-4 position-fixed top-50 start-50 translate-middle d-none" style="width: 400px;">
+    <h5 class="card-title">Értékeld az alkalmazást</h5>
+    <div class="card-body">
+      <!-- Pontszám választás -->
+      <div class="mb-3">
+        <label class="form-label">Pontszám (1-10):</label>
+        <div id="ratingButtons" class="d-flex justify-content-between">
+          <!-- Gombokat JavaScript tölti be -->
+        </div>
+      </div>
+
+      <!-- Vélemény szöveg -->
+      <div class="mb-3">
+        <label for="opinionText" class="form-label">Vélemény:</label>
+        <textarea id="opinionText" class="form-control" rows="3" placeholder="Írd ide a véleményedet..."></textarea>
+      </div>
+
+      <!-- Email cím -->
+      <div class="mb-3">
+        <label for="emailInput" class="form-label">Email cím (nem kötelező):</label>
+        <input type="email" id="emailInput" class="form-control" placeholder="email@example.com">
+      </div>
+
+      <!-- Gombok -->
+      <div class="d-flex justify-content-between">
+        <button id="submitFeedback" class="btn btn-success">Küldés</button>
+        <button id="closeCard" class="btn btn-danger">Bezárás</button>
+      </div>
+    </div>
+  </div>
+
+<br>
+<br>
+<br>
+<br>
+<br>
+<br>
+<br>
+<br>
+<br>
+<br>
+
+<script>
+  document.addEventListener("DOMContentLoaded", () => {
+    const feedbackBtn = document.getElementById("feedbackBtn");
+    const feedbackCard = document.getElementById("feedbackCard");
+    const closeCard = document.getElementById("closeCard");
+    const ratingButtons = document.getElementById("ratingButtons");
+    const submitFeedback = document.getElementById("submitFeedback");
+
+    // Pontszám gombok létrehozása
+    for (let i = 1; i <= 10; i++) {
+      const btn = document.createElement("button");
+      btn.className = "btn btn-outline-primary btn-sm";
+      btn.textContent = i;
+      btn.value = i;
+      btn.addEventListener("click", () => {
+        document.querySelectorAll("#ratingButtons button").forEach(b => b.classList.remove("active"));
+        btn.classList.add("active");
+      });
+      ratingButtons.appendChild(btn);
+    }
+
+    // Kártya megnyitása
+    feedbackBtn.addEventListener("click", () => {
+      feedbackCard.classList.remove("d-none");
+    });
+
+    // Kártya bezárása
+    closeCard.addEventListener("click", () => {
+      feedbackCard.classList.add("d-none");
+    });
+
+    // Vélemény küldése
+    submitFeedback.addEventListener("click", () => {
+      const rating = document.querySelector("#ratingButtons button.active")?.value || null;
+      const opinion = document.getElementById("opinionText").value.trim();
+      const email = document.getElementById("emailInput").value.trim();
+
+      if (!rating) {
+        alert("Kérlek, válassz pontszámot!");
+        return;
+      }
+
+      if (!opinion) {
+        alert("Kérlek, írj véleményt!");
+        return;
+      }
+
+      // Adatok küldése PHP-hez
+      fetch("visszajelzes_kezelese.php", {
+        method: "POST",
+        headers: { "Content-Type": "application/json" },
+        body: JSON.stringify({ rating, opinion, email })
+      })
+      .then(response => {
+        console.log(response)
+          if (!response.ok) {
+              throw new Error(`HTTP hiba! Állapot: ${response.status}`);
+          }
+          return response.text(); // Ideiglenesen text-ként olvasd be a választ
+      })
+      .then(data => {
+          console.log("Válasz szövegként:", data); // Nézd meg, mit küld vissza a PHP
+          return JSON.parse(data); // Ezután próbáld meg JSON-ként értelmezni
+      })
+      .then(parsedData => {
+          alert(parsedData.message);
+          if (parsedData.success) {
+              feedbackCard.classList.add("d-none");
+          }
+      })
+      .catch(err => console.error("Hiba:", err)); 
+
+    });
+  });
+</script>
+
+
+
+<
+
+
+<!-- idáig -->
+
+
+
 
 
 
