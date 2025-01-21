@@ -1,10 +1,17 @@
 <?php
+// Az adatbázis kapcsolat létrehozása
+$conn = new mysqli('localhost', 'root', '', 'flavorwave');
+
+// Ellenőrizzük, hogy sikerült-e a kapcsolat
+if ($conn->connect_errno != 0) {
+    die("Az adatbázis kapcsolódás nem sikerült: " . $conn->connect_error);
+}
 
 // SQL function lekérdezésekhez:
 function adatokLekerdezese($muvelet, $parameterek = []) {
-    $db = new mysqli('localhost', 'root', '', 'flavorwave');
-    if ($db->connect_errno == 0) {
-        $stmt = $db->prepare($muvelet);
+    global $conn;  // Globálisan elérhetővé tesszük a $conn változót
+    if ($conn) {
+        $stmt = $conn->prepare($muvelet);
         if ($stmt) {
             if (!empty($parameterek)) {
                 $stmt->bind_param(...$parameterek);
@@ -17,20 +24,19 @@ function adatokLekerdezese($muvelet, $parameterek = []) {
                 return [];
             }
         }
-        return $db->error;
+        return $conn->error;
     } else {
-        return $db->connect_error;
+        return $conn->connect_error;
     }
 }
 
-
 // SQL function módosításhoz:
 function adatokValtoztatasa($muvelet, $parameterek) {
-    $db = new mysqli('localhost', 'root', '', 'flavorwave');
-    if ($db->connect_errno == 0) {
-        $stmt = $db->prepare($muvelet);
+    global $conn;
+    if ($conn) {
+        $stmt = $conn->prepare($muvelet);
         if ($stmt) {
-            $stmt->bind_param(...$parameterek); // Paramétereket köt hozzá
+            $stmt->bind_param(...$parameterek);
             $stmt->execute();
             if ($stmt->affected_rows > 0) {
                 return 'Sikeres művelet!';
@@ -40,47 +46,44 @@ function adatokValtoztatasa($muvelet, $parameterek) {
                 return $stmt->error;
             }
         } else {
-            return $db->error;
+            return $conn->error;
         }
     } else {
-        return $db->connect_error;
+        return $conn->connect_error;
     }
 }
 
-
 // SQL function törléshez:
 function adatokTorlese($feltetel) {
-    $db = new mysqli('localhost', 'root', '', 'flavorwave');
-    if ($db->connect_errno == 0) {
+    global $conn;
+    if ($conn) {
         $muvelet = "DELETE FROM `etel` WHERE $feltetel";
-        $db->query($muvelet);
-        if ($db->errno == 0) {
-            if ($db->affected_rows > 0) {
+        $conn->query($muvelet);
+        if ($conn->errno == 0) {
+            if ($conn->affected_rows > 0) {
                 return 'Sikeres törlés!';
             } else {
                 return 'Nem történt törlés!';
             }
         }
-        return $db->error;
+        return $conn->error;
     } else {
-        return $db->connect_error;
+        return $conn->connect_error;
     }
 }
-
 
 // SQL function feltöltéshez:
 function adatokFeltoltese() {
-    $db = new mysqli ('localhost', 'root', '', 'flavorwave');
-    if ($db->connect_errno == 0 ) {
-        $muvelet = "INSERT INTO `etel` (id, nev, egyseg_ar, leiras, kategoria_id)	VALUES (?, ?, ?, ?, ?)";
-        $db->query($muvelet);
-        if ($db->errno == 0) {
+    global $conn;
+    if ($conn) {
+        $muvelet = "INSERT INTO `etel` (id, nev, egyseg_ar, leiras, kategoria_id) VALUES (?, ?, ?, ?, ?)";
+        $conn->query($muvelet);
+        if ($conn->errno == 0) {
             return 'Sikeres feltöltés!';
         }
-        return $db->error;
+        return $conn->error;
     } else {
-        return $db->connect_error;
+        return $conn->connect_error;
     }
 }
-
 ?>

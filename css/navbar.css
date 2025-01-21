@@ -130,7 +130,7 @@ nav .logo h1 {
 }
 
 /* Mobil megjelenés */
-@media (max-width: 768px) {
+@media (max-width: 820px) {
   .navbar-center,
   .navbar-buttons {
     display: none;
