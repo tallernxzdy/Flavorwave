@@ -86,7 +86,176 @@ session_start();
     </ul>
 </div>
 
-<br><br><br><br>
+<br><br><br>
+
+
+
+
+
+
+
+
+
+
+
+
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Hero Section - Food Delivery</title>
+    <style>
+        @import url('https://fonts.googleapis.com/css2?family=Montserrat:wght@400;700&display=swap');
+
+        body {
+            margin: 0;
+            font-family: 'Montserrat', sans-serif;
+            overflow-x: hidden;
+        }
+
+        .hero {
+            position: relative;
+            height: 100vh;
+            background: url('../kepek/pizza2.jpg') center/cover no-repeat;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            color: #fff;
+            text-align: center;
+            overflow: hidden;
+        }
+
+        .hero::after {
+            content: '';
+            position: absolute;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            background: rgba(0, 0, 0, 0.6); /* Overlay for better text visibility */
+            z-index: 1;
+        }
+
+        .hero-content {
+            position: relative;
+            z-index: 2;
+            max-width: 800px;
+        }
+
+        .hero h1 {
+            font-size: 4.5rem;
+            margin-bottom: 20px;
+            line-height: 1.2;
+            text-transform: uppercase;
+            letter-spacing: 3px;
+            animation: fadeInDown 1s ease-out;
+            text-shadow: 0 4px 6px rgba(0, 0, 0, 0.5);
+        }
+
+        .hero p {
+            font-size: 1.6rem;
+            margin-bottom: 40px;
+            line-height: 1.5;
+            animation: fadeInUp 1.5s ease-out;
+        }
+
+        .hero .cta-buttons {
+            display: flex;
+            justify-content: center;
+            gap: 20px;
+            animation: fadeInUp 2s ease-out;
+        }
+
+        .cta-buttons a {
+            text-decoration: none;
+            padding: 15px 40px;
+            font-size: 1.4rem;
+            border-radius: 30px;
+            transition: all 0.3s ease;
+            cursor: pointer;
+            font-weight: 700;
+        }
+
+        .cta-buttons .order-now {
+            background: linear-gradient(135deg, #ff7e5f, #feb47b);
+            color: #fff;
+            box-shadow: 0 4px 15px rgba(255, 126, 95, 0.5);
+        }
+
+        .cta-buttons .order-now:hover {
+            background: linear-gradient(135deg, #feb47b, #ff7e5f);
+            transform: scale(1.05);
+        }
+
+        .cta-buttons .view-menu {
+            background: transparent;
+            color: #fff;
+            border: 2px solid #fff;
+            box-shadow: 0 4px 15px rgba(255, 255, 255, 0.3);
+        }
+
+        .cta-buttons .view-menu:hover {
+            background: rgba(255, 255, 255, 0.9);
+            color: #000;
+            transform: scale(1.05);
+        }
+
+        @keyframes fadeInDown {
+            from {
+                opacity: 0;
+                transform: translateY(-50px);
+            }
+            to {
+                opacity: 1;
+                transform: translateY(0);
+            }
+        }
+
+        @keyframes fadeInUp {
+            from {
+                opacity: 0;
+                transform: translateY(50px);
+            }
+            to {
+                opacity: 1;
+                transform: translateY(0);
+            }
+        }
+    </style>
+</head>
+<body>
+    <div class="hero">
+        <div class="hero-content">
+            <h1>Friss, Forró, Finom</h1>
+            <p>Rendelj kedvenc ételeid közül gyorsan és egyszerűen! Fedezd fel az ízek világát.</p>
+            <div class="cta-buttons">
+                <a href="menu.php" class="order-now">Rendelj Most</a>
+                <a href="kategoria.php" class="view-menu">Tekintsd meg a Menüt</a>
+            </div>
+        </div>
+    </div>
+</body>
+</html>
+
+
+<br>
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
 
 
 
