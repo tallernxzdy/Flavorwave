@@ -33,7 +33,7 @@
       <li><a href="admin_felulet.php">Admin felület</a></li>
     <?php endif; ?>
 
-    <?php if (isset($_SESSION["username"])): ?>
+    <?php if (isset($_SESSION["felhasznalo_nev"])): ?>
       <li><a href="kijelentkezes.php">Kijelentkezés</a></li>
     <?php else: ?>
       <li><a href="bejelentkezes.php">Bejelentkezés</a></li>
@@ -54,7 +54,7 @@
       <li><a href="admin_felulet.php">Admin felület</a></li>
     <?php endif; ?>
 
-    <?php if (isset($_SESSION["username"])): ?>
+    <?php if (isset($_SESSION["felhasznalo_nev"])): ?>
       <li><a href="kijelentkezes.php">Kijelentkezés</a></li>
     <?php else: ?>
       <li><a href="bejelentkezes.php">Bejelentkezés</a></li>

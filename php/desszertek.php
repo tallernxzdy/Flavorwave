@@ -36,7 +36,7 @@
 
     <!-- Jobb oldalon a gombok -->
     <div class="navbar-buttons">
-        <?php if (isset($_SESSION["username"])): ?>
+        <?php if (isset($_SESSION["felhasznalo_nev"])): ?>
             <a href="kijelentkezes.php" class="login-btn">Kijelentkezés</a>
         <?php else: ?>
             <a href="bejelentkezes.php" class="login-btn">Bejelentkezés</a>
@@ -64,13 +64,15 @@
             <li><a href="admin_felulet.php">Admin felület</a></li>
         <?php endif; ?>
         <li><a href="kosar.php">Kosár</a></li>
-        <?php if (isset($_SESSION["username"])): ?>
+        <?php if (isset($_SESSION["felhasznalo_nev"])): ?>
             <li><a href="kijelentkezes.php">Kijelentkezés</a></li>
         <?php else: ?>
             <li><a href="bejelentkezes.php">Bejelentkezés</a></li>
         <?php endif; ?>
     </ul>
 </div>
+
+<br><br><br>
     
     <?php
         include './adatbazisra_csatlakozas.php';
