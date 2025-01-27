@@ -1,14 +1,11 @@
 /* Footer stílusok */
 .footer {
-    background-color: rgb(206, 22, 22); /* Háttérszín piros */
-    z-index: 10;
-    color: white; /* Fehér szöveg */
-    padding: 20px 15px; /* Függőleges és vízszintes padding */
-    text-align: center; /* Középre igazított tartalom */
-    box-shadow: 0 -4px 12px rgba(0, 0, 0, 0.15); /* Árnyék */
-    width: 100%; /* Szélesség a teljes képernyőhöz igazodik */
-    margin-top: auto; /* A flex doboz végére helyezi */
-    position: relative; /* Pozíció alapértelmezett */
+    background-color: rgb(206, 22, 22);
+    color: white;
+    padding: 20px 15px;
+    text-align: center;
+    box-shadow: 0 -4px 12px rgba(0, 0, 0, 0.15);
+    width: 100%;
 }
 
 /* Footer belső konténer */

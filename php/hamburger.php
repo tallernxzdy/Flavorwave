@@ -1,5 +1,4 @@
 <?php
-// Munkamenet indítása a fájl elején
 session_start();
 ?>
 

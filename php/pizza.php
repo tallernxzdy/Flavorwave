@@ -1,3 +1,7 @@
+<?php
+session_start();
+?>
+
 <!DOCTYPE html>
 <html lang="en">
 <head>
@@ -8,13 +12,14 @@
     <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/css/bootstrap.min.css" rel="stylesheet">
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.15.4/css/all.min.css">
     <link rel="icon" href="../kepek/logo.png" type="image/png">
-    <title>FlavorWave - Pizzak</title>
+    <title>FlavorWave - Pizza</title>
     <link rel="stylesheet" href="../css/navbar.css">
     <link rel="stylesheet" href="../css/footer.css">
     <link rel="stylesheet" href="../css/kategoriaelemek.css">
     <link rel="stylesheet" href="../css/menu.css">
 </head>
 <body>
+<div class="content-wrapper">
 <nav>
     <!-- Bal oldalon a logó -->
     <a href="kezdolap.php" class="logo">
@@ -106,7 +111,7 @@
                                 <p><strong>Ár:</strong> ' . htmlspecialchars($k['egyseg_ar']) . ' Ft</p>
                             </div>
                             <div class="modal-footer">
-                                <button type="button" class="modern-btn add-to-cart" data-item="' . htmlspecialchars($k['nev']) . '">Kosárba rakás</button>
+                                <button type="button" class="modern-btn add-to-cart" data-item-id="'. htmlspecialchars($k["id"]).'" data-item="' . htmlspecialchars($k['nev']) . '">Kosárba rakás</button>
                                 <button type="button" class="modern-btn close-btn" data-bs-dismiss="modal">Bezárás</button>
                             </div>
                         </div>
@@ -136,27 +141,106 @@
     <script>
         
         document.addEventListener("DOMContentLoaded", function () {
-            // Kosárba rakás gomb kattintása
-            document.querySelectorAll(".add-to-cart").forEach(function (button) {
-                button.addEventListener("click", function (event) {
-                    event.stopPropagation(); 
-                    const itemName = this.getAttribute("data-item");
-                    const toastBody = document.querySelector("#toast-added .toast-body");
-                    toastBody.textContent = `${itemName} sikeresen hozzáadva a kosárhoz!`;
-                
-                    const toastEl = document.getElementById("toast-added");
-                    const toast = new bootstrap.Toast(toastEl);
-                    toast.show();
-                });
-            });
-        
-            // Kártya kattintás logikája
-            document.querySelectorAll(".hover-card").forEach(function (card) {
-                card.addEventListener("click", function () {
-                });
-            });
+    // Kosárba rakás gomb kattintása
+    document.querySelectorAll(".add-to-cart").forEach(function (button) {
+        button.addEventListener("click", function (event) {
+            event.stopPropagation();
+            const itemId = this.getAttribute("data-item-id");
+            addToCart(itemId);
         });
+    });
+
+    // Kosárból törlés gomb kattintása
+    document.querySelectorAll(".remove-from-cart").forEach(function (button) {
+        button.addEventListener("click", function (event) {
+            event.stopPropagation();
+            const itemId = this.getAttribute("data-item-id");
+            removeFromCart(itemId);
+        });
+    });
+
+    // Mennyiség módosítása
+    document.querySelectorAll(".quantity-controls button").forEach(function (button) {
+        button.addEventListener("click", function (event) {
+            event.stopPropagation();
+            const itemId = this.closest(".cart-item").getAttribute("data-item-id");
+            const action = this.textContent === "+" ? "increase" : "decrease";
+            updateCartQuantity(itemId, action);
+        });
+    });
+});
+
+function addToCart(itemId) {
+    fetch("kosarba_rakas.php", {
+        method: "POST",
+        headers: {
+            "Content-Type": "application/json"
+        },
+        body: JSON.stringify({ itemId: itemId })
+    })
+    .then(response => response.json())
+    .then(data => {
+        if (data.success) {
+            showToast("Sikeresen hozzáadva a kosárhoz!");
+            
+        } else {
+            showToast("Hiba történt a kosárba rakás során.");
+        }
+    });
+}
+
+function removeFromCart(itemId) {
+    fetch("kosarbol_torles.php", {
+        method: "POST",
+        headers: {
+            "Content-Type": "application/json"
+        },
+        body: JSON.stringify({ itemId: itemId })
+    })
+    .then(response => response.json())
+    .then(data => {
+        if (data.success) {
+            showToast("Sikeresen eltávolítva a kosárból!");
+            
+        } else {
+            showToast("Hiba történt a törlés során.");
+        }
+    });
+}
+
+function updateCartQuantity(itemId, action) {
+    fetch("kosar_mod.php", {
+        method: "POST",
+        headers: {
+            "Content-Type": "application/json"
+        },
+        body: JSON.stringify({ itemId: itemId, action: action })
+    })
+    .then(response => response.json())
+    .then(data => {
+        if (data.success) {
+            showToast("Mennyiség frissítve!");
+           
+        } else {
+            showToast("Hiba történt a mennyiség frissítése során.");
+        }
+    });
+}
+
+function showToast(message) {
+    const toastBody = document.querySelector("#toast-added .toast-body");
+    toastBody.textContent = message;
+    const toastEl = document.getElementById("toast-added");
+    const toast = new bootstrap.Toast(toastEl);
+    toast.show();
+}
+
+        
     </script>
+
+
+
+
     
     
 
