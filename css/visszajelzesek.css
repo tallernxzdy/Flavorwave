@@ -1,0 +1,141 @@
+/* visszajelzesek.css */
+
+/* Alapbeállítások */
+body {
+    margin: 0;
+    font-family: 'Poppins', sans-serif;
+    padding-top: 70px; /* A navbar miatt */
+    background: linear-gradient(to bottom, #f7f7f7, #ececec);
+    min-height: 100vh;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+}
+
+/* Konténer a formhoz */
+.container {
+    background-color: #fff;
+    padding: 30px;
+    border-radius: 15px;
+    box-shadow: 0 4px 10px rgba(0, 0, 0, 0.1);
+    max-width: 600px;
+    width: 100%;
+    margin: 20px;
+}
+
+/* Cím stílusa */
+.container h1 {
+    font-size: 28px;
+    color: #ff3b3f;
+    text-align: center;
+    margin-bottom: 20px;
+    font-weight: bold;
+}
+
+/* Üzenet stílusa */
+.uzenet {
+    text-align: center;
+    font-size: 16px;
+    color: #333;
+    margin-bottom: 20px;
+    padding: 10px;
+    border-radius: 5px;
+    background-color: #f8f9fa;
+    border: 1px solid #ddd;
+}
+
+/* Form elemek */
+form {
+    display: flex;
+    flex-direction: column;
+    gap: 20px;
+}
+
+label {
+    font-size: 18px;
+    color: #333;
+    font-weight: 600;
+}
+
+select, textarea {
+    width: 100%;
+    padding: 10px;
+    font-size: 16px;
+    border: 2px solid #ddd;
+    border-radius: 8px;
+    transition: border-color 0.3s;
+}
+
+select:focus, textarea:focus {
+    border-color: #ff3b3f;
+    outline: none;
+}
+
+textarea {
+    resize: vertical;
+    min-height: 150px;
+}
+
+button {
+    background-color: #ff3b3f;
+    color: #fff;
+    font-size: 18px;
+    font-weight: 600;
+    padding: 12px 20px;
+    border: none;
+    border-radius: 8px;
+    cursor: pointer;
+    transition: background-color 0.3s, transform 0.3s;
+}
+
+button:hover {
+    background-color: #ff1c1f;
+    transform: scale(1.05);
+}
+
+/* Reszponzív design */
+@media (max-width: 768px) {
+    .container {
+        padding: 20px;
+    }
+
+    .container h1 {
+        font-size: 24px;
+    }
+
+    label {
+        font-size: 16px;
+    }
+
+    select, textarea {
+        font-size: 14px;
+    }
+
+    button {
+        font-size: 16px;
+        padding: 10px 15px;
+    }
+}
+
+@media (max-width: 480px) {
+    .container {
+        padding: 15px;
+    }
+
+    .container h1 {
+        font-size: 22px;
+    }
+
+    label {
+        font-size: 14px;
+    }
+
+    select, textarea {
+        font-size: 12px;
+    }
+
+    button {
+        font-size: 14px;
+        padding: 8px 12px;
+    }
+}
