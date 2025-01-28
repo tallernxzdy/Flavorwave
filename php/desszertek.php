@@ -23,13 +23,11 @@ session_start();
 <body>
     <div class="content-wrapper">
         <nav>
-            <!-- Bal oldalon a logó -->
             <a href="kezdolap.php" class="logo">
                 <img src="../kepek/logo.png" alt="Flavorwave Logo">
                 <h1>FlavorWave</h1>
             </a>
 
-            <!-- Középen a kategóriák (és Admin felület, ha jogosult) -->
             <div class="navbar-center">
                 <a href="kategoria.php">Menü</a>
                 <?php if (isset($_SESSION["jog_szint"]) && $_SESSION["jog_szint"] == 1): ?>
@@ -37,7 +35,6 @@ session_start();
                 <?php endif; ?>
             </div>
 
-            <!-- Jobb oldalon a gombok -->
             <div class="navbar-buttons">
                 <?php if (isset($_SESSION["felhasznalo_nev"])): ?>
                     <a href="kijelentkezes.php" class="login-btn">Kijelentkezés</a>
@@ -50,7 +47,6 @@ session_start();
                 </a>
             </div>
 
-            <!-- Hamburger menü ikon -->
             <div class="hamburger" onclick="toggleMenu()">
                 <span></span>
                 <span></span>
@@ -58,7 +54,6 @@ session_start();
             </div>
         </nav>
 
-        <!-- Hamburger menü tartalma -->
         <div class="menubar" id="menubar">
             <ul>
                 <li><a href="kezdolap.php">FlavorWave</a></li>
@@ -126,144 +121,65 @@ session_start();
             echo "<p>Ehhez a kategóriához nem tartozik étel!</p>";
         }
         ?>
-
-        <!-- Toast értesítés HTML kód -->
-        <div class="toast-container position-fixed bottom-0 end-0 p-3">
-            <div id="toast-added" class="toast align-items-center text-bg-success border-0" role="alert"
-                aria-live="assertive" aria-atomic="true">
-                <div class="d-flex">
-                    <div class="toast-body">
-                        Sikeresen hozzáadva a kosárhoz!
-                    </div>
-                    <button type="button" class="btn-close btn-close-white me-2 m-auto" data-bs-dismiss="toast"
-                        aria-label="Close"></button>
-                </div>
-            </div>
-        </div>
-
     </div>
-        <div class="footer">
-            <div class="footer-container">
-                <ul class="footer-links">
-                    <li><a href="../html/rolunk.html">Rólunk</a></li>
-                    <li><a href="../html/kapcsolatok.html">Kapcsolat</a></li>
-                    <li><a href="../html/adatvedelem.html">Adatvédelem</a></li>
-                </ul>
-                <div class="footer-socials">
-                    <a href="#"><i class="fab fa-facebook"></i></a>
-                    <a href="#"><i class="fab fa-instagram"></i></a>
-                    <a href="#"><i class="fab fa-twitter"></i></a>
-                    <a href="#"><i class="fab fa-youtube"></i></a>
-                </div>
-                <div class="footer-copy">
-                    &copy; 2024 FlavorWave - Minden jog fenntartva.
-                </div>
+
+    <div class="footer">
+        <div class="footer-container">
+            <ul class="footer-links">
+                <li><a href="../html/rolunk.html">Rólunk</a></li>
+                <li><a href="../html/kapcsolatok.html">Kapcsolat</a></li>
+                <li><a href="../html/adatvedelem.html">Adatvédelem</a></li>
+            </ul>
+            <div class="footer-socials">
+                <a href="#"><i class="fab fa-facebook"></i></a>
+                <a href="#"><i class="fab fa-instagram"></i></a>
+                <a href="#"><i class="fab fa-twitter"></i></a>
+                <a href="#"><i class="fab fa-youtube"></i></a>
+            </div>
+            <div class="footer-copy">
+                &copy; 2024 FlavorWave - Minden jog fenntartva.
             </div>
         </div>
+    </div>
 
-        <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/js/bootstrap.bundle.min.js"></script>
-        <script>
-
-            document.addEventListener("DOMContentLoaded", function () {
-                // Kosárba rakás gomb kattintása
-                document.querySelectorAll(".add-to-cart").forEach(function (button) {
-                    button.addEventListener("click", function (event) {
-                        event.stopPropagation();
-                        const itemId = this.getAttribute("data-item-id");
-                        addToCart(itemId);
-                    });
-                });
-
-                // Kosárból törlés gomb kattintása
-                document.querySelectorAll(".remove-from-cart").forEach(function (button) {
-                    button.addEventListener("click", function (event) {
-                        event.stopPropagation();
-                        const itemId = this.getAttribute("data-item-id");
-                        removeFromCart(itemId);
-                    });
-                });
-
-                // Mennyiség módosítása
-                document.querySelectorAll(".quantity-controls button").forEach(function (button) {
-                    button.addEventListener("click", function (event) {
-                        event.stopPropagation();
-                        const itemId = this.closest(".cart-item").getAttribute("data-item-id");
-                        const action = this.textContent === "+" ? "increase" : "decrease";
-                        updateCartQuantity(itemId, action);
-                    });
+    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/js/bootstrap.bundle.min.js"></script>
+    <script>
+        document.addEventListener("DOMContentLoaded", function () {
+            document.querySelectorAll(".add-to-cart").forEach(function (button) {
+                button.addEventListener("click", function (event) {
+                    event.stopPropagation();
+                    const itemId = this.getAttribute("data-item-id");
+                    addToCart(itemId);
                 });
             });
+        });
 
-            function addToCart(itemId) {
-                fetch("kosarba_rakas.php", {
-                    method: "POST",
-                    headers: {
-                        "Content-Type": "application/json"
-                    },
-                    body: JSON.stringify({ itemId: itemId })
-                })
-                    .then(response => response.json())
-                    .then(data => {
-                        if (data.success) {
-                            showToast("Sikeresen hozzáadva a kosárhoz!");
+        function addToCart(itemId) {
+            fetch("kosarba_rakas.php", {
+                method: "POST",
+                headers: {
+                    "Content-Type": "application/json"
+                },
+                body: JSON.stringify({ itemId: itemId })
+            })
+                .then(response => response.json())
+                .then(data => {
+                    if (data.success) {
+                        showToast("Sikeresen hozzáadva a kosárhoz!");
+                    } else {
+                        showToast("Hiba történt a kosárba rakás során.");
+                    }
+                });
+        }
 
-                        } else {
-                            showToast("Hiba történt a kosárba rakás során.");
-                        }
-                    });
-            }
-
-            function removeFromCart(itemId) {
-                fetch("kosarbol_torles.php", {
-                    method: "POST",
-                    headers: {
-                        "Content-Type": "application/json"
-                    },
-                    body: JSON.stringify({ itemId: itemId })
-                })
-                    .then(response => response.json())
-                    .then(data => {
-                        if (data.success) {
-                            showToast("Sikeresen eltávolítva a kosárból!");
-
-                        } else {
-                            showToast("Hiba történt a törlés során.");
-                        }
-                    });
-            }
-
-            function updateCartQuantity(itemId, action) {
-                fetch("kosar_mod.php", {
-                    method: "POST",
-                    headers: {
-                        "Content-Type": "application/json"
-                    },
-                    body: JSON.stringify({ itemId: itemId, action: action })
-                })
-                    .then(response => response.json())
-                    .then(data => {
-                        if (data.success) {
-                            showToast("Mennyiség frissítve!");
-
-                        } else {
-                            showToast("Hiba történt a mennyiség frissítése során.");
-                        }
-                    });
-            }
-
-            function showToast(message) {
-                const toastBody = document.querySelector("#toast-added .toast-body");
-                toastBody.textContent = message;
-                const toastEl = document.getElementById("toast-added");
-                const toast = new bootstrap.Toast(toastEl);
-                toast.show();
-            }
-
-
-        </script>      
-        
-            <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/js/bootstrap.bundle.min.js"></script>
-            <script src="../js/navbar.js"></script>
+        function showToast(message) {
+            const toastBody = document.querySelector("#toast-added .toast-body");
+            toastBody.textContent = message;
+            const toastEl = document.getElementById("toast-added");
+            const toast = new bootstrap.Toast(toastEl);
+            toast.show();
+        }
+    </script>
 </body>
 
 </html>

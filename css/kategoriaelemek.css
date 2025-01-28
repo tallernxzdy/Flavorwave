@@ -1,12 +1,13 @@
-body {
+body, html {
+    height: 100%; /* A teljes képernyő magassága */
+    margin: 0; /* Nincs alapértelmezett margó */
+    display: flex;
+    flex-direction: column; /* Függőleges elrendezés */
+}
+
+/* Tartalom kerete */
+.content-wrapper {
+    flex: 1; /* A tartalom kitölti a fennmaradó helyet */
     display: flex;
     flex-direction: column;
-    min-height: 100vh;
-    margin: 0;
-    background-color: #F1F8E9;
-}
-/* A tartalom kitölti a maradék helyet */
-.content-wrapper {
-    flex: 1;
-    width: 100%;
 }
