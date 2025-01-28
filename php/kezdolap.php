@@ -411,6 +411,313 @@ changeImage('image-slider-2');
 
 
 
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+<style>
+    :root {
+      --primary-color: #ff758c;
+      --secondary-color: #ffe6e9;
+      --text-color: #333;
+      --button-hover: #ff4a6e;
+      --shadow-color: rgba(0, 0, 0, 0.2);
+    }
+
+    /* General Reset */
+    * {
+      margin: 0;
+      padding: 0;
+      box-sizing: border-box;
+    }
+
+    /* Slider Container */
+    .coupon-slider {
+      position: relative;
+      width: 90%;
+      max-width: 1200px;
+      margin: 50px auto;
+      overflow: hidden;
+      border-radius: 25px;
+      box-shadow: 0 10px 30px var(--shadow-color);
+      background: #fff;
+    }
+
+    /* Slides Wrapper */
+    .slides {
+      display: flex;
+      transition: transform 0.6s cubic-bezier(0.68, -0.55, 0.27, 1.55);
+    }
+
+    /* Individual Slide */
+    .slide {
+      flex: 0 0 100%;
+      display: flex;
+      align-items: center;
+      color: var(--text-color);
+      padding: 20px;
+    }
+
+    .slide .text {
+      flex: 1;
+      padding: 20px;
+      text-align: left;
+      animation: fadeIn 1s ease;
+    }
+
+    .slide h3 {
+      font-size: 3rem;
+      color: var(--primary-color);
+      margin-bottom: 20px;
+      text-shadow: 2px 2px 4px rgba(0, 0, 0, 0.2);
+    }
+
+    .slide p {
+      font-size: 1.2rem;
+      margin-bottom: 30px;
+    }
+
+    .slide .btn {
+      display: inline-block;
+      padding: 15px 30px;
+      background: var(--primary-color);
+      color: #fff;
+      border-radius: 50px;
+      font-weight: bold;
+      text-decoration: none;
+      transition: all 0.3s ease;
+      box-shadow: 0 5px 15px rgba(255, 117, 140, 0.4);
+    }
+
+    .slide .btn:hover {
+      background: var(--button-hover);
+      box-shadow: 0 8px 20px rgba(255, 74, 110, 0.6);
+      transform: scale(1.1);
+    }
+
+    .slide .image {
+      flex: 1;
+      display: flex;
+      justify-content: center;
+      align-items: center;
+      position: relative;
+    }
+
+    .slide .image img {
+      max-width: 90%;
+      border-radius: 20px;
+      box-shadow: 0 8px 20px var(--shadow-color);
+      transform: scale(1);
+      transition: transform 0.5s ease;
+    }
+
+    .slide .image img:hover {
+      transform: scale(1.1);
+    }
+
+    /* Navigation Buttons */
+    .coupon-slider button {
+      position: absolute;
+      top: 50%;
+      transform: translateY(-50%);
+      background: rgba(255, 255, 255, 0.8);
+      border: none;
+      border-radius: 50%;
+      padding: 15px;
+      cursor: pointer;
+      box-shadow: 0 4px 10px var(--shadow-color);
+      transition: all 0.3s ease;
+    }
+
+    .coupon-slider button:hover {
+      background: #fff;
+      transform: translateY(-50%) scale(1.2);
+    }
+
+    .coupon-slider .prev {
+      left: 10px;
+    }
+
+    .coupon-slider .next {
+      right: 10px;
+    }
+
+    /* Decorative Dots */
+    .dots {
+      display: flex;
+      justify-content: center;
+      margin-top: 20px;
+    }
+
+    .dot {
+      width: 15px;
+      height: 15px;
+      background: #fff;
+      border: 2px solid var(--primary-color);
+      border-radius: 50%;
+      margin: 0 5px;
+      cursor: pointer;
+      transition: all 0.3s ease;
+    }
+
+    .dot.active {
+      background: var(--primary-color);
+      transform: scale(1.3);
+    }
+
+    @keyframes fadeIn {
+      from {
+        opacity: 0;
+        transform: translateY(20px);
+      }
+      to {
+        opacity: 1;
+        transform: translateY(0);
+      }
+    }
+  </style>
+</head>
+<body>
+
+<div class="coupon-slider">
+  <div class="slides">
+    <div class="slide">
+      <div class="text">
+        <h3>50% OFF on Burgers!</h3>
+        <p>Only today! Use coupon code: <strong>BURGER50</strong></p>
+        <a href="#" class="btn">Order Now</a>
+      </div>
+      <div class="image">
+        <img src="../kepek/pizza2.jpg" alt="Burger Deal">
+      </div>
+    </div>
+    <div class="slide">
+      <div class="text">
+        <h3>Free Dessert!</h3>
+        <p>With orders above $20. Valid until 2025-01-31.</p>
+        <a href="#" class="btn">Claim Now</a>
+      </div>
+      <div class="image">
+        <img src="../kepek/pizza2.jpg" alt="Dessert Offer">
+      </div>
+    </div>
+    <div class="slide">
+      <div class="text">
+        <h3>Buy 1 Get 1 Free</h3>
+        <p>On all pizzas. Use code: <strong>PIZZADEAL</strong></p>
+        <a href="#" class="btn">Grab the Deal</a>
+      </div>
+      <div class="image">
+        <img src="../kepek/pizza2.jpg" alt="Pizza Deal">
+      </div>
+    </div>
+  </div>
+  <button class="prev">&#10094;</button>
+  <button class="next">&#10095;</button>
+</div>
+
+<div class="dots">
+  <div class="dot active"></div>
+  <div class="dot"></div>
+  <div class="dot"></div>
+</div>
+
+<script>
+  const slides = document.querySelector('.slides');
+  const slide = document.querySelectorAll('.slide');
+  const prevButton = document.querySelector('.prev');
+  const nextButton = document.querySelector('.next');
+  const dots = document.querySelectorAll('.dot');
+  let currentIndex = 0;
+  let autoSlideInterval;
+
+  const updateSlider = () => {
+    slides.style.transform = `translateX(-${currentIndex * 100}%)`;
+    dots.forEach((dot, index) => {
+      dot.classList.toggle('active', index === currentIndex);
+    });
+  };
+
+  const nextSlide = () => {
+    currentIndex = (currentIndex < slide.length - 1) ? currentIndex + 1 : 0;
+    updateSlider();
+  };
+
+  const prevSlide = () => {
+    currentIndex = (currentIndex > 0) ? currentIndex - 1 : slide.length - 1;
+    updateSlider();
+  };
+
+  const startAutoSlide = () => {
+    autoSlideInterval = setInterval(nextSlide, 7000);
+  };
+
+  const stopAutoSlide = () => {
+    clearInterval(autoSlideInterval);
+  };
+
+  prevButton.addEventListener('click', () => {
+    prevSlide();
+    stopAutoSlide();
+    startAutoSlide();
+  });
+
+  nextButton.addEventListener('click', () => {
+    nextSlide();
+    stopAutoSlide();
+    startAutoSlide();
+  });
+
+  dots.forEach((dot, index) => {
+    dot.addEventListener('click', () => {
+      currentIndex = index;
+      updateSlider();
+      stopAutoSlide();
+      startAutoSlide();
+
+});
+  });
+
+  // Start automatic sliding on page load
+  startAutoSlide();
+
+  // Optional: Pause auto-slide on hover
+  const slider = document.querySelector('.coupon-slider');
+  slider.addEventListener('mouseenter', stopAutoSlide);
+  slider.addEventListener('mouseleave', startAutoSlide);
+</script>
+
+
+
+<br>
+
+
+
+
+
+
     <!-- Footer -->
     <div class="footer">
     <div class="footer-container">
