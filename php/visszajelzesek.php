@@ -9,7 +9,7 @@ if (!isset($_SESSION['felhasznalo_id'])) {
 if ($_SERVER['REQUEST_METHOD'] == 'POST') {
     // reCAPTCHA ellenőrzése
     $recaptcha_response = $_POST['g-recaptcha-response'];
-    $secret_key = "SECRET_KULCSOD"; // Ide írd be a Secret Key-et
+    $secret_key = "6Lf0bsoqAAAAADWSHQoOWiAnwyLyZL60Cfoi33K3";
     $url = 'https://www.google.com/recaptcha/api/siteverify';
     $data = [
         'secret' => $secret_key,
@@ -172,7 +172,7 @@ if ($_SERVER['REQUEST_METHOD'] == 'POST') {
             <textarea id="visszajelzes" name="visszajelzes" rows="5" required></textarea>
 
             <!-- reCAPTCHA -->
-            <div class="g-recaptcha" data-sitekey="SITE_KULCSOD"></div>
+            <div class="g-recaptcha" data-sitekey="6Lf0bsoqAAAAADgj9B0eBgXozNmq1q2vYqEMXzvb"></div>
             <br>
 
             <button type="submit">Küldés</button>
