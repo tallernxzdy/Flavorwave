@@ -151,9 +151,13 @@ if ($userId) {
 
         <div class="checkout-section">
             <?php if ($userId): ?>
-                <form action="rendeles_veglegesitese.php" method="post">
-                    <button class="checkout-btn" type="submit">Rendelés</button>
-                </form>
+                <?php if (!empty($cartItems)): ?>
+                    <form action="rendeles.php" method="post">
+                        <button class="checkout-btn" type="submit">Rendelés</button>
+                    </form>
+                <?php else: ?>
+                    <p class="error">A kosár üres, rendeléshez adjon hozzá termékeket!</p>
+                <?php endif; ?>
             <?php else: ?>
                 <p class="login-prompt">Rendeléshez jelentkezzen be!</p>
                 <a href="bejelentkezes.php" class="login-btn">Bejelentkezés</a>
@@ -239,24 +243,24 @@ if ($userId) {
         }
     </script>
 
-<div class="footer">
-    <div class="footer-container">
-        <ul class="footer-links">
-            <li><a href="../html/rolunk.html">Rólunk</a></li>
-            <li><a href="../html/kapcsolatok.html">Kapcsolat</a></li>
-            <li><a href="../html/adatvedelem.html">Adatvédelem</a></li>
-        </ul>
-        <div class="footer-socials">
-            <a href="#"><i class="fab fa-facebook"></i></a>
-            <a href="#"><i class="fab fa-instagram"></i></a>
-            <a href="#"><i class="fab fa-twitter"></i></a>
-            <a href="#"><i class="fab fa-youtube"></i></a>
-        </div>
-        <div class="footer-copy">
-            &copy; 2024 FlavorWave - Minden jog fenntartva.
+    <div class="footer">
+        <div class="footer-container">
+            <ul class="footer-links">
+                <li><a href="../html/rolunk.html">Rólunk</a></li>
+                <li><a href="../html/kapcsolatok.html">Kapcsolat</a></li>
+                <li><a href="../html/adatvedelem.html">Adatvédelem</a></li>
+            </ul>
+            <div class="footer-socials">
+                <a href="#"><i class="fab fa-facebook"></i></a>
+                <a href="#"><i class="fab fa-instagram"></i></a>
+                <a href="#"><i class="fab fa-twitter"></i></a>
+                <a href="#"><i class="fab fa-youtube"></i></a>
+            </div>
+            <div class="footer-copy">
+                &copy; 2024 FlavorWave - Minden jog fenntartva.
+            </div>
         </div>
     </div>
-</div>
     <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/js/bootstrap.bundle.min.js"></script>
     <script src="../js/navbar.js"></script>
 

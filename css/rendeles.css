@@ -1,0 +1,14 @@
+.order-container { max-width: 800px; margin: 2rem auto; padding: 2rem; }
+.cart-summary { background: #f8f9fa; padding: 1.5rem; border-radius: 8px; }
+.error {
+    color: #dc3545;
+    background: #f8d7da;
+    padding: 1rem;
+    border-radius: 4px;
+    margin-bottom: 1rem;
+    border: 1px solid #f5c6cb;
+}
+
+.error p {
+    margin: 0;
+}

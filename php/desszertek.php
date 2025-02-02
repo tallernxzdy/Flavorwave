@@ -70,7 +70,6 @@ session_start();
             </ul>
         </div>
 
-        <br><br><br>
 
         <?php
         include './adatbazisra_csatlakozas.php';
