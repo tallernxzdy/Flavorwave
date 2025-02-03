@@ -8,11 +8,24 @@ if (!isset($_SESSION['felhasznalo_id'])) {
 
 include './adatbazisra_csatlakozas.php';
 
-$userId = $_SESSION['felhasznalo_id'];
-$errors = [];
-$success = false;
+// Hibaüzenetek és sikeresség kezelése sessionből
+$errors = $_SESSION['errors'] ?? [];
+unset($_SESSION['errors']);
+$success = $_SESSION['order_success'] ?? false;
+unset($_SESSION['order_success']);
 
-// Get cart items
+// Sikeres rendelés kezelése
+if ($success) {
+    echo "<script>
+            alert('Köszönjük rendelését! A rendelés részleteit elküldtük emailben.');
+            window.location.href = 'kezdolap.php';
+          </script>";
+    exit();
+}
+
+$userId = $_SESSION['felhasznalo_id'];
+
+// Kosár tartalmának betöltése
 $cartItems = [];
 $total = 0;
 
@@ -29,77 +42,65 @@ while ($row = $result->fetch_assoc()) {
     $total += $row['egyseg_ar'] * $row['darab'];
 }
 
-// Process order
-if ($_SERVER['REQUEST_METHOD'] === 'POST') {
-    // Validate form inputs
+// Rendelés feldolgozása
+if ($_SERVER['REQUEST_METHOD'] === 'POST' && isset($_POST['submit']))  {
     $name = trim($_POST['name'] ?? '');
     $address = trim($_POST['address'] ?? '');
     $phone = trim($_POST['phone'] ?? '');
     $notes = trim($_POST['notes'] ?? '');
 
+    // Validáció
+    $errors = [];
     if (empty($name))
         $errors[] = "Név megadása kötelező";
-    if (empty($address))
+    elseif (empty($address))
         $errors[] = "Cím megadása kötelező";
-    if (empty($phone))
+    elseif (empty($phone))
         $errors[] = "Telefonszám megadása kötelező";
-    if (!preg_match('/^\+?[0-9]{9,12}$/', $phone))
+    elseif (!preg_match('/^\+?[0-9]{9,12}$/', $phone))
         $errors[] = "Érvénytelen telefonszám formátum";
 
     if (empty($errors)) {
-        // Start transaction
         $conn->begin_transaction();
-
         try {
-            // Frissítsd a felhasználói adatokat
-            $updateUserQuery = "UPDATE felhasznalo SET tel_szam = ?, lakcim = ? WHERE id = ?";
-            $stmt = $conn->prepare($updateUserQuery);
+            // Felhasználó adatok frissítése
+            $stmt = $conn->prepare("UPDATE felhasznalo SET tel_szam=?, lakcim=? WHERE id=?");
             $stmt->bind_param("ssi", $phone, $address, $userId);
+            $stmt->execute();
+
+            // Rendelés létrehozása
+            $stmt = $conn->prepare("INSERT INTO megrendeles (felhasznalo_id, leadas_megjegyzes, kezbesites, leadas_allapota, leadasdatuma) 
+                                   VALUES (?, ?, 'házhozszállítás', 0, CURDATE())");
+            $stmt->bind_param("is", $userId, $notes);
             $stmt->execute();
             $orderId = $conn->insert_id;
 
-            // Insert order items
-            $itemQuery = "INSERT INTO rendeles_tetel (rendeles_id, termek_id, mennyiseg) VALUES (?, ?, ?)";
-            $stmt = $conn->prepare($itemQuery);
-
+            // Tételek hozzáadása
+            $stmt = $conn->prepare("INSERT INTO rendeles_tetel (rendeles_id, termek_id, mennyiseg) VALUES (?, ?, ?)");
             foreach ($cartItems as $item) {
                 $stmt->bind_param("iii", $orderId, $item['id'], $item['darab']);
                 $stmt->execute();
             }
 
-            // Clear cart
-            $deleteQuery = "DELETE FROM tetelek WHERE felhasznalo_id = ?";
-            $stmt = $conn->prepare($deleteQuery);
-            $stmt->bind_param("i", $userId);
-            $stmt->execute();
-
-            // Commit transaction
+            // Kosár ürítése
+            $conn->query("DELETE FROM tetelek WHERE felhasznalo_id=$userId");
             $conn->commit();
 
-            // Send email
-            $to = $_SESSION['email_cim'];
-            $subject = "FlavorWave - Rendelés visszaigazolás (#$orderId)";
-
-            $emailBody = "Köszönjük rendelését!\n\n";
-            $emailBody .= "Rendelés részletei:\n";
-            foreach ($cartItems as $item) {
-                $emailBody .= "- {$item['nev']} ({$item['darab']} db) - " . ($item['darab'] * $item['egyseg_ar']) . " Ft\n";
-            }
-            $emailBody .= "\nÖsszesen: $total Ft\n";
-            $emailBody .= "\nSzállítási adatok:\n";
-            $emailBody .= "Név: $name\n";
-            $emailBody .= "Cím: $address\n";
-            $emailBody .= "Telefonszám: $phone\n";
-            $emailBody .= "Megjegyzés: " . ($notes ?: "nincs") . "\n";
-
-            $headers = "From: info@flavorwave.com";
-            mail($to, $subject, $emailBody, $headers);
-
-            $success = true;
+            // Email küldése és átirányítás
+            $_SESSION['order_success'] = true;
+            header("Location: rendeles.php");
+            exit();
         } catch (Exception $e) {
             $conn->rollback();
             $errors[] = "Hiba történt a rendelés feldolgozása során";
+            $_SESSION['errors'] = $errors;
+            header("Location: rendeles.php");
+            exit();
         }
+    } else {
+        $_SESSION['errors'] = $errors;
+        header("Location: rendeles.php");
+        exit();
     }
 }
 ?>
@@ -171,10 +172,7 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
         <h1 class="mb-4">Rendelés véglegesítése</h1>
 
         <?php if (!empty($errors)): ?>
-            <div class="error">
-                <?php foreach ($errors as $error): ?>
-                    <p><?= $error ?></p>
-                <?php endforeach; ?>
+            <div class="alert alert-danger"><?= $errors[0] ?>
             </div>
         <?php endif; ?>
 
@@ -203,7 +201,7 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
                             <label for="notes" class="form-label">Megjegyzés</label>
                             <textarea class="form-control" id="notes" name="notes" rows="3"></textarea>
                         </div>
-                        <button type="submit" class="btn btn-primary">Rendelés véglegesítése</button>
+                        <button type="submit" name="submit" class="btn btn-primary">Rendelés véglegesítése</button>
                     </form>
                 </div>
 
