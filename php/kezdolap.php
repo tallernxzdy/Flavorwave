@@ -21,6 +21,7 @@ session_start();
     <link rel="stylesheet" href="../css/carousel.css">
     <link rel="stylesheet" href="../css/parallax.css">
     <link rel="stylesheet" href="../css/kezdolap.css">
+    <link rel="stylesheet" href="../css/navbar.css">
 
 
 </head>
@@ -40,291 +41,66 @@ session_start();
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>FlavorWave - Modern Navbar</title>
-    <style>
-        @import url('https://fonts.googleapis.com/css2?family=Montserrat:wght@400;700&family=Poppins:wght@300;400;600&display=swap');
-
-        /* Alap stílusok */
-        body {
-            margin: 0;
-            font-family: 'Poppins', sans-serif;
-            background: #1a1a1a;
-            color: #fff;
-        }
-
-        /* Navbar konténer */
-        nav {
-            display: flex;
-            justify-content: space-between;
-            align-items: center;
-            padding: 20px 40px;
-            background: rgba(0, 0, 0, 0.8);
-            position: fixed;
-            top: 0;
-            left: 0;
-            width: 100%;
-            z-index: 1000;
-            backdrop-filter: blur(10px);
-            box-shadow: 0 4px 15px rgba(0, 0, 0, 0.3);
-        }
-
-        /* Logó stílus */
-        .logo {
-            display: flex;
-            align-items: center;
-            text-decoration: none;
-            color: #fff;
-            font-size: 1.5rem;
-            font-weight: 700;
-            transition: transform 0.3s ease;
-        }
-
-        .logo img {
-            height: 40px;
-            margin-right: 10px;
-        }
-
-        .logo:hover {
-            transform: scale(1.05);
-        }
-
-        /* Középső menü */
-        .navbar-center {
-            display: flex;
-            gap: 30px;
-        }
-
-        .navbar-center a {
-            text-decoration: none;
-            color: #fff;
-            font-size: 1.1rem;
-            font-weight: 500;
-            position: relative;
-            transition: color 0.3s ease;
-        }
-
-        .navbar-center a::after {
-            content: '';
-            position: absolute;
-            bottom: -5px;
-            left: 0;
-            width: 0;
-            height: 2px;
-            background: linear-gradient(135deg, #ff7e5f, #feb47b);
-            transition: width 0.3s ease;
-        }
-
-        .navbar-center a:hover {
-            color: #feb47b;
-        }
-
-        .navbar-center a:hover::after {
-            width: 100%;
-        }
-
-        /* Jobb oldali gombok */
-        .navbar-buttons {
-            display: flex;
-            align-items: center;
-            gap: 20px;
-        }
-
-        .navbar-buttons a {
-            text-decoration: none;
-            padding: 10px 20px;
-            font-size: 1rem;
-            font-weight: 600;
-            border-radius: 30px;
-            transition: all 0.3s ease;
-        }
-
-        .login-btn {
-            background: transparent;
-            color: #fff;
-            border: 2px solid #fff;
-        }
-
-        .login-btn:hover {
-            background: #fff;
-            color: #000;
-        }
-
-        .order-btn {
-          background: transparent;
-            color: #fff;
-            border: 2px solid #fff;
-        }
-
-        .order-btn:hover {
-          background: #fff;
-          color: #000;
-        }
-
-        .cart-btn {
-          background: transparent;
-            color: #fff;
-            border: 2px solid #fff;
-        }
-
-        .cart-btn:hover {
-          background: #fff;
-          color: #000;
-        }
-
-        .cart-icon {
-            height: 24px;
-            filter: invert(1);
-        }
-        .cart-btn:hover .cart-icon {
-          filter: invert(0); /* Alapértelmezett szín */
-        }
-
-
-        /* Hamburger menü */
-        .hamburger {
-            display: none;
-            flex-direction: column;
-            gap: 5px;
-            cursor: pointer;
-        }
-
-        .hamburger span {
-            width: 25px;
-            height: 3px;
-            background: #fff;
-            transition: all 0.3s ease;
-        }
-
-        /* Menü sáv (hamburger menü tartalma) */
-        .menubar {
-            display: none;
-            position: fixed;
-            top: 80px;
-            right: 20px;
-            background: rgba(0, 0, 0, 0.9);
-            border-radius: 10px;
-            padding: 20px;
-            box-shadow: 0 4px 15px rgba(0, 0, 0, 0.3);
-            z-index: 999;
-        }
-
-        .menubar ul {
-            list-style: none;
-            padding: 0;
-            margin: 0;
-        }
-
-        .menubar li {
-            margin-bottom: 15px;
-        }
-
-        .menubar a {
-            text-decoration: none;
-            color: #fff;
-            font-size: 1.1rem;
-            font-weight: 500;
-            transition: color 0.3s ease;
-        }
-
-        .menubar a:hover {
-            color: #feb47b;
-        }
-
-        /* Reszponzív stílusok */
-        @media (max-width: 768px) {
-            .navbar-center,
-            .navbar-buttons {
-                display: none;
-            }
-
-            .hamburger {
-                display: flex;
-            }
-
-            .menubar.active {
-                display: block;
-            }
-        }
-
-        /* Animációk */
-        @keyframes fadeIn {
-            from {
-                opacity: 0;
-                transform: translateY(-10px);
-            }
-
-            to {
-                opacity: 1;
-                transform: translateY(0);
-            }
-        }
-    </style>
 </head>
 
 <body>
-    <nav>
-        <!-- Bal oldalon a logó -->
-        <a href="kezdolap.php" class="logo">
-            <img src="../kepek/logo.png" alt="Flavorwave Logo">
-            <h1>FlavorWave</h1>
-        </a>
+<nav>
+    <!-- Bal oldalon a logó -->
+    <a href="kezdolap.php" class="logo">
+        <img src="../kepek/logo.png" alt="Flavorwave Logo">
+        <h1>FlavorWave</h1>
+    </a>
 
-        <!-- Középen a kategóriák (és Admin felület, ha jogosult) -->
-        <div class="navbar-center">
-            <a href="kategoria.php">Menü</a>
-            <?php if (isset($_SESSION["jog_szint"]) && $_SESSION["jog_szint"] == 1): ?>
-                <a href="admin_felulet.php">Admin felület</a>
-            <?php endif; ?>
-        </div>
-
-        <!-- Jobb oldalon a gombok -->
-        <div class="navbar-buttons">
-            <?php if (isset($_SESSION["felhasznalo_nev"])): ?>
-                <a href="kijelentkezes.php" class="login-btn">Kijelentkezés</a>
-            <?php else: ?>
-                <a href="bejelentkezes.php" class="login-btn">Bejelentkezés</a>
-            <?php endif; ?>
-            <a href="rendeles.php" class="order-btn">Rendelés</a>
-            <a href="kosar.php" class="cart-btn">
-                <img src="../kepek/kosar.png" alt="Kosár" class="cart-icon">
-            </a>
-        </div>
-
-        <!-- Hamburger menü ikon -->
-        <div class="hamburger" onclick="toggleMenu()">
-            <span></span>
-            <span></span>
-            <span></span>
-        </div>
-    </nav>
-
-    <!-- Hamburger menü tartalma -->
-    <div class="menubar" id="menubar">
-        <ul>
-            <li><a href="kezdolap.php">FlavorWave</a></li>
-            <li><a href="kategoria.php">Menü</a></li>
-            <?php if (isset($_SESSION["jog_szint"]) && $_SESSION["jog_szint"] == 1): ?>
-                <li><a href="admin_felulet.php">Admin felület</a></li>
-            <?php endif; ?>
-            <li><a href="kosar.php">Kosár</a></li>
-            <?php if (isset($_SESSION["felhasznalo_nev"])): ?>
-                <li><a href="kijelentkezes.php">Kijelentkezés</a></li>
-            <?php else: ?>
-                <li><a href="bejelentkezes.php">Bejelentkezés</a></li>
-            <?php endif; ?>
-        </ul>
+    <!-- Középen a kategóriák (és Admin felület, ha jogosult) -->
+    <div class="navbar-center">
+        <a href="kategoria.php">Menü</a>
+        <?php if (isset($_SESSION["jog_szint"]) && $_SESSION["jog_szint"] == 1): ?>
+            <a href="admin_felulet.php">Admin felület</a>
+        <?php endif; ?>
     </div>
 
-    <script>
-        function toggleMenu() {
-            const menubar = document.getElementById('menubar');
-            menubar.classList.toggle('active');
-        }
-    </script>
+    <!-- Jobb oldalon a gombok -->
+    <div class="navbar-buttons">
+        <?php if (isset($_SESSION["felhasznalo_nev"])): ?>
+            <a href="kijelentkezes.php" class="login-btn">Kijelentkezés</a>
+        <?php else: ?>
+            <a href="bejelentkezes.php" class="login-btn">Bejelentkezés</a>
+        <?php endif; ?>
+        <a href="rendeles.php" class="order-btn">Rendelés</a>
+        <a href="kosar.php" class="cart-btn">
+            <i class='fas fa-shopping-cart cart-icon'></i>
+        </a>
+    </div>
+
+    <!-- Hamburger menü ikon -->
+    <div class="hamburger" onclick="toggleMenu()">
+        <span></span>
+        <span></span>
+        <span></span>
+    </div>
+</nav>
+
+<!-- Hamburger menü tartalma -->
+<div class="menubar" id="menubar">
+    <ul>
+        <li><a href="kezdolap.php">FlavorWave</a></li>
+        <li><a href="kategoria.php">Menü</a></li>
+        <?php if (isset($_SESSION["jog_szint"]) && $_SESSION["jog_szint"] == 1): ?>
+            <li><a href="admin_felulet.php">Admin felület</a></li>
+        <?php endif; ?>
+        <li><a href="kosar.php">Kosár</a></li>
+        <?php if (isset($_SESSION["felhasznalo_nev"])): ?>
+            <li><a href="kijelentkezes.php">Kijelentkezés</a></li>
+        <?php else: ?>
+            <li><a href="bejelentkezes.php">Bejelentkezés</a></li>
+        <?php endif; ?>
+    </ul>
+</div>
+
 </body>
 
 </html>
 
-<br><br><br>
 
 
 

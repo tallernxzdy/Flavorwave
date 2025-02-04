@@ -1,4 +1,6 @@
 function toggleMenu() {
-  const menubar = document.getElementById('menubar');
-  menubar.classList.toggle('show-menu');
+  var menubar = document.getElementById("menubar");
+  var hamburger = document.querySelector(".hamburger");
+  menubar.classList.toggle("active");
+  hamburger.classList.toggle("active");
 }
