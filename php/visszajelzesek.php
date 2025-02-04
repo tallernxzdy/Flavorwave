@@ -7,10 +7,18 @@ if (!isset($_SESSION['felhasznalo_id'])) {
 }
 
 if ($_SERVER['REQUEST_METHOD'] == 'POST') {
-    // reCAPTCHA ellenőrzése
+    // Ellenőrizzük, hogy a reCAPTCHA mező ki van-e töltve
+    if (!isset($_POST['g-recaptcha-response']) || empty($_POST['g-recaptcha-response'])) {
+        $_SESSION['uzenet'] = "Kérjük, erősítse meg, hogy nem robot!";
+        header("Location: visszajelzesek.php");
+        exit();
+    }
+
+    // reCAPTCHA érvényesítés a Google API-val
     $recaptcha_response = $_POST['g-recaptcha-response'];
-    $secret_key = "6Lf0bsoqAAAAADWSHQoOWiAnwyLyZL60Cfoi33K3";
+    $secret_key = "6Lf0bsoqAAAAADWSHQoOWiAnwyLyZL60Cfoi33K3"; // Titkos kulcs
     $url = 'https://www.google.com/recaptcha/api/siteverify';
+    
     $data = [
         'secret' => $secret_key,
         'response' => $recaptcha_response,
@@ -27,15 +35,15 @@ if ($_SERVER['REQUEST_METHOD'] == 'POST') {
 
     $context = stream_context_create($options);
     $result = file_get_contents($url, false, $context);
-    $response = json_decode($result);
+    $result_json = json_decode($result, true);
 
-    if (!$response->success) {
-        $_SESSION['uzenet'] = "Kérjük, erősítse meg, hogy nem robot!";
+    if (!$result_json['success']) {
+        $_SESSION['uzenet'] = "reCAPTCHA ellenőrzés sikertelen. Próbálja újra!";
         header("Location: visszajelzesek.php");
         exit();
     }
 
-    // Tovább a vélemény mentése...
+    // Ha a reCAPTCHA érvényes, akkor mehet a vélemény rögzítése
     $ertekeles = intval($_POST['megelegedettseg']);
     $velemeny_szoveg = trim($_POST['visszajelzes']);
     $felhasznalo_id = $_SESSION['felhasznalo_id'];
@@ -52,39 +60,35 @@ if ($_SERVER['REQUEST_METHOD'] == 'POST') {
             $email_cim = $felhasznalo_adat['email_cim'];
 
             $sql = "INSERT INTO velemenyek (felhasznalo_id, velemeny_szoveg, ertekeles, email_cim) 
-                    VALUES (?, ?, ?, ?)
-                    ON DUPLICATE KEY UPDATE 
-                    velemeny_szoveg = VALUES(velemeny_szoveg),
-                    ertekeles = VALUES(ertekeles)";
-
+                    VALUES (?, ?, ?, ?)";
             $stmt = $conn->prepare($sql);
             $stmt->bind_param("isis", $felhasznalo_id, $velemeny_szoveg, $ertekeles, $email_cim);
+            $stmt->execute();
 
-            if ($stmt->execute()) {
-                $_SESSION['uzenet'] = "Köszönjük a visszajelzést!";
-                header("Location: visszajelzesek.php");
-                exit();
-            } else {
-                $_SESSION['uzenet'] = "Hiba történt a vélemény mentésekor: " . $stmt->error;
-                header("Location: visszajelzesek.php");
-                exit();
-            }
+            $_SESSION['uzenet'] = "Köszönjük a visszajelzést!";
         } else {
             $_SESSION['uzenet'] = "Hiba: A felhasználó nem található.";
-            header("Location: visszajelzesek.php");
-            exit();
         }
     } else {
         $_SESSION['uzenet'] = "Kérjük, minden mezőt töltsön ki!";
-        header("Location: visszajelzesek.php");
-        exit();
     }
+    header("Location: visszajelzesek.php");
+    exit();
 }
+
+
+// Vélemények lekérdezése
+$sql = "SELECT felhasznalo_nev, velemeny_szoveg, ertekeles FROM velemenyek 
+        INNER JOIN felhasznalo ON velemenyek.felhasznalo_id = felhasznalo.id 
+        ORDER BY velemenyek.id DESC";
+$result = $conn->query($sql);
+$velemenyek = ($result && $result->num_rows > 0) ? $result->fetch_all(MYSQLI_ASSOC) : [];
 ?>
 
 <!DOCTYPE html>
 <html lang="hu">
 <head>
+
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/css/bootstrap.min.css" rel="stylesheet">
@@ -92,13 +96,13 @@ if ($_SERVER['REQUEST_METHOD'] == 'POST') {
     <link rel="icon" href="../kepek/logo.png" type="image/png">
     <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@400;600&display=swap" rel="stylesheet">
     <title>Visszajelzés</title>
-    <link rel="stylesheet" href="../css/visszajelzesek.css">
     <link rel="stylesheet" href="../css/navbar.css">
+    <link rel="stylesheet" href="../css/visszajelzesek.css">
     <!-- reCAPTCHA script -->
     <script src="https://www.google.com/recaptcha/api.js" async defer></script>
+    <script></script>
 </head>
 <body>
-
     <nav>
         <!-- Bal oldalon a logó -->
         <a href="kezdolap.php" class="logo">
@@ -153,30 +157,51 @@ if ($_SERVER['REQUEST_METHOD'] == 'POST') {
         </ul>
     </div>
 
-    <br><br><br>
-
-
     <div class="container">
         <h1>Visszajelzés</h1>
-        <?php if (isset($_SESSION['uzenet'])) { echo "<p class='uzenet'>" . $_SESSION['uzenet'] . "</p>"; unset($_SESSION['uzenet']); } ?>
-        <form method="POST" action="">
+        <?php if (isset($_SESSION['uzenet'])) { echo "<p class='alert alert-info'>" . $_SESSION['uzenet'] . "</p>"; unset($_SESSION['uzenet']); } ?>
+        <form method="POST" action="visszajelzesek.php">
             <label for="megelegedettseg">Mennyire elégedett? (1-10)</label>
             <select id="megelegedettseg" name="megelegedettseg" required>
-                <option value="" disabled selected>Válasszon...</option>
-                <?php for ($i = 1; $i <= 10; $i++) {
-                    echo "<option value='$i'>$i</option>";
-                } ?>
+                <?php for ($i = 1; $i <= 10; $i++) echo "<option value='$i'>$i</option>"; ?>
             </select>
 
             <label for="visszajelzes">Visszajelzés szövege</label>
             <textarea id="visszajelzes" name="visszajelzes" rows="5" required></textarea>
-
-            <!-- reCAPTCHA -->
+            <br>
             <div class="g-recaptcha" data-sitekey="6Lf0bsoqAAAAADgj9B0eBgXozNmq1q2vYqEMXzvb"></div>
             <br>
-
             <button type="submit">Küldés</button>
         </form>
     </div>
+
+
+    <hr></hr>
+
+    <div class="container">
+        <h2>Mit mondanak rólunk?</h2>
+        <?php if (count($velemenyek) >= 3): ?>
+            <div class="row">
+                <?php foreach ($velemenyek as $row): ?>
+                    <div class="col-md-4">
+                        <div class="card">
+                            <div class="card-body">
+                                <p class="card-text">"<?php echo htmlspecialchars($row['velemeny_szoveg']); ?>"</p>
+                                <p class="card-subtitle">- <?php echo htmlspecialchars($row['felhasznalo_nev']); ?></p>
+                                <p class="card-text">Értékelés: <?php echo str_repeat("⭐", $row['ertekeles']); ?></p>
+                            </div>
+                        </div>
+                    </div>
+                <?php endforeach; ?>
+            </div>
+        <?php else: ?>
+            <p class="text-muted">Légy az elsők között, aki visszajelzést küld!</p>
+        <?php endif; ?>
+    </div>
+
+
+
+
 </body>
 </html>
+
