@@ -152,3 +152,7 @@ html body {
 .form-buttons .btn-secondary:hover {
     background-color: var(--gomb_szin_mellek_hover);
 }
+
+#margo_felulre{
+    margin-top: 30px;
+}

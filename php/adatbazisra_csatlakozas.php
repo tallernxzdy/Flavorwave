@@ -36,7 +36,9 @@ function adatokValtoztatasa($muvelet, $parameterek) {
     if ($conn) {
         $stmt = $conn->prepare($muvelet);
         if ($stmt) {
-            $stmt->bind_param(...$parameterek);
+            // A típusdefiníciós string és a paraméterek szétválasztása
+            $tipusok = array_shift($parameterek); // Az első elem a típusdefiníciós string
+            $stmt->bind_param($tipusok, ...$parameterek); // A többi elem a paraméterek
             $stmt->execute();
             if ($stmt->affected_rows > 0) {
                 return 'Sikeres művelet!';
