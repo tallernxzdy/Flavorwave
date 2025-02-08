@@ -59,13 +59,31 @@ if ($_SERVER['REQUEST_METHOD'] == 'POST') {
         if ($felhasznalo_adat) {
             $email_cim = $felhasznalo_adat['email_cim'];
 
-            $sql = "INSERT INTO velemenyek (felhasznalo_id, velemeny_szoveg, ertekeles, email_cim) 
-                    VALUES (?, ?, ?, ?)";
-            $stmt = $conn->prepare($sql);
-            $stmt->bind_param("isis", $felhasznalo_id, $velemeny_szoveg, $ertekeles, $email_cim);
-            $stmt->execute();
+            // Ellenőrizzük, hogy a felhasználó már küldött-e visszajelzést
+            $sql_check = "SELECT id FROM velemenyek WHERE felhasznalo_id = ?";
+            $stmt_check = $conn->prepare($sql_check);
+            $stmt_check->bind_param("i", $felhasznalo_id);
+            $stmt_check->execute();
+            $result_check = $stmt_check->get_result();
 
-            $_SESSION['uzenet'] = "Köszönjük a visszajelzést!";
+            if ($result_check->num_rows > 0) {
+                // Ha már küldött visszajelzést, akkor frissítjük a meglévőt
+                $sql_update = "UPDATE velemenyek SET velemeny_szoveg = ?, ertekeles = ?, email_cim = ? WHERE felhasznalo_id = ?";
+                $stmt_update = $conn->prepare($sql_update);
+                $stmt_update->bind_param("sisi", $velemeny_szoveg, $ertekeles, $email_cim, $felhasznalo_id);
+                $stmt_update->execute();
+
+                $_SESSION['uzenet'] = "Visszajelzés frissítve!";
+            } else {
+                // Ha még nem küldött visszajelzést, akkor beszúrjuk az újat
+                $sql_insert = "INSERT INTO velemenyek (felhasznalo_id, velemeny_szoveg, ertekeles, email_cim) 
+                               VALUES (?, ?, ?, ?)";
+                $stmt_insert = $conn->prepare($sql_insert);
+                $stmt_insert->bind_param("isis", $felhasznalo_id, $velemeny_szoveg, $ertekeles, $email_cim);
+                $stmt_insert->execute();
+
+                $_SESSION['uzenet'] = "Köszönjük a visszajelzést!";
+            }
         } else {
             $_SESSION['uzenet'] = "Hiba: A felhasználó nem található.";
         }
@@ -75,7 +93,6 @@ if ($_SERVER['REQUEST_METHOD'] == 'POST') {
     header("Location: visszajelzesek.php");
     exit();
 }
-
 
 // Vélemények lekérdezése
 $sql = "SELECT felhasznalo_nev, velemeny_szoveg, ertekeles FROM velemenyek 
@@ -88,7 +105,6 @@ $velemenyek = ($result && $result->num_rows > 0) ? $result->fetch_all(MYSQLI_ASS
 <!DOCTYPE html>
 <html lang="hu">
 <head>
-
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/css/bootstrap.min.css" rel="stylesheet">
@@ -117,7 +133,6 @@ $velemenyek = ($result && $result->num_rows > 0) ? $result->fetch_all(MYSQLI_ASS
                 <a href="admin_felulet.php">Admin felület</a>
             <?php endif; ?>
         </div>
-
 
         <!-- Jobb oldalon a gombok -->
         <div class="navbar-buttons">
@@ -175,7 +190,6 @@ $velemenyek = ($result && $result->num_rows > 0) ? $result->fetch_all(MYSQLI_ASS
         </form>
     </div>
 
-
     <hr></hr>
 
     <div class="container">
@@ -198,10 +212,5 @@ $velemenyek = ($result && $result->num_rows > 0) ? $result->fetch_all(MYSQLI_ASS
             <p class="text-muted">Légy az elsők között, aki visszajelzést küld!</p>
         <?php endif; ?>
     </div>
-
-
-
-
 </body>
 </html>
-
