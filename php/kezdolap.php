@@ -1084,6 +1084,251 @@ session_start();
 
 
 
+<!DOCTYPE html>
+<html lang="hu">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>FlavorWave - Ételajánló Quiz</title>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.2/css/all.min.css">
+    <style>
+        @import url('https://fonts.googleapis.com/css2?family=Poppins:wght@300;600;800&display=swap');
+
+        .quiz-container {
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            flex-direction: column;
+            padding: 100px 20px;
+            width: 100%;
+            font-family: 'Poppins', sans-serif;
+            color: #fff;
+        }
+
+        .quiz-question {
+            display: none;
+            align-items: center;
+            justify-content: center;
+            flex-direction: column;
+            position: relative;
+            width: 80%;
+            max-width: 800px;
+            padding: 30px 40px;
+            margin: 40px 0;
+            background: rgba(255, 255, 255, 0.1);
+            border-radius: 20px;
+            backdrop-filter: blur(10px);
+            border: 1px solid rgba(255, 255, 255, 0.2);
+            box-shadow: 0 15px 35px rgba(0, 0, 0, 0.3);
+            opacity: 0;
+            transform: translateY(20px);
+            transition: all 0.8s ease;
+        }
+
+        .quiz-question.active {
+            display: flex;
+            opacity: 1;
+            transform: translateY(0);
+        }
+
+        .quiz-question h2 {
+            font-size: 2rem;
+            margin-bottom: 20px;
+            text-align: center;
+            color: #fff;
+            text-shadow: 0 0 10px rgba(255, 255, 255, 0.5);
+        }
+
+        .quiz-options {
+            display: flex;
+            justify-content: center;
+            gap: 20px;
+            flex-wrap: wrap;
+        }
+
+        .quiz-options button {
+            padding: 15px 30px;
+            font-size: 1.2rem;
+            font-weight: 600;
+            color: #fff;
+            background: rgba(255, 255, 255, 0.1);
+            border: 1px solid rgba(255, 255, 255, 0.2);
+            border-radius: 10px;
+            cursor: pointer;
+            transition: all 0.3s ease;
+        }
+
+        .quiz-options button:hover {
+            background: rgba(255, 255, 255, 0.2);
+            transform: translateY(-5px);
+        }
+
+        .quiz-result {
+            display: none;
+            text-align: center;
+            font-size: 2rem;
+            margin-top: 40px;
+            color: #ff7e5f;
+            text-shadow: 0 0 10px rgba(255, 126, 95, 0.7);
+            opacity: 0;
+            transform: scale(0.9);
+            transition: all 0.8s ease;
+        }
+
+        .quiz-result.show {
+            display: block;
+            opacity: 1;
+            transform: scale(1);
+        }
+
+        .quiz-result p {
+            font-size: 2.5rem;
+            font-weight: 800;
+            margin: 0;
+            color: #ff7e5f;
+            text-shadow: 0 0 20px rgba(255, 126, 95, 0.7);
+            animation: popIn 1s ease-in-out;
+        }
+
+        @keyframes popIn {
+            0% {
+                transform: scale(0);
+                opacity: 0;
+            }
+            60% {
+                transform: scale(1.1);
+                opacity: 1;
+            }
+            100% {
+                transform: scale(1);
+            }
+        }
+
+        @keyframes float {
+            0%, 100% {
+                transform: translateY(0);
+            }
+            50% {
+                transform: translateY(-10px);
+            }
+        }
+
+        .quiz-question i {
+            font-size: 3rem;
+            margin-bottom: 20px;
+            color: #ff7e5f;
+            text-shadow: 0 0 10px rgba(255, 126, 95, 0.7);
+            animation: float 3s ease-in-out infinite;
+        }
+    </style>
+</head>
+<body>
+    <div class="quiz-container">
+        <div class="quiz-question active">
+            <i class="fas fa-pizza-slice"></i>
+            <h2>Milyen pizzát szeretnél?</h2>
+            <div class="quiz-options">
+                <button data-type="meat">Húsos</button>
+                <button data-type="veggie">Zöldséges</button>
+                <button data-type="cheese">Sajtos</button>
+            </div>
+        </div>
+        <div class="quiz-question">
+            <i class="fas fa-pepper-hot"></i>
+            <h2>Mennyire szereted a csípőset?</h2>
+            <div class="quiz-options">
+                <button data-spice="mild">Enyhe</button>
+                <button data-spice="medium">Közepes</button>
+                <button data-spice="hot">Csípős</button>
+            </div>
+        </div>
+        <div class="quiz-question">
+            <i class="fas fa-cheese"></i>
+            <h2>Mennyire szereted a sajtot?</h2>
+            <div class="quiz-options">
+                <button data-cheese="light">Kevés</button>
+                <button data-cheese="normal">Normál</button>
+                <button data-cheese="extra">Extra</button>
+            </div>
+        </div>
+        <div class="quiz-result">
+            <p>Az ajánlott ételed: <span id="recommended-food"></span></p>
+        </div>
+    </div>
+
+    <script>
+        document.addEventListener("DOMContentLoaded", function() {
+            const questions = document.querySelectorAll(".quiz-question");
+            const result = document.querySelector(".quiz-result");
+            const recommendedFood = document.getElementById("recommended-food");
+
+            let answers = {
+                type: null,
+                spice: null,
+                cheese: null
+            };
+
+            let currentQuestionIndex = 0;
+
+            function showNextQuestion() {
+                questions[currentQuestionIndex].classList.remove("active");
+                currentQuestionIndex++;
+                if (currentQuestionIndex < questions.length) {
+                    questions[currentQuestionIndex].classList.add("active");
+                } else {
+                    recommendFood();
+                    result.classList.add("show");
+                }
+            }
+
+            questions.forEach((question, index) => {
+                const options = question.querySelectorAll(".quiz-options button");
+                options.forEach(option => {
+                    option.addEventListener("click", () => {
+                        const key = Object.keys(answers)[index];
+                        answers[key] = option.dataset[key];
+                        showNextQuestion();
+                    });
+                });
+            });
+
+            function recommendFood() {
+                const { type, spice, cheese } = answers;
+                let food = "";
+
+                if (type === "meat") {
+                    food = "Húsos Pizza";
+                } else if (type === "veggie") {
+                    food = "Zöldséges Pizza";
+                } else if (type === "cheese") {
+                    food = "Sajtos Pizza";
+                }
+
+                if (spice === "medium") {
+                    food += " közepesen csípős";
+                } else if (spice === "hot") {
+                    food += " extra csípős";
+                }
+
+                if (cheese === "extra") {
+                    food += " extra sajttal";
+                }
+
+                recommendedFood.textContent = food;
+            }
+        });
+    </script>
+</body>
+</html>
+
+
+
+
+
+
+
+
+
 
 
 
