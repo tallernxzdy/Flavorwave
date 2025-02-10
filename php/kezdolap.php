@@ -1094,27 +1094,34 @@ session_start();
     <style>
         @import url('https://fonts.googleapis.com/css2?family=Poppins:wght@300;600;800&display=swap');
 
+        body {
+            margin: 0;
+            padding: 0;
+            font-family: 'Poppins', sans-serif;
+            background: linear-gradient(135deg, #1e1e2f, #2a2a40);
+            color: #fff;
+            overflow-x: hidden;
+            min-height: 100vh;
+        }
+
         .quiz-container {
+            width: 100%;
+            max-width: 1200px;
+            padding: 20px;
+            margin: 0 auto; /* Középre igazítás */
             display: flex;
             justify-content: center;
             align-items: center;
             flex-direction: column;
-            padding: 100px 20px;
-            width: 100%;
-            font-family: 'Poppins', sans-serif;
-            color: #fff;
+            min-height: 100vh; /* Teljes magasság kitöltése */
         }
 
         .quiz-question {
             display: none;
-            align-items: center;
-            justify-content: center;
-            flex-direction: column;
-            position: relative;
-            width: 80%;
+            width: 100%;
             max-width: 800px;
-            padding: 30px 40px;
-            margin: 40px 0;
+            padding: 40px;
+            margin: 20px 0;
             background: rgba(255, 255, 255, 0.1);
             border-radius: 20px;
             backdrop-filter: blur(10px);
@@ -1123,18 +1130,18 @@ session_start();
             opacity: 0;
             transform: translateY(20px);
             transition: all 0.8s ease;
+            text-align: center;
         }
 
         .quiz-question.active {
-            display: flex;
+            display: block;
             opacity: 1;
             transform: translateY(0);
         }
 
         .quiz-question h2 {
-            font-size: 2rem;
-            margin-bottom: 20px;
-            text-align: center;
+            font-size: 2.5rem;
+            margin-bottom: 30px;
             color: #fff;
             text-shadow: 0 0 10px rgba(255, 255, 255, 0.5);
         }
@@ -1147,47 +1154,128 @@ session_start();
         }
 
         .quiz-options button {
+            padding: 20px 40px;
+            font-size: 1.2rem;
+            font-weight: 600;
+            color: #fff;
+            background: linear-gradient(135deg, #ff7e5f, #feb47b);
+            border: none;
+            border-radius: 15px;
+            cursor: pointer;
+            transition: all 0.3s ease;
+            box-shadow: 0 5px 15px rgba(255, 126, 95, 0.3);
+        }
+
+        .quiz-options button:hover {
+            background: linear-gradient(135deg, #feb47b, #ff7e5f);
+            transform: translateY(-5px);
+            box-shadow: 0 10px 20px rgba(255, 126, 95, 0.5);
+        }
+
+        .quiz-result-card {
+            display: none;
+            width: 100%;
+            max-width: 800px;
+            padding: 40px;
+            margin: 20px 0;
+            background: rgba(255, 255, 255, 0.1);
+            border-radius: 20px;
+            backdrop-filter: blur(10px);
+            border: 1px solid rgba(255, 255, 255, 0.2);
+            box-shadow: 0 15px 35px rgba(0, 0, 0, 0.3);
+            opacity: 0;
+            transform: translateY(-50px);
+            transition: all 0.8s ease;
+            text-align: center;
+            animation: slideIn 0.8s ease-out forwards;
+        }
+
+        .quiz-result-card.show {
+            display: block;
+            opacity: 1;
+            transform: translateY(0);
+        }
+
+        .quiz-result-card h2 {
+            font-size: 2.5rem;
+            margin-bottom: 20px;
+            color: #ff7e5f;
+            text-shadow: 0 0 10px rgba(255, 126, 95, 0.7);
+        }
+
+        .quiz-result-card p {
+            font-size: 1.5rem;
+            margin-bottom: 20px;
+            color: #fff;
+        }
+
+        .quiz-result-card .image-container {
+            margin: 20px 0;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+        }
+
+        .quiz-result-card img {
+            width: 300px;
+            height: 300px;
+            border-radius: 20px;
+            box-shadow: 0 10px 20px rgba(0, 0, 0, 0.3);
+            transition: transform 0.3s ease, box-shadow 0.3s ease;
+        }
+
+        .quiz-result-card img:hover {
+            transform: scale(1.1);
+            box-shadow: 0 15px 30px rgba(0, 0, 0, 0.5);
+        }
+
+        .quiz-result-card a {
+            display: inline-block;
+            margin-top: 20px;
             padding: 15px 30px;
             font-size: 1.2rem;
             font-weight: 600;
             color: #fff;
-            background: rgba(255, 255, 255, 0.1);
-            border: 1px solid rgba(255, 255, 255, 0.2);
-            border-radius: 10px;
-            cursor: pointer;
+            background: linear-gradient(135deg, #ff7e5f, #feb47b);
+            border-radius: 15px;
+            text-decoration: none;
             transition: all 0.3s ease;
+            box-shadow: 0 5px 15px rgba(255, 126, 95, 0.3);
+            position: relative;
+            overflow: hidden;
         }
 
-        .quiz-options button:hover {
-            background: rgba(255, 255, 255, 0.2);
+        .quiz-result-card a::before {
+            content: '';
+            position: absolute;
+            top: 50%;
+            left: 50%;
+            width: 300%;
+            height: 300%;
+            background: radial-gradient(circle, rgba(255, 255, 255, 0.3), transparent);
+            transform: translate(-50%, -50%) scale(0);
+            transition: transform 0.5s ease;
+        }
+
+        .quiz-result-card a:hover::before {
+            transform: translate(-50%, -50%) scale(1);
+        }
+
+        .quiz-result-card a:hover {
+            background: linear-gradient(135deg, #feb47b, #ff7e5f);
             transform: translateY(-5px);
+            box-shadow: 0 10px 20px rgba(255, 126, 95, 0.5);
         }
 
-        .quiz-result {
-            display: none;
-            text-align: center;
-            font-size: 2rem;
-            margin-top: 40px;
-            color: #ff7e5f;
-            text-shadow: 0 0 10px rgba(255, 126, 95, 0.7);
-            opacity: 0;
-            transform: scale(0.9);
-            transition: all 0.8s ease;
-        }
-
-        .quiz-result.show {
-            display: block;
-            opacity: 1;
-            transform: scale(1);
-        }
-
-        .quiz-result p {
-            font-size: 2.5rem;
-            font-weight: 800;
-            margin: 0;
-            color: #ff7e5f;
-            text-shadow: 0 0 20px rgba(255, 126, 95, 0.7);
-            animation: popIn 1s ease-in-out;
+        @keyframes slideIn {
+            0% {
+                opacity: 0;
+                transform: translateY(-50px);
+            }
+            100% {
+                opacity: 1;
+                transform: translateY(0);
+            }
         }
 
         @keyframes popIn {
@@ -1214,7 +1302,7 @@ session_start();
         }
 
         .quiz-question i {
-            font-size: 3rem;
+            font-size: 4rem;
             margin-bottom: 20px;
             color: #ff7e5f;
             text-shadow: 0 0 10px rgba(255, 126, 95, 0.7);
@@ -1251,16 +1339,23 @@ session_start();
                 <button data-cheese="extra">Extra</button>
             </div>
         </div>
-        <div class="quiz-result">
-            <p>Az ajánlott ételed: <span id="recommended-food"></span></p>
+        <div class="quiz-result-card">
+            <h2>Az ajánlott ételed:</h2>
+            <p id="recommended-food"></p>
+            <div class="image-container">
+                <img id="food-image" src="" alt="Ajánlott étel">
+            </div>
+            <a id="order-link" href="#">Megrendelem!</a>
         </div>
     </div>
 
     <script>
         document.addEventListener("DOMContentLoaded", function() {
             const questions = document.querySelectorAll(".quiz-question");
-            const result = document.querySelector(".quiz-result");
+            const resultCard = document.querySelector(".quiz-result-card");
             const recommendedFood = document.getElementById("recommended-food");
+            const foodImage = document.getElementById("food-image");
+            const orderLink = document.getElementById("order-link");
 
             let answers = {
                 type: null,
@@ -1277,7 +1372,7 @@ session_start();
                     questions[currentQuestionIndex].classList.add("active");
                 } else {
                     recommendFood();
-                    result.classList.add("show");
+                    resultCard.classList.add("show");
                 }
             }
 
@@ -1295,37 +1390,44 @@ session_start();
             function recommendFood() {
                 const { type, spice, cheese } = answers;
                 let food = "";
+                let image = "";
+                let link = "pizza.php?type=";
 
                 if (type === "meat") {
                     food = "Húsos Pizza";
+                    image = "../kepek/pizza2.jpg";
+                    link += "meat";
                 } else if (type === "veggie") {
                     food = "Zöldséges Pizza";
+                    image = "../kepek/pizza2.jpg";
+                    link += "veggie";
                 } else if (type === "cheese") {
                     food = "Sajtos Pizza";
+                    image = "../kepek/pizza2.jpg";
+                    link += "cheese";
                 }
 
                 if (spice === "medium") {
                     food += " közepesen csípős";
+                    link += "&spice=medium";
                 } else if (spice === "hot") {
                     food += " extra csípős";
+                    link += "&spice=hot";
                 }
 
                 if (cheese === "extra") {
                     food += " extra sajttal";
+                    link += "&cheese=extra";
                 }
 
                 recommendedFood.textContent = food;
+                foodImage.src = image;
+                orderLink.href = link;
             }
         });
     </script>
 </body>
 </html>
-
-
-
-
-
-
 
 
 
