@@ -14,15 +14,6 @@ unset($_SESSION['errors']);
 $success = $_SESSION['order_success'] ?? false;
 unset($_SESSION['order_success']);
 
-// Sikeres rendelés kezelése
-if ($success) {
-    echo "<script>
-            alert('Köszönjük rendelését! A rendelés részleteit elküldtük emailben.');
-            window.location.href = 'kezdolap.php';
-          </script>";
-    exit();
-}
-
 $userId = $_SESSION['felhasznalo_id'];
 
 // Kosár tartalmának betöltése
@@ -43,7 +34,7 @@ while ($row = $result->fetch_assoc()) {
 }
 
 // Rendelés feldolgozása
-if ($_SERVER['REQUEST_METHOD'] === 'POST' && isset($_POST['submit']))  {
+if ($_SERVER['REQUEST_METHOD'] === 'POST' && isset($_POST['submit'])) {
     $name = trim($_POST['name'] ?? '');
     $address = trim($_POST['address'] ?? '');
     $phone = trim($_POST['phone'] ?? '');
@@ -168,18 +159,40 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST' && isset($_POST['submit']))  {
         </ul>
     </div>
 
+    <div class="modal fade" id="successModal" tabindex="-1" aria-labelledby="successModalLabel" aria-hidden="true">
+        <div class="modal-dialog">
+            <div class="modal-content">
+                <div class="modal-header">
+                    <h5 class="modal-title" id="successModalLabel">Sikeres rendelés</h5>
+                    <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+                </div>
+                <div class="modal-body">
+                    Köszönjük rendelését! A rendelés részleteit elküldtük emailben.
+                </div>
+                <div class="modal-footer">
+                <button type="button" class="btn btn-primary" data-bs-dismiss="modal">OK</button>
+                </div>
+            </div>
+        </div>
+    </div>
+
     <div class="order-container">
         <h1 class="mb-4">Rendelés véglegesítése</h1>
 
         <?php if (!empty($errors)): ?>
-            <div class="alert alert-danger"><?= $errors[0] ?>
-            </div>
+            <div class="alert alert-danger"><?= $errors[0] ?></div>
         <?php endif; ?>
 
         <?php if ($success): ?>
             <script>
-                alert('Köszönjük rendelését! A rendelés részleteit elküldtük emailben.');
-                window.location.href = 'kezdolap.php';
+                document.addEventListener('DOMContentLoaded', function () {
+                    var myModal = new bootstrap.Modal(document.getElementById('successModal'));
+                    myModal.show();
+
+                    document.getElementById('successModal').addEventListener('hidden.bs.modal', function () {
+                        window.location.href = 'kezdolap.php';
+                    });
+                });
             </script>
         <?php else: ?>
             <div class="row">
@@ -187,15 +200,15 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST' && isset($_POST['submit']))  {
                     <form method="POST">
                         <div class="mb-3">
                             <label for="name" class="form-label">Teljes név</label>
-                            <input type="text" class="form-control" id="name" name="name" required>
+                            <input type="text" class="form-control" id="name" name="name">
                         </div>
                         <div class="mb-3">
                             <label for="address" class="form-label">Szállítási cím</label>
-                            <input type="text" class="form-control" id="address" name="address" required>
+                            <input type="text" class="form-control" id="address" name="address">
                         </div>
                         <div class="mb-3">
                             <label for="phone" class="form-label">Telefonszám</label>
-                            <input type="tel" class="form-control" id="phone" name="phone" required>
+                            <input type="tel" class="form-control" id="phone" name="phone">
                         </div>
                         <div class="mb-3">
                             <label for="notes" class="form-label">Megjegyzés</label>
