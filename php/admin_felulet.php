@@ -206,7 +206,7 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
             <?php echo $message; ?>
         <?php endif; ?>
 
-        <form method="POST" enctype="multipart/form-data">
+        <form id="adminForm" method="POST" enctype="multipart/form-data">
             <select name="operation" id="operation" class="form-select mb-3" required>
                 <option value="">Válasszon műveletet</option>
                 <option value="add">Hozzáadás</option>
@@ -232,13 +232,13 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
                     <?php endforeach; ?>
                 </select>
                 <input type="file" name="kepek_url" accept="image/*" class="form-control mb-2">
-                <button type="submit" class="btn btn-primary">Hozzáadás</button>
+                <button type="submit" data-operation="add" class="btn btn-primary">Hozzáadás</button>
             </div>
 
             <!-- Szerkesztés űrlap -->
             <div id="edit-form" class="form-section" style="display:none;">
                 <h3>Szerkesztés</h3>
-                <select name="edit_etel" class="form-select mb-2" required>
+                <select name="edit_etel" class="form-select mb-2" >
                     <option value="">Válassz ételt</option>
                     <?php foreach ($etelek as $etel): ?>
                         <option value="<?= htmlspecialchars($etel['id']) ?>">
@@ -246,10 +246,10 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
                         </option>
                     <?php endforeach; ?>
                 </select>
-                <input type="text" name="edit_nev" placeholder="Név" class="form-control mb-2">
-                <input type="number" name="edit_egyseg_ar" placeholder="Egységár" class="form-control mb-2">
-                <textarea name="edit_leiras" placeholder="Leírás" class="form-control mb-2"></textarea>
-                <input type="number" name="edit_kaloria" placeholder="Kalória" class="form-control mb-2">
+                <input type="text" name="edit_nev" placeholder="Név" class="form-control mb-2" >
+                <input type="number" name="edit_egyseg_ar" placeholder="Egységár" class="form-control mb-2" >
+                <textarea name="edit_leiras" placeholder="Leírás" class="form-control mb-2"></textarea >
+                <input type="number" name="edit_kaloria" placeholder="Kalória" class="form-control mb-2" >
                 <textarea name="edit_osszetevok" placeholder="Összetevők" class="form-control mb-2"></textarea>
                 <textarea name="edit_allergenek" placeholder="Allergének" class="form-control mb-2"></textarea>
                 <select name="edit_kategoria_id" class="form-select mb-2">
@@ -261,7 +261,7 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
                     <?php endforeach; ?>
                 </select>
                 <input type="file" name="edit_kepek_url" accept="image/*" class="form-control mb-2">
-                <button type="submit" class="btn btn-primary">Szerkesztés</button>
+                <button type="submit" data-operation="edit" class="btn btn-primary">Szerkesztés</button>
             </div>
 
             <!-- Törlés űrlap -->
@@ -275,12 +275,35 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
                         </option>
                     <?php endforeach; ?>
                 </select>
-                <button type="submit" class="btn btn-danger">Törlés</button>
+                <button type="submit" data-operation="delete" class="btn btn-danger">Törlés</button>
             </div>
         </form>
     </div>
 
+
+    <!-- Megerősítés Modal a gomb lenyomásakor -->
+    <div class="modal fade" id="confirmationModal" tabindex="-1" aria-labelledby="confirmationModalLabel" aria-hidden="true">
+    <div class="modal-dialog">
+        <div class="modal-content">
+        <div class="modal-header">
+            <h5 class="modal-title" id="confirmationModalLabel">Megerősítés</h5>
+            <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+        </div>
+        <div class="modal-body">
+            <p>Biztosan szeretnéd végrehajtani a változtatásokat?</p>
+        </div>
+        <div class="modal-footer">
+            <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Mégse</button>
+            <button type="button" class="btn btn-primary" id="confirmAction">Igen</button>
+        </div>
+        </div>
+    </div>
+    </div>
+
+
     <script>
+
+
         document.getElementById('operation').addEventListener('change', function () {
         const sections = document.querySelectorAll('.form-section');
         
@@ -299,6 +322,35 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
             inputs.forEach(input => input.setAttribute('required', 'required'));
         }
         });
+
+
+        // Modalhoz ablakhoz js
+
+        document.addEventListener('DOMContentLoaded', function() {
+        const confirmationModal = new bootstrap.Modal(document.getElementById('confirmationModal'));
+        const confirmActionButton = document.getElementById('confirmAction');
+        let currentOperation = null;
+
+        // Gombok eseménykezelője
+        document.querySelectorAll('[data-operation]').forEach(button => {
+            button.addEventListener('click', function(event) {
+                event.preventDefault();
+                currentOperation = this.getAttribute('data-operation');
+                confirmationModal.show();
+            });
+        });
+
+        // Megerősítés gomb eseménykezelője
+        confirmActionButton.addEventListener('click', function() {
+            confirmationModal.hide();
+            if (currentOperation) {
+                // Beállítjuk a művelet típusát a hidden inputba
+                document.getElementById('operation').value = currentOperation;
+                // Elküldjük a formot
+                document.getElementById('adminForm').submit();
+            }
+        });
+    });
     </script>
 
     <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/js/bootstrap.bundle.min.js" integrity="sha384-YvpcrYf0tY3lHB60NNkmXc5s9fDVZLESaAA55NDzOxhy9GkcIdslK1eN7N6jIeHz" crossorigin="anonymous"></script>

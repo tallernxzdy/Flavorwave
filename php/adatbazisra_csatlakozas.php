@@ -74,18 +74,4 @@ function adatokTorlese($feltetel) {
     }
 }
 
-// SQL function feltöltéshez:
-function adatokFeltoltese() {
-    global $conn;
-    if ($conn) {
-        $muvelet = "INSERT INTO `etel` (id, nev, egyseg_ar, leiras, kategoria_id) VALUES (?, ?, ?, ?, ?)";
-        $conn->query($muvelet);
-        if ($conn->errno == 0) {
-            return 'Sikeres feltöltés!';
-        }
-        return $conn->error;
-    } else {
-        return $conn->connect_error;
-    }
-}
 ?>
