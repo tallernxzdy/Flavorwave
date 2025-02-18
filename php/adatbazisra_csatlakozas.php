@@ -74,4 +74,29 @@ function adatokTorlese($feltetel) {
     }
 }
 
+
+
+function rendeleseLekerdezese($allapot) {
+    global $conn;
+    $stmt = $conn->prepare("
+        SELECT megrendeles.id, felhasznalo.felhasznalo_nev 
+        FROM megrendeles
+        JOIN felhasznalo ON megrendeles.felhasznalo_id = felhasznalo.id
+        WHERE megrendeles.leadas_allapota = ?
+    ");
+    
+    if (!$stmt) {
+        die("Hiba a lekérdezés előkészítésekor: " . $conn->error);
+    }
+    
+    $stmt->bind_param("i", $allapot);
+    
+    if (!$stmt->execute()) {
+        die("Hiba a lekérdezés végrehajtásakor: " . $stmt->error);
+    }
+    
+    $result = $stmt->get_result();
+    return $result->fetch_all(MYSQLI_ASSOC);
+}
+
 ?>
