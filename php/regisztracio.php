@@ -25,19 +25,15 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
     // Ellenőrizzük, hogy minden mező ki van-e töltve
     if (empty($felhasznalonev)) {
         $errors[] = "A felhasználónév nem lehet üres!";
-        return;
     }
     if (empty($email)) {
         $errors[] = "Az email cím nem lehet üres!";
-        return;
     }
     if (empty($jelszo)) {
         $errors[] = "A jelszó nem lehet üres!";
-        return;
     }
     if (empty($tel_szam)) {
         $errors[] = "A telefonszám nem lehet üres!";
-        return;
     }
 
     // Email formátum ellenőrzése
@@ -137,7 +133,7 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
         <?php endif; ?>
         <a href="rendeles.php" class="order-btn">Rendelés</a>
         <a href="kosar.php" class="cart-btn">
-            <img src="../kepek/kosar.png" alt="Kosár" class="cart-icon">
+            <i class='fas fa-shopping-cart cart-icon'></i>
         </a>
     </div>
 
@@ -152,7 +148,6 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
 <!-- Hamburger menü tartalma -->
 <div class="menubar" id="menubar">
     <ul>
-        <li><a href="kezdolap.php">FlavorWave</a></li>
         <li><a href="kategoria.php">Menü</a></li>
         <?php if (isset($_SESSION["jog_szint"]) && $_SESSION["jog_szint"] == 1): ?>
             <li><a href="admin_felulet.php">Admin felület</a></li>
@@ -163,40 +158,37 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
         <?php else: ?>
             <li><a href="bejelentkezes.php">Bejelentkezés</a></li>
         <?php endif; ?>
+            <li><a href="rendeles.php">Rendelés</a></li>
     </ul>
 </div>
-
-<br><br><br>
 
 <div class="container">
     <h2>Regisztráció</h2>
 
     <?php if (!empty($errors)): ?>
-        <div class="error-message">
-            <?php foreach ($errors as $error): ?>
-                <p><?php echo $error; ?></p>
-            <?php endforeach; ?>
+        <div class="alert alert-danger">
+            <?php echo $errors[0]; ?>
         </div>
     <?php elseif (!empty($success_message)): ?>
-        <div class="success-message">
-            <p><?php echo $success_message; ?></p>
+        <div class="alert alert-success">
+            <?php echo $success_message; ?>
         </div>
     <?php endif; ?>
 
     <form action="" method="POST">
         <label for="username">Felhasználónév:</label>
-        <input type="text" name="username" id="username" required>
+        <input type="text" name="username" id="username">
 
         <label for="email">Email:</label>
-        <input type="email" name="email" id="email" required>
+        <input type="email" name="email" id="email">
 
         <label for="password">Jelszó:</label>
-        <input type="password" name="password" id="password" required>
+        <input type="password" name="password" id="password">
 
         <label for="phone">Telefonszám:</label>
-        <input type="tel" name="phone" id="phone" required>
+        <input type="tel" name="phone" id="phone">
 
-        <button type="submit">Regisztrálás</button>
+        <button type="submit" class="btn btn-primary">Regisztrálás</button>
     </form>
     <p>Van már fiókja? <a href="bejelentkezes.php">Jelentkezzen be itt</a>.</p>
 </div>

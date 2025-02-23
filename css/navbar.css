@@ -18,7 +18,6 @@ nav {
     left: 0;
     width: 100%;
     z-index: 1000;
-    backdrop-filter: blur(10px);
     box-shadow: 0 4px 15px rgba(0, 0, 0, 0.3);
     overflow: hidden;
 }
@@ -144,6 +143,13 @@ nav {
     flex-direction: column;
     gap: 5px;
     cursor: pointer;
+    padding: 10px;
+    background: rgba(255, 255, 255, 0.1);
+    border-radius: 8px;
+}
+
+.hamburger:hover {
+    background: rgba(255, 255, 255, 0.2);
 }
 
 .hamburger span {
@@ -163,6 +169,7 @@ nav {
     padding: 20px;
     box-shadow: 0 4px 15px rgba(0, 0, 0, 0.3);
     z-index: 1001;
+    width: 200px;
 }
 
 .menubar.active {
@@ -186,16 +193,20 @@ nav {
     font-size: 1.1rem;
     font-weight: 500;
     transition: color 0.3s ease;
+    display: block;
+    padding: 10px;
+    border-radius: 5px;
+    background: rgba(255, 255, 255, 0.1);
+    text-align: center;
 }
 
 .menubar a:hover {
     color: #feb47b;
+    background: rgba(255, 255, 255, 0.2);
 }
 
 .hamburger.active span:nth-child(1) {
-    transform: rotate(45deg);
-    position: relative;
-    top: 6px;
+    transform: rotate(45deg) translate(5px, 5px);
 }
 
 .hamburger.active span:nth-child(2) {
@@ -203,12 +214,9 @@ nav {
 }
 
 .hamburger.active span:nth-child(3) {
-    transform: rotate(-45deg);
-    position: relative;
-    top: -6px;
+    transform: rotate(-45deg) translate(5px, -5px);
 }
 
-/* Reszponzív stílusok */
 @media (max-width: 800px) {
     body {
         padding-top: 60px; /* Kisebb padding a kisebb képernyőkön */
@@ -225,6 +233,14 @@ nav {
 
     .hamburger {
         display: flex;
+    }
+
+    .logo {
+        font-size: 1.2rem;
+    }
+
+    .logo img {
+        height: 30px;
     }
 
     .menubar {
@@ -246,7 +262,44 @@ nav {
     }
 }
 
+@media (max-width: 600px) {
+    .logo {
+        font-size: 1rem;
+    }
+
+    .logo img {
+        height: 25px;
+    }
+
+    .hamburger {
+        padding: 8px;
+    }
+
+    .hamburger span {
+        width: 20px;
+        height: 2px;
+    }
+
+    .menubar {
+        top: 50px;
+    }
+
+    .menubar a {
+        font-size: 1rem;
+        padding: 8px;
+    }
+}
+
 @keyframes fadeIn {
     from { opacity: 0; transform: translateY(-10px); }
     to { opacity: 1; transform: translateY(0); }
+}
+
+@keyframes slideIn {
+    from { transform: translateX(100%); }
+    to { transform: translateX(0); }
+}
+
+.menubar.active {
+    animation: slideIn 0.3s ease-out;
 }

@@ -43,7 +43,7 @@ session_start();
         <?php endif; ?>
         <a href="rendeles.php" class="order-btn">Rendelés</a>
         <a href="kosar.php" class="cart-btn">
-            <img src="../kepek/kosar.png" alt="Kosár" class="cart-icon">
+            <i class='fas fa-shopping-cart cart-icon'></i>
         </a>
     </div>
 
@@ -58,7 +58,6 @@ session_start();
 <!-- Hamburger menü tartalma -->
 <div class="menubar" id="menubar">
     <ul>
-        <li><a href="kezdolap.php">FlavorWave</a></li>
         <li><a href="kategoria.php">Menü</a></li>
         <?php if (isset($_SESSION["jog_szint"]) && $_SESSION["jog_szint"] == 1): ?>
             <li><a href="admin_felulet.php">Admin felület</a></li>
@@ -69,10 +68,9 @@ session_start();
         <?php else: ?>
             <li><a href="bejelentkezes.php">Bejelentkezés</a></li>
         <?php endif; ?>
+            <li><a href="rendeles.php">Rendelés</a></li>
     </ul>
 </div>
-
-<br><br><br>
 
 <main>
     <div class="menu flex-grid">

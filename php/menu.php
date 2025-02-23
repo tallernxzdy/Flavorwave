@@ -20,46 +20,56 @@
 
     <!-- NAVBAR -->
     <nav>
-  <div class="logo">
+    <!-- Bal oldalon a logó -->
     <a href="kezdolap.php" class="logo">
-      <img src="../kepek/logo.png" alt="Flavorwave logó" class="logo-img">
-      <h1>FlavorWave</h1>
+        <img src="../kepek/logo.png" alt="Flavorwave Logo">
+        <h1>FlavorWave</h1>
     </a>
-  </div>
-  <ul>
-    <li><a href="kategoria.php">Kategóriák</a></li>
-    <li><a href="menu.php">Menü</a></li>
-    <?php if (isset($_SESSION["jog_szint"]) && $_SESSION["jog_szint"] == 1): ?>
-      <li><a href="admin_felulet.php">Admin felület</a></li>
-    <?php endif; ?>
 
-    <?php if (isset($_SESSION["felhasznalo_nev"])): ?>
-      <li><a href="kijelentkezes.php">Kijelentkezés</a></li>
-    <?php else: ?>
-      <li><a href="bejelentkezes.php">Bejelentkezés</a></li>
-    <?php endif; ?>
-  </ul>
-  <div class="hamburger">
-    <span class="line"></span>
-    <span class="line"></span>
-    <span class="line"></span>
-  </div>
+    <!-- Középen a kategóriák (és Admin felület, ha jogosult) -->
+    <div class="navbar-center">
+        <a href="kategoria.php">Menü</a>
+        <?php if (isset($_SESSION["jog_szint"]) && $_SESSION["jog_szint"] == 1): ?>
+            <a href="admin_felulet.php">Admin felület</a>
+        <?php endif; ?>
+    </div>
+
+    <!-- Jobb oldalon a gombok -->
+    <div class="navbar-buttons">
+        <?php if (isset($_SESSION["felhasznalo_nev"])): ?>
+            <a href="kijelentkezes.php" class="login-btn">Kijelentkezés</a>
+        <?php else: ?>
+            <a href="bejelentkezes.php" class="login-btn">Bejelentkezés</a>
+        <?php endif; ?>
+        <a href="rendeles.php" class="order-btn">Rendelés</a>
+        <a href="kosar.php" class="cart-btn">
+            <i class='fas fa-shopping-cart cart-icon'></i>
+        </a>
+    </div>
+
+    <!-- Hamburger menü ikon -->
+    <div class="hamburger" onclick="toggleMenu()">
+        <span></span>
+        <span></span>
+        <span></span>
+    </div>
 </nav>
 
-<div class="menubar">
-  <ul>
-  <li><a href="kategoria.php">Kategóriák</a></li>
-    <li><a href="menu.php">Menü</a></li>
-    <?php if (isset($_SESSION["jog_szint"]) && $_SESSION["jog_szint"] == 1): ?>
-      <li><a href="admin_felulet.php">Admin felület</a></li>
-    <?php endif; ?>
-
-    <?php if (isset($_SESSION["felhasznalo_nev"])): ?>
-      <li><a href="kijelentkezes.php">Kijelentkezés</a></li>
-    <?php else: ?>
-      <li><a href="bejelentkezes.php">Bejelentkezés</a></li>
-    <?php endif; ?>
-  </ul>
+<!-- Hamburger menü tartalma -->
+<div class="menubar" id="menubar">
+    <ul>
+        <li><a href="kategoria.php">Menü</a></li>
+        <?php if (isset($_SESSION["jog_szint"]) && $_SESSION["jog_szint"] == 1): ?>
+            <li><a href="admin_felulet.php">Admin felület</a></li>
+        <?php endif; ?>
+        <li><a href="kosar.php">Kosár</a></li>
+        <?php if (isset($_SESSION["felhasznalo_nev"])): ?>
+            <li><a href="kijelentkezes.php">Kijelentkezés</a></li>
+        <?php else: ?>
+            <li><a href="bejelentkezes.php">Bejelentkezés</a></li>
+        <?php endif; ?>
+            <li><a href="rendeles.php">Rendelés</a></li>
+    </ul>
 </div>
 
 
