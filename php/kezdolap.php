@@ -41,6 +41,8 @@ session_start();
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>FlavorWave - Modern Navbar</title>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.2/css/all.min.css">
+
 </head>
 
 <body>
@@ -83,7 +85,6 @@ session_start();
 <!-- Hamburger menü tartalma -->
 <div class="menubar" id="menubar">
     <ul>
-        <li><a href="kezdolap.php">FlavorWave</a></li>
         <li><a href="kategoria.php">Menü</a></li>
         <?php if (isset($_SESSION["jog_szint"]) && $_SESSION["jog_szint"] == 1): ?>
             <li><a href="admin_felulet.php">Admin felület</a></li>
@@ -94,13 +95,20 @@ session_start();
         <?php else: ?>
             <li><a href="bejelentkezes.php">Bejelentkezés</a></li>
         <?php endif; ?>
+            <li><a href="rendeles.php">Rendelés</a></li>
     </ul>
 </div>
-
+<script>
+    function toggleMenu() {
+        var menubar = document.getElementById("menubar");
+        var hamburger = document.querySelector(".hamburger"); // Hamburger ikon
+        menubar.classList.toggle("active");
+        hamburger.classList.toggle("active"); // Hamburger ikon aktívvá tétele
+    }
+</script>
 </body>
 
 </html>
-
 
 
 
@@ -180,19 +188,19 @@ session_start();
         }
 
         .hero h1 {
-            font-size: 5rem;
+            font-size: 3.5rem; /* Csökkentett betűméret */
             margin-bottom: 20px;
             line-height: 1.2;
             text-transform: uppercase;
-            letter-spacing: 4px;
+            letter-spacing: 2px; /* Csökkentett betűközt */
             animation: fadeInDown 1s ease-out;
             text-shadow: 0 4px 6px rgba(0, 0, 0, 0.5);
             font-family: 'Montserrat', sans-serif;
         }
 
         .hero p {
-            font-size: 1.8rem;
-            margin-bottom: 40px;
+            font-size: 1.4rem; /* Csökkentett betűméret */
+            margin-bottom: 30px; /* Csökkentett margó */
             line-height: 1.6;
             animation: fadeInUp 1.5s ease-out;
             font-weight: 300;
@@ -201,20 +209,22 @@ session_start();
         .hero .cta-buttons {
             display: flex;
             justify-content: center;
-            gap: 20px;
+            gap: 10px; /* Csökkentett távolság */
+            flex-wrap: wrap; /* Gombok egymás alá kerülése */
             animation: fadeInUp 2s ease-out;
         }
 
         .cta-buttons a {
             text-decoration: none;
-            padding: 15px 40px;
-            font-size: 1.4rem;
+            padding: 12px 30px; /* Csökkentett padding */
+            font-size: 1.1rem; /* Csökkentett betűméret */
             border-radius: 30px;
             transition: all 0.3s ease;
             cursor: pointer;
             font-weight: 700;
             text-transform: uppercase;
             letter-spacing: 1px;
+            white-space: nowrap; /* Szöveg egy sorban tartása */
         }
 
         .cta-buttons .order-now {
@@ -268,14 +278,14 @@ session_start();
         }
 
         .feedback-section {
-            margin-top: 50px;
+            margin-top: 30px; /* Csökkentett margó */
             text-align: center;
             animation: fadeInUp 2.5s ease-out;
         }
 
         .feedback-section a,
         .feedback-section p {
-            font-size: 1.2rem;
+            font-size: 1rem; /* Csökkentett betűméret */
             color: #fff;
             text-decoration: none;
             transition: color 0.3s ease;
@@ -287,7 +297,7 @@ session_start();
 
         .feedback-section .primary-bttn {
             background: linear-gradient(135deg, #ff7e5f, #feb47b);
-            padding: 10px 30px;
+            padding: 8px 20px; /* Csökkentett padding */
             border-radius: 30px;
             color: #fff;
             font-weight: 700;
@@ -299,6 +309,38 @@ session_start();
         .feedback-section .primary-bttn:hover {
             background: linear-gradient(135deg, #feb47b, #ff7e5f);
             transform: scale(1.05);
+        }
+
+        /* Média lekérdezések */
+        @media (max-width: 768px) {
+            .hero h1 {
+                font-size: 3rem;
+                letter-spacing: 1px;
+            }
+
+            .hero p {
+                font-size: 1.3rem;
+            }
+
+            .cta-buttons a {
+                font-size: 1rem;
+                padding: 10px 25px;
+            }
+        }
+
+        @media (max-width: 480px) {
+            .hero h1 {
+                font-size: 2.5rem;
+            }
+
+            .hero p {
+                font-size: 1.2rem;
+            }
+
+            .cta-buttons a {
+                font-size: 0.9rem;
+                padding: 8px 20px;
+            }
         }
     </style>
 </head>
@@ -334,7 +376,6 @@ session_start();
 
 
 
-
 <!DOCTYPE html>
 <html lang="hu">
 <head>
@@ -361,31 +402,32 @@ session_start();
         }
 
         body {
-            font-family: 'Poppins', sans-serif;
+            /* font-family: 'Poppins', sans-serif;
             background: linear-gradient(135deg, #1a1a1a, #2c3e50);
             color: #fff;
             display: flex;
-            just
+            justify-content: center;
             align-items: center;
             min-height: 100vh;
+            padding: 20px; Padding a kisebb képernyőkre */
         }
 
         section#weekly-deals {
             text-align: center;
-            padding: 50px 20px;
+            padding: 30px 20px; /* Csökkentett padding */
             background: rgba(255, 255, 255, 0.1);
             backdrop-filter: blur(10px);
             border-radius: 25px;
             box-shadow: 0 10px 30px var(--shadow-color);
             border: 1px solid rgba(255, 255, 255, 0.2);
+            width: 95%; /* Szélesebb a kisebb képernyőkre */
             max-width: 1200px;
-            width: 90%;
             margin: 0 auto;
         }
 
         section#weekly-deals h2 {
-            font-size: 2.5rem;
-            margin-bottom: 20px;
+            font-size: 2rem; /* Csökkentett betűméret */
+            margin-bottom: 15px; /* Csökkentett margó */
             color: var(--primary-color);
             text-shadow: 2px 2px 4px rgba(0, 0, 0, 0.2);
         }
@@ -393,14 +435,15 @@ session_start();
         .countdown {
             display: flex;
             justify-content: center;
-            gap: 20px;
-            margin-bottom: 40px;
-            font-size: 1.5rem;
+            gap: 10px; /* Csökkentett távolság */
+            margin-bottom: 30px; /* Csökkentett margó */
+            font-size: 1.2rem; /* Csökkentett betűméret */
             font-weight: bold;
+            flex-wrap: wrap; /* Hogy elférjen kisebb képernyőn */
         }
 
         .countdown span {
-            padding: 10px 20px;
+            padding: 8px 15px; /* Csökkentett padding */
             background: rgba(255, 255, 255, 0.1);
             border-radius: 10px;
             box-shadow: 0 5px 15px rgba(0, 0, 0, 0.2);
@@ -409,16 +452,17 @@ session_start();
         .sliders-container {
             display: flex;
             justify-content: center;
-            gap: 20px;
+            gap: 15px; /* Csökkentett távolság */
             margin: 0 auto;
             width: 100%;
+            flex-wrap: wrap; /* Hogy a sliderek egymás alá kerüljenek */
         }
 
         .image-slider {
             position: relative;
-            width: 45%;
-            max-width: none;
-            margin: 20px 0;
+            width: 100%; /* Teljes szélesség a kisebb képernyőkre */
+            max-width: 500px; /* Maximális szélesség */
+            margin: 15px 0; /* Csökkentett margó */
             overflow: hidden;
             border-radius: 15px;
             box-shadow: 0 10px 20px rgba(0, 0, 0, 0.2);
@@ -446,9 +490,9 @@ session_start();
 
         .cta-button {
             display: inline-block;
-            margin-top: 20px;
-            padding: 15px 30px;
-            font-size: 18px;
+            margin-top: 15px; /* Csökkentett margó */
+            padding: 12px 25px; /* Csökkentett padding */
+            font-size: 1rem; /* Csökkentett betűméret */
             font-weight: bold;
             color: #fff;
             background: linear-gradient(45deg, var(--gradient-start), var(--gradient-end));
@@ -468,6 +512,31 @@ session_start();
         .cta-button:active {
             transform: translateY(0);
             box-shadow: 0 8px 15px rgba(0, 0, 0, 0.2);
+        }
+
+        /* Média lekérdezések */
+        @media (min-width: 768px) {
+            .sliders-container {
+                flex-wrap: nowrap; /* Nagyobb képernyőn maradjanak egymás mellett */
+            }
+
+            .image-slider {
+                width: 45%; /* Két slider egymás mellett */
+            }
+        }
+
+        @media (max-width: 480px) {
+            section#weekly-deals h2 {
+                font-size: 1.8rem; /* Még kisebb betűméret */
+            }
+
+            .countdown {
+                font-size: 1rem; /* Még kisebb betűméret */
+            }
+
+            .cta-button {
+                font-size: 0.9rem; /* Még kisebb betűméret */
+            }
         }
     </style>
 </head>
@@ -546,8 +615,7 @@ session_start();
 </script>
 
 </body>
-</html> 
-
+</html>
 
 
 
@@ -952,7 +1020,6 @@ session_start();
             min-height: 100vh;
             display: flex;
             justify-content: center;
-            
         }
 
         .steps-container {
@@ -960,7 +1027,7 @@ session_start();
             justify-content: center;
             align-items: center;
             flex-direction: column;
-            padding: 100px 20px;
+            padding: 50px 20px; /* Csökkentett padding */
             width: 100%;
         }
 
@@ -969,10 +1036,10 @@ session_start();
             align-items: center;
             justify-content: flex-start;
             position: relative;
-            width: 80%;
+            width: 90%; /* Rugalmas szélesség */
             max-width: 800px;
-            padding: 30px 40px;
-            margin: 40px 0;
+            padding: 20px 30px; /* Csökkentett padding */
+            margin: 30px 0; /* Csökkentett margó */
             background: rgba(255, 255, 255, 0.1);
             border-radius: 20px;
             backdrop-filter: blur(10px);
@@ -989,14 +1056,14 @@ session_start();
         }
 
         .step i {
-            font-size: 3rem;
-            margin-right: 30px;
+            font-size: 2.5rem; /* Csökkentett betűméret */
+            margin-right: 20px; /* Csökkentett margó */
             color: #ff7e5f;
             text-shadow: 0 0 10px rgba(255, 126, 95, 0.7);
         }
 
         .step p {
-            font-size: 1.6rem;
+            font-size: 1.4rem; /* Csökkentett betűméret */
             font-weight: 600;
             margin: 0;
             color: #fff;
@@ -1046,6 +1113,37 @@ session_start();
         .step i {
             animation: float 3s ease-in-out infinite;
         }
+
+        /* Média lekérdezések */
+        @media (max-width: 768px) {
+            .step {
+                width: 95%; /* Még nagyobb szélesség kisebb képernyőkre */
+                padding: 15px 20px; /* Még kisebb padding */
+                margin: 20px 0; /* Még kisebb margó */
+            }
+
+            .step i {
+                font-size: 2rem; /* Még kisebb betűméret */
+                margin-right: 15px; /* Még kisebb margó */
+            }
+
+            .step p {
+                font-size: 1.2rem; /* Még kisebb betűméret */
+            }
+        }
+
+        @media (max-width: 480px) {
+            .step {
+                flex-direction: column; /* Álló elrendezés */
+                align-items: center;
+                text-align: center;
+            }
+
+            .step i {
+                margin-right: 0; /* Nincs margó az ikonnak */
+                margin-bottom: 10px; /* Alsó margó az ikonnak */
+            }
+        }
     </style>
 </head>
 <body>
@@ -1081,9 +1179,6 @@ session_start();
 
 
 
-
-
-
 <!DOCTYPE html>
 <html lang="hu">
 <head>
@@ -1094,34 +1189,91 @@ session_start();
     <style>
         @import url('https://fonts.googleapis.com/css2?family=Poppins:wght@300;600;800&display=swap');
 
-        body {
+        /* Alap stílusok */
+        * {
             margin: 0;
             padding: 0;
+            box-sizing: border-box;
             font-family: 'Poppins', sans-serif;
-            background: linear-gradient(135deg, #1e1e2f, #2a2a40);
-            color: #fff;
-            overflow-x: hidden;
-            min-height: 100vh;
         }
 
-        .quiz-container {
-            width: 100%;
-            max-width: 1200px;
-            padding: 20px;
-            margin: 0 auto; /* Középre igazítás */
+        /* Fő konténer */
+        .quiz-wrapper {
             display: flex;
             justify-content: center;
             align-items: center;
-            flex-direction: column;
-            min-height: 100vh; /* Teljes magasság kitöltése */
+            min-height: 100vh;
+            background: linear-gradient(135deg, #1e1e2f, #2a2a40);
+            padding: 20px; /* Csökkentett padding */
+        }
+
+        .quiz-container {
+            width: 95%; /* Növelt szélesség */
+            max-width: 1000px;
+            padding: 30px; /* Csökkentett padding */
+            background: rgba(255, 255, 255, 0.1);
+            border-radius: 20px;
+            backdrop-filter: blur(10px);
+            border: 1px solid rgba(255, 255, 255, 0.2);
+            box-shadow: 0 15px 35px rgba(0, 0, 0, 0.3);
+            text-align: center;
+            animation: slideInFromRight 1s ease-out;
+        }
+
+        @keyframes slideInFromRight {
+            0% {
+                transform: translateX(100%);
+                opacity: 0;
+            }
+            100% {
+                transform: translateX(0);
+                opacity: 1;
+            }
+        }
+
+        .quiz-container h1 {
+            font-size: 2.5rem; /* Csökkentett betűméret */
+            margin-bottom: 10px;
+            color: #ff7e5f;
+            text-shadow: 0 0 10px rgba(255, 126, 95, 0.7);
+            animation: popIn 1s ease-out;
+        }
+
+        .quiz-container p {
+            font-size: 1.1rem; /* Csökkentett betűméret */
+            margin-bottom: 20px; /* Csökkentett margó */
+            color: #fff;
+            animation: fadeIn 1.5s ease-out;
+        }
+
+        @keyframes popIn {
+            0% {
+                transform: scale(0);
+                opacity: 0;
+            }
+            60% {
+                transform: scale(1.1);
+                opacity: 1;
+            }
+            100% {
+                transform: scale(1);
+            }
+        }
+
+        @keyframes fadeIn {
+            0% {
+                opacity: 0;
+            }
+            100% {
+                opacity: 1;
+            }
         }
 
         .quiz-question {
             display: none;
             width: 100%;
-            max-width: 800px;
-            padding: 40px;
-            margin: 20px 0;
+            padding: 15px; /* Csökkentett padding */
+            margin: 15px 0; /* Csökkentett margó */
             background: rgba(255, 255, 255, 0.1);
             border-radius: 20px;
             backdrop-filter: blur(10px);
@@ -1140,8 +1292,8 @@ session_start();
         }
 
         .quiz-question h2 {
-            font-size: 2.5rem;
-            margin-bottom: 30px;
+            font-size: 1.8rem; /* Csökkentett betűméret */
+            margin-bottom: 15px; /* Csökkentett margó */
             color: #fff;
             text-shadow: 0 0 10px rgba(255, 255, 255, 0.5);
         }
@@ -1149,13 +1301,13 @@ session_start();
         .quiz-options {
             display: flex;
             justify-content: center;
-            gap: 20px;
+            gap: 10px; /* Csökkentett távolság */
             flex-wrap: wrap;
         }
 
         .quiz-options button {
-            padding: 20px 40px;
-            font-size: 1.2rem;
+            padding: 12px 25px; /* Csökkentett padding */
+            font-size: 0.9rem; /* Csökkentett betűméret */
             font-weight: 600;
             color: #fff;
             background: linear-gradient(135deg, #ff7e5f, #feb47b);
@@ -1164,6 +1316,7 @@ session_start();
             cursor: pointer;
             transition: all 0.3s ease;
             box-shadow: 0 5px 15px rgba(255, 126, 95, 0.3);
+            animation: float 3s ease-in-out infinite;
         }
 
         .quiz-options button:hover {
@@ -1172,12 +1325,20 @@ session_start();
             box-shadow: 0 10px 20px rgba(255, 126, 95, 0.5);
         }
 
+        @keyframes float {
+            0%, 100% {
+                transform: translateY(0);
+            }
+            50% {
+                transform: translateY(-10px);
+            }
+        }
+
         .quiz-result-card {
             display: none;
             width: 100%;
-            max-width: 800px;
-            padding: 40px;
-            margin: 20px 0;
+            padding: 30px; /* Csökkentett padding */
+            margin: 15px 0; /* Csökkentett margó */
             background: rgba(255, 255, 255, 0.1);
             border-radius: 20px;
             backdrop-filter: blur(10px);
@@ -1197,31 +1358,33 @@ session_start();
         }
 
         .quiz-result-card h2 {
-            font-size: 2.5rem;
-            margin-bottom: 20px;
+            font-size: 2rem; /* Csökkentett betűméret */
+            margin-bottom: 15px; /* Csökkentett margó */
             color: #ff7e5f;
             text-shadow: 0 0 10px rgba(255, 126, 95, 0.7);
         }
 
         .quiz-result-card p {
-            font-size: 1.5rem;
-            margin-bottom: 20px;
+            font-size: 1.2rem; /* Csökkentett betűméret */
+            margin-bottom: 15px; /* Csökkentett margó */
             color: #fff;
         }
 
         .quiz-result-card .image-container {
-            margin: 20px 0;
+            margin: 15px 0; /* Csökkentett margó */
             display: flex;
             justify-content: center;
             align-items: center;
         }
 
         .quiz-result-card img {
-            width: 300px;
-            height: 300px;
+            width: 100%;
+            max-width: 300px;
+            height: auto; /* Automatikus magasság */
             border-radius: 20px;
             box-shadow: 0 10px 20px rgba(0, 0, 0, 0.3);
             transition: transform 0.3s ease, box-shadow 0.3s ease;
+            animation: popIn 1s ease-out;
         }
 
         .quiz-result-card img:hover {
@@ -1231,9 +1394,9 @@ session_start();
 
         .quiz-result-card a {
             display: inline-block;
-            margin-top: 20px;
-            padding: 15px 30px;
-            font-size: 1.2rem;
+            margin-top: 15px; /* Csökkentett margó */
+            padding: 12px 25px; /* Csökkentett padding */
+            font-size: 1rem; /* Csökkentett betűméret */
             font-weight: 600;
             color: #fff;
             background: linear-gradient(135deg, #ff7e5f, #feb47b);
@@ -1243,6 +1406,7 @@ session_start();
             box-shadow: 0 5px 15px rgba(255, 126, 95, 0.3);
             position: relative;
             overflow: hidden;
+            animation: float 3s ease-in-out infinite;
         }
 
         .quiz-result-card a::before {
@@ -1267,85 +1431,88 @@ session_start();
             box-shadow: 0 10px 20px rgba(255, 126, 95, 0.5);
         }
 
-        @keyframes slideIn {
-            0% {
-                opacity: 0;
-                transform: translateY(-50px);
-            }
-            100% {
-                opacity: 1;
-                transform: translateY(0);
-            }
-        }
-
-        @keyframes popIn {
-            0% {
-                transform: scale(0);
-                opacity: 0;
-            }
-            60% {
-                transform: scale(1.1);
-                opacity: 1;
-            }
-            100% {
-                transform: scale(1);
-            }
-        }
-
-        @keyframes float {
-            0%, 100% {
-                transform: translateY(0);
-            }
-            50% {
-                transform: translateY(-10px);
-            }
-        }
-
         .quiz-question i {
-            font-size: 4rem;
-            margin-bottom: 20px;
+            font-size: 3rem; /* Csökkentett betűméret */
+            margin-bottom: 15px; /* Csökkentett margó */
             color: #ff7e5f;
             text-shadow: 0 0 10px rgba(255, 126, 95, 0.7);
             animation: float 3s ease-in-out infinite;
         }
+
+        /* Média lekérdezések */
+        @media (max-width: 768px) {
+            .quiz-container h1 {
+                font-size: 2rem;
+            }
+            .quiz-container p {
+                font-size: 1rem;
+            }
+            .quiz-options {
+                flex-direction: column;
+                align-items: center;
+            }
+            .quiz-options button {
+                width: 80%;
+                margin-bottom: 10px;
+            }
+            .quiz-result-card h2 {
+                font-size: 1.8rem;
+            }
+            .quiz-result-card p {
+                font-size: 1.1rem;
+            }
+        }
+
+        @media (max-width: 480px) {
+            .quiz-container h1 {
+                font-size: 1.7rem;
+            }
+            .quiz-options button {
+                width: 90%;
+            }
+        }
     </style>
 </head>
 <body>
-    <div class="quiz-container">
-        <div class="quiz-question active">
-            <i class="fas fa-pizza-slice"></i>
-            <h2>Milyen pizzát szeretnél?</h2>
-            <div class="quiz-options">
-                <button data-type="meat">Húsos</button>
-                <button data-type="veggie">Zöldséges</button>
-                <button data-type="cheese">Sajtos</button>
+    <div class="quiz-wrapper">
+        <div class="quiz-container">
+            <h1>Nem tudod milyen pizzát válassz?</h1>
+            <p>Mi segítünk! Csak válassz tetszésnek megfelelő alapanyagot!</p>
+            <div class="quiz-question active">
+                <i class="fas fa-pizza-slice"></i>
+                <h2>Milyen pizzát szeretnél?</h2>
+                <div class="quiz-options">
+                    <button data-type="meat">Húsos</button>
+                    <button data-type="veggie">Zöldséges</button>
+                    <button data-type="cheese">Sajtos</button>
+                </div>
             </div>
-        </div>
-        <div class="quiz-question">
-            <i class="fas fa-pepper-hot"></i>
-            <h2>Mennyire szereted a csípőset?</h2>
-            <div class="quiz-options">
-                <button data-spice="mild">Enyhe</button>
-                <button data-spice="medium">Közepes</button>
-                <button data-spice="hot">Csípős</button>
+            <div class="quiz-question">
+                <i class="fas fa-pepper-hot"></i>
+                <h2>Mennyire szereted a csípőset?</h2>
+                <div class="quiz-options">
+                    <button data-spice="mild">Enyhe</button>
+                    <button data-spice="medium">Közepes</button>
+                    <button data-spice="hot">Csípős</button>
+                </div>
             </div>
-        </div>
-        <div class="quiz-question">
-            <i class="fas fa-cheese"></i>
-            <h2>Mennyire szereted a sajtot?</h2>
-            <div class="quiz-options">
-                <button data-cheese="light">Kevés</button>
-                <button data-cheese="normal">Normál</button>
-                <button data-cheese="extra">Extra</button>
+            <div class="quiz-question">
+                <i class="fas fa-cheese"></i>
+                <h2>Mennyire szereted a sajtot?</h2>
+                <div class="quiz-options">
+                    <button data-cheese="light">Kevés</button>
+                    <button data-cheese="normal">Normál</button>
+                    <button data-cheese="extra">Extra</button>
+                </div>
             </div>
-        </div>
-        <div class="quiz-result-card">
-            <h2>Az ajánlott ételed:</h2>
-            <p id="recommended-food"></p>
-            <div class="image-container">
-                <img id="food-image" src="" alt="Ajánlott étel">
+            <div class="quiz-result-card">
+                <h2>Az ajánlott ételed:</h2>
+                <p id="recommended-food"></p>
+                <div class="image-container">
+                    <img id="food-image" src="" alt="Ajánlott étel">
+                </div>
+                <a id="order-link" href="#">Megrendelem!</a>
             </div>
-            <a id="order-link" href="#">Megrendelem!</a>
         </div>
     </div>
 
@@ -1428,13 +1595,6 @@ session_start();
     </script>
 </body>
 </html>
-
-
-
-
-
-
-
 
 
     <!-- Footer -->
