@@ -217,7 +217,7 @@ nav {
     transform: rotate(-45deg) translate(5px, -5px);
 }
 
-@media (max-width: 800px) {
+@media (max-width: 950px) {
     body {
         padding-top: 60px; /* Kisebb padding a kisebb képernyőkön */
     }

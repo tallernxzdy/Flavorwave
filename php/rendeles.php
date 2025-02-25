@@ -16,6 +16,17 @@ unset($_SESSION['order_success']);
 
 $userId = $_SESSION['felhasznalo_id'];
 
+// Felhasználó adatainak betöltése
+$userData = [];
+$query = "SELECT tel_szam, lakcim FROM felhasznalo WHERE id = ?";
+$stmt = $conn->prepare($query);
+$stmt->bind_param("i", $userId);
+$stmt->execute();
+$result = $stmt->get_result();
+if ($result->num_rows > 0) {
+    $userData = $result->fetch_assoc();
+}
+
 // Kosár tartalmának betöltése
 $cartItems = [];
 $total = 0;
@@ -35,63 +46,67 @@ while ($row = $result->fetch_assoc()) {
 
 // Rendelés feldolgozása
 if ($_SERVER['REQUEST_METHOD'] === 'POST' && isset($_POST['submit'])) {
-    $name = trim($_POST['name'] ?? '');
-    $address = trim($_POST['address'] ?? '');
-    $phone = trim($_POST['phone'] ?? '');
-    $notes = trim($_POST['notes'] ?? '');
+    if (empty($cartItems)) {
+        $errors[] = "A kosár üres, nem lehet leadni a rendelést.";
+    } else {
+        $name = trim($_POST['name'] ?? '');
+        $address = trim($_POST['address'] ?? '');
+        $phone = trim($_POST['phone'] ?? '');
+        $notes = trim($_POST['notes'] ?? ''); // Megjegyzés nem kötelező
 
-    // Validáció
-    $errors = [];
-    if (empty($name))
-        $errors[] = "Név megadása kötelező";
-    elseif (empty($address))
-        $errors[] = "Cím megadása kötelező";
-    elseif (empty($phone))
-        $errors[] = "Telefonszám megadása kötelező";
-    elseif (!preg_match('/^\+?[0-9]{9,12}$/', $phone))
-        $errors[] = "Érvénytelen telefonszám formátum";
+        // Validáció
+        $errors = [];
+        if (empty($name))
+            $errors[] = "Név megadása kötelező";
+        elseif (empty($address))
+            $errors[] = "Cím megadása kötelező";
+        elseif (empty($phone))
+            $errors[] = "Telefonszám megadása kötelező";
+        elseif (!preg_match('/^\+?[0-9]{9,12}$/', $phone))
+            $errors[] = "Érvénytelen telefonszám formátum";
 
-    if (empty($errors)) {
-        $conn->begin_transaction();
-        try {
-            // Felhasználó adatok frissítése
-            $stmt = $conn->prepare("UPDATE felhasznalo SET tel_szam=?, lakcim=? WHERE id=?");
-            $stmt->bind_param("ssi", $phone, $address, $userId);
-            $stmt->execute();
-
-            // Rendelés létrehozása
-            $stmt = $conn->prepare("INSERT INTO megrendeles (felhasznalo_id, leadas_megjegyzes, kezbesites, leadas_allapota, leadasdatuma) 
-                                   VALUES (?, ?, 'házhozszállítás', 0, CURDATE())");
-            $stmt->bind_param("is", $userId, $notes);
-            $stmt->execute();
-            $orderId = $conn->insert_id;
-
-            // Tételek hozzáadása
-            $stmt = $conn->prepare("INSERT INTO rendeles_tetel (rendeles_id, termek_id, mennyiseg) VALUES (?, ?, ?)");
-            foreach ($cartItems as $item) {
-                $stmt->bind_param("iii", $orderId, $item['id'], $item['darab']);
+        if (empty($errors)) {
+            $conn->begin_transaction();
+            try {
+                // Felhasználó adatok frissítése
+                $stmt = $conn->prepare("UPDATE felhasznalo SET tel_szam=?, lakcim=? WHERE id=?");
+                $stmt->bind_param("ssi", $phone, $address, $userId);
                 $stmt->execute();
+
+                // Rendelés létrehozása
+                $stmt = $conn->prepare("INSERT INTO megrendeles (felhasznalo_id, leadas_megjegyzes, kezbesites, leadas_allapota, leadasdatuma) 
+                                       VALUES (?, ?, 'házhozszállítás', 0, CURDATE())");
+                $stmt->bind_param("is", $userId, $notes);
+                $stmt->execute();
+                $orderId = $conn->insert_id;
+
+                // Tételek hozzáadása
+                $stmt = $conn->prepare("INSERT INTO rendeles_tetel (rendeles_id, termek_id, mennyiseg) VALUES (?, ?, ?)");
+                foreach ($cartItems as $item) {
+                    $stmt->bind_param("iii", $orderId, $item['id'], $item['darab']);
+                    $stmt->execute();
+                }
+
+                // Kosár ürítése
+                $conn->query("DELETE FROM tetelek WHERE felhasznalo_id=$userId");
+                $conn->commit();
+
+                // Sikeres rendelés esetén modal megjelenítése
+                $_SESSION['order_success'] = true;
+                header("Location: rendeles.php");
+                exit();
+            } catch (Exception $e) {
+                $conn->rollback();
+                $errors[] = "Hiba történt a rendelés feldolgozása során";
+                $_SESSION['errors'] = $errors;
+                header("Location: rendeles.php");
+                exit();
             }
-
-            // Kosár ürítése
-            $conn->query("DELETE FROM tetelek WHERE felhasznalo_id=$userId");
-            $conn->commit();
-
-            // Email küldése és átirányítás
-            $_SESSION['order_success'] = true;
-            header("Location: rendeles.php");
-            exit();
-        } catch (Exception $e) {
-            $conn->rollback();
-            $errors[] = "Hiba történt a rendelés feldolgozása során";
+        } else {
             $_SESSION['errors'] = $errors;
             header("Location: rendeles.php");
             exit();
         }
-    } else {
-        $_SESSION['errors'] = $errors;
-        header("Location: rendeles.php");
-        exit();
     }
 }
 ?>
@@ -104,10 +119,10 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST' && isset($_POST['submit'])) {
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>FlavorWave - Rendelés</title>
     <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/css/bootstrap.min.css" rel="stylesheet">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.15.4/css/all.min.css">
     <link rel="stylesheet" href="../css/navbar.css">
     <link rel="stylesheet" href="../css/footer.css">
     <link rel="stylesheet" href="../css/rendeles.css">
-
 </head>
 
 <body>
@@ -175,7 +190,7 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST' && isset($_POST['submit'])) {
                     Köszönjük rendelését! A rendelés részleteit elküldtük emailben.
                 </div>
                 <div class="modal-footer">
-                <button type="button" class="btn btn-primary" data-bs-dismiss="modal">OK</button>
+                    <button type="button" class="btn btn-primary" data-bs-dismiss="modal">OK</button>
                 </div>
             </div>
         </div>
@@ -183,6 +198,7 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST' && isset($_POST['submit'])) {
 
     <div class="order-container">
         <h1 class="mb-4">Rendelés véglegesítése</h1>
+        
 
         <?php if (!empty($errors)): ?>
             <div class="alert alert-danger"><?= $errors[0] ?></div>
@@ -205,18 +221,18 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST' && isset($_POST['submit'])) {
                     <form method="POST">
                         <div class="mb-3">
                             <label for="name" class="form-label">Teljes név</label>
-                            <input type="text" class="form-control" id="name" name="name">
+                            <input type="text" class="form-control" id="name" name="name" required>
                         </div>
                         <div class="mb-3">
                             <label for="address" class="form-label">Szállítási cím</label>
-                            <input type="text" class="form-control" id="address" name="address">
+                            <input type="text" class="form-control" id="address" name="address" value="<?= $userData['lakcim'] ?? '' ?>" required>
                         </div>
                         <div class="mb-3">
                             <label for="phone" class="form-label">Telefonszám</label>
-                            <input type="tel" class="form-control" id="phone" name="phone">
+                            <input type="tel" class="form-control" id="phone" name="phone" value="<?= $userData['tel_szam'] ?? '' ?>" required>
                         </div>
                         <div class="mb-3">
-                            <label for="notes" class="form-label">Megjegyzés</label>
+                            <label for="notes" class="form-label">Megjegyzés (opcionális)</label>
                             <textarea class="form-control" id="notes" name="notes" rows="3"></textarea>
                         </div>
                         <button type="submit" name="submit" class="btn btn-primary">Rendelés véglegesítése</button>
@@ -244,25 +260,25 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST' && isset($_POST['submit'])) {
     </div>
 
     <div class="footer">
-        <div class="footer-container">
-            <ul class="footer-links">
-                <li><a href="../html/rolunk.html">Rólunk</a></li>
-                <li><a href="../html/kapcsolatok.html">Kapcsolat</a></li>
-                <li><a href="../html/adatvedelem.html">Adatvédelem</a></li>
-            </ul>
-            <div class="footer-socials">
-                <a href="#"><i class="fab fa-facebook"></i></a>
-                <a href="#"><i class="fab fa-instagram"></i></a>
-                <a href="#"><i class="fab fa-twitter"></i></a>
-                <a href="#"><i class="fab fa-youtube"></i></a>
-            </div>
-            <div class="footer-copy">
-                &copy; 2024 FlavorWave - Minden jog fenntartva.
-            </div>
+    <div class="footer-container">
+        <ul class="footer-links">
+            <li><a href="../html/rolunk.html">Rólunk</a></li>
+            <li><a href="../html/kapcsolatok.html">Kapcsolat</a></li>
+            <li><a href="../html/adatvedelem.html">Adatvédelem</a></li>
+        </ul>
+        <div class="footer-socials">
+            <a href="#"><i class="fab fa-facebook"></i></a>
+            <a href="#"><i class="fab fa-instagram"></i></a>
+            <a href="#"><i class="fab fa-twitter"></i></a>
+            <a href="#"><i class="fab fa-youtube"></i></a>
+        </div>
+        <div class="footer-copy">
+            &copy; 2025 FlavorWave - Minden jog fenntartva.
         </div>
     </div>
-
+</div>
     <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/js/bootstrap.bundle.min.js"></script>
+    <script src="../js/navbar.js"></script>
 </body>
 
 </html>

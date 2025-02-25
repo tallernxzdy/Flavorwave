@@ -27,13 +27,6 @@ session_start();
 </head>
 <body>
 
-
-
-
-
-
-
-
 <!DOCTYPE html>
 <html lang="hu">
 
@@ -98,14 +91,6 @@ session_start();
             <li><a href="rendeles.php">Rendelés</a></li>
     </ul>
 </div>
-<script>
-    function toggleMenu() {
-        var menubar = document.getElementById("menubar");
-        var hamburger = document.querySelector(".hamburger"); // Hamburger ikon
-        menubar.classList.toggle("active");
-        hamburger.classList.toggle("active"); // Hamburger ikon aktívvá tétele
-    }
-</script>
 </body>
 
 </html>
