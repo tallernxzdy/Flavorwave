@@ -1,0 +1,264 @@
+:root {
+    --primary-color: #00ff88;
+    --secondary-color: #00b8ff;
+    --text-color: #fff;
+    --button-hover: #00cc66;
+    --shadow-color: rgba(0, 0, 0, 0.3);
+    --gradient-start: #00ff88;
+    --gradient-end: #00b8ff;
+}
+
+/* General Reset */
+* {
+    margin: 0;
+    padding: 0;
+    box-sizing: border-box;
+}
+
+/* Container for the slider */
+.shaker-master-container {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    min-height: 100vh;
+    background: linear-gradient(135deg, #1a1a1a, #2c3e50);
+    overflow: hidden;
+}
+
+/* Slider Container */
+.shaker-master {
+    position: relative;
+    width: 90%;
+    max-width: 1200px;
+    margin: 50px auto;
+    overflow: hidden;
+    border-radius: 25px;
+    box-shadow: 0 10px 30px var(--shadow-color);
+    background: rgba(0, 0, 0, 0.5);
+    backdrop-filter: blur(10px);
+    border: 1px solid rgba(255, 255, 255, 0.2);
+}
+
+/* Slides Wrapper */
+.shaker-slides {
+    display: flex;
+    transition: transform 0.6s cubic-bezier(0.68, -0.55, 0.27, 1.55);
+}
+
+/* Individual Slide */
+.shaker-slide {
+    flex: 0 0 100%;
+    display: flex;
+    align-items: center;
+    color: var(--text-color);
+    padding: 40px;
+    position: relative;
+}
+
+.shaker-slide .shaker-text {
+    flex: 1;
+    padding: 20px;
+    text-align: left;
+    animation: fadeIn 1s ease;
+}
+
+.shaker-slide h3 {
+    font-size: 3rem;
+    color: var(--primary-color);
+    margin-bottom: 20px;
+    text-shadow: 2px 2px 4px rgba(0, 0, 0, 0.2);
+}
+
+.shaker-slide p {
+    font-size: 1.2rem;
+    margin-bottom: 30px;
+    color: #fff;
+}
+
+.shaker-slide .shaker-btn {
+    display: inline-block;
+    padding: 15px 30px;
+    background: var(--primary-color);
+    color: #fff;
+    border-radius: 50px;
+    font-weight: bold;
+    text-decoration: none;
+    transition: all 0.3s ease;
+    box-shadow: 0 5px 15px rgba(0, 255, 136, 0.4);
+}
+
+.shaker-slide .shaker-btn:hover {
+    background: var(--button-hover);
+    box-shadow: 0 8px 20px rgba(0, 204, 102, 0.6);
+    transform: scale(1.1);
+}
+
+.shaker-slide .shaker-image {
+    flex: 1;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    position: relative;
+}
+
+.shaker-slide .shaker-image img {
+    max-width: 90%;
+    border-radius: 20px;
+    box-shadow: 0 8px 20px var(--shadow-color);
+    transform: scale(1);
+    transition: transform 0.5s ease;
+}
+
+.shaker-slide .shaker-image img:hover {
+    transform: scale(1.1);
+}
+
+/* Navigation Buttons */
+.shaker-master button {
+    position: absolute;
+    top: 50%;
+    transform: translateY(-50%);
+    background: rgba(255, 255, 255, 0.8);
+    border: none;
+    border-radius: 50%;
+    padding: 15px;
+    cursor: pointer;
+    box-shadow: 0 4px 10px var(--shadow-color);
+    transition: all 0.3s ease;
+}
+
+.shaker-master button:hover {
+    background: #fff;
+    transform: translateY(-50%) scale(1.2);
+}
+
+.shaker-master .shaker-prev {
+    left: 10px;
+}
+
+.shaker-master .shaker-next {
+    right: 10px;
+}
+
+/* Decorative Dots */
+.shaker-dots {
+    display: flex;
+    justify-content: center;
+    margin-top: 20px;
+}
+
+.shaker-dot {
+    width: 15px;
+    height: 15px;
+    background: #fff;
+    border: 2px solid var(--primary-color);
+    border-radius: 50%;
+    margin: 0 5px;
+    cursor: pointer;
+    transition: all 0.3s ease;
+}
+
+.shaker-dot.active {
+    background: var(--primary-color);
+    transform: scale(1.3);
+}
+
+@keyframes fadeIn {
+    from {
+        opacity: 0;
+        transform: translateY(20px);
+    }
+    to {
+        opacity: 1;
+        transform: translateY(0);
+    }
+}
+
+/* Neon Glow Effect */
+.shaker-slide::before {
+    content: '';
+    position: absolute;
+    top: -10px;
+    left: -10px;
+    right: -10px;
+    bottom: -10px;
+    border-radius: 30px;
+    background: linear-gradient(135deg, rgba(0, 255, 136, 0.3), rgba(0, 184, 255, 0.3));
+    z-index: -1;
+    filter: blur(20px);
+    opacity: 0;
+    transition: opacity 0.8s ease;
+}
+
+.shaker-slide.show::before {
+    opacity: 1;
+}
+
+/* Floating Animation */
+@keyframes float {
+    0%, 100% {
+        transform: translateY(0);
+    }
+    50% {
+        transform: translateY(-10px);
+    }
+}
+
+.shaker-slide .shaker-image img {
+    animation: float 3s ease-in-out infinite;
+}
+
+/* Shaker Animation */
+@keyframes shake {
+    0%, 100% {
+        transform: rotate(0deg);
+    }
+    25% {
+        transform: rotate(-5deg);
+    }
+    50% {
+        transform: rotate(5deg);
+    }
+    75% {
+        transform: rotate(-5deg);
+    }
+}
+
+.shaker-slide .shaker-image img:hover {
+    animation: shake 0.5s ease-in-out;
+}
+
+/* Background Particles */
+.shaker-particles {
+    position: absolute;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    overflow: hidden;
+    z-index: -1;
+}
+
+.shaker-particles span {
+    position: absolute;
+    width: 10px;
+    height: 10px;
+    background: var(--primary-color);
+    border-radius: 50%;
+    box-shadow: 0 0 10px var(--primary-color), 0 0 20px var(--primary-color), 0 0 40px var(--primary-color);
+    animation: shaker-particle-float 5s infinite ease-in-out;
+}
+
+@keyframes shaker-particle-float {
+    0% {
+        transform: translateY(0) scale(1);
+        opacity: 0;
+    }
+    50% {
+        opacity: 1;
+    }
+    100% {
+        transform: translateY(-100vh) scale(0);
+        opacity: 0;
+    }
+}
