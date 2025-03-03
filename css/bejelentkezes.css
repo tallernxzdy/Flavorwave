@@ -46,7 +46,9 @@ label {
 }
 
 input[type="text"],
-input[type="password"] {
+input[type="email"],
+input[type="password"],
+input[type="tel"] {
     width: 100%;
     padding: 0.6em; /* Kisebb padding */
     border-radius: 5px;
@@ -57,7 +59,9 @@ input[type="password"] {
 }
 
 input[type="text"]:focus,
-input[type="password"]:focus {
+input[type="email"]:focus,
+input[type="password"]:focus,
+input[type="tel"]:focus {
     border-color: #FF7043; /* Narancs fókusz kiemelés */
     outline: none;
 }
@@ -114,22 +118,25 @@ p a:hover {
     }
 }
 
+/* Jelszó mező stílus */
 .input-container {
     position: relative;
-    width: auto;
-  }
-  #password {
+    width: 100%;
+}
+
+#password {
     width: 100%;
     padding-right: 40px;
-  }
-  .input_img {
+}
+
+.input_img {
     position: absolute;
     right: 10px;
     top: 50%;
     transform: translateY(-50%);
     cursor: pointer;
-  }
-  .input_img svg {
-    fill: #333;
-  }
+}
 
+.input_img svg {
+    fill: #333;
+}
