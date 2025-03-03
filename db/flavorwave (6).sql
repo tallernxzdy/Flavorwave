@@ -240,7 +240,7 @@ INSERT INTO `velemenyek` (`id`, `felhasznalo_id`, `velemeny_szoveg`, `ertekeles`
 ALTER TABLE `etel`
   ADD PRIMARY KEY (`id`),
   ADD UNIQUE KEY `nev` (`nev`),
-  ADD KEY
+  ADD KEY `kategoria_id` (`kategoria_id`);
 
 --
 -- A tábla indexei `extra_feltet`
