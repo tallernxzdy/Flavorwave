@@ -198,25 +198,8 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST' && isset($_POST['submit'])) {
 
     <div class="order-container">
         <h1 class="mb-4">Rendelés véglegesítése</h1>
-        
 
-        <?php if (!empty($errors)): ?>
-            <div class="alert alert-danger"><?= $errors[0] ?></div>
-        <?php endif; ?>
-
-        <?php if ($success): ?>
-            <script>
-                document.addEventListener('DOMContentLoaded', function () {
-                    var myModal = new bootstrap.Modal(document.getElementById('successModal'));
-                    myModal.show();
-
-                    document.getElementById('successModal').addEventListener('hidden.bs.modal', function () {
-                        window.location.href = 'kezdolap.php';
-                    });
-                });
-            </script>
-        <?php else: ?>
-            <div class="row">
+        <div class="row">
                 <div class="col-md-6">
                     <form method="POST">
                         <div class="mb-3">
@@ -256,6 +239,24 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST' && isset($_POST['submit'])) {
                     </div>
                 </div>
             </div>
+        
+
+        <?php if (!empty($errors)): ?>
+            <div class="alert alert-danger"><?= $errors[0] ?></div>
+        <?php endif; ?>
+
+        <?php if ($success): ?>
+            <script>
+                document.addEventListener('DOMContentLoaded', function () {
+                    var myModal = new bootstrap.Modal(document.getElementById('successModal'));
+                    myModal.show();
+
+                    document.getElementById('successModal').addEventListener('hidden.bs.modal', function () {
+                        window.location.href = 'kezdolap.php';
+                    });
+                });
+            </script>
+            
         <?php endif; ?>
     </div>
 

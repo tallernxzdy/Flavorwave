@@ -85,7 +85,7 @@ session_start();
                 echo '
                 <div class="col-lg-3 col-md-4 col-sm-6">
                     <div class="card hover-card">
-                        <img src="../kepek/' . htmlspecialchars($k['kep_url']) . '" class="card-img-top" alt="Étel kép">
+                        <img src="../kepek/hotdogok/' . htmlspecialchars($k['kep_url']) . '" class="card-img-top" alt="Étel kép">
                         <div class="card-body text-center">
                             <h5 class="card-title">' . htmlspecialchars($k['nev']) . '</h5>
                             <p class="card-text">' . htmlspecialchars($k['leiras']) . '</p>
@@ -102,7 +102,7 @@ session_start();
                                 <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
                             </div>
                             <div class="modal-body">
-                                <img src="../kepek/' . htmlspecialchars($k['kep_url']) . '" class="img-fluid mb-3" alt="Étel kép">
+                                <img src="../kepek/hotdogok/' . htmlspecialchars($k['kep_url']) . '" class="img-fluid mb-3" alt="Étel kép">
                                 <p><strong>Kalória:</strong> ' . htmlspecialchars($k['kaloria']) . ' kcal</p>
                                 <p><strong>Összetevők:</strong> ' . htmlspecialchars($k['osszetevok']) . '</p>
                                 <p><strong>Allergének:</strong> ' . htmlspecialchars($k['allergenek']) . '</p>
