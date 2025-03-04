@@ -29,17 +29,24 @@
         }
     }
 
-    // Rendelés törlése
-    if (isset($_POST['delete_order'])) {
+    // Rendelés elküldése
+    if (isset($_POST['finished_order'])) {
         $rendeles_id = $_POST['order_id'];
-        $stmt = $conn->prepare("DELETE FROM megrendeles WHERE id = ?");
-        $stmt->bind_param("i", $rendeles_id);
-
-        if ($stmt->execute()) {
-            $message = "A rendelés sikeresen törölve!";
-            $message_type = "success";
+    
+        if (!empty($rendeles_id)) {
+            // Frissítsd a rendelés állapotát 3-ra (elküldött állapot)
+            $stmt = $conn->prepare("UPDATE megrendeles SET leadas_allapota = 3 WHERE id = ?");
+            $stmt->bind_param("i", $rendeles_id);
+    
+            if ($stmt->execute()) {
+                $message = "A rendelés sikeresen elküldve!";
+                $message_type = "success";
+            } else {
+                $message = "Hiba történt a rendelés elküldésekor!";
+                $message_type = "error";
+            }
         } else {
-            $message = "Hiba történt a rendelés törlésekor!";
+            $message = "Nincs kiválasztva rendelés!";
             $message_type = "error";
         }
     }
@@ -191,7 +198,7 @@
                         <option value="<?= $order['id'] ?>">Rendelés #<?= $order['id'] ?> - <?= htmlspecialchars($order['felhasznalo_nev']) ?></option>
                     <?php } ?>
                 </select>
-                <button type="submit" name="delete_order" class="btn btn-danger-custom btn-danger">Rendelés törlése</button>
+                <button type="submit" name="finished_order" class="btn btn-danger-custom btn-danger">Rendelés Elküldése</button>
             </form>
         </div>
     </div>
@@ -296,7 +303,7 @@
         });
     }
 
-    function deleteOrder() {
+    function finishOrder() {
         let orderId = $("#completed_orders").val();
         if (!orderId) {
             showMessage("Válassz ki egy rendelést a törléshez!", "error");
@@ -305,7 +312,7 @@
 
         openConfirmationModal(function() {
             $.post("dolgozoi_felulet.php", 
-                { delete_order: true, order_id: orderId }, 
+                { finished_order: true, order_id: orderId }, 
                 function(response) {
                     if (response.status === "success") {
                         showMessage(response.message, "success");
@@ -321,25 +328,16 @@
         });
     }
     
-    function showMessage(message, type = "success") {
-        const messageElement = $("#message");
-        const messageText = $("#message-text");
+    function showMessage(message, type) {
+        $("#message-text").text(message);
+        $("#message").removeClass("alert-success alert-danger").addClass(type === "success" ? "alert-success" : "alert-danger").fadeIn();
 
-        // Üzenet stílusának beállítása (siker vagy hiba)
-        messageElement.removeClass("alert-success alert-danger").addClass(`alert-${type === "success" ? "success" : "danger"}`);
-        messageText.text(message); // Üzenet szövegének beállítása
-        messageElement.fadeIn(); // Üzenet megjelenítése
-
-        // Üzenet eltűntetése 5 másodperc után
-        setTimeout(() => {
-            messageElement.fadeOut();
-        }, 5000);
+        setTimeout(function() {
+            $("#message").fadeOut();
+        }, 3000);
     }
 
-
     </script>
-
-
 
 </body>
 </html>
