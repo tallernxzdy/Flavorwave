@@ -129,7 +129,7 @@ body {
 .hero {
     position: relative;
     height: 100vh;
-    background: url('../kepek/pizza2.jpg') center/cover no-repeat fixed;
+    background: url('../kepek/pizzak/pizza2.jpg') center/cover no-repeat fixed;
     display: flex;
     justify-content: center;
     align-items: center;
@@ -140,19 +140,19 @@ body {
 
 @keyframes changeBackground {
     0% {
-        background-image: url('../kepek/pizza2.jpg');
+        background-image: url('../kepek/pizzak/pizza2.jpg');
     }
 
     33% {
-        background-image: url('../kepek/pizza2.jpg');
+        background-image: url('../kepek/pizzak/pizza2.jpg');
     }
 
     66% {
-        background-image: url('../kepek/pizza2.jpg');
+        background-image: url('../kepek/pizzak/pizza2.jpg');
     }
 
     100% {
-        background-image: url('../kepek/pizza2.jpg');
+        background-image: url('../kepek/pizzak/pizza2.jpg');
     }
 }
 

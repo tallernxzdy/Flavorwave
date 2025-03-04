@@ -35,18 +35,17 @@ body {
 .cart-item {
     display: flex;
     justify-content: space-between;
-    align-items: center;
+    align-items: center; /* Középre igazítás függőlegesen */
     padding: 15px 0;
     border-bottom: 1px solid #dee2e6;
-}
-
-.cart-item:last-child {
-    border-bottom: none;
+    gap: 20px; /* Egységes távolság az elemek között */
 }
 
 .item-details {
     display: flex;
+    align-items: center; /* Középre igazítás függőlegesen */
     gap: 15px;
+    flex: 1; /* Kitölti a rendelkezésre álló helyet */
 }
 
 .item-details img {
@@ -59,22 +58,25 @@ body {
 .item-info {
     display: flex;
     flex-direction: column;
+    justify-content: center; /* Középre igazítás függőlegesen */
 }
 
 .item-name {
     font-size: 1.1rem;
     font-weight: bold;
     color: #495057;
+    margin: 0; /* Margó eltávolítása */
 }
 
 .item-price {
     font-size: 0.95rem;
     color: #6c757d;
+    margin: 0; /* Margó eltávolítása */
 }
 
 .quantity-controls {
     display: flex;
-    align-items: center;
+    align-items: center; /* Középre igazítás függőlegesen */
     gap: 10px;
 }
 
@@ -85,39 +87,42 @@ body {
     font-size: 1.1rem;
     cursor: pointer;
     border-radius: 4px;
+    height: 30px; /* Fix magasság a gomboknak */
+    display: flex;
+    align-items: center; /* Szöveg középre igazítása */
+    justify-content: center;
 }
 
 .quantity-controls button:hover {
     background: #dee2e6;
 }
 
-.total-section {
-    margin-top: 20px;
+.quantity-controls .quantity {
+    font-size: 1rem;
+    min-width: 30px; /* Fix szélesség a mennyiségnek */
+    text-align: center;
+}
+
+.item-total {
+    font-size: 1rem;
+    min-width: 80px; /* Fix szélesség az összegnek */
     text-align: right;
 }
 
-.total-section .total-label {
-    font-size: 1.2rem;
-    font-weight: bold;
-}
-
-.total-section .total-amount {
-    font-size: 1.4rem;
-    color: #198754;
-}
-
-.checkout-btn {
-    margin-top: 15px;
-    padding: 10px 20px;
-    font-size: 1.1rem;
-    background-color: #198754;
-    color: #ffffff;
+.remove-from-cart {
+    background: #dc3545;
+    color: white;
     border: none;
-    border-radius: 5px;
+    padding: 5px 10px;
+    font-size: 0.9rem;
     cursor: pointer;
-    display: inline-block;
+    border-radius: 4px;
+    height: 30px; /* Fix magasság a gombnak */
+    display: flex;
+    align-items: center; /* Szöveg középre igazítása */
+    justify-content: center;
 }
 
-.checkout-btn:hover {
-    background-color: #157347;
+.remove-from-cart:hover {
+    background: #c82333;
 }

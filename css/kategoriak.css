@@ -9,6 +9,10 @@ html, body {
     color: #333;
 }
 
+h1{
+    text-align: center;
+}
+
 .content-wrapper {
     flex: 1;
     display: flex;
@@ -25,112 +29,89 @@ main {
 /* Oldal címe */
 .page-title {
     text-align: center;
-    font-size: 2.5em;
+    font-size: 2.2em;
     margin-bottom: 1em;
     color: #222;
     font-weight: bold;
 }
 
 /* Menü gombok */
+/* Kártya rács szerkezet */
 .flex-grid {
     display: flex;
     flex-wrap: wrap;
-    gap: 1.5em;
     justify-content: center;
+    gap: 20px;
     padding: 2em;
     box-sizing: border-box;
+    max-width: 1200px;
+    margin: 0 auto;
 }
 
-.flex-grid__row {
-    display: flex;
-    flex-wrap: wrap;
-    justify-content: center;
-    gap: 1.5em;
-    margin-bottom: 2em;
-}
-
-.flex-col-6, .flex-col-md-4, .flex-col-lg-3 {
-    flex: 1 1 calc(25% - 1.5em); /* 4 oszlop nagy képernyőn */
-    max-width: calc(25% - 1.5em);
-    box-sizing: border-box;
-}
-
+/* Kártyák */
 .menu__option {
-    display: block;
-    text-align: center;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
     text-decoration: none;
     color: #333;
-    transition: transform 0.3s ease, box-shadow 0.3s ease;
-    padding: 1.5em;
-    background: #f9f9f9;
+    background: #fff;
     border-radius: 12px;
-    box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
-    width: 100%;
-    margin: 0 auto;
-    background-color: #F1F8E9;
-    overflow: hidden;
-    border: none;
+    box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+    padding: 20px;
+    transition: transform 0.3s ease, box-shadow 0.3s ease;
+    width: 250px;
+    height: 300px;
+    text-align: center;
+    justify-content: space-between;
 }
 
 .menu__option img {
     width: 100%;
-    height: auto;
+    height: 180px;
+    object-fit: cover;
     border-radius: 8px;
-    margin-bottom: 1em;
     transition: transform 0.3s ease;
 }
 
 .menu__option h2 {
-    margin-top: 0.5em;
-    font-size: 1.3em;
+    font-size: 1.2em;
     font-weight: bold;
+    margin: 10px 0 0 0;
     color: #222;
 }
 
 .menu__option:hover {
     transform: translateY(-5px);
     box-shadow: 0 8px 16px rgba(0, 0, 0, 0.2);
-    background-color: #c8e6c9;
 }
 
-.menu__option:hover img {
-    transform: scale(1.05);
+/* Rács méretek */
+.flex-col {
+    flex: 1 1 calc(25% - 20px); /* 4 oszlop nagy képernyőn */
+    max-width: calc(25% - 20px);
 }
 
-/* Reszponzív viselkedés */
+/* Tablet méret */
 @media (max-width: 1024px) {
-    .flex-col-lg-3 {
-        flex: 1 1 calc(33.33% - 1.5em); /* 3 oszlop közepes képernyőn */
-        max-width: calc(33.33% - 1.5em);
+    .flex-col {
+        flex: 1 1 calc(33.33% - 20px); /* 3 oszlop */
+        max-width: calc(33.33% - 20px);
     }
 }
 
+/* Mobil méret */
 @media (max-width: 768px) {
-    .flex-col-md-4 {
-        flex: 1 1 calc(50% - 1.5em); /* 2 oszlop kis képernyőn */
-        max-width: calc(50% - 1.5em);
-    }
-
-    .menu__option {
-        padding: 1em;
-    }
-
-    .menu__option h2 {
-        font-size: 1.2em;
+    .flex-col {
+        flex: 1 1 calc(50% - 20px); /* 2 oszlop */
+        max-width: calc(50% - 20px);
     }
 }
 
 @media (max-width: 480px) {
-    .flex-col-6 {
-        flex: 1 1 100%; /* 1 oszlop mobil képernyőn */
+    .flex-col {
+        flex: 1 1 100%; /* 1 oszlop */
         max-width: 100%;
     }
-
-    .menu__option {
-        padding: 1em;
-    }
-
-    .menu__option h2 {
-        font-size: 1.1em;
-    }
 }
+
