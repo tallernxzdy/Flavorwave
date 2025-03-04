@@ -72,8 +72,9 @@ session_start();
             </ul>
         </div>
 
-        <h1 class="page-title">Kategóriák</h1>
+        
     <div class="menu flex-grid">
+        <h1 class="page-title">Kategóriák</h1>
         <div class="flex-grid__row">
             <!-- Kategóriák listázása -->
             <div class="flex-col-6 flex-col-md-4 flex-col-lg-3">

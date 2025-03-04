@@ -11,3 +11,35 @@ body, html {
     display: flex;
     flex-direction: column;
 }
+
+.card {
+    display: flex;
+    flex-direction: column;
+    height: 100%;
+}
+
+.card img {
+    height: 200px; /* Fixált képméret, állítsd be szükség szerint */
+    object-fit: cover; /* Képarány megtartása, levágás nélkül */
+}
+
+.card-body {
+    flex-grow: 1; /* A leírás és a gombok kitöltik a fennmaradó helyet */
+    display: flex;
+    flex-direction: column;
+    justify-content: space-between; /* Egyenletes elosztás */
+}
+
+.card-title {
+    font-size: 18px;
+    font-weight: bold;
+}
+
+.card-text {
+    flex-grow: 1; /* A leírás rugalmasan igazodik */
+}
+
+.details-btn {
+    margin-top: auto; /* Az alsó részhez igazítja a gombot */
+    width: 100%;
+}

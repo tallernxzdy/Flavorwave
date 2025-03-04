@@ -139,6 +139,7 @@ nav {
     border-color: #fff;
 }
 
+/* Hamburger menü ikon */
 .hamburger {
     display: none;
     flex-direction: column;
@@ -147,6 +148,7 @@ nav {
     padding: 10px;
     background: rgba(255, 255, 255, 0.1);
     border-radius: 8px;
+    transition: background 0.3s ease;
 }
 
 .hamburger:hover {
@@ -160,6 +162,20 @@ nav {
     transition: all 0.3s ease;
 }
 
+/* Hamburger menü animáció */
+.hamburger.active span:nth-child(1) {
+    transform: rotate(45deg) translate(5px, 5px);
+}
+
+.hamburger.active span:nth-child(2) {
+    opacity: 0;
+}
+
+.hamburger.active span:nth-child(3) {
+    transform: rotate(-45deg) translate(5px, -5px);
+}
+
+/* Menü tartalma */
 .menubar {
     display: none;
     position: fixed;
@@ -171,11 +187,11 @@ nav {
     box-shadow: 0 4px 15px rgba(0, 0, 0, 0.3);
     z-index: 1001;
     width: 200px;
+    animation: fadeIn 0.3s ease-out;
 }
 
 .menubar.active {
     display: block;
-    animation: fadeIn 0.3s ease-out;
 }
 
 .menubar ul {
@@ -206,26 +222,30 @@ nav {
     background: rgba(255, 255, 255, 0.2);
 }
 
-.hamburger.active span:nth-child(1) {
-    transform: rotate(45deg) translate(5px, 5px);
+/* Animációk */
+@keyframes fadeIn {
+    from { opacity: 0; transform: translateY(-10px); }
+    to { opacity: 1; transform: translateY(0); }
 }
 
-.hamburger.active span:nth-child(2) {
-    opacity: 0;
+@keyframes slideIn {
+    from { transform: translateX(100%); }
+    to { transform: translateX(0); }
 }
 
-.hamburger.active span:nth-child(3) {
-    transform: rotate(-45deg) translate(5px, -5px);
+.menubar.active {
+    animation: slideIn 0.3s ease-out;
 }
 
+/* Reszponzív stílusok */
 @media (max-width: 950px) {
     body {
-        padding-top: 60px; /* Kisebb padding a kisebb képernyőkön */
+        padding-top: 60px;
     }
 
     nav {
         padding: 15px 20px;
-        height: 60px; /* Kisebb navbar magasság */
+        height: 60px;
     }
 
     .navbar-center,
@@ -266,11 +286,11 @@ nav {
 
 @media (max-width: 600px) {
     body {
-        padding-top: 50px; /* Még kisebb padding mobil képernyőkön */
+        padding-top: 50px;
     }
 
     nav {
-        height: 50px; /* Még kisebb navbar magasság */
+        height: 50px;
     }
 
     .logo {
@@ -298,18 +318,4 @@ nav {
         font-size: 1rem;
         padding: 8px;
     }
-}
-
-@keyframes fadeIn {
-    from { opacity: 0; transform: translateY(-10px); }
-    to { opacity: 1; transform: translateY(0); }
-}
-
-@keyframes slideIn {
-    from { transform: translateX(100%); }
-    to { transform: translateX(0); }
-}
-
-.menubar.active {
-    animation: slideIn 0.3s ease-out;
 }

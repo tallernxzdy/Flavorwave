@@ -3,7 +3,7 @@
 -- https://www.phpmyadmin.net/
 --
 -- Gép: 127.0.0.1
--- Létrehozás ideje: 2025. Már 04. 09:18
+-- Létrehozás ideje: 2025. Már 04. 09:25
 -- Kiszolgáló verziója: 10.4.32-MariaDB
 -- PHP verzió: 8.2.12
 
@@ -284,7 +284,7 @@ ALTER TABLE `kategoria`
 --
 ALTER TABLE `megrendeles`
   ADD PRIMARY KEY (`id`),
-  ADD UNIQUE KEY `felhasznalo_id` (`felhasznalo_id`);
+  ADD KEY `felhasznalo_id` (`felhasznalo_id`);
 
 --
 -- A tábla indexei `rendeles_tetel`
