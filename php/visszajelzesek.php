@@ -132,6 +132,9 @@ $velemenyek = ($result && $result->num_rows > 0) ? $result->fetch_all(MYSQLI_ASS
         <?php if (isset($_SESSION["jog_szint"]) && $_SESSION["jog_szint"] == 1): ?>
             <a href="admin_felulet.php">Admin felület</a>
         <?php endif; ?>
+        <?php if (isset($_SESSION["jog_szint"]) && $_SESSION["jog_szint"] == 2): ?>
+            <a href="dolgozoi_felulet.php">Dolgozoi felulet</a>
+        <?php endif; ?>
     </div>
 
     <!-- Jobb oldalon a gombok -->
