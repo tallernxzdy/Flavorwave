@@ -2,7 +2,6 @@
 session_start();
 
 ?>
-
 <!DOCTYPE html>
 <html lang="hu">
 <head>
@@ -22,23 +21,19 @@ session_start();
     <link rel="stylesheet" href="../css/parallax.css">
     <link rel="stylesheet" href="../css/kezdolap.css">
     <link rel="stylesheet" href="../css/navbar.css">
+    <link rel="stylesheet" href="../css/fooldal/etelajanlo.css">
+
+    <link rel="stylesheet" href="../css/fooldal/hetiajanlat.css">
+    <link rel="stylesheet" href="../css/fooldal/kupon.css">
+    <link rel="stylesheet" href="../css/fooldal/rendeles_lepesek.css">
+    <link rel="stylesheet" href="../css/fooldal/shakek.css">
+    <link rel="stylesheet" href="../css/fooldal/hero.css">
+
 
 
 </head>
 <body>
 
-<!DOCTYPE html>
-<html lang="hu">
-
-<head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>FlavorWave - Modern Navbar</title>
-    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.2/css/all.min.css">
-
-</head>
-
-<body>
 <nav>
     <!-- Bal oldalon a logó -->
     <a href="kezdolap.php" class="logo">
@@ -91,249 +86,8 @@ session_start();
             <li><a href="rendeles.php">Rendelés</a></li>
     </ul>
 </div>
-</body>
-
-</html>
 
 
-
-
-
-
-
-
-
-
-
-
-<!DOCTYPE html>
-<html lang="hu">
-
-<head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Friss, Forró, Finom - Ételrendelés</title>
-    <!-- <link rel="stylesheet" href="../css/fooldal/hero.css"> -->
-
-    <style>
-        @import url('https://fonts.googleapis.com/css2?family=Montserrat:wght@400;700&family=Poppins:wght@300;400;600&display=swap');
-
-body {
-    margin: 0;
-    font-family: 'Poppins', sans-serif;
-    overflow-x: hidden;
-    background: #1a1a1a;
-    color: #fff;
-}
-
-.hero {
-    position: relative;
-    height: 100vh;
-    background: url('../kepek/pizzak/pizza2.jpg') center/cover no-repeat fixed;
-    display: flex;
-    justify-content: center;
-    align-items: center;
-    text-align: center;
-    overflow: hidden;
-    animation: changeBackground 15s infinite;
-}
-
-@keyframes changeBackground {
-    0% {
-        background-image: url('../kepek/pizzak/pizza2.jpg');
-    }
-
-    33% {
-        background-image: url('../kepek/pizzak/pizza2.jpg');
-    }
-
-    66% {
-        background-image: url('../kepek/pizzak/pizza2.jpg');
-    }
-
-    100% {
-        background-image: url('../kepek/pizzak/pizza2.jpg');
-    }
-}
-
-.hero::after {
-    content: '';
-    position: absolute;
-    top: 0;
-    left: 0;
-    width: 100%;
-    height: 100%;
-    background: rgba(0, 0, 0, 0.6);
-    z-index: 1;
-}
-
-.hero-content {
-    position: relative;
-    z-index: 2;
-    max-width: 800px;
-    padding: 0 20px;
-}
-
-.hero h1 {
-    font-size: 3.5rem; /* Csökkentett betűméret */
-    margin-bottom: 20px;
-    line-height: 1.2;
-    text-transform: uppercase;
-    letter-spacing: 2px; /* Csökkentett betűközt */
-    animation: fadeInDown 1s ease-out;
-    text-shadow: 0 4px 6px rgba(0, 0, 0, 0.5);
-    font-family: 'Montserrat', sans-serif;
-}
-
-.hero p {
-    font-size: 1.4rem; /* Csökkentett betűméret */
-    margin-bottom: 30px; /* Csökkentett margó */
-    line-height: 1.6;
-    animation: fadeInUp 1.5s ease-out;
-    font-weight: 300;
-}
-
-.hero .cta-buttons {
-    display: flex;
-    justify-content: center;
-    gap: 10px; /* Csökkentett távolság */
-    flex-wrap: wrap; /* Gombok egymás alá kerülése */
-    animation: fadeInUp 2s ease-out;
-}
-
-.cta-buttons a {
-    text-decoration: none;
-    padding: 12px 30px; /* Csökkentett padding */
-    font-size: 1.1rem; /* Csökkentett betűméret */
-    border-radius: 30px;
-    transition: all 0.3s ease;
-    cursor: pointer;
-    font-weight: 700;
-    text-transform: uppercase;
-    letter-spacing: 1px;
-    white-space: nowrap; /* Szöveg egy sorban tartása */
-}
-
-.cta-buttons .order-now {
-    background: linear-gradient(135deg, #ff7e5f, #feb47b);
-    color: #fff;
-    box-shadow: 0 4px 15px rgba(255, 126, 95, 0.5);
-}
-
-.cta-buttons .order-now:hover {
-    background: linear-gradient(135deg, #feb47b, #ff7e5f);
-    transform: scale(1.05);
-    box-shadow: 0 6px 20px rgba(255, 126, 95, 0.7);
-}
-
-.cta-buttons .view-menu {
-    background: transparent;
-    color: #fff;
-    border: 2px solid #fff;
-    box-shadow: 0 4px 15px rgba(255, 255, 255, 0.3);
-}
-
-.cta-buttons .view-menu:hover {
-    background: rgba(255, 255, 255, 0.9);
-    color: #000;
-    transform: scale(1.05);
-    box-shadow: 0 6px 20px rgba(255, 255, 255, 0.5);
-}
-
-@keyframes fadeInDown {
-    from {
-        opacity: 0;
-        transform: translateY(-50px);
-    }
-
-    to {
-        opacity: 1;
-        transform: translateY(0);
-    }
-}
-
-@keyframes fadeInUp {
-    from {
-        opacity: 0;
-        transform: translateY(50px);
-    }
-
-    to {
-        opacity: 1;
-        transform: translateY(0);
-    }
-}
-
-.feedback-section {
-    margin-top: 30px; /* Csökkentett margó */
-    text-align: center;
-    animation: fadeInUp 2.5s ease-out;
-}
-
-.feedback-section a,
-.feedback-section p {
-    font-size: 1rem; /* Csökkentett betűméret */
-    color: #fff;
-    text-decoration: none;
-    transition: color 0.3s ease;
-}
-
-.feedback-section a:hover {
-    color: #feb47b;
-}
-
-.feedback-section .primary-bttn {
-    background: linear-gradient(135deg, #ff7e5f, #feb47b);
-    padding: 8px 20px; /* Csökkentett padding */
-    border-radius: 30px;
-    color: #fff;
-    font-weight: 700;
-    text-transform: uppercase;
-    letter-spacing: 1px;
-    box-shadow: 0 4px 15px rgba(255, 126, 95, 0.5);
-}
-
-.feedback-section .primary-bttn:hover {
-    background: linear-gradient(135deg, #feb47b, #ff7e5f);
-    transform: scale(1.05);
-}
-
-/* Média lekérdezések */
-@media (max-width: 768px) {
-    .hero h1 {
-        font-size: 3rem;
-        letter-spacing: 1px;
-    }
-
-    .hero p {
-        font-size: 1.3rem;
-    }
-
-    .cta-buttons a {
-        font-size: 1rem;
-        padding: 10px 25px;
-    }
-}
-
-@media (max-width: 480px) {
-    .hero h1 {
-        font-size: 2.5rem;
-    }
-
-    .hero p {
-        font-size: 1.2rem;
-    }
-
-    .cta-buttons a {
-        font-size: 0.9rem;
-        padding: 8px 20px;
-    }
-}
-    </style>
-
-</head>
-
-<body>
     <div class="hero">
         <div class="hero-content">
             <h1>Friss, Forró, Finom</h1>
@@ -352,29 +106,10 @@ body {
             <p>Kérjük, <a href="bejelentkezes.php">jelentkezz be</a>, hogy véleményt írhass!</p>
         <?php endif; ?>
     </div>
-</body>
-
-</html>
 
 
 <br>
 
-
-
-
-
-
-<!DOCTYPE html>
-<html lang="hu">
-<head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Heti Ajánlat</title>
-    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.2/css/all.min.css">
-    <link rel="stylesheet" href="../css/fooldal/hetiajanlat.css">
-
-</head>
-<body>
 
 <section id="weekly-deals">
     <h2>Heti Ajánlat Vége:</h2>
@@ -400,54 +135,6 @@ body {
     <a href="menu.php" class="cta-button">Fedezd fel az ajánlatokat!</a>
 </section>
 
-<script src="../js/fooldal/hetiajanlat.js">
-
-</script>
-
-</body>
-</html>
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-<!DOCTYPE html>
-<html lang="hu">
-<head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Coupon Slider</title>
-    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.2/css/all.min.css">
-    <link rel="stylesheet" href="../css/fooldal/kupon.css">
-</head>
-<body>
 
 <div class="coupon-slider">
     <div class="slides">
@@ -482,8 +169,8 @@ body {
             </div>
         </div>
     </div>
-    <button class="prev">&#10094;</button>
-    <button class="next">&#10095;</button>
+    <button class="prev">❮</button>
+    <button class="next">❯</button>
 </div>
 
 <div class="dots">
@@ -491,47 +178,10 @@ body {
     <div class="dot"></div>
     <div class="dot"></div>
 </div>
-
-<script src="../js/fooldal/kupon.js">
-
-</script>
-
-</body>
-</html>
 <br>
 
 
 
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-<!DOCTYPE html>
-<html lang="hu">
-<head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Rendelési Lépések</title>
-    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.2/css/all.min.css">
-    <link rel="stylesheet" href="../css/fooldal/rendeles_lepesek.css">
-
-</head>
-<body>
     <div class="steps-container">
         <div class="step"><i class="fas fa-utensils"></i> <p>Válassz ételt 🍕</p></div>
         <div class="step"><i class="fas fa-map-marker-alt"></i> <p>Add meg a címed 📍</p></div>
@@ -539,31 +189,7 @@ body {
         <div class="step"><i class="fas fa-smile"></i> <p>Élvezd az ételt 😋</p></div>
     </div>
 
-    <script src="../js/fooldal/rendeles_lepesek.js">
 
-    </script>
-</body>
-</html>
-
-
-
-
-
-
-
-
-
-<!DOCTYPE html>
-<html lang="hu">
-<head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>FlavorWave - Ételajánló Quiz</title>
-    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.2/css/all.min.css">
-    <link rel="stylesheet" href="../css/fooldal/etelajanlo.css">
-
-</head>
-<body>
     <div class="quiz-wrapper">
         <div class="quiz-container">
             <h1>Nem tudod milyen pizzát válassz?</h1>
@@ -606,34 +232,6 @@ body {
         </div>
     </div>
 
-    <script src="../js/fooldal/etelajanlo.js">
-       
-    </script>
-</body>
-</html>
-
-
-
-
-
-
-
-
-
-
-
-
-
-<!DOCTYPE html>
-<html lang="hu">
-<head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Shaker Master</title>
-    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.2/css/all.min.css">
-    <link rel="stylesheet" href="../css/fooldal/shakek.css">
-</head>
-<body>
 
 <div class="shaker-master-container">
     <div class="shaker-master">
@@ -669,8 +267,8 @@ body {
                 </div>
             </div>
         </div>
-        <button class="shaker-prev">&#10094;</button>
-        <button class="shaker-next">&#10095;</button>
+        <button class="shaker-prev">❮</button>
+        <button class="shaker-next">❯</button>
     </div>
 
     <div class="shaker-dots">
@@ -692,36 +290,6 @@ body {
     </div>
 </div>
 
-<script src="../js/fooldal/shakek.js">
-
-</script>
-
-</body>
-</html>
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
 
     <!-- Footer -->
     <div class="footer">
@@ -738,12 +306,17 @@ body {
             <a href="#"><i class="fab fa-youtube"></i></a>
         </div>
         <div class="footer-copy">
-            &copy; 2025 FlavorWave - Minden jog fenntartva.
+            © 2025 FlavorWave - Minden jog fenntartva.
         </div>
     </div>
 </div>
     <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/js/bootstrap.bundle.min.js"></script>
     <script src="../js/navbar.js"></script>
+    <script src="../js/fooldal/hetiajanlat.js"></script>
+    <script src="../js/fooldal/kupon.js"></script>
+    <script src="../js/fooldal/rendeles_lepesek.js"></script>
+    <script src="../js/fooldal/etelajanlo.js"></script>
+    <script src="../js/fooldal/shakek.js"></script>
 
 
 </body>

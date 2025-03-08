@@ -1,11 +1,14 @@
-:root {
-    --primary-color: #00ff88;
-    --secondary-color: #00b8ff;
-    --text-color: #fff;
-    --button-hover: #00cc66;
-    --shadow-color: rgba(0, 0, 0, 0.3);
-    --gradient-start: #00ff88;
-    --gradient-end: #00b8ff;
+.shake-section {
+    width: 100%;
+    min-height: 500px; /* Állítsd be a kívánt méretet */
+    padding: 50px 0;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    color: white;
+    text-align: center;
+    font-size: 2rem;
+    font-weight: bold;
 }
 
 /* General Reset */

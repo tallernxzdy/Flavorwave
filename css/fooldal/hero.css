@@ -1,17 +1,20 @@
 @import url('https://fonts.googleapis.com/css2?family=Montserrat:wght@400;700&family=Poppins:wght@300;400;600&display=swap');
 
 
-.hero {
+body .hero {
     position: relative;
     height: 100vh;
-    background: url('../kepek/pizza2.jpg') center/cover no-repeat fixed;
+    background: url('../../kepek/pizzak/pizza2.jpg') center/cover no-repeat fixed !important;
     display: flex;
     justify-content: center;
     align-items: center;
     text-align: center;
     overflow: hidden;
     animation: changeBackground 15s infinite;
+    z-index: 10; 
 }
+
+
 
 @keyframes changeBackground {
     0% {
