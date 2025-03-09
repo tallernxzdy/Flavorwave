@@ -11,30 +11,45 @@ try {
     if (isset($_SESSION['felhasznalo_id'])) {
         // Logged in user - update database
         $userId = $_SESSION['felhasznalo_id'];
-        $stmt = $conn->prepare("UPDATE tetelek SET darab = darab " . ($action === "increase" ? "+ 1" : "- 1") . " WHERE felhasznalo_id = ? AND etel_id = ?");
-        $stmt->bind_param("ii", $userId, $itemId);
-        $stmt->execute();
 
-        // Get new quantity
+        // Check if the item exists in the cart
         $stmt = $conn->prepare("SELECT darab FROM tetelek WHERE felhasznalo_id = ? AND etel_id = ?");
         $stmt->bind_param("ii", $userId, $itemId);
         $stmt->execute();
         $result = $stmt->get_result();
 
         if ($result->num_rows > 0) {
+            // If the item exists, update the quantity
             $row = $result->fetch_assoc();
             $newQuantity = $row['darab'];
 
-            // Remove item if quantity reaches 0
-            if ($newQuantity <= 0) {
-                $conn->query("DELETE FROM tetelek WHERE felhasznalo_id = $userId AND etel_id = $itemId");
-                $newQuantity = 0;
+            if ($action === "increase") {
+                $newQuantity++;
+            } else {
+                $newQuantity--;
             }
 
-            $response = ['success' => true, 'newQuantity' => $newQuantity];
+            // If the quantity is 0 or less, delete the item
+            if ($newQuantity <= 0) {
+                $deleteQuery = "DELETE FROM tetelek WHERE felhasznalo_id = ? AND etel_id = ?";
+                $deleteStmt = $conn->prepare($deleteQuery);
+                $deleteStmt->bind_param("ii", $userId, $itemId);
+                $deleteStmt->execute();
+                $newQuantity = 0;
+            } else {
+                // Otherwise, update the quantity
+                $updateQuery = "UPDATE tetelek SET darab = ? WHERE felhasznalo_id = ? AND etel_id = ?";
+                $updateStmt = $conn->prepare($updateQuery);
+                $updateStmt->bind_param("iii", $newQuantity, $userId, $itemId);
+                $updateStmt->execute();
+            }
         }
     } else {
-        // Guest user - update session and cookie
+        // Guest user - update session
+        if (!isset($_SESSION['kosar'])) {
+            $_SESSION['kosar'] = [];
+        }
+
         if (isset($_SESSION['kosar'][$itemId])) {
             if ($action === "increase") {
                 $_SESSION['kosar'][$itemId]++;
@@ -44,17 +59,15 @@ try {
 
             $newQuantity = $_SESSION['kosar'][$itemId];
 
-            // Remove from session if quantity <= 0
+            // If the quantity is 0 or less, remove the item
             if ($_SESSION['kosar'][$itemId] <= 0) {
                 unset($_SESSION['kosar'][$itemId]);
                 $newQuantity = 0;
             }
-
-            // Update cookie
-            setcookie('guest_cart', json_encode($_SESSION['kosar']), time() + 604800, '/');
-            $response = ['success' => true, 'newQuantity' => $newQuantity];
         }
     }
+
+    $response = ['success' => true, 'newQuantity' => $newQuantity];
 } catch (Exception $e) {
     $response['error'] = $e->getMessage();
 }

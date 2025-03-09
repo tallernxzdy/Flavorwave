@@ -3,6 +3,15 @@
 
     include 'adatbazisra_csatlakozas.php';
 
+    if (!isset($_SESSION['felhasznalo_id']) || $_SESSION['jog_szint'] != 1) {
+        header('Location: bejelentkezes.php');
+        exit;
+    }
+    if (!isset($_SESSION['felhasznalo_id']) || $_SESSION['jog_szint'] != 2) {
+        header('Location: bejelentkezes.php');
+        exit;
+    }
+
     // Üzenetek inicializálása
     $message = "";
     $message_type = "";
@@ -94,6 +103,9 @@
         <a href="kategoria.php">Menü</a>
         <?php if (isset($_SESSION["jog_szint"]) && $_SESSION["jog_szint"] == 1): ?>
             <a href="admin_felulet.php">Admin felület</a>
+        <?php endif; ?>
+        <?php if (isset($_SESSION["jog_szint"]) && $_SESSION["jog_szint"] == 2): ?>
+            <a href="dolgozoi_felulet.php">Dolgozoi felulet</a>
         <?php endif; ?>
     </div>
 

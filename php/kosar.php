@@ -1,23 +1,59 @@
 <?php
-if (session_status() == PHP_SESSION_NONE) {
-    session_start();
-}
+session_start();
+include 'adatbazisra_csatlakozas.php';
 
 $userId = isset($_SESSION['felhasznalo_id']) ? $_SESSION['felhasznalo_id'] : null;
-include './adatbazisra_csatlakozas.php';
-
 $cartItems = [];
 $total = 0;
 
-// Check for guest cart in cookie and merge with session if needed
-if (!$userId) {
-    if (empty($_SESSION['kosar']) && isset($_COOKIE['guest_cart'])) {
-        $_SESSION['kosar'] = json_decode($_COOKIE['guest_cart'], true);
+// Kosárba rakás logikája
+if ($_SERVER['REQUEST_METHOD'] === 'POST' && isset($_POST['etel_id'])) {
+    $etelId = $_POST['etel_id'];
+
+    if ($userId) {
+        // Bejelentkezett felhasználó - adatbázisból ellenőrizzük
+        $query = "SELECT darab FROM tetelek WHERE felhasznalo_id = ? AND etel_id = ?";
+        $stmt = $conn->prepare($query);
+        $stmt->bind_param("ii", $userId, $etelId);
+        $stmt->execute();
+        $result = $stmt->get_result();
+
+        if ($result->num_rows > 0) {
+            // Ha már benne van, növeljük a mennyiséget
+            $row = $result->fetch_assoc();
+            $newQuantity = $row['darab'] + 1;
+            $updateQuery = "UPDATE tetelek SET darab = ? WHERE felhasznalo_id = ? AND etel_id = ?";
+            $updateStmt = $conn->prepare($updateQuery);
+            $updateStmt->bind_param("iii", $newQuantity, $userId, $etelId);
+            $updateStmt->execute();
+        } else {
+            // Ha nincs benne, beszúrjuk új elemként
+            $insertQuery = "INSERT INTO tetelek (felhasznalo_id, etel_id, darab) VALUES (?, ?, 1)";
+            $insertStmt = $conn->prepare($insertQuery);
+            $insertStmt->bind_param("ii", $userId, $etelId);
+            $insertStmt->execute();
+        }
+    } else {
+        // Vendég felhasználó - session-ből ellenőrizzük
+        if (isset($_SESSION['kosar'][$etelId])) {
+            // Ha már benne van, növeljük a mennyiséget
+            $_SESSION['kosar'][$etelId]++;
+        } else {
+            // Ha nincs benne, beszúrjuk új elemként
+            $_SESSION['kosar'][$etelId] = 1;
+        }
+        // Frissítjük a cookie-t is
+        setcookie('guest_cart', json_encode($_SESSION['kosar']), time() + 604800, '/');
     }
+
+    // Visszairányítjuk a felhasználót a kosár oldalra
+    header("Location: kosar.php");
+    exit();
 }
 
+// Kosár adatainak lekérése
 if ($userId) {
-    // Logged in user - get cart from database
+    // Bejelentkezett felhasználó - adatbázisból lekérjük a kosarat
     $query = "SELECT etel.id, etel.nev, etel.kep_url, etel.egyseg_ar, tetelek.darab 
               FROM tetelek 
               JOIN etel ON tetelek.etel_id = etel.id 
@@ -31,7 +67,7 @@ if ($userId) {
         $total += $row['egyseg_ar'] * $row['darab'];
     }
 } else {
-    // Guest user - get cart from session
+    // Vendég felhasználó - session-ből lekérjük a kosarat
     if (isset($_SESSION['kosar'])) {
         foreach ($_SESSION['kosar'] as $itemId => $quantity) {
             $query = "SELECT id, nev, egyseg_ar, kep_url FROM etel WHERE id = ?";
@@ -64,69 +100,73 @@ if ($userId) {
 </head>
 
 <body>
-<nav>
-    <!-- Bal oldalon a logó -->
-    <a href="kezdolap.php" class="logo">
-        <img src="../kepek/logo.png" alt="Flavorwave Logo">
-        <h1>FlavorWave</h1>
-    </a>
-
-    <!-- Középen a kategóriák (és Admin felület, ha jogosult) -->
-    <div class="navbar-center">
-        <a href="kategoria.php">Menü</a>
-        <?php if (isset($_SESSION["jog_szint"]) && $_SESSION["jog_szint"] == 1): ?>
-            <a href="admin_felulet.php">Admin felület</a>
-        <?php endif; ?>
-    </div>
-
-    <!-- Jobb oldalon a gombok -->
-    <div class="navbar-buttons">
-        <?php if (isset($_SESSION["felhasznalo_nev"])): ?>
-            <a href="kijelentkezes.php" class="login-btn">Kijelentkezés</a>
-        <?php else: ?>
-            <a href="bejelentkezes.php" class="login-btn">Bejelentkezés</a>
-        <?php endif; ?>
-        <a href="rendeles.php" class="order-btn">Rendelés</a>
-        <a href="kosar.php" class="cart-btn">
-            <i class='fas fa-shopping-cart cart-icon'></i>
+    <nav>
+        <!-- Bal oldalon a logó -->
+        <a href="kezdolap.php" class="logo">
+            <img src="../kepek/logo.png" alt="Flavorwave Logo">
+            <h1>FlavorWave</h1>
         </a>
-    </div>
 
-    <!-- Hamburger menü ikon -->
-    <div class="hamburger" onclick="toggleMenu()">
-        <span></span>
-        <span></span>
-        <span></span>
-    </div>
-</nav>
+        <!-- Középen a kategóriák (és Admin felület, ha jogosult) -->
+        <div class="navbar-center">
+            <a href="kategoria.php">Menü</a>
+            <?php if (isset($_SESSION["jog_szint"]) && $_SESSION["jog_szint"] == 1): ?>
+                <a href="admin_felulet.php">Admin felület</a>
+            <?php endif; ?>
+            <?php if (isset($_SESSION["jog_szint"]) && $_SESSION["jog_szint"] == 2): ?>
+                <a href="dolgozoi_felulet.php">Dolgozoi felulet</a>
+            <?php endif; ?>
+        </div>
 
-<!-- Hamburger menü tartalma -->
-<div class="menubar" id="menubar">
-    <ul>
-        <li><a href="kategoria.php">Menü</a></li>
-        <?php if (isset($_SESSION["jog_szint"]) && $_SESSION["jog_szint"] == 1): ?>
-            <li><a href="admin_felulet.php">Admin felület</a></li>
-        <?php endif; ?>
-        <li><a href="kosar.php">Kosár</a></li>
-        <?php if (isset($_SESSION["felhasznalo_nev"])): ?>
-            <li><a href="kijelentkezes.php">Kijelentkezés</a></li>
-        <?php else: ?>
-            <li><a href="bejelentkezes.php">Bejelentkezés</a></li>
-        <?php endif; ?>
+        <!-- Jobb oldalon a gombok -->
+        <div class="navbar-buttons">
+            <?php if (isset($_SESSION["felhasznalo_nev"])): ?>
+                <a href="kijelentkezes.php" class="login-btn">Kijelentkezés</a>
+            <?php else: ?>
+                <a href="bejelentkezes.php" class="login-btn">Bejelentkezés</a>
+            <?php endif; ?>
+            <a href="rendeles.php" class="order-btn">Rendelés</a>
+            <a href="kosar.php" class="cart-btn">
+                <i class='fas fa-shopping-cart cart-icon'></i>
+            </a>
+        </div>
+
+        <!-- Hamburger menü ikon -->
+        <div class="hamburger" onclick="toggleMenu()">
+            <span></span>
+            <span></span>
+            <span></span>
+        </div>
+    </nav>
+
+    <!-- Hamburger menü tartalma -->
+    <div class="menubar" id="menubar">
+        <ul>
+            <li><a href="kategoria.php">Menü</a></li>
+            <?php if (isset($_SESSION["jog_szint"]) && $_SESSION["jog_szint"] == 1): ?>
+                <li><a href="admin_felulet.php">Admin felület</a></li>
+            <?php endif; ?>
+            <li><a href="kosar.php">Kosár</a></li>
+            <?php if (isset($_SESSION["felhasznalo_nev"])): ?>
+                <li><a href="kijelentkezes.php">Kijelentkezés</a></li>
+            <?php else: ?>
+                <li><a href="bejelentkezes.php">Bejelentkezés</a></li>
+            <?php endif; ?>
             <li><a href="rendeles.php">Rendelés</a></li>
-    </ul>
-</div>
+        </ul>
+    </div>
 
     <div class="cart-container">
         <div class="cart-header">
             <h1>Kosár</h1>
             <button class="btn btn-danger btn-sm" onclick="clearCart()">Kosár ürítése</button>
+
         </div>
 
         <?php foreach ($cartItems as $item): ?>
             <div class="cart-item" data-item-id="<?= $item['id'] ?>">
                 <div class="item-details">
-                    <img src="../kepek/<?= $item['kep_url'] ?>" alt="<?= $item['nev'] ?>">
+                    <img src="../kepek/<?= $item['category'] ?>/<?= $item['kep_url'] ?>" alt="<?= $item['nev'] ?>">
                     <div class="item-info">
                         <span class="item-name"><?= $item['nev'] ?></span>
                         <span class="item-price" data-price="<?= $item['egyseg_ar'] ?>">Ár: <?= $item['egyseg_ar'] ?>
@@ -235,10 +275,28 @@ if ($userId) {
                 .then(response => response.json())
                 .then(data => {
                     if (data.success) {
-                        document.querySelectorAll('.cart-item').forEach(item => item.remove());
-                        document.querySelector('.total-amount').textContent = '0 Ft';
+                        // Remove only cart items (keep layout)
+                        document.querySelectorAll('.cart-item').forEach(item => {
+                            item.style.opacity = '0';
+                            setTimeout(() => item.remove(), 500); // Smooth fade-out
+                        });
+
+                        // Update total price to 0
+                        setTimeout(() => {
+                            document.querySelector('.total-amount').textContent = '0 Ft';
+                        }, 500);
+
+                        // Show "A kosár üres" message and hide order button
+                        setTimeout(() => {
+                            document.querySelector('.checkout-section').innerHTML = `
+                    <p class="error">A kosár üres, rendeléshez adjon hozzá termékeket!</p>
+                `;
+                        }, 500);
+                    } else {
+                        alert('Hiba történt a kosár törlése közben. Próbálja újra!');
                     }
-                });
+                })
+                .catch(error => console.error('Error:', error));
         }
     </script>
 
@@ -262,8 +320,6 @@ if ($userId) {
     </div>
     <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/js/bootstrap.bundle.min.js"></script>
     <script src="../js/navbar.js"></script>
-
-    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/js/bootstrap.bundle.min.js"></script>
 </body>
 
 </html>
