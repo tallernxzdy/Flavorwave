@@ -2,20 +2,27 @@
 session_start();
 include 'adatbazisra_csatlakozas.php';
 
+$response = ['success' => false];
+
 if (isset($_SESSION['felhasznalo_id'])) {
-    // Logged in user - clear database cart
+    // Bejelentkezett felhasználó - töröljük az adatbázisból
     $userId = $_SESSION['felhasznalo_id'];
-    $query = "DELETE FROM tetelek WHERE felhasznalo_id = ?";
-    $stmt = $conn->prepare($query);
-    $stmt->bind_param("i", $userId);
-    $stmt->execute();
-} else {
-    // Guest user - clear session and delete cookie
-    if (isset($_SESSION['kosar'])) {
-        unset($_SESSION['kosar']);
-        setcookie('guest_cart', '', time() - 3600, '/'); // Delete cookie
+    $deleteQuery = "DELETE FROM tetelek WHERE felhasznalo_id = ?";
+    $deleteStmt = $conn->prepare($deleteQuery);
+    $deleteStmt->bind_param("i", $userId);
+
+    if ($deleteStmt->execute()) {
+        $response['success'] = true;
     }
+} else {
+    // Vendég felhasználó - töröljük a session-ből és a cookie-ból
+    unset($_SESSION['kosar']);
+    setcookie('guest_cart', '', time() - 3600, '/');
+    $response['success'] = true;
 }
 
-echo json_encode(['success' => true]);
+// JSON válasz küldése
+header('Content-Type: application/json');
+echo json_encode($response);
+exit();
 ?>

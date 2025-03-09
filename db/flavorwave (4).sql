@@ -2,10 +2,10 @@
 -- version 5.2.1
 -- https://www.phpmyadmin.net/
 --
--- Gép: 127.0.0.1
--- Létrehozás ideje: 2025. Már 04. 09:25
--- Kiszolgáló verziója: 10.4.32-MariaDB
--- PHP verzió: 8.2.12
+-- Host: 127.0.0.1
+-- Generation Time: Mar 09, 2025 at 09:50 AM
+-- Server version: 10.4.32-MariaDB
+-- PHP Version: 8.2.12
 
 SET SQL_MODE = "NO_AUTO_VALUE_ON_ZERO";
 START TRANSACTION;
@@ -18,7 +18,7 @@ SET time_zone = "+00:00";
 /*!40101 SET NAMES utf8mb4 */;
 
 --
--- Adatbázis: `flavorwave`
+-- Database: `flavorwave`
 --
 CREATE DATABASE IF NOT EXISTS `flavorwave` DEFAULT CHARACTER SET utf8mb4 COLLATE utf8mb4_general_ci;
 USE `flavorwave`;
@@ -26,7 +26,7 @@ USE `flavorwave`;
 -- --------------------------------------------------------
 
 --
--- Tábla szerkezet ehhez a táblához `etel`
+-- Table structure for table `etel`
 --
 
 CREATE TABLE `etel` (
@@ -42,7 +42,7 @@ CREATE TABLE `etel` (
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_general_ci;
 
 --
--- A tábla adatainak kiíratása `etel`
+-- Dumping data for table `etel`
 --
 
 INSERT INTO `etel` (`id`, `nev`, `egyseg_ar`, `leiras`, `kategoria_id`, `kep_url`, `kaloria`, `osszetevok`, `allergenek`) VALUES
@@ -90,7 +90,7 @@ INSERT INTO `etel` (`id`, `nev`, `egyseg_ar`, `leiras`, `kategoria_id`, `kep_url
 -- --------------------------------------------------------
 
 --
--- Tábla szerkezet ehhez a táblához `extra_feltet`
+-- Table structure for table `extra_feltet`
 --
 
 CREATE TABLE `extra_feltet` (
@@ -102,7 +102,7 @@ CREATE TABLE `extra_feltet` (
 -- --------------------------------------------------------
 
 --
--- Tábla szerkezet ehhez a táblához `felhasznalo`
+-- Table structure for table `felhasznalo`
 --
 
 CREATE TABLE `felhasznalo` (
@@ -116,7 +116,7 @@ CREATE TABLE `felhasznalo` (
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_general_ci;
 
 --
--- A tábla adatainak kiíratása `felhasznalo`
+-- Dumping data for table `felhasznalo`
 --
 
 INSERT INTO `felhasznalo` (`id`, `felhasznalo_nev`, `email_cim`, `jelszo`, `tel_szam`, `lakcim`, `jog_szint`) VALUES
@@ -125,7 +125,7 @@ INSERT INTO `felhasznalo` (`id`, `felhasznalo_nev`, `email_cim`, `jelszo`, `tel_
 -- --------------------------------------------------------
 
 --
--- Tábla szerkezet ehhez a táblához `feltet_opcio`
+-- Table structure for table `feltet_opcio`
 --
 
 CREATE TABLE `feltet_opcio` (
@@ -137,7 +137,7 @@ CREATE TABLE `feltet_opcio` (
 -- --------------------------------------------------------
 
 --
--- Tábla szerkezet ehhez a táblához `kategoria`
+-- Table structure for table `kategoria`
 --
 
 CREATE TABLE `kategoria` (
@@ -147,7 +147,7 @@ CREATE TABLE `kategoria` (
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_general_ci;
 
 --
--- A tábla adatainak kiíratása `kategoria`
+-- Dumping data for table `kategoria`
 --
 
 INSERT INTO `kategoria` (`id`, `kategoria_nev`, `kep_url`) VALUES
@@ -162,7 +162,7 @@ INSERT INTO `kategoria` (`id`, `kategoria_nev`, `kep_url`) VALUES
 -- --------------------------------------------------------
 
 --
--- Tábla szerkezet ehhez a táblához `megrendeles`
+-- Table structure for table `megrendeles`
 --
 
 CREATE TABLE `megrendeles` (
@@ -175,7 +175,7 @@ CREATE TABLE `megrendeles` (
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_general_ci;
 
 --
--- A tábla adatainak kiíratása `megrendeles`
+-- Dumping data for table `megrendeles`
 --
 
 INSERT INTO `megrendeles` (`id`, `felhasznalo_id`, `leadas_megjegyzes`, `kezbesites`, `leadas_allapota`, `leadasdatuma`) VALUES
@@ -184,7 +184,7 @@ INSERT INTO `megrendeles` (`id`, `felhasznalo_id`, `leadas_megjegyzes`, `kezbesi
 -- --------------------------------------------------------
 
 --
--- Tábla szerkezet ehhez a táblához `rendeles_tetel`
+-- Table structure for table `rendeles_tetel`
 --
 
 CREATE TABLE `rendeles_tetel` (
@@ -198,7 +198,7 @@ CREATE TABLE `rendeles_tetel` (
 -- --------------------------------------------------------
 
 --
--- Tábla szerkezet ehhez a táblához `tetelek`
+-- Table structure for table `tetelek`
 --
 
 CREATE TABLE `tetelek` (
@@ -211,7 +211,7 @@ CREATE TABLE `tetelek` (
 -- --------------------------------------------------------
 
 --
--- Tábla szerkezet ehhez a táblához `valaszthato_feltet`
+-- Table structure for table `valaszthato_feltet`
 --
 
 CREATE TABLE `valaszthato_feltet` (
@@ -223,7 +223,7 @@ CREATE TABLE `valaszthato_feltet` (
 -- --------------------------------------------------------
 
 --
--- Tábla szerkezet ehhez a táblához `velemenyek`
+-- Table structure for table `velemenyek`
 --
 
 CREATE TABLE `velemenyek` (
@@ -235,18 +235,18 @@ CREATE TABLE `velemenyek` (
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8 COLLATE=utf8_unicode_ci;
 
 --
--- A tábla adatainak kiíratása `velemenyek`
+-- Dumping data for table `velemenyek`
 --
 
 INSERT INTO `velemenyek` (`id`, `felhasznalo_id`, `velemeny_szoveg`, `ertekeles`, `email_cim`) VALUES
 (31, 4, 'asdff', 4, '13c-borondi@ipari.vein.hu');
 
 --
--- Indexek a kiírt táblákhoz
+-- Indexes for dumped tables
 --
 
 --
--- A tábla indexei `etel`
+-- Indexes for table `etel`
 --
 ALTER TABLE `etel`
   ADD PRIMARY KEY (`id`),
@@ -254,19 +254,19 @@ ALTER TABLE `etel`
   ADD KEY `kategoria_id` (`kategoria_id`);
 
 --
--- A tábla indexei `extra_feltet`
+-- Indexes for table `extra_feltet`
 --
 ALTER TABLE `extra_feltet`
   ADD PRIMARY KEY (`id`);
 
 --
--- A tábla indexei `felhasznalo`
+-- Indexes for table `felhasznalo`
 --
 ALTER TABLE `felhasznalo`
   ADD PRIMARY KEY (`id`);
 
 --
--- A tábla indexei `feltet_opcio`
+-- Indexes for table `feltet_opcio`
 --
 ALTER TABLE `feltet_opcio`
   ADD PRIMARY KEY (`id`),
@@ -274,20 +274,20 @@ ALTER TABLE `feltet_opcio`
   ADD KEY `tetel_id` (`tetel_id`);
 
 --
--- A tábla indexei `kategoria`
+-- Indexes for table `kategoria`
 --
 ALTER TABLE `kategoria`
   ADD PRIMARY KEY (`id`);
 
 --
--- A tábla indexei `megrendeles`
+-- Indexes for table `megrendeles`
 --
 ALTER TABLE `megrendeles`
   ADD PRIMARY KEY (`id`),
   ADD KEY `felhasznalo_id` (`felhasznalo_id`);
 
 --
--- A tábla indexei `rendeles_tetel`
+-- Indexes for table `rendeles_tetel`
 --
 ALTER TABLE `rendeles_tetel`
   ADD PRIMARY KEY (`id`),
@@ -295,16 +295,17 @@ ALTER TABLE `rendeles_tetel`
   ADD KEY `termek_id` (`termek_id`);
 
 --
--- A tábla indexei `tetelek`
+-- Indexes for table `tetelek`
 --
 ALTER TABLE `tetelek`
   ADD PRIMARY KEY (`id`),
+  ADD UNIQUE KEY `unique_cart_item` (`felhasznalo_id`,`etel_id`),
   ADD KEY `rendeles_id` (`etel_id`),
   ADD KEY `etel_id` (`etel_id`),
   ADD KEY `felhasznalo_id` (`felhasznalo_id`);
 
 --
--- A tábla indexei `valaszthato_feltet`
+-- Indexes for table `valaszthato_feltet`
 --
 ALTER TABLE `valaszthato_feltet`
   ADD PRIMARY KEY (`id`),
@@ -312,121 +313,121 @@ ALTER TABLE `valaszthato_feltet`
   ADD KEY `etel_id` (`etel_id`);
 
 --
--- A tábla indexei `velemenyek`
+-- Indexes for table `velemenyek`
 --
 ALTER TABLE `velemenyek`
   ADD PRIMARY KEY (`id`),
   ADD KEY `felhasznalo_id` (`felhasznalo_id`);
 
 --
--- A kiírt táblák AUTO_INCREMENT értéke
+-- AUTO_INCREMENT for dumped tables
 --
 
 --
--- AUTO_INCREMENT a táblához `etel`
+-- AUTO_INCREMENT for table `etel`
 --
 ALTER TABLE `etel`
   MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=76;
 
 --
--- AUTO_INCREMENT a táblához `extra_feltet`
+-- AUTO_INCREMENT for table `extra_feltet`
 --
 ALTER TABLE `extra_feltet`
   MODIFY `id` int(11) NOT NULL AUTO_INCREMENT;
 
 --
--- AUTO_INCREMENT a táblához `felhasznalo`
+-- AUTO_INCREMENT for table `felhasznalo`
 --
 ALTER TABLE `felhasznalo`
   MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=5;
 
 --
--- AUTO_INCREMENT a táblához `feltet_opcio`
+-- AUTO_INCREMENT for table `feltet_opcio`
 --
 ALTER TABLE `feltet_opcio`
   MODIFY `id` int(11) NOT NULL AUTO_INCREMENT;
 
 --
--- AUTO_INCREMENT a táblához `kategoria`
+-- AUTO_INCREMENT for table `kategoria`
 --
 ALTER TABLE `kategoria`
   MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=10;
 
 --
--- AUTO_INCREMENT a táblához `megrendeles`
+-- AUTO_INCREMENT for table `megrendeles`
 --
 ALTER TABLE `megrendeles`
   MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=11;
 
 --
--- AUTO_INCREMENT a táblához `rendeles_tetel`
+-- AUTO_INCREMENT for table `rendeles_tetel`
 --
 ALTER TABLE `rendeles_tetel`
   MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=6;
 
 --
--- AUTO_INCREMENT a táblához `tetelek`
+-- AUTO_INCREMENT for table `tetelek`
 --
 ALTER TABLE `tetelek`
-  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=6;
+  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=28;
 
 --
--- AUTO_INCREMENT a táblához `valaszthato_feltet`
+-- AUTO_INCREMENT for table `valaszthato_feltet`
 --
 ALTER TABLE `valaszthato_feltet`
   MODIFY `id` int(11) NOT NULL AUTO_INCREMENT;
 
 --
--- AUTO_INCREMENT a táblához `velemenyek`
+-- AUTO_INCREMENT for table `velemenyek`
 --
 ALTER TABLE `velemenyek`
   MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=32;
 
 --
--- Megkötések a kiírt táblákhoz
+-- Constraints for dumped tables
 --
 
 --
--- Megkötések a táblához `etel`
+-- Constraints for table `etel`
 --
 ALTER TABLE `etel`
   ADD CONSTRAINT `etel_ibfk_1` FOREIGN KEY (`kategoria_id`) REFERENCES `kategoria` (`id`) ON DELETE CASCADE ON UPDATE CASCADE;
 
 --
--- Megkötések a táblához `feltet_opcio`
+-- Constraints for table `feltet_opcio`
 --
 ALTER TABLE `feltet_opcio`
   ADD CONSTRAINT `feltet_opcio_ibfk_1` FOREIGN KEY (`feltet_id`) REFERENCES `extra_feltet` (`id`) ON DELETE CASCADE ON UPDATE CASCADE,
   ADD CONSTRAINT `feltet_opcio_ibfk_2` FOREIGN KEY (`tetel_id`) REFERENCES `tetelek` (`id`) ON DELETE CASCADE ON UPDATE CASCADE;
 
 --
--- Megkötések a táblához `megrendeles`
+-- Constraints for table `megrendeles`
 --
 ALTER TABLE `megrendeles`
   ADD CONSTRAINT `megrendeles_ibfk_1` FOREIGN KEY (`felhasznalo_id`) REFERENCES `felhasznalo` (`id`) ON DELETE CASCADE ON UPDATE CASCADE;
 
 --
--- Megkötések a táblához `rendeles_tetel`
+-- Constraints for table `rendeles_tetel`
 --
 ALTER TABLE `rendeles_tetel`
   ADD CONSTRAINT `rendeles_tetel_ibfk_1` FOREIGN KEY (`rendeles_id`) REFERENCES `megrendeles` (`id`) ON DELETE CASCADE ON UPDATE CASCADE,
   ADD CONSTRAINT `rendeles_tetel_ibfk_2` FOREIGN KEY (`termek_id`) REFERENCES `etel` (`id`) ON DELETE CASCADE ON UPDATE CASCADE;
 
 --
--- Megkötések a táblához `tetelek`
+-- Constraints for table `tetelek`
 --
 ALTER TABLE `tetelek`
   ADD CONSTRAINT `tetelek_ibfk_1` FOREIGN KEY (`etel_id`) REFERENCES `etel` (`id`) ON DELETE CASCADE ON UPDATE CASCADE;
 
 --
--- Megkötések a táblához `valaszthato_feltet`
+-- Constraints for table `valaszthato_feltet`
 --
 ALTER TABLE `valaszthato_feltet`
   ADD CONSTRAINT `valaszthato_feltet_ibfk_1` FOREIGN KEY (`etel_id`) REFERENCES `etel` (`id`) ON DELETE CASCADE ON UPDATE CASCADE,
   ADD CONSTRAINT `valaszthato_feltet_ibfk_2` FOREIGN KEY (`feltet_id`) REFERENCES `extra_feltet` (`id`) ON DELETE CASCADE ON UPDATE CASCADE;
 
 --
--- Megkötések a táblához `velemenyek`
+-- Constraints for table `velemenyek`
 --
 ALTER TABLE `velemenyek`
   ADD CONSTRAINT `velemenyek_ibfk_1` FOREIGN KEY (`felhasznalo_id`) REFERENCES `felhasznalo` (`id`) ON DELETE CASCADE ON UPDATE CASCADE;
