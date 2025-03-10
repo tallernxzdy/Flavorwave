@@ -5,6 +5,7 @@ session_start();
 
 <!DOCTYPE html>
 <html lang="en">
+
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
@@ -17,6 +18,7 @@ session_start();
     <link rel="stylesheet" href="../css/footer.css">
     <link rel="stylesheet" href="../css/kategoriak.css">
 </head>
+
 <body>
     <div class="content-wrapper">
         <nav>
@@ -44,7 +46,7 @@ session_start();
                 <?php else: ?>
                     <a href="bejelentkezes.php" class="login-btn">Bejelentkezés</a>
                 <?php endif; ?>
-                <a href="rendeles.php" class="order-btn">Rendelés</a>
+                <a href="rendeles_megtekintes.php" class="order-btn">Rendeléseim</a>
                 <a href="kosar.php" class="cart-btn">
                     <i class='fas fa-shopping-cart cart-icon'></i>
                 </a>
@@ -71,57 +73,57 @@ session_start();
                 <?php else: ?>
                     <li><a href="bejelentkezes.php">Bejelentkezés</a></li>
                 <?php endif; ?>
-                <li><a href="rendeles.php">Rendelés</a></li>
+                <li><a href="rendelesek_megtekintes.php">Rendeléseim</a></li>
             </ul>
         </div>
 
-<h1>Kategoriák</h1>      
-<div class="flex-grid"> 
-    <div class="flex-col">
-        <a href="hamburger.php" class="menu__option">
-            <img src="../kepek/hamburgerek/standardburger.jpg" alt="Hamburgerek">
-            <h2>Hamburgerek</h2>
-        </a>
-    </div>
-    <div class="flex-col">
-        <a href="pizza.php" class="menu__option">
-            <img src="../kepek/pizzak/pizza.jpg" alt="Pizzák">
-            <h2>Pizzák</h2>
-        </a>
-    </div>
-    <div class="flex-col">
-        <a href="hotdog.php" class="menu__option">
-            <img src="../kepek/hotdogok/simahotdog.jpg" alt="Hot-dogok">
-            <h2>Hot-dogok</h2>
-        </a>
-    </div>
-    <div class="flex-col">
-        <a href="koretek.php" class="menu__option">
-            <img src="../kepek/sultkrumplik/hasabburgonya.jpg" alt="Köretek">
-            <h2>Köretek</h2>
-        </a>
-    </div>
-    <div class="flex-col">
-        <a href="desszertek.php" class="menu__option">
-            <img src="../kepek/desszertek/almaspite.jpeg" alt="Desszertek">
-            <h2>Desszertek</h2>
-        </a>
-    </div>
-    <div class="flex-col">
-        <a href="shakek.php" class="menu__option">
-            <img src="../kepek/shakek/vaniliasshake.jpg" alt="Shakek">
-            <h2>Shakek</h2>
-        </a>
-    </div>
-    <div class="flex-col">
-        <a href="italok.php" class="menu__option">
-            <img src="../kepek/italok/fanta.jpg" alt="Italok">
-            <h2>Italok</h2>
-        </a>
-    </div>
-</div>
+        <h1>Kategoriák</h1>
+        <div class="flex-grid">
+            <div class="flex-col">
+                <a href="hamburger.php" class="menu__option">
+                    <img src="../kepek/hamburgerek/standardburger.jpg" alt="Hamburgerek">
+                    <h2>Hamburgerek</h2>
+                </a>
+            </div>
+            <div class="flex-col">
+                <a href="pizza.php" class="menu__option">
+                    <img src="../kepek/pizzak/pizza.jpg" alt="Pizzák">
+                    <h2>Pizzák</h2>
+                </a>
+            </div>
+            <div class="flex-col">
+                <a href="hotdog.php" class="menu__option">
+                    <img src="../kepek/hotdogok/simahotdog.jpg" alt="Hot-dogok">
+                    <h2>Hot-dogok</h2>
+                </a>
+            </div>
+            <div class="flex-col">
+                <a href="koretek.php" class="menu__option">
+                    <img src="../kepek/sultkrumplik/hasabburgonya.jpg" alt="Köretek">
+                    <h2>Köretek</h2>
+                </a>
+            </div>
+            <div class="flex-col">
+                <a href="desszertek.php" class="menu__option">
+                    <img src="../kepek/desszertek/almaspite.jpeg" alt="Desszertek">
+                    <h2>Desszertek</h2>
+                </a>
+            </div>
+            <div class="flex-col">
+                <a href="shakek.php" class="menu__option">
+                    <img src="../kepek/shakek/vaniliasshake.jpg" alt="Shakek">
+                    <h2>Shakek</h2>
+                </a>
+            </div>
+            <div class="flex-col">
+                <a href="italok.php" class="menu__option">
+                    <img src="../kepek/italok/fanta.jpg" alt="Italok">
+                    <h2>Italok</h2>
+                </a>
+            </div>
+        </div>
 
-</main>
+        </main>
 
         <footer class="footer">
             <div class="footer-container">
@@ -143,4 +145,5 @@ session_start();
     <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/js/bootstrap.bundle.min.js"></script>
     <script src="../js/navbar.js"></script>
 </body>
+
 </html>

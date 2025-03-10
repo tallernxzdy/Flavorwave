@@ -1,12 +1,6 @@
 @import url('https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;600&display=swap');
 
-/* Alap stílusok */
-body {
-    margin: 0;
-    padding-top: 80px; /* Padding a navbar magasságának kompenzálására */
-    font-family: 'Poppins', sans-serif;
-}
-
+/* Navbar stílusok */
 nav {
     display: flex;
     justify-content: space-between;
@@ -18,9 +12,8 @@ nav {
     left: 0;
     width: 100%;
     height: 80px; /* Navbar magassága */
-    z-index: 1000;
+    z-index: 1000; /* Navbar mindig legfelül */
     box-shadow: 0 4px 15px rgba(0, 0, 0, 0.3);
-    overflow: hidden;
 }
 
 .logo {

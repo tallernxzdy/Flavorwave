@@ -18,7 +18,7 @@ if ($_SERVER['REQUEST_METHOD'] == 'POST') {
     $recaptcha_response = $_POST['g-recaptcha-response'];
     $secret_key = "6Lf0bsoqAAAAADWSHQoOWiAnwyLyZL60Cfoi33K3"; // Titkos kulcs
     $url = 'https://www.google.com/recaptcha/api/siteverify';
-    
+
     $data = [
         'secret' => $secret_key,
         'response' => $recaptcha_response,
@@ -104,6 +104,7 @@ $velemenyek = ($result && $result->num_rows > 0) ? $result->fetch_all(MYSQLI_ASS
 
 <!DOCTYPE html>
 <html lang="hu">
+
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
@@ -118,69 +119,74 @@ $velemenyek = ($result && $result->num_rows > 0) ? $result->fetch_all(MYSQLI_ASS
     <script src="https://www.google.com/recaptcha/api.js" async defer></script>
     <script></script>
 </head>
+
 <body>
-<nav>
-    <!-- Bal oldalon a logó -->
-    <a href="kezdolap.php" class="logo">
-        <img src="../kepek/logo.png" alt="Flavorwave Logo">
-        <h1>FlavorWave</h1>
-    </a>
-
-    <!-- Középen a kategóriák (és Admin felület, ha jogosult) -->
-    <div class="navbar-center">
-        <a href="kategoria.php">Menü</a>
-        <?php if (isset($_SESSION["jog_szint"]) && $_SESSION["jog_szint"] == 1): ?>
-            <a href="admin_felulet.php">Admin felület</a>
-        <?php endif; ?>
-        <?php if (isset($_SESSION["jog_szint"]) && $_SESSION["jog_szint"] == 2): ?>
-            <a href="dolgozoi_felulet.php">Dolgozoi felulet</a>
-        <?php endif; ?>
-    </div>
-
-    <!-- Jobb oldalon a gombok -->
-    <div class="navbar-buttons">
-        <?php if (isset($_SESSION["felhasznalo_nev"])): ?>
-            <a href="kijelentkezes.php" class="login-btn">Kijelentkezés</a>
-        <?php else: ?>
-            <a href="bejelentkezes.php" class="login-btn">Bejelentkezés</a>
-        <?php endif; ?>
-        <a href="rendeles.php" class="order-btn">Rendelés</a>
-        <a href="kosar.php" class="cart-btn">
-            <i class='fas fa-shopping-cart cart-icon'></i>
+    <nav>
+        <!-- Bal oldalon a logó -->
+        <a href="kezdolap.php" class="logo">
+            <img src="../kepek/logo.png" alt="Flavorwave Logo">
+            <h1>FlavorWave</h1>
         </a>
-    </div>
 
-    <!-- Hamburger menü ikon -->
-    <div class="hamburger" onclick="toggleMenu()">
-        <span></span>
-        <span></span>
-        <span></span>
-    </div>
-</nav>
+        <!-- Középen a kategóriák (és Admin felület, ha jogosult) -->
+        <div class="navbar-center">
+            <a href="kategoria.php">Menü</a>
+            <?php if (isset($_SESSION["jog_szint"]) && $_SESSION["jog_szint"] == 1): ?>
+                <a href="admin_felulet.php">Admin felület</a>
+            <?php endif; ?>
+            <?php if (isset($_SESSION["jog_szint"]) && $_SESSION["jog_szint"] == 2): ?>
+                <a href="dolgozoi_felulet.php">Dolgozoi felulet</a>
+            <?php endif; ?>
+        </div>
 
-<!-- Hamburger menü tartalma -->
-<div class="menubar" id="menubar">
-    <ul>
-        <li><a href="kategoria.php">Menü</a></li>
-        <?php if (isset($_SESSION["jog_szint"]) && $_SESSION["jog_szint"] == 1): ?>
-            <li><a href="admin_felulet.php">Admin felület</a></li>
-        <?php endif; ?>
-        <li><a href="kosar.php">Kosár</a></li>
-        <?php if (isset($_SESSION["felhasznalo_nev"])): ?>
-            <li><a href="kijelentkezes.php">Kijelentkezés</a></li>
-        <?php else: ?>
-            <li><a href="bejelentkezes.php">Bejelentkezés</a></li>
-        <?php endif; ?>
-            <li><a href="rendeles.php">Rendelés</a></li>
-    </ul>
-</div>
+        <!-- Jobb oldalon a gombok -->
+        <div class="navbar-buttons">
+            <?php if (isset($_SESSION["felhasznalo_nev"])): ?>
+                <a href="kijelentkezes.php" class="login-btn">Kijelentkezés</a>
+            <?php else: ?>
+                <a href="bejelentkezes.php" class="login-btn">Bejelentkezés</a>
+            <?php endif; ?>
+            <a href="rendeles_megtekintes.php" class="order-btn">Rendeléseim</a>
+            <a href="kosar.php" class="cart-btn">
+                <i class='fas fa-shopping-cart cart-icon'></i>
+            </a>
+        </div>
+
+        <!-- Hamburger menü ikon -->
+        <div class="hamburger" onclick="toggleMenu()">
+            <span></span>
+            <span></span>
+            <span></span>
+        </div>
+    </nav>
+
+    <!-- Hamburger menü tartalma -->
+    <div class="menubar" id="menubar">
+        <ul>
+            <li><a href="kategoria.php">Menü</a></li>
+            <?php if (isset($_SESSION["jog_szint"]) && $_SESSION["jog_szint"] == 1): ?>
+                <li><a href="admin_felulet.php">Admin felület</a></li>
+            <?php endif; ?>
+            <li><a href="kosar.php">Kosár</a></li>
+            <?php if (isset($_SESSION["felhasznalo_nev"])): ?>
+                <li><a href="kijelentkezes.php">Kijelentkezés</a></li>
+            <?php else: ?>
+                <li><a href="bejelentkezes.php">Bejelentkezés</a></li>
+            <?php endif; ?>
+            <li><a href="rendelesek_megtekintes.php">Rendeléseim</a></li>
+        </ul>
+    </div>
     <div class="container">
         <h1>Visszajelzés</h1>
-        <?php if (isset($_SESSION['uzenet'])) { echo "<p class='alert alert-info'>" . $_SESSION['uzenet'] . "</p>"; unset($_SESSION['uzenet']); } ?>
+        <?php if (isset($_SESSION['uzenet'])) {
+            echo "<p class='alert alert-info'>" . $_SESSION['uzenet'] . "</p>";
+            unset($_SESSION['uzenet']);
+        } ?>
         <form method="POST" action="visszajelzesek.php">
             <label for="megelegedettseg">Mennyire elégedett? (1-10)</label>
             <select id="megelegedettseg" name="megelegedettseg" required>
-                <?php for ($i = 1; $i <= 10; $i++) echo "<option value='$i'>$i</option>"; ?>
+                <?php for ($i = 1; $i <= 10; $i++)
+                    echo "<option value='$i'>$i</option>"; ?>
             </select>
 
             <label for="visszajelzes">Visszajelzés szövege</label>
@@ -192,7 +198,8 @@ $velemenyek = ($result && $result->num_rows > 0) ? $result->fetch_all(MYSQLI_ASS
         </form>
     </div>
 
-    <hr></hr>
+    <hr>
+    </hr>
 
     <div class="container">
         <h2>Mit mondanak rólunk?</h2>
@@ -215,4 +222,5 @@ $velemenyek = ($result && $result->num_rows > 0) ? $result->fetch_all(MYSQLI_ASS
         <?php endif; ?>
     </div>
 </body>
+
 </html>

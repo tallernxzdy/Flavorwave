@@ -1,87 +1,87 @@
 <!DOCTYPE html>
 <html lang="hu">
+
 <head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <meta http-equiv="X-UA-Compatible" content="ie=edge" />
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <meta http-equiv="X-UA-Compatible" content="ie=edge" />
 
-    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/css/bootstrap.min.css" rel="stylesheet">
-    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.15.4/css/all.min.css">
-    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/js/bootstrap.bundle.min.js"></script>
+  <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/css/bootstrap.min.css" rel="stylesheet">
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.15.4/css/all.min.css">
+  <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/js/bootstrap.bundle.min.js"></script>
 
-    <link rel="icon" href="../kepek/logo.png" type="image/png">
-    <title>FlavorWave | Menü</title>
-    <link rel="stylesheet" href="../css/style.css">
-    <link rel="stylesheet" href="../css/navbar.css">
-    <link rel="stylesheet" href="../css/footer.css">
-    <link rel="stylesheet" href="../css/menu.css">
+  <link rel="icon" href="../kepek/logo.png" type="image/png">
+  <title>FlavorWave | Menü</title>
+  <link rel="stylesheet" href="../css/style.css">
+  <link rel="stylesheet" href="../css/navbar.css">
+  <link rel="stylesheet" href="../css/footer.css">
+  <link rel="stylesheet" href="../css/menu.css">
 </head>
+
 <body>
 
-    <!-- NAVBAR -->
-    <nav>
+  <nav>
     <!-- Bal oldalon a logó -->
     <a href="kezdolap.php" class="logo">
-        <img src="../kepek/logo.png" alt="Flavorwave Logo">
-        <h1>FlavorWave</h1>
+      <img src="../kepek/logo.png" alt="Flavorwave Logo">
+      <h1>FlavorWave</h1>
     </a>
 
     <!-- Középen a kategóriák (és Admin felület, ha jogosult) -->
     <div class="navbar-center">
-        <a href="kategoria.php">Menü</a>
-        <?php if (isset($_SESSION["jog_szint"]) && $_SESSION["jog_szint"] == 1): ?>
-            <a href="admin_felulet.php">Admin felület</a>
-        <?php endif; ?>
-        <?php if (isset($_SESSION["jog_szint"]) && $_SESSION["jog_szint"] == 2): ?>
-            <a href="dolgozoi_felulet.php">Dolgozoi felulet</a>
-        <?php endif; ?>
+      <a href="kategoria.php">Menü</a>
+      <?php if (isset($_SESSION["jog_szint"]) && $_SESSION["jog_szint"] == 1): ?>
+        <a href="admin_felulet.php">Admin felület</a>
+      <?php endif; ?>
+      <?php if (isset($_SESSION["jog_szint"]) && $_SESSION["jog_szint"] == 2): ?>
+        <a href="dolgozoi_felulet.php">Dolgozoi felulet</a>
+      <?php endif; ?>
     </div>
 
     <!-- Jobb oldalon a gombok -->
     <div class="navbar-buttons">
-        <?php if (isset($_SESSION["felhasznalo_nev"])): ?>
-            <a href="kijelentkezes.php" class="login-btn">Kijelentkezés</a>
-        <?php else: ?>
-            <a href="bejelentkezes.php" class="login-btn">Bejelentkezés</a>
-        <?php endif; ?>
-        <a href="rendeles.php" class="order-btn">Rendelés</a>
-        <a href="kosar.php" class="cart-btn">
-            <i class='fas fa-shopping-cart cart-icon'></i>
-        </a>
+      <?php if (isset($_SESSION["felhasznalo_nev"])): ?>
+        <a href="kijelentkezes.php" class="login-btn">Kijelentkezés</a>
+      <?php else: ?>
+        <a href="bejelentkezes.php" class="login-btn">Bejelentkezés</a>
+      <?php endif; ?>
+      <a href="rendeles_megtekintes.php" class="order-btn">Rendeléseim</a>
+      <a href="kosar.php" class="cart-btn">
+        <i class='fas fa-shopping-cart cart-icon'></i>
+      </a>
     </div>
 
     <!-- Hamburger menü ikon -->
     <div class="hamburger" onclick="toggleMenu()">
-        <span></span>
-        <span></span>
-        <span></span>
+      <span></span>
+      <span></span>
+      <span></span>
     </div>
-</nav>
+  </nav>
 
-<!-- Hamburger menü tartalma -->
-<div class="menubar" id="menubar">
+  <!-- Hamburger menü tartalma -->
+  <div class="menubar" id="menubar">
     <ul>
-        <li><a href="kategoria.php">Menü</a></li>
-        <?php if (isset($_SESSION["jog_szint"]) && $_SESSION["jog_szint"] == 1): ?>
-            <li><a href="admin_felulet.php">Admin felület</a></li>
-        <?php endif; ?>
-        <li><a href="kosar.php">Kosár</a></li>
-        <?php if (isset($_SESSION["felhasznalo_nev"])): ?>
-            <li><a href="kijelentkezes.php">Kijelentkezés</a></li>
-        <?php else: ?>
-            <li><a href="bejelentkezes.php">Bejelentkezés</a></li>
-        <?php endif; ?>
-            <li><a href="rendeles.php">Rendelés</a></li>
+      <li><a href="kategoria.php">Menü</a></li>
+      <?php if (isset($_SESSION["jog_szint"]) && $_SESSION["jog_szint"] == 1): ?>
+        <li><a href="admin_felulet.php">Admin felület</a></li>
+      <?php endif; ?>
+      <li><a href="kosar.php">Kosár</a></li>
+      <?php if (isset($_SESSION["felhasznalo_nev"])): ?>
+        <li><a href="kijelentkezes.php">Kijelentkezés</a></li>
+      <?php else: ?>
+        <li><a href="bejelentkezes.php">Bejelentkezés</a></li>
+      <?php endif; ?>
+      <li><a href="rendelesek_megtekintes.php">Rendeléseim</a></li>
     </ul>
-</div>
+  </div>
 
 
 
 
 
 
-
-<div class="container my-5">
+  <div class="container my-5">
     <div class="row g-4">
       <!-- Kártya 1 -->
       <div class="col-lg-3 col-md-4 col-sm-6">
@@ -189,12 +189,14 @@
 
   <!-- KOSÁRBA RAKÁS ÜZENET -->
   <div class="toast-container position-fixed bottom-0 end-0 p-3">
-    <div id="toast-added" class="toast align-items-center text-bg-success border-0" role="alert" aria-live="assertive" aria-atomic="true">
+    <div id="toast-added" class="toast align-items-center text-bg-success border-0" role="alert" aria-live="assertive"
+      aria-atomic="true">
       <div class="d-flex">
         <div class="toast-body">
           Hozzáadva a kosárhoz!
         </div>
-        <button type="button" class="btn-close btn-close-white me-2 m-auto" data-bs-dismiss="toast" aria-label="Bezárás"></button>
+        <button type="button" class="btn-close btn-close-white me-2 m-auto" data-bs-dismiss="toast"
+          aria-label="Bezárás"></button>
       </div>
     </div>
   </div>
@@ -218,31 +220,32 @@
 
 
 
-    <!-- Footer -->
-    <footer class="footer">
-        <div class="footer-container">
-            <!-- Footer linkek -->
-            <ul class="footer-links">
-                <li><a href="../html/rolunk.html">Rólunk</a></li>
-                <li><a href="../html/kapcsolat.html">Kapcsolat</a></li>
-                <li><a href="../html/adatvedelem.html">Adatvédelem</a></li>
-            </ul>
+  <!-- Footer -->
+  <footer class="footer">
+    <div class="footer-container">
+      <!-- Footer linkek -->
+      <ul class="footer-links">
+        <li><a href="../html/rolunk.html">Rólunk</a></li>
+        <li><a href="../html/kapcsolat.html">Kapcsolat</a></li>
+        <li><a href="../html/adatvedelem.html">Adatvédelem</a></li>
+      </ul>
 
-            <!-- Social media ikonok -->
-            <div class="footer-socials">
-                <a href="#"><i class="fab fa-facebook"></i></a>
-                <a href="#"><i class="fab fa-instagram"></i></a>
-                <a href="#"><i class="fab fa-twitter"></i></a>
-                <a href="#"><i class="fab fa-youtube"></i></a>
-            </div>
+      <!-- Social media ikonok -->
+      <div class="footer-socials">
+        <a href="#"><i class="fab fa-facebook"></i></a>
+        <a href="#"><i class="fab fa-instagram"></i></a>
+        <a href="#"><i class="fab fa-twitter"></i></a>
+        <a href="#"><i class="fab fa-youtube"></i></a>
+      </div>
 
-            <!-- Copyright rész -->
-            <div class="footer-copy">
-                &copy; 2024 FlavorWave - Minden jog fenntartva.
-            </div>
-        </div>
-    </footer>
-    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/js/bootstrap.bundle.min.js"></script>
-    <script src="../js/navbar.js"></script>
+      <!-- Copyright rész -->
+      <div class="footer-copy">
+        &copy; 2024 FlavorWave - Minden jog fenntartva.
+      </div>
+    </div>
+  </footer>
+  <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/js/bootstrap.bundle.min.js"></script>
+  <script src="../js/navbar.js"></script>
 </body>
+
 </html>

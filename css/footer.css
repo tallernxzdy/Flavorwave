@@ -1,3 +1,4 @@
+/* Footer stílusok */
 .footer {
     background-color: #000000;
     color: #ffffff;
@@ -5,8 +6,8 @@
     text-align: center;
     border-top: 3px solid #2a2a2a;
     width: 100%;
-    flex-shrink: 0;
-    margin-top: auto;
+    flex-shrink: 0; /* Footer ne zsugorodjon össze */
+    margin-top: auto; /* Footer mindig alul marad */
     position: relative;
     overflow: hidden;
 }

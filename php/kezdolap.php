@@ -59,7 +59,7 @@ session_start();
         <?php else: ?>
             <a href="bejelentkezes.php" class="login-btn">Bejelentkezés</a>
         <?php endif; ?>
-        <a href="rendeles.php" class="order-btn">Rendelés</a>
+        <a href="rendeles_megtekintes.php" class="order-btn">Rendeléseim</a>
         <a href="kosar.php" class="cart-btn">
             <i class='fas fa-shopping-cart cart-icon'></i>
         </a>
@@ -86,7 +86,7 @@ session_start();
         <?php else: ?>
             <li><a href="bejelentkezes.php">Bejelentkezés</a></li>
         <?php endif; ?>
-            <li><a href="rendeles.php">Rendelés</a></li>
+            <li><a href="rendelesek_megtekintes.php">Rendeléseim</a></li>
     </ul>
 </div>
 
