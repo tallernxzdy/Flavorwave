@@ -22,6 +22,16 @@ if (!is_array($etelek)) {
     $message = "<div class='alert alert-warning'>Hiba az ételek lekérdezése során: $etelek</div>";
 }
 
+// felhasználókat lekérdezése a jogosultság megváltoztatásához
+$felhasznalok = []; // Inicializáljuk üres tömbre
+$felhasznalokLekerdezese = adatokLekerdezese("SELECT id, felhasznalo_nev, jog_szint FROM felhasznalo");
+if (is_array($felhasznalokLekerdezese)) {
+    $felhasznalok = $felhasznalokLekerdezese;
+} else {
+    $message = "<div class='alert alert-warning'>Hiba a felhasználók lekérdezése során: $felhasznalokLekerdezese</div>";
+}
+
+
 // Művelet feldolgozása
 if ($_SERVER['REQUEST_METHOD'] === 'POST') {
     $operation = $_POST['operation'];
@@ -128,7 +138,27 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
         $result = adatokTorlese("id = $id");
         $message = "<div class='alert alert-secondary'>$result</div>";
     }
+
+    // admin felület felhasználó szerkesztése:
+    if($operation === 'edit_user'){
+        $userId = $_POST['editUserId'];
+        $jogSzint = $_POST['jog_szint'];
+
+        $sql = "UPDATE felhasznalo SET jog_szint = ? WHERE id = ?";
+        $stmt = $conn->prepare($sql);
+        $stmt -> bind_param("ii", $jogSzint, $userId);
+
+        if ($stmt->execute()) {
+            $message = "<div class='alert alert-success'>Felhasználó jogosultsága sikeresen frissítve!</div>";
+        } else {
+            $message = "<div class='alert alert-danger'>Hiba történt a frissítés során!</div>";
+        }
+
+        $stmt->close();
+    }
 }
+
+
 ?>
 
 <!DOCTYPE html>
@@ -286,6 +316,104 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
             </div>
         </form>
     </div>
+
+
+
+    <!-- admin felület felhasználó szerkesztése -->
+    <div class="container mt-5">
+        <h2>Felhasználó szerkesztése</h2>
+            <table class="table table-bordered">
+                <thead>
+                    <tr>
+                        <th>Felhasználónév</th>
+                        <th>Jogosultság</th>
+                        <th>Művelet</th>
+                    </tr>
+                </thead>
+                <tbody>
+                <?php foreach ($felhasznalok as $felhasznalo): ?>
+                    <tr>
+                        <!-- megszövegesítése a táblában a -->
+                        <td><?= htmlspecialchars($felhasznalo['felhasznalo_nev']) ?></td>
+                        <td>
+                            <?php
+                            switch ($felhasznalo['jog_szint']) {
+                                case 0:
+                                    echo "Felhasználó";
+                                    break;
+                                case 1:
+                                    echo "Admin";
+                                    break;
+                                case 2:
+                                    echo "Dolgozó";
+                                    break;
+                                default:
+                                    echo "Ismeretlen";
+                            }
+                            ?>
+                        </td>
+                        <td>
+                            <?php if ($felhasznalo['jog_szint'] != 1): ?>
+                                <button class="btn btn-primary" onclick="editUser(<?= $felhasznalo['id'] ?>)">Változtatás</button>
+                            <?php else: ?>
+                                <button class="btn btn-secondary" disabled>Változtatás</button>
+                            <?php endif; ?>
+                        </td>
+                    </tr>
+                <?php endforeach; ?>
+                </tbody>
+            </table>
+    </div>
+
+        <!-- Modal a jogosultság módosításához -->
+        <div class="modal fade" id="editUserModal" tabindex="-1" aria-labelledby="editUserModalLabel" aria-hidden="true">
+            <div class="modal-dialog">
+                <div class="modal-content">
+                    <div class="modal-header">
+                        <h5 class="modal-title" id="editUserModalLabel">Felhasználó szerkesztése</h5>
+                        <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+                    </div>
+                    <div class="modal-body">
+                        <form id="editUserForm" method="POST">
+                            <input type="hidden" name="editUserId" id="editUserId">
+                            <input type="hidden" name="operation" value="edit_user">
+                            <div class="form-group">
+                                <label>Felhasználói jogosultságra váltás</label>
+                                <input type="radio" name="jog_szint" value="0">
+                            </div>
+                            <div class="form-group">
+                                <label>Dolgozói jogosultságra váltás</label>
+                                <input type="radio" name="jog_szint" value="2">
+                            </div>
+                        </form>
+                    </div>
+                    <div class="modal-footer">
+                        <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Bezárás</button>
+                        <button type="button" class="btn btn-primary" onclick="saveUserChanges()">Mentés</button>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+
+
+    <!-- javascript a felhasználó szerkesztésére -->
+    <script>
+        function editUser(userId) {
+            document.getElementById('editUserId').value = userId;
+            const editUserModal = new bootstrap.Modal(document.getElementById('editUserModal'));
+            editUserModal.show();
+        }
+
+        function saveUserChanges() {
+            document.getElementById('editUserForm').submit();
+        }
+    </script>
+
+    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/js/bootstrap.bundle.min.js"></script>
+    <script src="../js/navbar.js"></script>
+</body>
+</html>
 
 
     <!-- Megerősítés Modal a gomb lenyomásakor -->
