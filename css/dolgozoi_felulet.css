@@ -8,6 +8,7 @@ h1, h3 {
 }
 
 .container {
+    padding-top: 10px;
     margin-top: 20px;
 }
 
@@ -60,4 +61,16 @@ select {
     border-radius: 5px;
     border: 1px solid #ced4da;
     margin-bottom: 10px;
+}
+
+
+@media (min-width: 1200px) {
+    body {
+        padding-top: 10px;
+    }
+
+    nav {
+        padding: 15px 20px;
+        height: 10px;
+    }
 }

@@ -98,6 +98,11 @@ html body {
     box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
 }
 
+
+.container{
+    padding-top: 100px;
+}
+
 .admin-container h1 {
     text-align: center;
     margin-bottom: 1.5rem;
@@ -156,3 +161,13 @@ html body {
 #margo_felulre{
     margin-top: 30px;
 }
+
+
+label{
+    text-align:center;
+}
+
+
+/* @media(min-width: 480x) {
+    
+} */

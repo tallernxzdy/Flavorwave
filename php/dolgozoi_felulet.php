@@ -3,14 +3,14 @@ session_start(); // Munkamenet indítása
 
 include 'adatbazisra_csatlakozas.php';
 
-if (!isset($_SESSION['felhasznalo_id']) || $_SESSION['jog_szint'] != 1) {
+if (!isset($_SESSION['felhasznalo_id']) || $_SESSION['jog_szint'] == 0) {
     header('Location: bejelentkezes.php');
-    exit;
+    exit();
 }
-if (!isset($_SESSION['felhasznalo_id']) || $_SESSION['jog_szint'] != 2) {
-    header('Location: bejelentkezes.php');
-    exit;
-}
+
+
+
+
 
 // Üzenetek inicializálása
 $message = "";
@@ -59,6 +59,9 @@ if (isset($_POST['finished_order'])) {
         $message_type = "error";
     }
 }
+
+
+
 ?>
 
 
@@ -216,6 +219,68 @@ if (isset($_POST['finished_order'])) {
             </div>
         </div>
     </div>
+
+
+
+    <!-- admin felületre ugrás -->
+    <?php
+    if (isset($_SESSION['jog_szint']) && $_SESSION['jog_szint'] == 1) {
+    echo '<div class="d-grid gap-2 col-6 mx-auto"> 
+            <a class="btn btn-secondary" href="admin_felulet.php">Admin felület</a> 
+        </div>';
+    }
+    ?>
+
+
+<?php
+    // Megrendelések lekérdezése
+    $query = "SELECT megrendeles.id, rendeles_tetel.mennyiseg, etel.nev AS etel_nev, etel.egyseg_ar, felhasznalo.felhasznalo_nev 
+            FROM megrendeles 
+            INNER JOIN rendeles_tetel ON rendeles_tetel.rendeles_id = megrendeles.id 
+            INNER JOIN etel ON rendeles_tetel.termek_id = etel.id 
+            INNER JOIN felhasznalo ON felhasznalo.id = megrendeles.felhasznalo_id";
+
+    $result = $conn->query($query);
+?>
+
+    <div class="container mt-5">
+        <h3 class="text-center">Kész megrendelések listája</h3>
+        <div class="table-responsive">
+            <table class="table table-bordered table-striped">
+                <thead class="table-dark">
+                    <tr>
+                        <th>Rendelés ID</th>
+                        <th>Felhasználó</th>
+                        <th>Étel</th>
+                        <th>Mennyiség</th>
+                        <th>Egységár</th>
+                        <th>Összesen</th>
+                    </tr>
+                </thead>
+                <tbody>
+                    <?php
+                    if ($result->num_rows > 0) {
+                        while ($row = $result->fetch_assoc()) {
+                            $osszesen = $row["mennyiseg"] * $row["egyseg_ar"];
+                            echo "<tr>
+                                    <td>{$row['id']}</td>
+                                    <td>{$row['felhasznalo_nev']}</td>
+                                    <td>{$row['etel_nev']}</td>
+                                    <td>{$row['mennyiseg']}</td>
+                                    <td>{$row['egyseg_ar']} Ft</td>
+                                    <td>{$osszesen} Ft</td>
+                                </tr>";
+                        }
+                    } else {
+                        echo "<tr><td colspan='6' class='text-center'>Nincs elérhető adat.</td></tr>";
+                    }
+                    ?>
+                </tbody>
+            </table>
+        </div>
+    </div>
+
+
 
 
     <!-- megerősítő modal üzenetek-->

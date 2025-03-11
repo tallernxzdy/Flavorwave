@@ -140,21 +140,34 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
     }
 
     // admin felület felhasználó szerkesztése:
-    if($operation === 'edit_user'){
+    if ($operation === 'edit_user') {
         $userId = $_POST['editUserId'];
         $jogSzint = $_POST['jog_szint'];
-
-        $sql = "UPDATE felhasznalo SET jog_szint = ? WHERE id = ?";
-        $stmt = $conn->prepare($sql);
-        $stmt -> bind_param("ii", $jogSzint, $userId);
-
-        if ($stmt->execute()) {
-            $message = "<div class='alert alert-success'>Felhasználó jogosultsága sikeresen frissítve!</div>";
+    
+        // Ellenőrizzük, hogy a felhasználó jogosultsági szintje megegyezik-e az újjal
+        $checkSql = "SELECT jog_szint FROM felhasznalo WHERE id = ?";
+        $checkStmt = $conn->prepare($checkSql);
+        $checkStmt->bind_param("i", $userId);
+        $checkStmt->execute();
+        $checkStmt->bind_result($currentJogSzint);
+        $checkStmt->fetch();
+        $checkStmt->close();
+    
+        if ($currentJogSzint == $jogSzint) {
+            $message = "<div class='alert alert-warning'>A felhasználó már rendelkezik ezzel a jogosultsági szinttel!</div>";
         } else {
-            $message = "<div class='alert alert-danger'>Hiba történt a frissítés során!</div>";
+            $sql = "UPDATE felhasznalo SET jog_szint = ? WHERE id = ?";
+            $stmt = $conn->prepare($sql);
+            $stmt->bind_param("ii", $jogSzint, $userId);
+    
+            if ($stmt->execute()) {
+                $message = "<div class='alert alert-success'>Felhasználó jogosultsága sikeresen frissítve!</div>";
+            } else {
+                $message = "<div class='alert alert-danger'>Hiba történt a frissítés során!</div>";
+            }
+    
+            $stmt->close();
         }
-
-        $stmt->close();
     }
 }
 
@@ -181,6 +194,7 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
 </head>
 
 <body>
+    <!-- navbar -->
     <nav>
         <!-- Bal oldalon a logó -->
         <a href="kezdolap.php" class="logo">
@@ -220,6 +234,10 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
         </div>
     </nav>
 
+
+
+
+
     <!-- Hamburger menü tartalma -->
     <div class="menubar" id="menubar">
         <ul>
@@ -237,8 +255,13 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
         </ul>
     </div>
 
+
+
+
+    <!--  -->
     <div class="container" id="margo_felulre">
         <h1>Admin Felület</h1>
+        <h5>adatbázis műveletek</h5>
         <?php if ($message): ?>
             <?php echo $message; ?>
         <?php endif; ?>
@@ -365,32 +388,45 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
             </table>
     </div>
 
-        <!-- Modal a jogosultság módosításához -->
-        <div class="modal fade" id="editUserModal" tabindex="-1" aria-labelledby="editUserModalLabel" aria-hidden="true">
-            <div class="modal-dialog">
-                <div class="modal-content">
-                    <div class="modal-header">
-                        <h5 class="modal-title" id="editUserModalLabel">Felhasználó szerkesztése</h5>
-                        <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
-                    </div>
-                    <div class="modal-body">
-                        <form id="editUserForm" method="POST">
-                            <input type="hidden" name="editUserId" id="editUserId">
-                            <input type="hidden" name="operation" value="edit_user">
-                            <div class="form-group">
-                                <label>Felhasználói jogosultságra váltás</label>
-                                <input type="radio" name="jog_szint" value="0">
-                            </div>
-                            <div class="form-group">
-                                <label>Dolgozói jogosultságra váltás</label>
-                                <input type="radio" name="jog_szint" value="2">
-                            </div>
-                        </form>
-                    </div>
-                    <div class="modal-footer">
-                        <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Bezárás</button>
-                        <button type="button" class="btn btn-primary" onclick="saveUserChanges()">Mentés</button>
-                    </div>
+
+    <!-- dolgozói felületre ugrás -->
+    <br>
+    <div class="d-grid gap-2 col-6 mx-auto">
+        <a class="btn btn-secondary" href="dolgozoi_felulet.php">dolgozói felület</a>
+    </div>
+
+
+
+
+
+
+    <!-- Modal a jogosultság módosításához -->
+
+    <div class="modal fade" id="editUserModal" tabindex="-1" aria-labelledby="editUserModalLabel" aria-hidden="true">
+        <div class="modal-dialog">
+            <div class="modal-content">
+                <div class="modal-header">
+                    <h5 class="modal-title" id="editUserModalLabel">Felhasználó szerkesztése</h5>
+                    <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+                </div>
+                <div class="modal-body">
+                    <form id="editUserForm" method="POST">
+                        <input type="hidden" name="editUserId" id="editUserId">
+                        <input type="hidden" name="currentJogSzint" id="currentJogSzint"> <!-- Új hidden mező -->
+                        <input type="hidden" name="operation" value="edit_user">
+                        <div class="form-group">
+                            <label>Felhasználói jogosultságra váltás:</label>
+                            <input type="radio" name="jog_szint" value="0">
+                        </div>
+                        <div class="form-group">
+                            <label>Dolgozói jogosultságra váltás:</label>
+                            <input type="radio" name="jog_szint" value="2">
+                        </div>
+                    </form>
+                </div>
+                <div class="modal-footer">
+                    <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Bezárás</button>
+                    <button type="button" class="btn btn-primary" onclick="saveUserChanges()">Mentés</button>
                 </div>
             </div>
         </div>
@@ -399,13 +435,29 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
 
     <!-- javascript a felhasználó szerkesztésére -->
     <script>
-        function editUser(userId) {
+        function editUser(userId, currentJogSzint) {
             document.getElementById('editUserId').value = userId;
+            document.getElementById('currentJogSzint').value = currentJogSzint; // Aktuális jogosultsági szint beállítása
             const editUserModal = new bootstrap.Modal(document.getElementById('editUserModal'));
             editUserModal.show();
         }
 
         function saveUserChanges() {
+            const currentJogSzint = parseInt(document.getElementById('currentJogSzint').value, 10); // Számmá alakítás
+            const selectedRadio = document.querySelector('input[name="jog_szint"]:checked');
+
+            if (!selectedRadio) {
+                alert("Kérjük, válasszon jogosultsági szintet!");
+                return;
+            }
+
+            const selectedJogSzint = parseInt(selectedRadio.value, 10); // Számmá alakítás
+
+            if (currentJogSzint === selectedJogSzint) {
+                alert("A felhasználó már rendelkezik ezzel a jogosultsági szinttel!");
+                return;
+            }
+
             document.getElementById('editUserForm').submit();
         }
     </script>
@@ -460,7 +512,7 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
         });
 
 
-        // Modalhoz ablakhoz js
+        // Modalh ablakhoz js
 
         document.addEventListener('DOMContentLoaded', function () {
             const confirmationModal = new bootstrap.Modal(document.getElementById('confirmationModal'));
