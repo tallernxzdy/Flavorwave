@@ -35,24 +35,24 @@ session_start();
 <body>
 
 <nav>
-    <!-- Bal oldalon a logó -->
+    <!-- Bal oldalon a logó és felirat -->
     <a href="kezdolap.php" class="logo">
         <img src="../kepek/logo.png" alt="Flavorwave Logo">
         <h1>FlavorWave</h1>
     </a>
 
-    <!-- Középen a kategóriák (és Admin felület, ha jogosult) -->
+    <!-- Középen a menüpontok -->
     <div class="navbar-center">
         <a href="kategoria.php">Menü</a>
         <?php if (isset($_SESSION["jog_szint"]) && $_SESSION["jog_szint"] == 1): ?>
             <a href="admin_felulet.php">Admin felület</a>
         <?php endif; ?>
         <?php if (isset($_SESSION["jog_szint"]) && $_SESSION["jog_szint"] == 2): ?>
-            <a href="dolgozoi_felulet.php">Dolgozoi felulet</a>
+            <a href="dolgozoi_felulet.php">Dolgozói felület</a>
         <?php endif; ?>
     </div>
 
-    <!-- Jobb oldalon a gombok -->
+    <!-- Jobb oldali gombok -->
     <div class="navbar-buttons">
         <?php if (isset($_SESSION["felhasznalo_nev"])): ?>
             <a href="kijelentkezes.php" class="login-btn">Kijelentkezés</a>
@@ -62,6 +62,7 @@ session_start();
         <a href="rendeles_megtekintes.php" class="order-btn">Rendeléseim</a>
         <a href="kosar.php" class="cart-btn">
             <i class='fas fa-shopping-cart cart-icon'></i>
+            Kosár
         </a>
     </div>
 
@@ -80,13 +81,16 @@ session_start();
         <?php if (isset($_SESSION["jog_szint"]) && $_SESSION["jog_szint"] == 1): ?>
             <li><a href="admin_felulet.php">Admin felület</a></li>
         <?php endif; ?>
+        <?php if (isset($_SESSION["jog_szint"]) && $_SESSION["jog_szint"] == 2): ?>
+            <li><a href="dolgozoi_felulet.php">Dolgozói felület</a></li>
+        <?php endif; ?>
         <li><a href="kosar.php">Kosár</a></li>
         <?php if (isset($_SESSION["felhasznalo_nev"])): ?>
             <li><a href="kijelentkezes.php">Kijelentkezés</a></li>
         <?php else: ?>
             <li><a href="bejelentkezes.php">Bejelentkezés</a></li>
         <?php endif; ?>
-            <li><a href="rendelesek_megtekintes.php">Rendeléseim</a></li>
+        <li><a href="rendeles_megtekintes.php">Rendeléseim</a></li>
     </ul>
 </div>
 

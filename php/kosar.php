@@ -54,9 +54,10 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST' && isset($_POST['etel_id'])) {
 // Kosár adatainak lekérése
 if ($userId) {
     // Bejelentkezett felhasználó - adatbázisból lekérjük a kosarat
-    $query = "SELECT etel.id, etel.nev, etel.kep_url, etel.egyseg_ar, tetelek.darab 
+    $query = "SELECT etel.id, etel.nev, etel.kep_url, etel.egyseg_ar, tetelek.darab, kategoria.kategoria_nev 
               FROM tetelek 
               JOIN etel ON tetelek.etel_id = etel.id 
+              JOIN kategoria ON etel.kategoria_id = kategoria.id 
               WHERE tetelek.felhasznalo_id = ?";
     $stmt = $conn->prepare($query);
     $stmt->bind_param("i", $userId);
@@ -70,7 +71,10 @@ if ($userId) {
     // Vendég felhasználó - session-ből lekérjük a kosarat
     if (isset($_SESSION['kosar'])) {
         foreach ($_SESSION['kosar'] as $itemId => $quantity) {
-            $query = "SELECT id, nev, egyseg_ar, kep_url FROM etel WHERE id = ?";
+            $query = "SELECT etel.id, etel.nev, etel.egyseg_ar, etel.kep_url, kategoria.kategoria_nev 
+                      FROM etel 
+                      JOIN kategoria ON etel.kategoria_id = kategoria.id 
+                      WHERE etel.id = ?";
             $stmt = $conn->prepare($query);
             $stmt->bind_param("i", $itemId);
             $stmt->execute();
@@ -160,17 +164,15 @@ if ($userId) {
         <div class="cart-header">
             <h1>Kosár</h1>
             <button class="btn btn-danger btn-sm" onclick="clearCart()">Kosár ürítése</button>
-
         </div>
 
         <?php foreach ($cartItems as $item): ?>
             <div class="cart-item" data-item-id="<?= $item['id'] ?>">
                 <div class="item-details">
-                    <img src="../kepek/<?= $item['category'] ?>/<?= $item['kep_url'] ?>" alt="<?= $item['nev'] ?>">
+                    <img src="../kepek/<?= htmlspecialchars($item['kategoria_nev']) ?>/<?= htmlspecialchars($item['kep_url']) ?>" alt="<?= htmlspecialchars($item['nev']) ?>">
                     <div class="item-info">
-                        <span class="item-name"><?= $item['nev'] ?></span>
-                        <span class="item-price" data-price="<?= $item['egyseg_ar'] ?>">Ár: <?= $item['egyseg_ar'] ?>
-                            Ft</span>
+                        <span class="item-name"><?= htmlspecialchars($item['nev']) ?></span>
+                        <span class="item-price" data-price="<?= $item['egyseg_ar'] ?>">Ár: <?= $item['egyseg_ar'] ?> Ft</span>
                     </div>
                 </div>
                 <div class="quantity-controls">
@@ -242,6 +244,7 @@ if ($userId) {
                         }
 
                         updateTotal();
+                        checkIfCartEmpty();
                     }
                 });
         }
@@ -261,6 +264,7 @@ if ($userId) {
                     if (data.success) {
                         cartItem.remove();
                         updateTotal();
+                        checkIfCartEmpty();
                     }
                 });
         }
@@ -289,8 +293,8 @@ if ($userId) {
                         // Show "A kosár üres" message and hide order button
                         setTimeout(() => {
                             document.querySelector('.checkout-section').innerHTML = `
-                    <p class="error">A kosár üres, rendeléshez adjon hozzá termékeket!</p>
-                `;
+                                <p class="error">A kosár üres, rendeléshez adjon hozzá termékeket!</p>
+                            `;
                         }, 500);
                     } else {
                         alert('Hiba történt a kosár törlése közben. Próbálja újra!');
@@ -298,6 +302,30 @@ if ($userId) {
                 })
                 .catch(error => console.error('Error:', error));
         }
+
+        function checkIfCartEmpty() {
+            const cartItems = document.querySelectorAll('.cart-item');
+            const checkoutSection = document.querySelector('.checkout-section');
+            if (cartItems.length === 0) {
+                // Ha üres a kosár, frissítjük a checkout szekciót, hogy csak az üzenet legyen látható
+                checkoutSection.innerHTML = `
+                    <p class="error">A kosár üres, rendeléshez adjon hozzá termékeket!</p>
+                `;
+            } else if (checkoutSection.querySelector('.error')) {
+                // Ha nem üres, de van hibaüzenet, akkor visszaállítjuk a rendelés gombot (csak bejelentkezett felhasználó esetén)
+                const userId = <?php echo json_encode($userId); ?>;
+                if (userId) {
+                    checkoutSection.innerHTML = `
+                        <form action="rendeles.php" method="post">
+                            <button class="checkout-btn" type="submit">Rendelés</button>
+                        </form>
+                    `;
+                }
+            }
+        }
+
+        // Oldal betöltésekor is ellenőrizzük a kosár állapotát
+        document.addEventListener('DOMContentLoaded', checkIfCartEmpty);
     </script>
 
     <div class="footer">
@@ -314,7 +342,7 @@ if ($userId) {
                 <a href="#"><i class="fab fa-youtube"></i></a>
             </div>
             <div class="footer-copy">
-                &copy; 2024 FlavorWave - Minden jog fenntartva.
+                © 2024 FlavorWave - Minden jog fenntartva.
             </div>
         </div>
     </div>

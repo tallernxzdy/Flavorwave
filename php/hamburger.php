@@ -21,8 +21,7 @@ session_start();
 </head>
 
 <body>
-    <div class="content-wrapper">
-        <nav>
+<nav>
             <!-- Bal oldalon a logó -->
             <a href="kezdolap.php" class="logo">
                 <img src="../kepek/logo.png" alt="Flavorwave Logo">
@@ -77,7 +76,9 @@ session_start();
                 <li><a href="rendelesek_megtekintes.php">Rendeléseim</a></li>
             </ul>
         </div>
+    <div class="content-wrapper">
 
+        <h1>Hamburgerek</h1>
         <?php
         include './adatbazisra_csatlakozas.php';
 
