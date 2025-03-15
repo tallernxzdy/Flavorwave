@@ -1,6 +1,10 @@
 <?php
-// rendeles.php
 session_start();
+require '../vendor/autoload.php'; // Elérési út ellenőrzése szükséges
+use PHPMailer\PHPMailer\PHPMailer;
+use PHPMailer\PHPMailer\Exception;
+
+// Innen folytatódik a kódod
 if (!isset($_SESSION['felhasznalo_id'])) {
     header("Location: bejelentkezes.php");
     exit();
@@ -45,6 +49,7 @@ while ($row = $result->fetch_assoc()) {
 }
 
 // Rendelés feldolgozása
+// Rendelés feldolgozása
 if ($_SERVER['REQUEST_METHOD'] === 'POST' && isset($_POST['submit'])) {
     if (empty($cartItems)) {
         $errors[] = "A kosár üres, nem lehet leadni a rendelést.";
@@ -52,7 +57,7 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST' && isset($_POST['submit'])) {
         $name = trim($_POST['name'] ?? '');
         $address = trim($_POST['address'] ?? '');
         $phone = trim($_POST['phone'] ?? '');
-        $notes = trim($_POST['notes'] ?? ''); // Megjegyzés nem kötelező
+        $notes = trim($_POST['notes'] ?? '');
 
         // Validáció
         $errors = [];
@@ -89,9 +94,62 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST' && isset($_POST['submit'])) {
 
                 // Kosár ürítése
                 $conn->query("DELETE FROM tetelek WHERE felhasznalo_id=$userId");
+
+                // Felhasználó e-mail címének lekérdezése
+                $stmt = $conn->prepare("SELECT email_cim FROM felhasznalo WHERE id = ?");
+                $stmt->bind_param("i", $userId);
+                $stmt->execute();
+                $result = $stmt->get_result();
+                $userEmail = $result->fetch_assoc()['email_cim'];
+
+
+                $mail = new PHPMailer(true);
+                try {
+                    // SMTP beállítások (pl. Gmail)
+                    $mail->isSMTP();
+                    $mail->Host = 'smtp.gmail.com'; // SMTP szerver címe
+                    $mail->SMTPAuth = true;
+                    $mail->Username = 'flavorwavereal@gmail.com'; // A te Gmail címed
+                    $mail->Password = 'awch ocfs ldcr hded'; // Alkalmazás-specifikus jelszó (lásd lent)
+                    $mail->SMTPSecure = PHPMailer::ENCRYPTION_STARTTLS;
+                    $mail->CharSet = "UTF-8";
+                    $mail->Port = 587;
+
+                    // Feladó és címzett
+                    $mail->setFrom('flavorwavereal@gmail.com', 'FlavorWave');
+                    $mail->addAddress($userEmail, $name); // Felhasználó e-mail címe és neve
+
+                    // E-mail tartalom
+                    $mail->isHTML(true);
+                    $mail->Subject = 'Rendelés visszaigazolás - FlavorWave';
+                    $mail->Body = "
+                        <h2>Kedves $name!</h2>
+                        <p>Köszönjük rendelésedet! Az alábbiakban összefoglaljuk a rendelésed részleteit:</p>
+                        <h3>Rendelési adatok:</h3>
+                        <ul>
+                            <li><strong>Rendelés azonosító:</strong> #$orderId</li>
+                            <li><strong>Szállítási cím:</strong> $address</li>
+                            <li><strong>Telefonszám:</strong> $phone</li>
+                            <li><strong>Megjegyzés:</strong> " . ($notes ?: 'Nincs') . "</li>
+                        </ul>
+                        <h3>Rendelt tételek:</h3>
+                        <ul>";
+                    foreach ($cartItems as $item) {
+                        $mail->Body .= "<li>{$item['nev']} - {$item['darab']} db - " . ($item['egyseg_ar'] * $item['darab']) . " Ft</li>";
+                    }
+                    $mail->Body .= "
+                        </ul>
+                        <p><strong>Összesen:</strong> $total Ft</p>
+                        <p>Hamarosan felvesszük veled a kapcsolatot a kiszállítás részleteivel kapcsolatban.</p>
+                        <p>Üdvözlettel,<br>FlavorWave Csapat</p>";
+
+                    $mail->send();
+                } catch (Exception $e) {
+                    error_log("E-mail küldési hiba: {$mail->ErrorInfo}");
+                }
+
                 $conn->commit();
 
-                // Sikeres rendelés esetén modal megjelenítése
                 $_SESSION['order_success'] = true;
                 header("Location: rendeles.php");
                 exit();
