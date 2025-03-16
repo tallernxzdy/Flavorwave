@@ -75,7 +75,7 @@ session_start();
     <div class="hero">
     <video autoplay loop muted playsinline class="hero-video">
         <source src="../kepek/hambi2.mp4" type="video/mp4">
-        A böngésződ nem támogatja a videólejátszást.
+        
     </video>
     <div class="hero-content">
         <h1>Friss, Forró, Finom</h1>
@@ -88,43 +88,6 @@ session_start();
 </div>
 
 
-
-    <div class="feedback-section">
-        <?php if (isset($_SESSION['felhasznalo_id'])): ?>
-            <a href="visszajelzesek.php" class="primary-bttn">Küldd el a véleményed!</a>
-        <?php else: ?>
-            <p>Kérjük, <a href="bejelentkezes.php">jelentkezz be</a>, hogy véleményt írhass!</p>
-        <?php endif; ?>
-    </div>
-
-    <section id="weekly-deals">
-    <h2>Heti Ajánlat Vége:</h2>
-    <div class="countdown" id="countdown">
-        <span class="days">00</span> nap
-        <span class="hours">00</span> óra
-        <span class="minutes">00</span> perc
-        <span class="seconds">00</span> másodperc
-    </div>
-    <div class="sliders-container">
-        <div class="image-slider" id="image-slider-1">
-            <img src="../kepek/pizzak/pizza2.jpg" alt="Ajánlat 1">
-            <img src="../kepek/pizzak/pizza2.jpg" alt="Ajánlat 2">
-            <img src="../kepek/pizzak/pizza2.jpg" alt="Ajánlat 3">
-        </div>
-        <div class="image-slider" id="image-slider-2">
-            <img src="../kepek/pizzak/pizza2.jpg" alt="Ajánlat 4">
-            <img src="../kepek/pizzak/pizza2.jpg" alt="Ajánlat 5">
-            <img src="../kepek/pizzak/pizza2.jpg" alt="Ajánlat 6">
-        </div>
-    </div>
-    <p>Ne maradj le! Az ajánlat visszaszámlálás alatt érhető el.</p>
-    <a href="menu.php" class="cta-button primary-bttn">Fedezd fel az ajánlatokat!</a>
-</section>
-
-
-<br>
-<br>
-<div class="shaker-master-container">
 <div class="coupon-slider">
     <div class="slides">
         <div class="slide">
@@ -162,12 +125,48 @@ session_start();
     <button class="next"><i class="fas fa-chevron-right"></i></button>
 </div>
 
+
 <div class="dots">
     <div class="dot active"></div>
     <div class="dot"></div>
     <div class="dot"></div>
 </div>
-</div>
+<br>
+<br>
+
+
+    <section id="weekly-deals">
+    <h2>Heti Ajánlat Vége:</h2>
+    <div class="countdown" id="countdown">
+        <span class="days">00</span> nap
+        <span class="hours">00</span> óra
+        <span class="minutes">00</span> perc
+        <span class="seconds">00</span> másodperc
+    </div>
+    <div class="sliders-container">
+        <div class="image-slider" id="image-slider-1">
+            <img src="../kepek/pizzak/pizza2.jpg" alt="Ajánlat 1">
+            <img src="../kepek/pizzak/pizza2.jpg" alt="Ajánlat 2">
+            <img src="../kepek/pizzak/pizza2.jpg" alt="Ajánlat 3">
+        </div>
+        <div class="image-slider" id="image-slider-2">
+            <img src="../kepek/pizzak/pizza2.jpg" alt="Ajánlat 4">
+            <img src="../kepek/pizzak/pizza2.jpg" alt="Ajánlat 5">
+            <img src="../kepek/pizzak/pizza2.jpg" alt="Ajánlat 6">
+        </div>
+    </div>
+    <p>Ne maradj le! Az ajánlat visszaszámlálás alatt érhető el.</p>
+    <a href="menu.php" class="cta-button primary-bttn">Fedezd fel az ajánlatokat!</a>
+</section>
+
+<br>
+<br>
+
+
+
+
+
+
 
 <div class="steps-container">
     <div class="step" data-aos="fade-up"><i class="fas fa-utensils"></i> <p>Válassz ételt 🍕</p></div>
@@ -176,7 +175,7 @@ session_start();
     <div class="step" data-aos="fade-up"><i class="fas fa-smile"></i> <p>Élvezd az ételt 😋</p></div>
 </div>
 
-<div class="quiz-wrapper">
+
 <div class="quiz-wrapper">
         <div class="quiz-container">
             <h1>Nem tudod milyen pizzát válassz?</h1>
@@ -218,7 +217,6 @@ session_start();
             </div>
         </div>
     </div>
-</div>
     
 
     <div class="shaker-master-container">
@@ -264,6 +262,15 @@ session_start();
         <div class="shaker-dot"></div>
     </div>
 </div>
+
+
+<div class="feedback-section">
+        <?php if (isset($_SESSION['felhasznalo_id'])): ?>
+            <a href="visszajelzesek.php" class="primary-bttn">Küldd el a véleményed!</a>
+        <?php else: ?>
+            <p>Kérjük, <a href="bejelentkezes.php">jelentkezz be</a>, hogy véleményt írhass!</p>
+        <?php endif; ?>
+    </div>
     <section class="why-us">
     <h3>Miért minket válassz?</h3>
     <div class="features">
