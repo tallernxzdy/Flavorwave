@@ -104,6 +104,7 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST' && isset($_POST['submit'])) {
 
 
                 $mail = new PHPMailer(true);
+
                 try {
                     // SMTP beállítások (pl. Gmail)
                     $mail->isSMTP();

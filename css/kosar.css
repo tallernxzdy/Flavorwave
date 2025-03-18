@@ -1,129 +1,325 @@
+@import url('https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;600&display=swap');
+
 body {
-    background-color: #f8f9fa;
-    height: 100vh;
+    font-family: 'Poppins', sans-serif;
+    background-color: #f4f4f9;
+    color: #333;
+    min-height: 100vh;
     display: flex;
     flex-direction: column;
     justify-content: space-between;
-
-    }
-
-.cart-container {
-    width: 1200px;
-    max-width: 100%;
-    margin: 50px auto;
-    padding: 20px;
-    padding-top: 90px;
-    background: #ffffff;
-    border-radius: 8px;
-    box-shadow: 0 4px 10px rgba(0, 0, 0, 0.1);
 }
 
+/* Cart Container Styling */
+.cart-container {
+    width: 1200px;
+    max-width: 95%;
+    margin: 4rem auto;
+    padding: 2rem;
+    background: #fff;
+    border-radius: 12px;
+    box-shadow: 0 4px 20px rgba(0, 0, 0, 0.05);
+}
+
+/* Cart Header Styling */
 .cart-header {
     display: flex;
     justify-content: space-between;
     align-items: center;
-    margin-bottom: 20px;
-    border-bottom: 1px solid #dee2e6;
-    padding-bottom: 10px;
+    margin-bottom: 1.5rem;
+    border-bottom: 1px solid #dcdcdc;
+    padding-bottom: 1rem;
 }
 
 .cart-header h1 {
-    font-size: 1.8rem;
+    font-size: 2rem;
+    font-weight: 600;
+    color: #2c3e50;
     margin: 0;
-    color: #343a40;
 }
 
+.cart-header .btn-danger {
+    background-color: #e74c3c;
+    border: none;
+    padding: 0.5rem 1rem;
+    font-size: 0.95rem;
+    font-weight: 600;
+    border-radius: 8px;
+    transition: background-color 0.3s ease, transform 0.2s ease;
+}
+
+.cart-header .btn-danger:hover {
+    background-color: #c0392b;
+    transform: translateY(-2px);
+}
+
+/* Cart Item Styling */
 .cart-item {
     display: flex;
     justify-content: space-between;
-    align-items: center; /* Középre igazítás függőlegesen */
-    padding: 15px 0;
-    border-bottom: 1px solid #dee2e6;
-    gap: 20px; /* Egységes távolság az elemek között */
+    align-items: center;
+    padding: 1.5rem 0;
+    border-bottom: 1px solid #dcdcdc;
+    gap: 1rem;
+    transition: opacity 0.3s ease;
+}
+
+.cart-item img {
+    width: 80px;
+    height: 80px;
+    object-fit: cover;
+    border-radius: 8px;
+    box-shadow: 0 2px 5px rgba(0, 0, 0, 0.1);
 }
 
 .item-details {
     display: flex;
-    align-items: center; /* Középre igazítás függőlegesen */
-    gap: 15px;
-    flex: 1; /* Kitölti a rendelkezésre álló helyet */
-}
-
-.item-details img {
-    width: 80px;
-    height: 80px;
-    object-fit: cover;
-    border-radius: 5px;
+    align-items: center;
+    gap: 1rem;
+    flex: 1;
 }
 
 .item-info {
     display: flex;
     flex-direction: column;
-    justify-content: center; /* Középre igazítás függőlegesen */
+    justify-content: center;
 }
 
 .item-name {
     font-size: 1.1rem;
-    font-weight: bold;
-    color: #495057;
-    margin: 0; /* Margó eltávolítása */
+    font-weight: 600;
+    color: #34495e;
+    margin: 0;
 }
 
 .item-price {
     font-size: 0.95rem;
-    color: #6c757d;
-    margin: 0; /* Margó eltávolítása */
+    color: #7f8c8d;
+    margin: 0;
 }
 
+/* Quantity Controls */
 .quantity-controls {
     display: flex;
-    align-items: center; /* Középre igazítás függőlegesen */
-    gap: 10px;
+    align-items: center;
+    gap: 0.75rem;
 }
 
 .quantity-controls button {
-    background: #e9ecef;
+    background: #ecf0f1;
     border: none;
-    padding: 5px 10px;
+    padding: 0.5rem 0.75rem;
     font-size: 1.1rem;
+    font-weight: 600;
+    color: #34495e;
     cursor: pointer;
-    border-radius: 4px;
-    height: 30px; /* Fix magasság a gomboknak */
+    border-radius: 6px;
+    height: 32px;
+    width: 32px;
     display: flex;
-    align-items: center; /* Szöveg középre igazítása */
+    align-items: center;
     justify-content: center;
+    transition: background-color 0.3s ease;
 }
 
 .quantity-controls button:hover {
-    background: #dee2e6;
+    background: #dcdcdc;
 }
 
 .quantity-controls .quantity {
     font-size: 1rem;
-    min-width: 30px; /* Fix szélesség a mennyiségnek */
+    font-weight: 500;
+    min-width: 30px;
     text-align: center;
+    color: #2c3e50;
 }
 
+/* Item Total */
 .item-total {
     font-size: 1rem;
-    min-width: 80px; /* Fix szélesség az összegnek */
+    font-weight: 500;
+    min-width: 80px;
     text-align: right;
+    color: #2c3e50;
 }
 
+/* Remove Button */
 .remove-from-cart {
-    background: #dc3545;
-    color: white;
+    background: #e74c3c;
+    color: #fff;
     border: none;
-    padding: 5px 10px;
+    padding: 0.5rem 1rem;
     font-size: 0.9rem;
+    font-weight: 600;
     cursor: pointer;
-    border-radius: 4px;
-    height: 30px; /* Fix magasság a gombnak */
+    border-radius: 6px;
+    height: 32px;
     display: flex;
-    align-items: center; /* Szöveg középre igazítása */
+    align-items: center;
     justify-content: center;
+    transition: background-color 0.3s ease, transform 0.2s ease;
 }
 
 .remove-from-cart:hover {
-    background: #c82333;
+    background: #c0392b;
+    transform: translateY(-2px);
+}
+
+/* Total Section */
+.total-section {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    padding: 1.5rem 0;
+    border-top: 1px solid #dcdcdc;
+    margin-top: 1rem;
+}
+
+.total-label {
+    font-size: 1.2rem;
+    font-weight: 600;
+    color: #2c3e50;
+}
+
+.total-amount {
+    font-size: 1.2rem;
+    font-weight: 600;
+    color: #3498db;
+}
+
+/* Checkout Section */
+.checkout-section {
+    text-align: right;
+    margin-top: 2rem;
+}
+
+.checkout-btn {
+    background-color: #3498db;
+    border: none;
+    padding: 0.75rem 2rem;
+    font-size: 1.1rem;
+    font-weight: 600;
+    color: #fff;
+    border-radius: 8px;
+    transition: background-color 0.3s ease, transform 0.2s ease;
+}
+
+.checkout-btn:hover {
+    background-color: #2980b9;
+    transform: translateY(-2px);
+}
+
+.error {
+    color: #e74c3c;
+    font-size: 1rem;
+    text-align: center;
+    margin: 1rem 0;
+}
+
+.login-prompt {
+    color: #7f8c8d;
+    font-size: 1rem;
+    text-align: center;
+    margin-bottom: 1rem;
+}
+
+.login-btn {
+    display: inline-block;
+    background-color: #3498db;
+    color: #fff;
+    padding: 0.75rem 1.5rem;
+    font-size: 1rem;
+    font-weight: 600;
+    text-decoration: none;
+    border-radius: 8px;
+    transition: background-color 0.3s ease, transform 0.2s ease;
+}
+
+.login-btn:hover {
+    background-color: #2980b9;
+    transform: translateY(-2px);
+}
+
+/* Responsive Design */
+@media (max-width: 768px) {
+    .cart-container {
+        margin: 2rem 1rem;
+        padding: 1.5rem;
+    }
+
+    .cart-header h1 {
+        font-size: 1.5rem;
+    }
+
+    .cart-item {
+        flex-direction: column;
+        align-items: flex-start;
+        gap: 1rem;
+        padding: 1rem 0;
+    }
+
+    .item-details {
+        width: 100%;
+    }
+
+    .item-details img {
+        width: 60px;
+        height: 60px;
+    }
+
+    .quantity-controls {
+        margin: 0.5rem 0;
+    }
+
+    .item-total {
+        text-align: left;
+        width: 100%;
+    }
+
+    .remove-from-cart {
+        width: 100%;
+        text-align: center;
+    }
+
+    .total-section {
+        flex-direction: column;
+        align-items: flex-start;
+        gap: 0.5rem;
+    }
+
+    .checkout-section {
+        text-align: center;
+    }
+
+    .checkout-btn,
+    .login-btn {
+        width: 100%;
+        padding: 0.75rem;
+    }
+}
+
+@media (max-width: 480px) {
+    .cart-header {
+        flex-direction: column;
+        align-items: flex-start;
+        gap: 1rem;
+    }
+
+    .cart-header .btn-danger {
+        width: 100%;
+        text-align: center;
+    }
+
+    .item-name {
+        font-size: 1rem;
+    }
+
+    .item-price {
+        font-size: 0.85rem;
+    }
+
+    .total-label,
+    .total-amount {
+        font-size: 1rem;
+    }
 }

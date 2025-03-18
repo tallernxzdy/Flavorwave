@@ -1,6 +1,12 @@
 <?php
 session_start(); // Session kezelés
 
+// PHPMailer betöltése
+use PHPMailer\PHPMailer\PHPMailer;
+use PHPMailer\PHPMailer\Exception;
+
+require '../vendor/autoload.php'; // Composer autoload fájl betöltése
+
 // Adatbázis kapcsolat
 $servername = "localhost";
 $username = "root";
@@ -80,7 +86,48 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
             $stmt->bind_param("ssss", $felhasznalonev, $email, $hashedPassword, $tel_szam);
 
             if ($stmt->execute()) {
+                // Sikeres regisztráció üzenete
                 $success_message = "Sikeres regisztráció! <a href='bejelentkezes.php'>Bejelentkezés</a>";
+
+                // PHPMailer inicializálása
+                $mail = new PHPMailer(true);
+
+                try {
+                    // SMTP beállítások (Gmail példa)
+                    $mail->isSMTP();
+                    $mail->Host = 'smtp.gmail.com'; // Gmail SMTP szerver
+                    $mail->SMTPAuth = true;
+                    $mail->Username = 'flavorwavereal@gmail.com'; // A te Gmail címed
+                    $mail->Password = 'awch ocfs ldcr hded'; // Gmail alkalmazás-specifikus jelszó (lásd lent)
+                    $mail->SMTPSecure = PHPMailer::ENCRYPTION_STARTTLS;
+                    $mail->CharSet = "UTF-8";
+                    $mail->Port = 587;
+
+                    // Email beállítások
+                    $mail->setFrom('flavorwavereal@gmail.com', 'FlavorWave');
+                    $mail->addAddress($email, $felhasznalonev); // Címzett
+                    $mail->addReplyTo('flavorwavereal@gmail.com', 'FlavorWave');
+
+                    // Tartalom
+                    $mail->isHTML(false); // Egyszerű szövegként küldjük
+                    $mail->CharSet = 'UTF-8';
+                    $mail->Subject = 'Sikeres regisztráció a FlavorWave-en!';
+                    $mail->Body = "Kedves $felhasznalonev!\n\n" .
+                                  "Köszönjük, hogy regisztráltál a FlavorWave oldalán!\n" .
+                                  "Sikeresen létrehoztuk a fiókodat. Mostantól bejelentkezhetsz az alábbi adatokkal:\n" .
+                                  "Felhasználónév: $felhasznalonev\n" .
+                                  "Email: $email\n\n" .
+                                  "Kérjük, tartsd biztonságban a jelszavadat.\n" .
+                                  "Jó étvágyat kívánunk a FlavorWave kínálatához!\n\n" .
+                                  "Üdvözlettel,\n" .
+                                  "A FlavorWave Csapata";
+
+                    // Email küldése
+                    $mail->send();
+                    $success_message .= "<br>Email értesítést küldtünk a megadott címre!";
+                } catch (Exception $e) {
+                    $errors[] = "Hiba történt az email küldése során: {$mail->ErrorInfo}";
+                }
             } else {
                 $errors[] = "Hiba történt a regisztráció során: " . $stmt->error;
             }
@@ -212,7 +259,7 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
                 <a href="#"><i class="fab fa-youtube"></i></a>
             </div>
             <div class="footer-copy">
-                &copy; 2024 FlavorWave - Minden jog fenntartva.
+                © 2025 FlavorWave - Minden jog fenntartva.
             </div>
         </div>
     </div>
