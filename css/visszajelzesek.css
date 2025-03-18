@@ -63,3 +63,23 @@ button:hover {
 .text-muted {
     color: #757575 !important;
 }
+
+.rating {
+    font-size: 2em;
+    color: #ccc;
+    cursor: pointer;
+}
+
+.rating .star {
+    transition: color 0.2s;
+}
+
+.rating .star:hover,
+.rating .star.active {
+    color: #ffcc00;
+}
+
+
+textarea{
+    resize: none;
+}

@@ -93,13 +93,21 @@ session_start();
             </div>
             <div class="flex-col">
                 <a href="hotdog.php" class="menu__option">
+<<<<<<< HEAD
                     <img src="../kepek/Hot-dogok/simahotdog.jpg" alt="Hot-dogok">
+=======
+                    <img src="../kepek/hot-dogok/simahotdog.jpg" alt="Hot-dogok">
+>>>>>>> 3a019abc0849eb3542c163df3ef58391d708c830
                     <h2>Hot-dogok</h2>
                 </a>
             </div>
             <div class="flex-col">
                 <a href="koretek.php" class="menu__option">
+<<<<<<< HEAD
                     <img src="../kepek/köretek/hasabburgonya.jpg" alt="Köretek">
+=======
+                    <img src="../kepek/koretek/hasabburgonya.jpg" alt="Köretek">
+>>>>>>> 3a019abc0849eb3542c163df3ef58391d708c830
                     <h2>Köretek</h2>
                 </a>
             </div>
