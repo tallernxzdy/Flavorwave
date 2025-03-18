@@ -117,7 +117,27 @@ $velemenyek = ($result && $result->num_rows > 0) ? $result->fetch_all(MYSQLI_ASS
     <link rel="stylesheet" href="../css/visszajelzesek.css">
     <!-- reCAPTCHA script -->
     <script src="https://www.google.com/recaptcha/api.js" async defer></script>
-    <script></script>
+    <script>
+        document.addEventListener('DOMContentLoaded', function() {
+            const stars = document.querySelectorAll('.rating .star');
+            const ratingInput = document.getElementById('megelegedettseg');
+
+            stars.forEach(star => {
+                star.addEventListener('click', function() {
+                    const value = this.getAttribute('data-value');
+                    ratingInput.value = value;
+
+                    stars.forEach(s => {
+                        if (s.getAttribute('data-value') <= value) {
+                            s.classList.add('active');
+                        } else {
+                            s.classList.remove('active');
+                        }
+                    });
+                });
+            });
+        });
+    </script>
 </head>
 
 <body>
@@ -176,21 +196,25 @@ $velemenyek = ($result && $result->num_rows > 0) ? $result->fetch_all(MYSQLI_ASS
             <li><a href="rendelesek_megtekintes.php">Rendeléseim</a></li>
         </ul>
     </div>
-    <div class="container">
-        <h1>Visszajelzés</h1>
+    <div class="container" style="padding-top: 150px;">
+        <h1 style="text-align:center">Visszajelzés</h1>
         <?php if (isset($_SESSION['uzenet'])) {
             echo "<p class='alert alert-info'>" . $_SESSION['uzenet'] . "</p>";
             unset($_SESSION['uzenet']);
         } ?>
         <form method="POST" action="visszajelzesek.php">
-            <label for="megelegedettseg">Mennyire elégedett? (1-10)</label>
-            <select id="megelegedettseg" name="megelegedettseg" required>
-                <?php for ($i = 1; $i <= 10; $i++)
-                    echo "<option value='$i'>$i</option>"; ?>
-            </select>
+            <label for="megelegedettseg">Mennyire elégedett? (1-5 csillag)</label>
+            <div class="rating">
+                <span class="star" data-value="1">&#9733;</span>
+                <span class="star" data-value="2">&#9733;</span>
+                <span class="star" data-value="3">&#9733;</span>
+                <span class="star" data-value="4">&#9733;</span>
+                <span class="star" data-value="5">&#9733;</span>
+            </div>
+            <input type="hidden" id="megelegedettseg" name="megelegedettseg" required>
 
             <label for="visszajelzes">Visszajelzés szövege</label>
-            <textarea id="visszajelzes" name="visszajelzes" rows="5" required></textarea>
+            <textarea id="visszajelzes" name="visszajelzes" rows="5" required ></textarea>
             <br>
             <div class="g-recaptcha" data-sitekey="6Lf0bsoqAAAAADgj9B0eBgXozNmq1q2vYqEMXzvb"></div>
             <br>
@@ -202,7 +226,7 @@ $velemenyek = ($result && $result->num_rows > 0) ? $result->fetch_all(MYSQLI_ASS
     </hr>
 
     <div class="container">
-        <h2>Mit mondanak rólunk?</h2>
+        <h2 style="text-align:center">Mit mondanak rólunk?</h2>
         <?php if (count($velemenyek) >= 3): ?>
             <div class="row">
                 <?php foreach ($velemenyek as $row): ?>

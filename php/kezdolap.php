@@ -92,29 +92,29 @@ session_start();
     <div class="slides">
         <div class="slide">
             <div class="text">
-                <h3>50% OFF on Burgers!</h3>
-                <p>Only today! Use coupon code: <strong>BURGER50</strong></p>
-                <a href="#" class="btn">Order Now</a>
+                <h3>25% minden Pizzából!</h3>
+                <p>Csak Ma! Használd a kuponkódunkat: <strong>Pizza25</strong></p>
+                <a href="#" class="btn">Rendelj most</a>
             </div>
             <div class="image">
-                <img src="../kepek/pizzak/pizza2.jpg" alt="Burger Deal">
+                <img src="../kepek/pizzak/pizza3.jpg" alt="Burger Deal">
             </div>
         </div>
         <div class="slide">
             <div class="text">
-                <h3>Free Dessert!</h3>
-                <p>With orders above $20. Valid until 2025-01-31.</p>
-                <a href="#" class="btn">Claim Now</a>
+                <h3>Ingyenes Desszert!</h3>
+                <p>Minden 10.000Ft-s rendelés felett egy általad választható desszertet adunk, teljesen ingyen!</p>
+                <a href="#" class="btn">Kérem a desszertet!</a>
             </div>
             <div class="image">
-                <img src="../kepek/pizzak/pizza2.jpg" alt="Dessert Offer">
+                <img src="../kepek/desszertek/almaspite.jpeg" alt="Dessert Offer">
             </div>
         </div>
         <div class="slide">
             <div class="text">
-                <h3>Buy 1 Get 1 Free</h3>
-                <p>On all pizzas. Use code: <strong>PIZZADEAL</strong></p>
-                <a href="#" class="btn">Grab the Deal</a>
+                <h3>Kettőt fizet, hármat kap!</h3>
+                <p>Minden 2 darab megrendelt pizza mellé szabadon választhatsz egy harmadikat. Használd a kuponunkat a beváltáshoz: <strong>PIZZADEAL</strong></p>
+                <a href="#" class="btn">Ragadd meg az alkalmat</a>
             </div>
             <div class="image">
                 <img src="../kepek/pizzak/pizza2.jpg" alt="Pizza Deal">
@@ -145,14 +145,14 @@ session_start();
     </div>
     <div class="sliders-container">
         <div class="image-slider" id="image-slider-1">
-            <img src="../kepek/pizzak/pizza2.jpg" alt="Ajánlat 1">
-            <img src="../kepek/pizzak/pizza2.jpg" alt="Ajánlat 2">
+            <img src="../kepek/pizzak/gombaspizza.jpg" alt="Ajánlat 1">
+            <img src="../kepek/pizzak/hawaiipizza.jpg" alt="Ajánlat 2">
             <img src="../kepek/pizzak/pizza2.jpg" alt="Ajánlat 3">
         </div>
         <div class="image-slider" id="image-slider-2">
-            <img src="../kepek/pizzak/pizza2.jpg" alt="Ajánlat 4">
-            <img src="../kepek/pizzak/pizza2.jpg" alt="Ajánlat 5">
-            <img src="../kepek/pizzak/pizza2.jpg" alt="Ajánlat 6">
+            <img src="../kepek/pizzak/margherita.jpg" alt="Ajánlat 4">
+            <img src="../kepek/pizzak/pizza4.jpg" alt="Ajánlat 5">
+            <img src="../kepek/pizzak/sonkaspizza.jpg" alt="Ajánlat 6">
         </div>
     </div>
     <p>Ne maradj le! Az ajánlat visszaszámlálás alatt érhető el.</p>
@@ -193,14 +193,14 @@ session_start();
                 <i class="fas fa-pepper-hot"></i>
                 <h2>Mennyire szereted a csípőset?</h2>
                 <div class="quiz-options">
-                    <button data-spice="mild">Enyhe</button>
-                    <button data-spice="medium">Közepes</button>
-                    <button data-spice="hot">Csípős</button>
+                    <button data-spice="mild">Enyhén</button>
+                    <button data-spice="medium">Közepesen</button>
+                    <button data-spice="hot">Nagyon</button>
                 </div>
             </div>
             <div class="quiz-question">
                 <i class="fas fa-cheese"></i>
-                <h2>Mennyire szereted a sajtot?</h2>
+                <h2>Mennyi sajtot szeretnél?</h2>
                 <div class="quiz-options">
                     <button data-cheese="light">Kevés</button>
                     <button data-cheese="normal">Normál</button>
@@ -224,32 +224,32 @@ session_start();
         <div class="shaker-slides">
             <div class="shaker-slide">
                 <div class="shaker-text">
-                    <h3>Shaker 1: Classic</h3>
-                    <p>Próbáld ki a klasszikus shakerünket!</p>
+                    <h3>Epres shake</h3>
+                    <p>A gyümölcsok kedvelőinek</p>
                     <a href="#" class="shaker-btn">Vásárlás</a>
                 </div>
                 <div class="shaker-image">
-                    <img src="../kepek/shakek/karamellasshake.jpg" alt="Classic Shaker">
+                    <img src="../kepek/shakek/epresshake.jpg" alt="Epres shake">
                 </div>
             </div>
             <div class="shaker-slide">
                 <div class="shaker-text">
-                    <h3>Shaker 2: Neon</h3>
-                    <p>Világítsd fel a bulit!</p>
+                    <h3>Csokis shake</h3>
+                    <p>A Csokoládé igazi fanatikusainak, három féle csokival.</p>
                     <a href="#" class="shaker-btn">Vásárlás</a>
                 </div>
                 <div class="shaker-image">
-                    <img src="../kepek/shakek/karamellasshake.jpg" alt="Neon Shaker">
+                    <img src="../kepek/shakek/csokisshake.jpg" alt="Csokis Shake">
                 </div>
             </div>
             <div class="shaker-slide">
                 <div class="shaker-text">
-                    <h3>Shaker 3: Premium</h3>
-                    <p>A profik választása!</p>
+                    <h3>Karamellás shake</h3>
+                    <p>Az igazán édes szájuaknak</p>
                     <a href="#" class="shaker-btn">Vásárlás</a>
                 </div>
                 <div class="shaker-image">
-                    <img src="../kepek/shakek/karamellasshake.jpg" alt="Premium Shaker">
+                    <img src="../kepek/shakek/karamellasshake.jpg" alt="Karamellás shake">
                 </div>
             </div>
         </div>
