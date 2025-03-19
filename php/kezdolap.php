@@ -17,6 +17,7 @@ session_start();
     <link rel="stylesheet" href="../css/navbar.css">
     <script src="https://unpkg.com/aos@2.3.1/dist/aos.js"></script>
 
+
     <title>FlavorWave</title>
 
 </head>
@@ -48,7 +49,7 @@ session_start();
                 <?php endif; ?>
                 <a href="rendeles_megtekintes.php" class="order-btn">Rendeléseim</a>
                 <a href="kosar.php" class="cart-btn">
-                    <i class='fas fa-shopping-cart cart-icon'></i>
+                    <i class='fas fa-shopping-cart cart-icon'></i> Kosár
                 </a>
             </div>
 
