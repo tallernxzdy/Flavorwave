@@ -21,13 +21,13 @@ nav {
     display: flex;
     justify-content: space-between;
     align-items: center;
-    padding: 15px 40px;
+    padding: 15px 40px; /* Eredeti */
     background: var(--dark-black);
     position: fixed;
     top: 0;
     left: 0;
     width: 100%;
-    height: 100px;
+    height: 100px; /* Eredeti */
     z-index: 1000;
     box-shadow: 0 2px 10px var(--shadow-color);
     transition: height 0.3s ease;
@@ -192,11 +192,11 @@ nav {
     transform: rotate(-45deg) translate(6px, -6px);
 }
 
-/* Hamburger menü tartalma - változatlan */
+/* Hamburger menü tartalma */
 .menubar {
     display: none;
     position: fixed;
-    top: 80px;
+    top: 100px;  /* Módosított érték! A nav magasságához igazítva */
     left: 0;
     width: 100%;
     background: var(--dark-black);
@@ -247,7 +247,7 @@ nav {
     -webkit-text-stroke: 0;
 }
 
-/* Reszponzív stílusok - változatlan */
+/* Reszponzív stílusok */
 @media (max-width: 1200px) {
     nav {
         padding: 15px 25px;
@@ -272,13 +272,13 @@ nav {
     }
 
     .menubar {
-        top: 70px;
+        top: 100px; /*Módosítva! */
     }
 }
 
 @media (max-width: 480px) {
     nav {
-        height: 100px;
+        height: 70px; /* Fontos, hogy a magasságot is csökkentsük, különben sok hely marad! */
         padding: 10px 15px;
     }
 
@@ -290,13 +290,18 @@ nav {
         font-size: 1.4rem;
     }
 
+     /* Flavorwave felirat eltüntetése */
+    .logo h1 {
+        display: none;
+    }
+
     .hamburger span {
         width: 24px;
         height: 2px;
     }
 
     .menubar {
-        top: 60px;
+        top: 70px; /* Módosított érték! */
         padding: 15px;
     }
 
