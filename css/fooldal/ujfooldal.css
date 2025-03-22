@@ -22,55 +22,60 @@ body {
 }
 
 .hero {
-min-height: 100vh;
-position: relative;
-display: flex;
-align-items: center;
-justify-content: center;
-overflow: hidden; /* A videó túlnyúlását megakadályozza */
+    min-height: 100vh;
+    position: relative;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    overflow: hidden; /* A videó túlnyúlását megakadályozza */
 }
 
 .hero video {
-position: absolute;
-top: 50%;
-left: 50%;
-width: 100%;
-height: 100%;
-object-fit: cover; /* A videó kitölti a teljes háttért, megtartva az arányokat */
-transform: translate(-50%, -50%); /* Középre igazítja a videót */
-z-index: -1; /* A videó alatta legyen a tartalom */
+    position: absolute;
+    top: 50%;
+    left: 50%;
+    width: 100%;
+    height: 100%;
+    object-fit: cover; /* A videó kitölti a teljes háttért, megtartva az arányokat */
+    transform: translate(-50%, -50%); /* Középre igazítja a videót */
+    z-index: -1; /* A videó alatta legyen a tartalom */
 }
 
 .hero::before {
-content: '';
-position: absolute;
-width: 100%;
-height: 100%;
-background: linear-gradient(45deg, rgba(26, 26, 26, 0.8), rgba(212, 163, 115, 0.3));
-z-index: 1; /* A gradient legyen a videó fölött */
+    content: '';
+    position: absolute;
+    width: 100%;
+    height: 100%;
+    background: linear-gradient(45deg, rgba(26, 26, 26, 0.8), rgba(212, 163, 115, 0.3));
+    z-index: 1; /* A gradient legyen a videó fölött */
 }
 
 .hero-content {
-text-align: center;
-position: relative;
-z-index: 2; /* A tartalom legyen a videó és a gradient fölött */
-padding: 3rem;
+    text-align: center;
+    position: relative;
+    z-index: 2; /* A tartalom legyen a videó és a gradient fölött */
+    padding: 3rem;
 }
 
 .hero-content h1 {
-color: var(--primary-beige);
-font-size: 5rem;
-font-weight: 800;
-text-shadow: 3px 3px 6px var(--shadow-color);
-animation: fadeIn 1s ease;
+    color: var(--primary-beige);
+    font-size: 5rem;
+    font-weight: 800;
+    text-shadow: 3px 3px 6px var(--shadow-color);
+    animation: fadeIn 1s ease;
 }
 
 .hero-content p {
-color: var(--accent-gold);
-font-size: 1.8rem;
-margin: 1.5rem 0;
+    color: var(--accent-gold);
+    font-size: 1.8rem;
+    margin: 1.5rem 0;
 }
 
+.cta-buttons {
+    display: flex;
+    justify-content: center; /* Középre igazítjuk a gombokat */
+    flex-wrap: wrap; /* Engedjük, hogy a gombok új sorba kerüljenek, ha nem férnek el */
+}
 
 .cta-buttons a {
     padding: 1.2rem 2.5rem;
@@ -80,6 +85,9 @@ margin: 1.5rem 0;
     font-weight: 600;
     font-size: 1.2rem;
     transition: var(--transition);
+    /*white-space: nowrap;  Ezt eltávolítjuk */
+    min-width: 180px; /* Állítsunk be egy minimum szélességet a gomboknak */
+    text-align: center; /* A szöveg középre igazítása a gombon belül */
 }
 
 .order-now {
@@ -97,6 +105,63 @@ margin: 1.5rem 0;
     transform: scale(1.1);
     box-shadow: 0 8px 20px var(--shadow-color);
 }
+
+/* Media Query kisebb képernyőkre */
+@media (max-width: 768px) {
+    .hero-content h1 {
+        font-size: 4rem; /* Kissé csökkentjük a főcímet */
+    }
+
+    .hero-content p {
+        font-size: 1.5rem; /* Kissé csökkentjük a bekezdés méretét */
+    }
+
+    .hero-content {
+        padding: 2rem; /* Csökkentjük a paddingot */
+    }
+}
+
+/* Media Query még kisebb képernyőkre (pl. okostelefonok) */
+@media (max-width: 480px) {
+    .hero-content h1 {
+        font-size: 3rem; /* Még jobban csökkentjük a főcímet */
+    }
+
+    .hero-content p {
+        font-size: 1.2rem; /* Még jobban csökkentjük a bekezdés méretét */
+    }
+
+    .cta-buttons a {
+        margin: 0.5rem; /* Kisebb margó a gombok között */
+        padding: 1rem 1.8rem; /* Kisebb padding a gombokban */
+    }
+
+    .hero-content {
+        padding: 1.5rem; /* Még jobban csökkentjük a paddingot */
+    }
+}
+
+/* Media Query a legkisebb képernyőkre (pl. nagyon keskeny telefonok) */
+@media (max-width: 360px) {
+    .hero-content h1 {
+        font-size: 2.5rem; /* Még tovább csökkentjük a főcímet */
+    }
+
+    .hero-content p {
+        font-size: 1rem; /* Még tovább csökkentjük a bekezdést */
+    }
+
+    .cta-buttons a {
+        font-size: 1rem; /* A gombok szövegét is csökkentjük, ha nagyon kicsi a hely */
+        padding: 0.8rem 1.5rem; /* Még kisebb padding a gombokban */
+        min-width: auto; /* Eltávolítjuk a minimum szélességet a legkisebb képernyőn */
+    }
+
+    .hero-content {
+        padding: 1rem; /* Minimális padding */
+    }
+}
+
 
 /* Feedback */
 .feedback-section {
