@@ -1,145 +1,182 @@
-:root {
-    --primary-color: #ff7e5f;
-    --secondary-color: #feb47b;
-    --text-color: #333;
-    --button-hover: #ff4a6e;
-    --shadow-color: rgba(0, 0, 0, 0.2);
-    --gradient-start: #ff7e5f;
-    --gradient-end: #feb47b;
-}
-
-/* General Reset */
-* {
-    margin: 0;
-    padding: 0;
-    box-sizing: border-box;
-}
-
-
-
-section#weekly-deals {
+/* Weekly Deals */
+#weekly-deals {
+    padding: clamp(2rem, 5vw, 4rem) clamp(0.5rem, 1.5vw, 1rem);
+    background: var(--dark-black);
+    color: var(--primary-beige);
     text-align: center;
-    padding: 30px 20px; /* Csökkentett padding */
-    background: rgba(255, 255, 255, 0.1);
-    backdrop-filter: blur(10px);
-    border-radius: 25px;
-    box-shadow: 0 10px 30px var(--shadow-color);
-    border: 1px solid rgba(255, 255, 255, 0.2);
-    width: 95%; /* Szélesebb a kisebb képernyőkre */
-    max-width: 1200px;
-    margin: 0 auto;
+    position: relative;
+    overflow: hidden;
 }
 
-section#weekly-deals h2 {
-    font-size: 2rem; /* Csökkentett betűméret */
-    margin-bottom: 15px; /* Csökkentett margó */
-    color: var(--primary-color);
-    text-shadow: 2px 2px 4px rgba(0, 0, 0, 0.2);
+#weekly-deals::before {
+    content: '';
+    position: absolute;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    background: linear-gradient(135deg, rgba(212, 163, 115, 0.05), transparent 50%);
+    z-index: 0;
+}
+
+#weekly-deals h2 {
+    font-size: clamp(1.8rem, 4vw, 2.8rem);
+    font-weight: 800;
+    margin-bottom: clamp(1rem, 2vw, 1.5rem);
+    text-transform: uppercase;
+    letter-spacing: 2px;
+    color: var(--primary-beige);
+    text-shadow: 2px 2px 5px var(--shadow-color);
+    position: relative;
+    z-index: 1;
 }
 
 .countdown {
-    display: flex;
-    justify-content: center;
-    gap: 10px; /* Csökkentett távolság */
-    margin-bottom: 30px; /* Csökkentett margó */
-    font-size: 1.2rem; /* Csökkentett betűméret */
-    font-weight: bold;
-    flex-wrap: wrap; /* Hogy elférjen kisebb képernyőn */
-}
-
-.countdown span {
-    padding: 8px 15px; /* Csökkentett padding */
-    background: rgba(255, 255, 255, 0.1);
-    border-radius: 10px;
-    box-shadow: 0 5px 15px rgba(0, 0, 0, 0.2);
+    font-size: clamp(1.2rem, 3vw, 1.8rem);
+    color: var(--accent-gold);
+    margin: clamp(1rem, 2vw, 1.5rem) 0;
+    font-weight: 700;
+    text-shadow: 1px 1px 3px var(--shadow-color);
+    position: relative;
+    z-index: 1;
 }
 
 .sliders-container {
     display: flex;
+    flex-wrap: wrap;
+    gap: clamp(0.5rem, 1vw, 1rem);
     justify-content: center;
-    gap: 15px; /* Csökkentett távolság */
+    max-width: 1200px;
     margin: 0 auto;
-    width: 100%;
-    flex-wrap: wrap; /* Hogy a sliderek egymás alá kerüljenek */
+    overflow: hidden;
+    position: relative;
+    z-index: 1;
 }
 
 .image-slider {
     position: relative;
-    width: 100%; /* Teljes szélesség a kisebb képernyőkre */
-    max-width: 500px; /* Maximális szélesség */
-    margin: 15px 0; /* Csökkentett margó */
+    width: clamp(200px, 30vw, 380px);
+    aspect-ratio: 16 / 9;
+    border-radius: 20px;
     overflow: hidden;
-    border-radius: 15px;
-    box-shadow: 0 10px 20px rgba(0, 0, 0, 0.2);
+    box-shadow: 0 8px 25px var(--shadow-color);
+    border: 3px solid var(--accent-gold);
+    transition: transform 0.3s ease;
+}
+
+.image-slider:hover {
+    transform: scale(1.03);
 }
 
 .image-slider img {
     width: 100%;
-    height: auto;
-    display: none;
-    animation: fadeIn 1s ease-in-out;
+    height: 100%;
+    object-fit: cover;
+    object-position: center;
+    border-radius: 17px;
+    position: absolute;
+    top: 0;
+    left: 0;
+    opacity: 0;
+    transition: opacity 0.5s ease;
 }
 
 .image-slider img.active {
-    display: block;
+    opacity: 1;
 }
 
-@keyframes fadeIn {
-    from {
-        opacity: 0;
-    }
-    to {
-        opacity: 1;
-    }
+#weekly-deals p {
+    font-size: clamp(0.9rem, 2vw, 1.2rem);
+    margin: clamp(1rem, 2vw, 1.5rem) 0;
+    font-weight: 500;
+    position: relative;
+    z-index: 1;
 }
 
-.cta-button {
-    display: inline-block;
-    margin-top: 15px; /* Csökkentett margó */
-    padding: 12px 25px; /* Csökkentett padding */
-    font-size: 1rem; /* Csökkentett betűméret */
-    font-weight: bold;
-    color: #fff;
-    background: linear-gradient(45deg, var(--gradient-start), var(--gradient-end));
-    border: none;
-    border-radius: 50px;
+.cta-button.primary-bttn {
+    background: var(--accent-gold);
+    color: var(--dark-black);
+    padding: clamp(0.6rem, 1.5vw, 1rem) clamp(1.2rem, 2.5vw, 2rem);
+    border-radius: 40px;
     text-decoration: none;
-    box-shadow: 0 10px 20px rgba(0, 0, 0, 0.2);
-    transition: transform 0.3s, box-shadow 0.3s;
+    font-weight: 700;
+    font-size: clamp(0.9rem, 1.8vw, 1.3rem);
+    text-transform: uppercase;
+    transition: var(--transition);
+    position: relative;
+    box-shadow: 0 4px 15px rgba(212, 163, 115, 0.4);
+    z-index: 1;
+    display: inline-block;
+    white-space: normal;
+    text-align: center;
+    width: fit-content;
 }
 
-.cta-button:hover {
-    transform: translateY(-5px);
-    box-shadow: 0 15px 25px rgba(0, 0, 0, 0.3);
-    background: linear-gradient(45deg, var(--gradient-end), var(--gradient-start));
+.cta-button.primary-bttn:hover {
+    transform: scale(1.05);
+    box-shadow: 0 6px 20px rgba(212, 163, 115, 0.6);
 }
 
-.cta-button:active {
-    transform: translateY(0);
-    box-shadow: 0 8px 15px rgba(0, 0, 0, 0.2);
-}
+/* Reszponzív töréspontok */
+@media (max-width: 768px) {
+    #weekly-deals {
+        padding: clamp(1.5rem, 3vw, 2rem) clamp(0.5rem, 1vw, 0.8rem);
+    }
 
-/* Média lekérdezések */
-@media (min-width: 768px) {
     .sliders-container {
-        flex-wrap: nowrap; /* Nagyobb képernyőn maradjanak egymás mellett */
+        flex-direction: column;
+        align-items: center;
+        gap: clamp(0.5rem, 1vw, 1rem);
     }
 
     .image-slider {
-        width: 45%; /* Két slider egymás mellett */
+        width: clamp(180px, 90vw, 300px);
+        aspect-ratio: 16 / 9;
+    }
+
+    .cta-button.primary-bttn {
+        width: fit-content;
+        padding: clamp(0.6rem, 1.2vw, 0.9rem) clamp(1rem, 2vw, 1.5rem); /* Nagyobb padding */
+        font-size: clamp(0.9rem, 1.6vw, 1.2rem); /* Nagyobb betűméret */
     }
 }
 
 @media (max-width: 480px) {
-    section#weekly-deals h2 {
-        font-size: 1.8rem; /* Még kisebb betűméret */
+    #weekly-deals {
+        padding: clamp(1rem, 2vw, 1.5rem) clamp(0.3rem, 0.8vw, 0.5rem);
+    }
+
+    #weekly-deals h2 {
+        font-size: clamp(1.5rem, 3.5vw, 2rem);
     }
 
     .countdown {
-        font-size: 1rem; /* Még kisebb betűméret */
+        font-size: clamp(1rem, 2.5vw, 1.4rem);
     }
 
-    .cta-button {
-        font-size: 0.9rem; /* Még kisebb betűméret */
+    .sliders-container {
+        gap: clamp(0.3rem, 0.8vw, 0.5rem);
     }
+
+    .image-slider {
+        width: clamp(150px, 95vw, 250px);
+        aspect-ratio: 16 / 9;
+    }
+
+    #weekly-deals p {
+        font-size: clamp(0.8rem, 1.8vw, 1rem);
+    }
+
+    .cta-button.primary-bttn {
+        width: fit-content;
+        padding: clamp(0.5rem, 1vw, 0.8rem) clamp(0.8rem, 1.5vw, 1.2rem); /* Nagyobb padding */
+        font-size: clamp(0.8rem, 1.4vw, 1.1rem); /* Nagyobb betűméret */
+    }
+}
+
+/* Ensure animations are defined */
+@keyframes pulse {
+    0% { transform: scale(1); }
+    50% { transform: scale(1.05); }
+    100% { transform: scale(1); }
 }

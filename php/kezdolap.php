@@ -15,6 +15,12 @@ session_start();
     <link href="https://unpkg.com/aos@2.3.1/dist/aos.css" rel="stylesheet">
     <link rel="stylesheet" href="../css/fooldal/ujfooldal.css">
     <link rel="stylesheet" href="../css/navbar.css">
+    <link rel="stylesheet" href="../css/fooldal/hero.css">
+    <link rel="stylesheet" href="../css/fooldal/kupon.css">
+    <link rel="stylesheet" href="../css/fooldal/hetiajanlat.css">
+    <link rel="stylesheet" href="../css/fooldal/rendeles_lepesek.css">
+    <link rel="stylesheet" href="../css/fooldal/etelajanlo.css">
+    <link rel="stylesheet" href="../css/fooldal/shakek.css">
     <script src="https://unpkg.com/aos@2.3.1/dist/aos.js"></script>
 
 
@@ -182,6 +188,9 @@ session_start();
     <div class="step" data-aos="fade-up"><i class="fas fa-smile"></i> <p>Élvezd az ételt 😋</p></div>
 </div>
 
+<br>
+<br>
+
 
 <div class="quiz-wrapper">
         <div class="quiz-container">
@@ -218,7 +227,7 @@ session_start();
                 <h2>Az ajánlott ételed:</h2>
                 <p id="recommended-food"></p>
                 <div class="image-container">
-                    <img id="food-image" src="" alt="Ajánlott étel">
+                    <img id="food-image" src="../kepek/pizzak/pizza2.jpg" alt="Ajánlott étel">
                 </div>
                 <a id="order-link" href="#">Megrendelem!</a>
             </div>

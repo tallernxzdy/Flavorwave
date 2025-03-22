@@ -1,267 +1,321 @@
-.shake-section {
-    width: 100%;
-    min-height: 500px; /* Állítsd be a kívánt méretet */
-    padding: 50px 0;
-    display: flex;
-    align-items: center;
-    justify-content: center;
-    color: white;
-    text-align: center;
-    font-size: 2rem;
-    font-weight: bold;
-}
-
-/* General Reset */
-* {
-    margin: 0;
-    padding: 0;
-    box-sizing: border-box;
-}
-
-/* Container for the slider */
+/* Shaker Slider */
 .shaker-master-container {
-    display: flex;
-    justify-content: center;
-    align-items: center;
-    min-height: 100vh;
-    background: linear-gradient(135deg, #1a1a1a, #2c3e50);
-    overflow: hidden;
+    max-width: 1400px;
+    width: 90%;
+    margin: 4rem auto;
+    position: relative;
+    padding: 2rem;
+    overflow: visible;
+    /* Nincs háttér, ahogy kérted */
 }
 
-/* Slider Container */
 .shaker-master {
     position: relative;
-    width: 90%;
-    max-width: 1200px;
-    margin: 50px auto;
-    overflow: hidden;
-    border-radius: 25px;
-    box-shadow: 0 10px 30px var(--shadow-color);
-    background: rgba(0, 0, 0, 0.5);
-    backdrop-filter: blur(10px);
-    border: 1px solid rgba(255, 255, 255, 0.2);
 }
 
-/* Slides Wrapper */
 .shaker-slides {
-    display: flex;
-    transition: transform 0.6s cubic-bezier(0.68, -0.55, 0.27, 1.55);
+    position: relative;
+    height: auto;
+    min-height: 400px;
 }
 
-/* Individual Slide */
 .shaker-slide {
-    flex: 0 0 100%;
-    display: flex;
-    align-items: center;
-    color: var(--text-color);
-    padding: 40px;
-    position: relative;
-}
-
-.shaker-slide .shaker-text {
-    flex: 1;
-    padding: 20px;
-    text-align: left;
-    animation: fadeIn 1s ease;
-}
-
-.shaker-slide h3 {
-    font-size: 3rem;
-    color: var(--primary-color);
-    margin-bottom: 20px;
-    text-shadow: 2px 2px 4px rgba(0, 0, 0, 0.2);
-}
-
-.shaker-slide p {
-    font-size: 1.2rem;
-    margin-bottom: 30px;
-    color: #fff;
-}
-
-.shaker-slide .shaker-btn {
-    display: inline-block;
-    padding: 15px 30px;
-    background: var(--primary-color);
-    color: #fff;
-    border-radius: 50px;
-    font-weight: bold;
-    text-decoration: none;
-    transition: all 0.3s ease;
-    box-shadow: 0 5px 15px rgba(0, 255, 136, 0.4);
-}
-
-.shaker-slide .shaker-btn:hover {
-    background: var(--button-hover);
-    box-shadow: 0 8px 20px rgba(0, 204, 102, 0.6);
-    transform: scale(1.1);
-}
-
-.shaker-slide .shaker-image {
-    flex: 1;
-    display: flex;
-    justify-content: center;
-    align-items: center;
-    position: relative;
-}
-
-.shaker-slide .shaker-image img {
-    max-width: 90%;
-    border-radius: 20px;
-    box-shadow: 0 8px 20px var(--shadow-color);
-    transform: scale(1);
-    transition: transform 0.5s ease;
-}
-
-.shaker-slide .shaker-image img:hover {
-    transform: scale(1.1);
-}
-
-/* Navigation Buttons */
-.shaker-master button {
-    position: absolute;
-    top: 50%;
-    transform: translateY(-50%);
-    background: rgba(255, 255, 255, 0.8);
-    border: none;
-    border-radius: 50%;
-    padding: 15px;
-    cursor: pointer;
-    box-shadow: 0 4px 10px var(--shadow-color);
-    transition: all 0.3s ease;
-}
-
-.shaker-master button:hover {
-    background: #fff;
-    transform: translateY(-50%) scale(1.2);
-}
-
-.shaker-master .shaker-prev {
-    left: 10px;
-}
-
-.shaker-master .shaker-next {
-    right: 10px;
-}
-
-/* Decorative Dots */
-.shaker-dots {
-    display: flex;
-    justify-content: center;
-    margin-top: 20px;
-}
-
-.shaker-dot {
-    width: 15px;
-    height: 15px;
-    background: #fff;
-    border: 2px solid var(--primary-color);
-    border-radius: 50%;
-    margin: 0 5px;
-    cursor: pointer;
-    transition: all 0.3s ease;
-}
-
-.shaker-dot.active {
-    background: var(--primary-color);
-    transform: scale(1.3);
-}
-
-@keyframes fadeIn {
-    from {
-        opacity: 0;
-        transform: translateY(20px);
-    }
-    to {
-        opacity: 1;
-        transform: translateY(0);
-    }
-}
-
-/* Neon Glow Effect */
-.shaker-slide::before {
-    content: '';
-    position: absolute;
-    top: -10px;
-    left: -10px;
-    right: -10px;
-    bottom: -10px;
+    background: var(--dark-black);
+    color: var(--primary-beige);
     border-radius: 30px;
-    background: linear-gradient(135deg, rgba(0, 255, 136, 0.3), rgba(0, 184, 255, 0.3));
-    z-index: -1;
-    filter: blur(20px);
-    opacity: 0;
-    transition: opacity 0.8s ease;
-}
-
-.shaker-slide.show::before {
-    opacity: 1;
-}
-
-/* Floating Animation */
-@keyframes float {
-    0%, 100% {
-        transform: translateY(0);
-    }
-    50% {
-        transform: translateY(-10px);
-    }
-}
-
-.shaker-slide .shaker-image img {
-    animation: float 3s ease-in-out infinite;
-}
-
-/* Shaker Animation */
-@keyframes shake {
-    0%, 100% {
-        transform: rotate(0deg);
-    }
-    25% {
-        transform: rotate(-5deg);
-    }
-    50% {
-        transform: rotate(5deg);
-    }
-    75% {
-        transform: rotate(-5deg);
-    }
-}
-
-.shaker-slide .shaker-image img:hover {
-    animation: shake 0.5s ease-in-out;
-}
-
-/* Background Particles */
-.shaker-particles {
+    padding: clamp(1rem, 3vw, 3rem);
+    display: flex;
+    align-items: center;
+    gap: clamp(1rem, 2vw, 3rem);
+    width: 100%;
+    min-height: 400px;
     position: absolute;
     top: 0;
     left: 0;
-    width: 100%;
-    height: 100%;
+    opacity: 0;
+    transition: opacity 0.7s ease;
+    box-shadow: 0 15px 40px var(--shadow-color);
+    border: 2px solid var(--accent-gold);
+}
+
+.shaker-slide.active {
+    opacity: 1;
+    position: relative;
+    z-index: 1;
+    height: auto;
+}
+
+.shaker-text {
+    flex: 1;
+    min-width: 0;
+}
+
+.shaker-text h3 {
+    color: var(--accent-gold);
+    font-size: clamp(1.2rem, 3.5vw, 2.8rem);
+    font-weight: 800;
+    text-transform: uppercase;
+    letter-spacing: 1.5px;
+    margin-bottom: clamp(0.5rem, 1.5vw, 1rem);
+    text-shadow: 2px 2px 5px var(--shadow-color);
+    line-height: 1.2;
+    word-wrap: break-word;
+}
+
+.shaker-text p {
+    font-size: clamp(0.8rem, 2vw, 1.4rem);
+    font-weight: 500;
+    margin-bottom: clamp(0.8rem, 1.5vw, 2rem);
+    line-height: 1.4;
+    word-wrap: break-word;
+}
+
+.shaker-btn {
+    background: var(--accent-gold);
+    color: var(--dark-black);
+    padding: clamp(0.5rem, 1.2vw, 1.2rem) clamp(0.8rem, 2vw, 2.5rem);
+    border-radius: 50px;
+    text-decoration: none;
+    font-weight: 800;
+    font-size: clamp(0.7rem, 1.5vw, 1.4rem);
+    text-transform: uppercase;
+    transition: var(--transition);
+    position: relative;
     overflow: hidden;
+    box-shadow: 0 5px 20px rgba(212, 163, 115, 0.5);
+    z-index: 1;
+    display: inline-block;
+    white-space: normal;
+    line-height: 1.2;
+    text-align: center;
+}
+
+.shaker-btn::before {
+    content: '';
+    position: absolute;
+    top: 50%;
+    left: 50%;
+    width: 0;
+    height: 0;
+    background: rgba(255, 255, 255, 0.3);
+    border-radius: 50%;
+    transform: translate(-50%, -50%);
+    transition: width 0.6s ease, height 0.6s ease;
     z-index: -1;
 }
 
-.shaker-particles span {
-    position: absolute;
-    width: 10px;
-    height: 10px;
-    background: var(--primary-color);
-    border-radius: 50%;
-    box-shadow: 0 0 10px var(--primary-color), 0 0 20px var(--primary-color), 0 0 40px var(--primary-color);
-    animation: shaker-particle-float 5s infinite ease-in-out;
+.shaker-btn:hover::before {
+    width: 300%;
+    height: 300%;
 }
 
-@keyframes shaker-particle-float {
-    0% {
-        transform: translateY(0) scale(1);
-        opacity: 0;
+.shaker-btn:hover {
+    transform: scale(1.1);
+    box-shadow: 0 10px 30px rgba(212, 163, 115, 0.7);
+}
+
+.shaker-image {
+    flex: 1;
+    min-width: 0;
+}
+
+.shaker-image img {
+    width: 100%;
+    height: clamp(150px, 35vw, 300px);
+    object-fit: cover;
+    border-radius: 20px;
+    border: 2px solid var(--accent-gold);
+    box-shadow: 0 5px 20px var(--shadow-color);
+}
+
+.shaker-prev, .shaker-next {
+    background: var(--dark-black);
+    color: var(--primary-beige);
+    border: none;
+    padding: clamp(0.8rem, 2vw, 1.5rem);
+    border-radius: 50%;
+    position: absolute;
+    cursor: pointer;
+    transition: var(--transition);
+    font-size: clamp(1rem, 2vw, 1.8rem);
+    box-shadow: 0 5px 15px var(--shadow-color);
+    z-index: 2;
+}
+
+.shaker-prev:hover, .shaker-next:hover {
+    background: var(--accent-gold);
+    color: var(--dark-black);
+    transform: scale(1.05);
+    box-shadow: 0 5px 15px rgba(212, 163, 115, 0.3);
+}
+
+.shaker-prev {
+    left: clamp(-6rem, -7vw, -5rem);
+    top: 50%;
+    transform: translateY(-10%);
+}
+
+.shaker-next {
+    right: clamp(-6rem, -7vw, -5rem);
+    top: 50%;
+    transform: translateY(-10%);
+}
+
+.shaker-dots {
+    text-align: center;
+    margin-top: clamp(4rem, 6vw, 5rem);
+    position: relative;
+    z-index: 2;
+    padding-bottom: 1rem;
+}
+
+.shaker-dot {
+    width: 16px;
+    height: 16px;
+    background: var(--dark-black);
+    display: inline-block;
+    border-radius: 50%;
+    margin: 0 12px;
+    cursor: pointer;
+    transition: var(--transition);
+    box-shadow: 0 2px 10px var(--shadow-color);
+}
+
+.shaker-dot:hover {
+    /* Nincs hover effekt, ahogy a Coupon Slider-ben */
+}
+
+.shaker-dot.active {
+    background: var(--accent-gold);
+    transform: scale(1.4);
+}
+
+/* Reszponzív töréspontok */
+@media (max-width: 768px) {
+    .shaker-master-container {
+        padding: 1.5rem;
     }
-    50% {
-        opacity: 1;
+
+    .shaker-slides {
+        min-height: 500px;
+        padding-bottom: 3rem; /* Kevesebb hely, hogy közelebb legyen a sliderhez */
     }
-    100% {
-        transform: translateY(-100vh) scale(0);
-        opacity: 0;
+
+    .shaker-slide {
+        flex-direction: column;
+        align-items: flex-start;
+        min-height: 500px;
+    }
+
+    .shaker-text {
+        width: 100%;
+    }
+
+    .shaker-text h3 {
+        font-size: clamp(1.2rem, 3.5vw, 2rem);
+    }
+
+    .shaker-text p {
+        font-size: clamp(0.8rem, 2vw, 1.2rem);
+    }
+
+    .shaker-btn {
+        padding: clamp(0.5rem, 1vw, 1rem) clamp(0.6rem, 1.5vw, 2rem);
+        font-size: clamp(0.7rem, 1.5vw, 1.2rem);
+    }
+
+    .shaker-image {
+        width: 100%;
+    }
+
+    .shaker-image img {
+        height: clamp(150px, 40vw, 250px);
+    }
+
+    .shaker-prev, .shaker-next {
+        top: auto;
+        bottom: -1.5rem; /* Közelebb a sliderhez, de nem érinti */
+        transform: none;
+        background: var(--accent-gold);
+        color: var(--dark-black);
+        padding: clamp(0.8rem, 2vw, 1rem);
+        font-size: clamp(1.2rem, 2.5vw, 1.5rem);
+        box-shadow: 0 5px 20px rgba(212, 163, 115, 0.5);
+        border: 2px solid var(--dark-black);
+    }
+
+    .shaker-prev:hover, .shaker-next:hover {
+        background: var(--dark-black);
+        color: var(--primary-beige);
+        transform: scale(1.05);
+        box-shadow: 0 5px 15px rgba(0, 0, 0, 0.3);
+    }
+
+    .shaker-prev {
+        left: clamp(1rem, 5vw, 2rem);
+    }
+
+    .shaker-next {
+        right: clamp(1rem, 5vw, 2rem);
+    }
+
+    .shaker-dots {
+        margin-top: 2.5rem; /* Közelebb a sliderhez, de a nyilak alatt */
+    }
+
+    .shaker-dot {
+        width: 16px;
+        height: 16px;
+        margin: 0 12px;
+    }
+}
+
+@media (max-width: 480px) {
+    .shaker-master-container {
+        padding: 1rem;
+    }
+
+    .shaker-slides {
+        min-height: 450px;
+        padding-bottom: 2.5rem; /* Kevesebb hely, hogy közelebb legyen a sliderhez */
+    }
+
+    .shaker-slide {
+        padding: 1rem;
+        min-height: 450px;
+    }
+
+    .shaker-text h3 {
+        font-size: clamp(1rem, 3vw, 1.8rem);
+    }
+
+    .shaker-text p {
+        font-size: clamp(0.7rem, 1.8vw, 1rem);
+    }
+
+    .shaker-btn {
+        width: 100%;
+        padding: clamp(0.5rem, 1vw, 1rem) clamp(0.6rem, 1.5vw, 2rem);
+        font-size: clamp(0.65rem, 1.2vw, 1.2rem);
+    }
+
+    .shaker-image img {
+        height: clamp(120px, 35vw, 200px);
+    }
+
+    .shaker-prev, .shaker-next {
+        padding: 0.8rem;
+        font-size: 1.2rem;
+        bottom: -2rem; 
+    }
+
+    .shaker-dots {
+        margin-top: 3rem; 
+    }
+
+    .shaker-dot {
+        width: 16px;
+        height: 16px;
+        margin: 0 12px;
     }
 }

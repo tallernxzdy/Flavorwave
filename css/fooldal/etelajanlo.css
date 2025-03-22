@@ -1,278 +1,221 @@
-@import url('https://fonts.googleapis.com/css2?family=Poppins:wght@300;600;800&display=swap');
+/* Quiz */
+.quiz-wrapper {
+    padding: clamp(2rem, 5vw, 5rem) clamp(1rem, 2vw, 2rem);
+    background: var(--dark-black);
+}
 
+.quiz-container {
+    max-width: clamp(600px, 90vw, 900px);
+    margin: 0 auto;
+    background: var(--dark-black);
+    padding: clamp(1.5rem, 3vw, 3rem);
+    border-radius: 20px;
+    color: var(--primary-beige);
+    text-align: center;
+    box-shadow: 0 10px 30px var(--shadow-color);
+    border: 2px solid var(--accent-gold);
+    position: relative;
+    z-index: 1;
+}
 
+.quiz-container::before {
+    content: '';
+    position: absolute;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    background: linear-gradient(45deg, rgba(212, 163, 115, 0.1), transparent);
+    opacity: 0.5;
+    border-radius: 20px;
+    z-index: -1;
+}
 
-        /* Fő konténer */
-        .quiz-wrapper {
-            display: flex;
-            justify-content: center;
-            align-items: center;
-            min-height: 100vh;
-            background: linear-gradient(135deg, #1e1e2f, #2a2a40);
-            padding: 20px; /* Csökkentett padding */
-        }
+.quiz-container h1 {
+    font-size: clamp(1.8rem, 4vw, 2.5rem);
+    font-weight: 800;
+    margin-bottom: clamp(0.5rem, 1.5vw, 1rem);
+    color: var(--primary-beige);
+    text-shadow: 2px 2px 5px var(--shadow-color);
+}
 
-        .quiz-container {
-            width: 95%; /* Növelt szélesség */
-            max-width: 1000px;
-            padding: 30px; /* Csökkentett padding */
-            background: rgba(255, 255, 255, 0.1);
-            border-radius: 20px;
-            backdrop-filter: blur(10px);
-            border: 1px solid rgba(255, 255, 255, 0.2);
-            box-shadow: 0 15px 35px rgba(0, 0, 0, 0.3);
-            text-align: center;
-            animation: slideInFromRight 1s ease-out;
-        }
+.quiz-question {
+    display: none;
+}
 
-        @keyframes slideInFromRight {
-            0% {
-                transform: translateX(100%);
-                opacity: 0;
-            }
-            100% {
-                transform: translateX(0);
-                opacity: 1;
-            }
-        }
+.quiz-question.active {
+    display: block;
+    animation: fadeIn 0.5s ease;
+}
 
-        .quiz-container h1 {
-            font-size: 2.5rem; /* Csökkentett betűméret */
-            margin-bottom: 10px;
-            color: #ff7e5f;
-            text-shadow: 0 0 10px rgba(255, 126, 95, 0.7);
-            animation: popIn 1s ease-out;
-        }
+.quiz-question h2 {
+    color: var(--accent-gold);
+    font-size: clamp(1.4rem, 3vw, 2rem);
+    margin: clamp(0.5rem, 1.5vw, 1rem) 0;
+    text-shadow: 1px 1px 3px var(--shadow-color);
+}
 
-        .quiz-container p {
-            font-size: 1.1rem; /* Csökkentett betűméret */
-            margin-bottom: 20px; /* Csökkentett margó */
-            color: #fff;
-            animation: fadeIn 1.5s ease-out;
-        }
+.quiz-options {
+    display: flex;
+    flex-wrap: wrap;
+    justify-content: center; /* Középre igazítás */
+    align-items: center; /* Függőlegesen is középre */
+    gap: clamp(0.3rem, 1vw, 0.5rem);
+    width: 100%; /* Biztosítjuk, hogy a konténer teljes szélességét használja */
+}
 
-        @keyframes popIn {
-            0% {
-                transform: scale(0);
-                opacity: 0;
-            }
-            60% {
-                transform: scale(1.1);
-                opacity: 1;
-            }
-            100% {
-                transform: scale(1);
-            }
-        }
+.quiz-options button {
+    background: var(--accent-gold);
+    color: var(--dark-black);
+    padding: clamp(0.5rem, 1vw, 0.8rem) clamp(1rem, 2vw, 1.5rem);
+    border: none;
+    border-radius: 15px;
+    font-weight: 600;
+    font-size: clamp(0.8rem, 1.5vw, 1rem);
+    cursor: pointer;
+    transition: var(--transition);
+    box-shadow: 0 4px 15px rgba(212, 163, 115, 0.3);
+    width: clamp(100px, 30vw, 150px); /* Kisebb szélesség, hogy középen maradjon */
+    text-align: center;
+    line-height: 1.2;
+}
 
-        @keyframes fadeIn {
-            0% {
-                opacity: 0;
-            }
-            100% {
-                opacity: 1;
-            }
-        }
+.quiz-options button:hover {
+    background: var(--primary-beige);
+    color: var(--dark-black);
+    transform: scale(1.05);
+    box-shadow: 0 6px 20px rgba(212, 163, 115, 0.5);
+}
 
-        .quiz-question {
-            display: none;
-            width: 100%;
-            padding: 15px; /* Csökkentett padding */
-            margin: 15px 0; /* Csökkentett margó */
-            background: rgba(255, 255, 255, 0.1);
-            border-radius: 20px;
-            backdrop-filter: blur(10px);
-            border: 1px solid rgba(255, 255, 255, 0.2);
-            box-shadow: 0 15px 35px rgba(0, 0, 0, 0.3);
-            opacity: 0;
-            transform: translateY(20px);
-            transition: all 0.8s ease;
-            text-align: center;
-        }
+.quiz-result-card {
+    display: none;
+}
 
-        .quiz-question.active {
-            display: block;
-            opacity: 1;
-            transform: translateY(0);
-        }
+.quiz-result-card.active {
+    display: block;
+    animation: fadeIn 0.5s ease;
+}
 
-        .quiz-question h2 {
-            font-size: 1.8rem; /* Csökkentett betűméret */
-            margin-bottom: 15px; /* Csökkentett margó */
-            color: #fff;
-            text-shadow: 0 0 10px rgba(255, 255, 255, 0.5);
-        }
+.quiz-result-card img {
+    max-width: clamp(200px, 60vw, 300px);
+    border-radius: 15px;
+    margin: clamp(0.5rem, 1.5vw, 1rem) 0;
+    border: 2px solid var(--accent-gold);
+    box-shadow: 0 5px 15px var(--shadow-color);
+}
 
-        .quiz-options {
-            display: flex;
-            justify-content: center;
-            gap: 10px; /* Csökkentett távolság */
-            flex-wrap: wrap;
-        }
+.quiz-result-card a {
+    background: var(--accent-gold);
+    color: var(--dark-black);
+    padding: clamp(0.6rem, 1.5vw, 1rem) clamp(1rem, 2vw, 2rem);
+    border-radius: 30px;
+    text-decoration: none;
+    display: inline-block;
+    margin-top: clamp(0.5rem, 1.5vw, 1rem);
+    transition: var(--transition);
+    font-weight: 600;
+    font-size: clamp(0.8rem, 1.5vw, 1rem);
+    box-shadow: 0 4px 15px rgba(212, 163, 115, 0.3);
+}
 
-        .quiz-options button {
-            padding: 12px 25px; /* Csökkentett padding */
-            font-size: 0.9rem; /* Csökkentett betűméret */
-            font-weight: 600;
-            color: #fff;
-            background: linear-gradient(135deg, #ff7e5f, #feb47b);
-            border: none;
-            border-radius: 15px;
-            cursor: pointer;
-            transition: all 0.3s ease;
-            box-shadow: 0 5px 15px rgba(255, 126, 95, 0.3);
-            animation: float 3s ease-in-out infinite;
-        }
+.quiz-result-card a:hover {
+    background: var(--primary-beige);
+    transform: scale(1.05);
+    box-shadow: 0 6px 20px rgba(212, 163, 115, 0.5);
+}
 
-        .quiz-options button:hover {
-            background: linear-gradient(135deg, #feb47b, #ff7e5f);
-            transform: translateY(-5px);
-            box-shadow: 0 10px 20px rgba(255, 126, 95, 0.5);
-        }
+/* Reszponzív töréspontok */
+@media (max-width: 768px) {
+    .quiz-wrapper {
+        padding: clamp(1.5rem, 3vw, 3rem) clamp(0.5rem, 1vw, 1rem);
+    }
 
-        @keyframes float {
-            0%, 100% {
-                transform: translateY(0);
-            }
-            50% {
-                transform: translateY(-10px);
-            }
-        }
+    .quiz-container {
+        max-width: clamp(400px, 90vw, 600px);
+        padding: clamp(1rem, 2vw, 2rem);
+        border-radius: 15px;
+    }
 
-        .quiz-result-card {
-            display: none;
-            width: 100%;
-            padding: 30px; /* Csökkentett padding */
-            margin: 15px 0; /* Csökkentett margó */
-            background: rgba(255, 255, 255, 0.1);
-            border-radius: 20px;
-            backdrop-filter: blur(10px);
-            border: 1px solid rgba(255, 255, 255, 0.2);
-            box-shadow: 0 15px 35px rgba(0, 0, 0, 0.3);
-            opacity: 0;
-            transform: translateY(-50px);
-            transition: all 0.8s ease;
-            text-align: center;
-            animation: slideIn 0.8s ease-out forwards;
-        }
+    .quiz-container::before {
+        border-radius: 15px;
+    }
 
-        .quiz-result-card.show {
-            display: block;
-            opacity: 1;
-            transform: translateY(0);
-        }
+    .quiz-container h1 {
+        font-size: clamp(1.5rem, 3.5vw, 2rem);
+    }
 
-        .quiz-result-card h2 {
-            font-size: 2rem; /* Csökkentett betűméret */
-            margin-bottom: 15px; /* Csökkentett margó */
-            color: #ff7e5f;
-            text-shadow: 0 0 10px rgba(255, 126, 95, 0.7);
-        }
+    .quiz-question h2 {
+        font-size: clamp(1.2rem, 2.5vw, 1.8rem);
+    }
 
-        .quiz-result-card p {
-            font-size: 1.2rem; /* Csökkentett betűméret */
-            margin-bottom: 15px; /* Csökkentett margó */
-            color: #fff;
-        }
+    .quiz-options {
+        flex-direction: column;
+        gap: clamp(0.5rem, 1vw, 0.8rem);
+    }
 
-        .quiz-result-card .image-container {
-            margin: 15px 0; /* Csökkentett margó */
-            display: flex;
-            justify-content: center;
-            align-items: center;
-        }
+    .quiz-options button {
+        width: clamp(120px, 60vw, 200px); /* Kicsit szélesebb, de elfér */
+        padding: clamp(0.4rem, 0.8vw, 0.6rem) clamp(0.8rem, 1.5vw, 1.2rem);
+        font-size: clamp(0.7rem, 1.3vw, 0.9rem);
+        border-radius: 12px;
+    }
 
-        .quiz-result-card img {
-            width: 100%;
-            max-width: 300px;
-            height: auto; /* Automatikus magasság */
-            border-radius: 20px;
-            box-shadow: 0 10px 20px rgba(0, 0, 0, 0.3);
-            transition: transform 0.3s ease, box-shadow 0.3s ease;
-            animation: popIn 1s ease-out;
-        }
+    .quiz-result-card img {
+        max-width: clamp(150px, 50vw, 250px);
+    }
 
-        .quiz-result-card img:hover {
-            transform: scale(1.1);
-            box-shadow: 0 15px 30px rgba(0, 0, 0, 0.5);
-        }
+    .quiz-result-card a {
+        padding: clamp(0.5rem, 1vw, 0.8rem) clamp(0.8rem, 1.5vw, 1.5rem);
+        font-size: clamp(0.7rem, 1.3vw, 0.9rem);
+    }
+}
 
-        .quiz-result-card a {
-            display: inline-block;
-            margin-top: 15px; /* Csökkentett margó */
-            padding: 12px 25px; /* Csökkentett padding */
-            font-size: 1rem; /* Csökkentett betűméret */
-            font-weight: 600;
-            color: #fff;
-            background: linear-gradient(135deg, #ff7e5f, #feb47b);
-            border-radius: 15px;
-            text-decoration: none;
-            transition: all 0.3s ease;
-            box-shadow: 0 5px 15px rgba(255, 126, 95, 0.3);
-            position: relative;
-            overflow: hidden;
-            animation: float 3s ease-in-out infinite;
-        }
+@media (max-width: 480px) {
+    .quiz-wrapper {
+        padding: clamp(1rem, 2vw, 2rem) clamp(0.3rem, 0.8vw, 0.5rem);
+    }
 
-        .quiz-result-card a::before {
-            content: '';
-            position: absolute;
-            top: 50%;
-            left: 50%;
-            width: 300%;
-            height: 300%;
-            background: radial-gradient(circle, rgba(255, 255, 255, 0.3), transparent);
-            transform: translate(-50%, -50%) scale(0);
-            transition: transform 0.5s ease;
-        }
+    .quiz-container {
+        max-width: clamp(300px, 95vw, 400px);
+        padding: clamp(0.8rem, 1.5vw, 1.5rem);
+        border-radius: 10px;
+    }
 
-        .quiz-result-card a:hover::before {
-            transform: translate(-50%, -50%) scale(1);
-        }
+    .quiz-container::before {
+        border-radius: 10px;
+    }
 
-        .quiz-result-card a:hover {
-            background: linear-gradient(135deg, #feb47b, #ff7e5f);
-            transform: translateY(-5px);
-            box-shadow: 0 10px 20px rgba(255, 126, 95, 0.5);
-        }
+    .quiz-container h1 {
+        font-size: clamp(1.2rem, 3vw, 1.8rem);
+    }
 
-        .quiz-question i {
-            font-size: 3rem; /* Csökkentett betűméret */
-            margin-bottom: 15px; /* Csökkentett margó */
-            color: #ff7e5f;
-            text-shadow: 0 0 10px rgba(255, 126, 95, 0.7);
-            animation: float 3s ease-in-out infinite;
-        }
+    .quiz-question h2 {
+        font-size: clamp(1rem, 2vw, 1.5rem);
+    }
 
-        /* Média lekérdezések */
-        @media (max-width: 768px) {
-            .quiz-container h1 {
-                font-size: 2rem;
-            }
-            .quiz-container p {
-                font-size: 1rem;
-            }
-            .quiz-options {
-                flex-direction: column;
-                align-items: center;
-            }
-            .quiz-options button {
-                width: 80%;
-                margin-bottom: 10px;
-            }
-            .quiz-result-card h2 {
-                font-size: 1.8rem;
-            }
-            .quiz-result-card p {
-                font-size: 1.1rem;
-            }
-        }
+    .quiz-options {
+        gap: clamp(0.3rem, 0.8vw, 0.5rem);
+    }
 
-        @media (max-width: 480px) {
-            .quiz-container h1 {
-                font-size: 1.7rem;
-            }
-            .quiz-options button {
-                width: 90%;
-            }
-        }
+    .quiz-options button {
+        width: clamp(100px, 70vw, 180px); /* Még kisebb szélesség, hogy elférjen */
+        padding: clamp(0.3rem, 0.6vw, 0.5rem) clamp(0.6rem, 1vw, 1rem);
+        font-size: clamp(0.65rem, 1.2vw, 0.85rem);
+        border-radius: 10px;
+    }
+
+    .quiz-result-card img {
+        max-width: clamp(120px, 45vw, 200px);
+    }
+
+    .quiz-result-card a {
+        padding: clamp(0.4rem, 0.8vw, 0.6rem) clamp(0.6rem, 1.2vw, 1rem);
+        font-size: clamp(0.65rem, 1.2vw, 0.85rem);
+    }
+}
+
+/* Fade-in animáció */
+@keyframes fadeIn {
+    0% { opacity: 0; transform: translateY(20px); }
+    100% { opacity: 1; transform: translateY(0); }
+}

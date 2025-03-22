@@ -13,6 +13,9 @@
             }, 5000);
         });
 
+
+
+
         // Coupon Slider
         const slides = document.querySelectorAll('.slide');
         const dots = document.querySelectorAll('.dot');
@@ -53,6 +56,9 @@
             currentSlide = (currentSlide + 1) % slides.length;
             showSlide(currentSlide);
         }, 5000);
+
+
+
 
         // Quiz
         const questions = document.querySelectorAll('.quiz-question');
@@ -97,13 +103,16 @@
                 imageSrc = '../kepek/pizza2.jpg';
             } else {
                 result = answers['cheese'] === 'Extra' ? 'Four Cheese Bliss' : 'Margherita';
-                imageSrc = '../kepek/pizza3.jpg';
+                imageSrc = '../kepek/pizza2.jpg';
             }
 
             recommendedFood.textContent = result;
             foodImage.src = imageSrc;
             orderLink.href = '#order';
         }
+
+
+
 
         // Shaker Slider
         const shakerSlides = document.querySelectorAll('.shaker-slide');
@@ -145,6 +154,8 @@
             currentShaker = (currentShaker + 1) % shakerSlides.length;
             showShaker(currentShaker);
         }, 5000);
+
+
 
         // Countdown (example end date: March 23, 2025)
         function updateCountdown() {

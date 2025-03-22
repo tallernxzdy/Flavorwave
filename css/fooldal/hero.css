@@ -1,209 +1,140 @@
-@import url('https://fonts.googleapis.com/css2?family=Montserrat:wght@400;700&family=Poppins:wght@300;400;600&display=swap');
-
-
-body .hero {
+.hero {
+    min-height: 100vh;
     position: relative;
-    height: 100vh;
-    background: url('../../kepek/pizzak/pizza2.jpg') center/cover no-repeat fixed !important;
     display: flex;
-    justify-content: center;
     align-items: center;
-    text-align: center;
-    overflow: hidden;
-    animation: changeBackground 15s infinite;
-    z-index: 10; 
+    justify-content: center;
+    overflow: hidden; /* A videó túlnyúlását megakadályozza */
 }
 
-
-
-@keyframes changeBackground {
-    0% {
-        background-image: url('../kepek/pizza2.jpg');
-    }
-
-    33% {
-        background-image: url('../kepek/pizza2.jpg');
-    }
-
-    66% {
-        background-image: url('../kepek/pizza2.jpg');
-    }
-
-    100% {
-        background-image: url('../kepek/pizza2.jpg');
-    }
-}
-
-.hero::after {
-    content: '';
+.hero video {
     position: absolute;
-    top: 0;
-    left: 0;
+    top: 50%;
+    left: 50%;
     width: 100%;
     height: 100%;
-    background: rgba(0, 0, 0, 0.6);
-    z-index: 1;
+    object-fit: cover; /* A videó kitölti a teljes háttért, megtartva az arányokat */
+    transform: translate(-50%, -50%); /* Középre igazítja a videót */
+    z-index: -1; /* A videó alatta legyen a tartalom */
+}
+
+.hero::before {
+    content: '';
+    position: absolute;
+    width: 100%;
+    height: 100%;
+    background: linear-gradient(45deg, rgba(26, 26, 26, 0.8), rgba(212, 163, 115, 0.3));
+    z-index: 1; /* A gradient legyen a videó fölött */
 }
 
 .hero-content {
+    text-align: center;
     position: relative;
-    z-index: 2;
-    max-width: 800px;
-    padding: 0 20px;
+    z-index: 2; /* A tartalom legyen a videó és a gradient fölött */
+    padding: 3rem;
 }
 
-.hero h1 {
-    font-size: 3.5rem; /* Csökkentett betűméret */
-    margin-bottom: 20px;
-    line-height: 1.2;
-    text-transform: uppercase;
-    letter-spacing: 2px; /* Csökkentett betűközt */
-    animation: fadeInDown 1s ease-out;
-    text-shadow: 0 4px 6px rgba(0, 0, 0, 0.5);
-    font-family: 'Montserrat', sans-serif;
+.hero-content h1 {
+    color: var(--primary-beige);
+    font-size: 5rem;
+    font-weight: 800;
+    text-shadow: 3px 3px 6px var(--shadow-color);
+    animation: fadeIn 1s ease;
 }
 
-.hero p {
-    font-size: 1.4rem; /* Csökkentett betűméret */
-    margin-bottom: 30px; /* Csökkentett margó */
-    line-height: 1.6;
-    animation: fadeInUp 1.5s ease-out;
-    font-weight: 300;
+.hero-content p {
+    color: var(--accent-gold);
+    font-size: 1.8rem;
+    margin: 1.5rem 0;
 }
 
-.hero .cta-buttons {
+.cta-buttons {
     display: flex;
-    justify-content: center;
-    gap: 10px; /* Csökkentett távolság */
-    flex-wrap: wrap; /* Gombok egymás alá kerülése */
-    animation: fadeInUp 2s ease-out;
+    justify-content: center; /* Középre igazítjuk a gombokat */
+    flex-wrap: wrap; /* Engedjük, hogy a gombok új sorba kerüljenek, ha nem férnek el */
 }
 
 .cta-buttons a {
+    padding: 1.2rem 2.5rem;
+    margin: 0.8rem;
     text-decoration: none;
-    padding: 12px 30px; /* Csökkentett padding */
-    font-size: 1.1rem; /* Csökkentett betűméret */
-    border-radius: 30px;
-    transition: all 0.3s ease;
-    cursor: pointer;
-    font-weight: 700;
-    text-transform: uppercase;
-    letter-spacing: 1px;
-    white-space: nowrap; /* Szöveg egy sorban tartása */
+    border-radius: 50px;
+    font-weight: 600;
+    font-size: 1.2rem;
+    transition: var(--transition);
+    /*white-space: nowrap;  Ezt eltávolítjuk */
+    min-width: 180px; /* Állítsunk be egy minimum szélességet a gomboknak */
+    text-align: center; /* A szöveg középre igazítása a gombon belül */
 }
 
-.cta-buttons .order-now {
-    background: linear-gradient(135deg, #ff7e5f, #feb47b);
-    color: #fff;
-    box-shadow: 0 4px 15px rgba(255, 126, 95, 0.5);
+.order-now {
+    background: var(--accent-gold);
+    color: var(--dark-black);
 }
 
-.cta-buttons .order-now:hover {
-    background: linear-gradient(135deg, #feb47b, #ff7e5f);
-    transform: scale(1.05);
-    box-shadow: 0 6px 20px rgba(255, 126, 95, 0.7);
-}
-
-.cta-buttons .view-menu {
+.view-menu {
     background: transparent;
-    color: #fff;
-    border: 2px solid #fff;
-    box-shadow: 0 4px 15px rgba(255, 255, 255, 0.3);
+    color: var(--primary-beige);
+    border: 3px solid var(--accent-gold);
 }
 
-.cta-buttons .view-menu:hover {
-    background: rgba(255, 255, 255, 0.9);
-    color: #000;
-    transform: scale(1.05);
-    box-shadow: 0 6px 20px rgba(255, 255, 255, 0.5);
+.cta-buttons a:hover {
+    transform: scale(1.1);
+    box-shadow: 0 8px 20px var(--shadow-color);
 }
 
-@keyframes fadeInDown {
-    from {
-        opacity: 0;
-        transform: translateY(-50px);
-    }
-
-    to {
-        opacity: 1;
-        transform: translateY(0);
-    }
-}
-
-@keyframes fadeInUp {
-    from {
-        opacity: 0;
-        transform: translateY(50px);
-    }
-
-    to {
-        opacity: 1;
-        transform: translateY(0);
-    }
-}
-
-.feedback-section {
-    margin-top: 30px; /* Csökkentett margó */
-    text-align: center;
-    animation: fadeInUp 2.5s ease-out;
-}
-
-.feedback-section a,
-.feedback-section p {
-    font-size: 1rem; /* Csökkentett betűméret */
-    color: #fff;
-    text-decoration: none;
-    transition: color 0.3s ease;
-}
-
-.feedback-section a:hover {
-    color: #feb47b;
-}
-
-.feedback-section .primary-bttn {
-    background: linear-gradient(135deg, #ff7e5f, #feb47b);
-    padding: 8px 20px; /* Csökkentett padding */
-    border-radius: 30px;
-    color: #fff;
-    font-weight: 700;
-    text-transform: uppercase;
-    letter-spacing: 1px;
-    box-shadow: 0 4px 15px rgba(255, 126, 95, 0.5);
-}
-
-.feedback-section .primary-bttn:hover {
-    background: linear-gradient(135deg, #feb47b, #ff7e5f);
-    transform: scale(1.05);
-}
-
-/* Média lekérdezések */
+/* Media Query kisebb képernyőkre */
 @media (max-width: 768px) {
-    .hero h1 {
-        font-size: 3rem;
-        letter-spacing: 1px;
+    .hero-content h1 {
+        font-size: 4rem; /* Kissé csökkentjük a főcímet */
     }
 
-    .hero p {
-        font-size: 1.3rem;
+    .hero-content p {
+        font-size: 1.5rem; /* Kissé csökkentjük a bekezdés méretét */
     }
 
-    .cta-buttons a {
-        font-size: 1rem;
-        padding: 10px 25px;
+    .hero-content {
+        padding: 2rem; /* Csökkentjük a paddingot */
     }
 }
 
+/* Media Query még kisebb képernyőkre (pl. okostelefonok) */
 @media (max-width: 480px) {
-    .hero h1 {
-        font-size: 2.5rem;
+    .hero-content h1 {
+        font-size: 3rem; /* Még jobban csökkentjük a főcímet */
     }
 
-    .hero p {
-        font-size: 1.2rem;
+    .hero-content p {
+        font-size: 1.2rem; /* Még jobban csökkentjük a bekezdés méretét */
     }
 
     .cta-buttons a {
-        font-size: 0.9rem;
-        padding: 8px 20px;
+        margin: 0.5rem; /* Kisebb margó a gombok között */
+        padding: 1rem 1.8rem; /* Kisebb padding a gombokban */
+    }
+
+    .hero-content {
+        padding: 1.5rem; /* Még jobban csökkentjük a paddingot */
+    }
+}
+
+/* Media Query a legkisebb képernyőkre (pl. nagyon keskeny telefonok) */
+@media (max-width: 360px) {
+    .hero-content h1 {
+        font-size: 2.5rem; /* Még tovább csökkentjük a főcímet */
+    }
+
+    .hero-content p {
+        font-size: 1rem; /* Még tovább csökkentjük a bekezdést */
+    }
+
+    .cta-buttons a {
+        font-size: 1rem; /* A gombok szövegét is csökkentjük, ha nagyon kicsi a hely */
+        padding: 0.8rem 1.5rem; /* Még kisebb padding a gombokban */
+        min-width: auto; /* Eltávolítjuk a minimum szélességet a legkisebb képernyőn */
+    }
+
+    .hero-content {
+        padding: 1rem; /* Minimális padding */
     }
 }
