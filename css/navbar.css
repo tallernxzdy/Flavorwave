@@ -125,11 +125,11 @@ nav {
     text-stroke: none; /* Körvonal eltávolítása - szabványos */
 }
 
-.order-btn {
+.order-button {
     background: transparent;
 }
 
-.order-btn:hover {
+.order-button:hover {
     background: var(--accent-gold);
     color: var(--dark-black);
     transform: translateY(-3px);

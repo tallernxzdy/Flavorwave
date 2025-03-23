@@ -1,14 +1,4 @@
 
-
-/* Változók a konzisztens színekhez */
-/* :root {
-    --dark-black: #121212;
-    --primary-beige: #f5e8c7;
-    --accent-gold: #d4a373;
-    --shadow-color: rgba(0, 0, 0, 0.5);
-    --transition: all 0.3s ease;
-} */
-
 /* Népszerű Ételeink Galériája */
 .popular-foods-gallery {
     background: var(--dark-black);
