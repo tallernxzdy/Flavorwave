@@ -77,8 +77,7 @@ if (isset($_POST['finished_order'])) {
     <title>Dolgozói Felület</title>
     <!-- CSS fájok -->
     <link rel="stylesheet" href="../css/navbar.css">
-    <link rel="stylesheet" href="../css/admin_felulet.css">
-    <link rel="stylesheet" href="../css/dolgozoi_felulet.css">
+    <link rel="stylesheet" href="../css/fooldal/ujfooldal.css">
     <!-- Bootstrap CSS -->
     <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/css/bootstrap.min.css" rel="stylesheet"
         integrity="sha384-QWTKZyjpPEjISv5WaRU9OFeRpok6YctnYmDr5pNlyT2bRjXh0JMhjY6hW+ALEwIH" crossorigin="anonymous">
@@ -155,7 +154,7 @@ if (isset($_POST['finished_order'])) {
         </ul>
     </div>
 
-    <div class="container">
+    <div class="container mt-5">
         <h1 class="text-center my-4">Dolgozói felület</h1>
 
         <!-- Átvételre váró rendelések -->
