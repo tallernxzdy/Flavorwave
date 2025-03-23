@@ -157,23 +157,43 @@
 
 
 
-        // Countdown (example end date: March 23, 2025)
         function updateCountdown() {
-            const endDate = new Date('2025-03-23T00:00:00');
             const now = new Date();
+            
+            // Az aktuális hét vasárnapjának éjfél kiszámítása
+            const currentDay = now.getDay(); // 0 = vasárnap, 1 = hétfő, stb.
+            const daysUntilSunday = (7 - currentDay) % 7; // Hány nap van vasárnapig
+            
+            // Következő vasárnap éjfél beállítása
+            const endDate = new Date(now);
+            endDate.setDate(now.getDate() + daysUntilSunday);
+            endDate.setHours(23, 59, 59, 999); // Vasárnap éjfél előtti utolsó pillanat
+        
+            // Ha éppen vasárnap van és éjfél elmúlt, a következő vasárnapra állítjuk
+            if (currentDay === 0 && now > endDate) {
+                endDate.setDate(endDate.getDate() + 7);
+            }
+        
             const diff = endDate - now;
-
+        
             const days = Math.floor(diff / (1000 * 60 * 60 * 24));
             const hours = Math.floor((diff % (1000 * 60 * 60 * 24)) / (1000 * 60 * 60));
             const minutes = Math.floor((diff % (1000 * 60 * 60)) / (1000 * 60));
             const seconds = Math.floor((diff % (1000 * 60)) / 1000);
-
-            document.querySelector('.days').textContent = days.toString().padStart(2, '0');
-            document.querySelector('.hours').textContent = hours.toString().padStart(2, '0');
-            document.querySelector('.minutes').textContent = minutes.toString().padStart(2, '0');
-            document.querySelector('.seconds').textContent = seconds.toString().padStart(2, '0');
+        
+            // Ellenőrzés, hogy a DOM elemek léteznek-e
+            const daysElement = document.querySelector('.days');
+            const hoursElement = document.querySelector('.hours');
+            const minutesElement = document.querySelector('.minutes');
+            const secondsElement = document.querySelector('.seconds');
+        
+            if (daysElement) daysElement.textContent = days.toString().padStart(2, '0');
+            if (hoursElement) hoursElement.textContent = hours.toString().padStart(2, '0');
+            if (minutesElement) minutesElement.textContent = minutes.toString().padStart(2, '0');
+            if (secondsElement) secondsElement.textContent = seconds.toString().padStart(2, '0');
         }
-
+        
+        // Azonnali indítás és másodpercenkénti frissítés
         setInterval(updateCountdown, 1000);
         updateCountdown();
 
