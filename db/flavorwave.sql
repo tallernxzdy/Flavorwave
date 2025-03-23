@@ -3,7 +3,7 @@
 -- https://www.phpmyadmin.net/
 --
 -- Host: 127.0.0.1
--- Generation Time: Mar 09, 2025 at 09:50 AM
+-- Generation Time: Mar 23, 2025 at 11:20 AM
 -- Server version: 10.4.32-MariaDB
 -- PHP Version: 8.2.12
 
@@ -90,18 +90,6 @@ INSERT INTO `etel` (`id`, `nev`, `egyseg_ar`, `leiras`, `kategoria_id`, `kep_url
 -- --------------------------------------------------------
 
 --
--- Table structure for table `extra_feltet`
---
-
-CREATE TABLE `extra_feltet` (
-  `id` int(11) NOT NULL,
-  `feltet_nev` varchar(20) NOT NULL,
-  `feltet_ar` int(10) NOT NULL
-) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_general_ci;
-
--- --------------------------------------------------------
-
---
 -- Table structure for table `felhasznalo`
 --
 
@@ -121,18 +109,6 @@ CREATE TABLE `felhasznalo` (
 
 INSERT INTO `felhasznalo` (`id`, `felhasznalo_nev`, `email_cim`, `jelszo`, `tel_szam`, `lakcim`, `jog_szint`) VALUES
 (4, 'main', '13c-borondi@ipari.vein.hu', '$2y$10$61bO5xSX5AjCzX7o1CIEFeaR3MD7gDpI2E.WqB/IB6wKZlAKVfbC.', '06201234568', 'Herend utca 20', 1);
-
--- --------------------------------------------------------
-
---
--- Table structure for table `feltet_opcio`
---
-
-CREATE TABLE `feltet_opcio` (
-  `id` int(11) NOT NULL,
-  `feltet_id` int(11) NOT NULL,
-  `tetel_id` int(11) NOT NULL
-) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_general_ci;
 
 -- --------------------------------------------------------
 
@@ -179,7 +155,10 @@ CREATE TABLE `megrendeles` (
 --
 
 INSERT INTO `megrendeles` (`id`, `felhasznalo_id`, `leadas_megjegyzes`, `kezbesites`, `leadas_allapota`, `leadasdatuma`) VALUES
-(10, 4, 'bbb', 'házhozszállítás', 2, '2025-02-25');
+(10, 4, 'bbb', 'házhozszállítás', 2, '2025-02-25'),
+(11, 4, 'gaki', 'házhozszállítás', 0, '2025-03-15'),
+(12, 4, 'asd', 'házhozszállítás', 0, '2025-03-15'),
+(13, 4, 'gas', 'házhozszállítás', 0, '2025-03-15');
 
 -- --------------------------------------------------------
 
@@ -195,6 +174,15 @@ CREATE TABLE `rendeles_tetel` (
   `statusz` tinyint(4) NOT NULL
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_general_ci;
 
+--
+-- Dumping data for table `rendeles_tetel`
+--
+
+INSERT INTO `rendeles_tetel` (`id`, `rendeles_id`, `termek_id`, `mennyiseg`, `statusz`) VALUES
+(6, 11, 38, 1, 0),
+(7, 12, 39, 1, 0),
+(8, 13, 9, 1, 0);
+
 -- --------------------------------------------------------
 
 --
@@ -206,18 +194,6 @@ CREATE TABLE `tetelek` (
   `felhasznalo_id` int(11) NOT NULL,
   `etel_id` int(11) NOT NULL,
   `darab` int(11) NOT NULL
-) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_general_ci;
-
--- --------------------------------------------------------
-
---
--- Table structure for table `valaszthato_feltet`
---
-
-CREATE TABLE `valaszthato_feltet` (
-  `id` int(11) NOT NULL,
-  `feltet_id` int(11) NOT NULL,
-  `etel_id` int(11) NOT NULL
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_general_ci;
 
 -- --------------------------------------------------------
@@ -254,24 +230,10 @@ ALTER TABLE `etel`
   ADD KEY `kategoria_id` (`kategoria_id`);
 
 --
--- Indexes for table `extra_feltet`
---
-ALTER TABLE `extra_feltet`
-  ADD PRIMARY KEY (`id`);
-
---
 -- Indexes for table `felhasznalo`
 --
 ALTER TABLE `felhasznalo`
   ADD PRIMARY KEY (`id`);
-
---
--- Indexes for table `feltet_opcio`
---
-ALTER TABLE `feltet_opcio`
-  ADD PRIMARY KEY (`id`),
-  ADD KEY `feltet_id` (`feltet_id`,`tetel_id`),
-  ADD KEY `tetel_id` (`tetel_id`);
 
 --
 -- Indexes for table `kategoria`
@@ -305,14 +267,6 @@ ALTER TABLE `tetelek`
   ADD KEY `felhasznalo_id` (`felhasznalo_id`);
 
 --
--- Indexes for table `valaszthato_feltet`
---
-ALTER TABLE `valaszthato_feltet`
-  ADD PRIMARY KEY (`id`),
-  ADD KEY `feltet_id` (`feltet_id`,`etel_id`),
-  ADD KEY `etel_id` (`etel_id`);
-
---
 -- Indexes for table `velemenyek`
 --
 ALTER TABLE `velemenyek`
@@ -330,22 +284,10 @@ ALTER TABLE `etel`
   MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=76;
 
 --
--- AUTO_INCREMENT for table `extra_feltet`
---
-ALTER TABLE `extra_feltet`
-  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT;
-
---
 -- AUTO_INCREMENT for table `felhasznalo`
 --
 ALTER TABLE `felhasznalo`
   MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=5;
-
---
--- AUTO_INCREMENT for table `feltet_opcio`
---
-ALTER TABLE `feltet_opcio`
-  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT;
 
 --
 -- AUTO_INCREMENT for table `kategoria`
@@ -357,25 +299,19 @@ ALTER TABLE `kategoria`
 -- AUTO_INCREMENT for table `megrendeles`
 --
 ALTER TABLE `megrendeles`
-  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=11;
+  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=14;
 
 --
 -- AUTO_INCREMENT for table `rendeles_tetel`
 --
 ALTER TABLE `rendeles_tetel`
-  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=6;
+  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=9;
 
 --
 -- AUTO_INCREMENT for table `tetelek`
 --
 ALTER TABLE `tetelek`
-  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=28;
-
---
--- AUTO_INCREMENT for table `valaszthato_feltet`
---
-ALTER TABLE `valaszthato_feltet`
-  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT;
+  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=35;
 
 --
 -- AUTO_INCREMENT for table `velemenyek`
@@ -392,13 +328,6 @@ ALTER TABLE `velemenyek`
 --
 ALTER TABLE `etel`
   ADD CONSTRAINT `etel_ibfk_1` FOREIGN KEY (`kategoria_id`) REFERENCES `kategoria` (`id`) ON DELETE CASCADE ON UPDATE CASCADE;
-
---
--- Constraints for table `feltet_opcio`
---
-ALTER TABLE `feltet_opcio`
-  ADD CONSTRAINT `feltet_opcio_ibfk_1` FOREIGN KEY (`feltet_id`) REFERENCES `extra_feltet` (`id`) ON DELETE CASCADE ON UPDATE CASCADE,
-  ADD CONSTRAINT `feltet_opcio_ibfk_2` FOREIGN KEY (`tetel_id`) REFERENCES `tetelek` (`id`) ON DELETE CASCADE ON UPDATE CASCADE;
 
 --
 -- Constraints for table `megrendeles`
@@ -418,13 +347,6 @@ ALTER TABLE `rendeles_tetel`
 --
 ALTER TABLE `tetelek`
   ADD CONSTRAINT `tetelek_ibfk_1` FOREIGN KEY (`etel_id`) REFERENCES `etel` (`id`) ON DELETE CASCADE ON UPDATE CASCADE;
-
---
--- Constraints for table `valaszthato_feltet`
---
-ALTER TABLE `valaszthato_feltet`
-  ADD CONSTRAINT `valaszthato_feltet_ibfk_1` FOREIGN KEY (`etel_id`) REFERENCES `etel` (`id`) ON DELETE CASCADE ON UPDATE CASCADE,
-  ADD CONSTRAINT `valaszthato_feltet_ibfk_2` FOREIGN KEY (`feltet_id`) REFERENCES `extra_feltet` (`id`) ON DELETE CASCADE ON UPDATE CASCADE;
 
 --
 -- Constraints for table `velemenyek`
