@@ -1,154 +1,108 @@
-/* Footer stílusok */
+/* Footer */
 .footer {
-    background-color: #000000;
-    color: #ffffff;
-    padding: 40px 20px;
+    background: var(--dark-black);
+    color: var(--primary-beige);
+    padding: clamp(1.5rem, 4vw, 3rem) clamp(1rem, 2vw, 2rem); /* Dinamikus padding */
     text-align: center;
-    border-top: 3px solid #2a2a2a;
-    width: 100%;
-    flex-shrink: 0; /* Footer ne zsugorodjon össze */
-    margin-top: auto; /* Footer mindig alul marad */
-    position: relative;
-    overflow: hidden;
-}
-
-.footer-container {
-    display: flex;
-    flex-direction: column;
-    align-items: center;
-    max-width: 1200px;
-    margin: 0 auto;
-    position: relative;
-    z-index: 1;
 }
 
 .footer-links {
-    list-style-type: none;
+    list-style: none;
     display: flex;
-    gap: 2.5em;
-    flex-wrap: wrap;
     justify-content: center;
-    margin-bottom: 2em;
-    padding: 0;
+    flex-wrap: wrap; /* Biztosítjuk, hogy a linkek egymás alá kerüljenek, ha nem férnek el */
+    gap: clamp(1rem, 2vw, 2rem); /* Dinamikus gap */
+    margin-bottom: clamp(1rem, 2vw, 1.5rem); /* Dinamikus margó */
 }
 
-.footer-links li a {
-    color: #ffffff;
-    font-size: 1.1em;
+.footer-links a {
+    color: var(--accent-gold);
     text-decoration: none;
-    transition: all 0.3s cubic-bezier(0.4, 0, 0.2, 1);
-    padding: 8px 15px;
-    border-radius: 4px;
-    position: relative;
+    font-weight: 600;
+    font-size: clamp(0.8rem, 1.5vw, 1rem); /* Dinamikus betűméret */
+    transition: var(--transition);
 }
 
-.footer-links li a::before {
-    content: '';
-    position: absolute;
-    bottom: 0;
-    left: 0;
-    width: 0;
-    height: 2px;
-    background: #feb47b;
-    transition: width 0.3s ease;
-}
-
-.footer-links li a:hover {
-    color: #feb47b;
-    background: rgba(255, 255, 255, 0.05);
-}
-
-.footer-links li a:hover::before {
-    width: 100%;
-}
-
-/* Közösségi ikonok linkjeihez más stílust alkalmazunk */
-.footer-socials {
-    display: flex;
-    gap: 2em;
-    flex-wrap: wrap;
-    justify-content: center;
-    margin-bottom: 2.5em;
+.footer-links a:hover {
+    color: var(--primary-beige);
+    transform: translateY(-3px);
 }
 
 .footer-socials a {
-    display: inline-flex;
-    align-items: center;
-    justify-content: center;
-    width: 50px;
-    height: 50px;
-    border-radius: 50%;
-    background: rgba(255, 255, 255, 0.1);
-    transition: all 0.3s ease;
-    text-decoration: none; /* Kihúzás eltávolítása */
-}
-
-.footer-socials a::before {
-    content: none; /* Kihúzás eltávolítása */
-}
-
-.footer-socials i {
-    font-size: 1.8em;
-    color: #ffffff;
-    transition: transform 0.3s ease;
+    color: var(--primary-beige);
+    margin: 0 clamp(0.8rem, 1.5vw, 1.5rem); /* Dinamikus margó */
+    font-size: clamp(1.2rem, 3vw, 2rem); /* Dinamikus ikon méret */
+    transition: var(--transition);
 }
 
 .footer-socials a:hover {
-    background: #feb47b;
-    transform: translateY(-3px);
-    box-shadow: 0 4px 15px rgba(0, 255, 157, 0.3);
+    color: var(--accent-gold);
+    transform: scale(1.2);
 }
 
-.footer-socials a:hover i {
-    color: #000000;
-    transform: scale(1.1);
+/* Animáció */
+@keyframes fadeIn {
+    from { opacity: 0; }
+    to { opacity: 1; }
 }
 
-.footer-copy {
-    font-size: 0.9em;
-    color: #888888;
-    margin-top: 25px;
-    letter-spacing: 0.5px;
-}
-
-/* Reszponzív stílusok */
+/* Reszponzív töréspontok */
 @media (max-width: 768px) {
     .footer {
-        padding: 30px 15px;
+        padding: clamp(1.2rem, 3vw, 2.5rem) clamp(0.8rem, 1.5vw, 1.5rem);
     }
-    
+
     .footer-links {
-        gap: 1.5em;
-        flex-direction: row;
+        gap: clamp(0.8rem, 1.5vw, 1.5rem);
+        margin-bottom: clamp(0.8rem, 1.5vw, 1.2rem);
     }
-    
-    .footer-links li a {
-        font-size: 1em;
-        padding: 6px 12px;
+
+    .footer-links a {
+        font-size: clamp(0.75rem, 1.3vw, 0.9rem);
     }
-    
-    .footer-socials {
-        gap: 1.5em;
-        margin-bottom: 2em;
-    }
-    
+
     .footer-socials a {
-        width: 45px;
-        height: 45px;
-    }
-    
-    .footer-socials i {
-        font-size: 1.5em;
-    }
-    
-    .footer-copy {
-        font-size: 0.85em;
+        margin: 0 clamp(0.6rem, 1.2vw, 1.2rem);
+        font-size: clamp(1rem, 2.5vw, 1.8rem);
     }
 }
 
 @media (max-width: 480px) {
+    .footer {
+        padding: clamp(1rem, 2.5vw, 2rem) clamp(0.6rem, 1vw, 1rem);
+    }
+
     .footer-links {
-        flex-direction: column;
-        gap: 1em;
+        gap: clamp(0.6rem, 1vw, 1rem);
+        margin-bottom: clamp(0.6rem, 1vw, 1rem);
+    }
+
+    .footer-links a {
+        font-size: clamp(0.7rem, 1.2vw, 0.85rem);
+    }
+
+    .footer-socials a {
+        margin: 0 clamp(0.5rem, 1vw, 1rem);
+        font-size: clamp(0.9rem, 2vw, 1.5rem);
+    }
+}
+
+@media (max-width: 360px) {
+    .footer {
+        padding: clamp(0.8rem, 2vw, 1.5rem) clamp(0.5rem, 0.8vw, 0.8rem);
+    }
+
+    .footer-links {
+        gap: clamp(0.5rem, 0.8vw, 0.8rem);
+        margin-bottom: clamp(0.5rem, 0.8vw, 0.8rem);
+    }
+
+    .footer-links a {
+        font-size: clamp(0.65rem, 1vw, 0.8rem);
+    }
+
+    .footer-socials a {
+        margin: 0 clamp(0.4rem, 0.8vw, 0.8rem);
+        font-size: clamp(0.8rem, 1.8vw, 1.3rem);
     }
 }

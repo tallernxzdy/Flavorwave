@@ -104,7 +104,6 @@ $velemenyek = ($result && $result->num_rows > 0) ? $result->fetch_all(MYSQLI_ASS
 
 <!DOCTYPE html>
 <html lang="hu">
-
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
@@ -115,6 +114,7 @@ $velemenyek = ($result && $result->num_rows > 0) ? $result->fetch_all(MYSQLI_ASS
     <title>Visszajelzés</title>
     <link rel="stylesheet" href="../css/navbar.css">
     <link rel="stylesheet" href="../css/visszajelzesek.css">
+    
     <!-- reCAPTCHA script -->
     <script src="https://www.google.com/recaptcha/api.js" async defer></script>
     <script>
@@ -138,113 +138,123 @@ $velemenyek = ($result && $result->num_rows > 0) ? $result->fetch_all(MYSQLI_ASS
             });
         });
     </script>
+    
 </head>
-
 <body>
-    <nav>
-        <!-- Bal oldalon a logó -->
-        <a href="kezdolap.php" class="logo">
-            <img src="../kepek/logo.png" alt="Flavorwave Logo">
-            <h1>FlavorWave</h1>
-        </a>
-
-        <!-- Középen a kategóriák (és Admin felület, ha jogosult) -->
-        <div class="navbar-center">
-            <a href="kategoria.php">Menü</a>
-            <?php if (isset($_SESSION["jog_szint"]) && $_SESSION["jog_szint"] == 1): ?>
-                <a href="admin_felulet.php">Admin felület</a>
-            <?php endif; ?>
-            <?php if (isset($_SESSION["jog_szint"]) && $_SESSION["jog_szint"] == 2): ?>
-                <a href="dolgozoi_felulet.php">Dolgozoi felulet</a>
-            <?php endif; ?>
-        </div>
-
-        <!-- Jobb oldalon a gombok -->
-        <div class="navbar-buttons">
-            <?php if (isset($_SESSION["felhasznalo_nev"])): ?>
-                <a href="kijelentkezes.php" class="login-btn">Kijelentkezés</a>
-            <?php else: ?>
-                <a href="bejelentkezes.php" class="login-btn">Bejelentkezés</a>
-            <?php endif; ?>
-            <a href="rendeles_megtekintes.php" class="order-btn">Rendeléseim</a>
-            <a href="kosar.php" class="cart-btn">
-                <i class='fas fa-shopping-cart cart-icon'></i>
+<nav>
+            <!-- Bal oldalon a logó -->
+            <a href="kezdolap.php" class="logo">
+                <img src="../kepek/logo.png" alt="Flavorwave Logo">
+                <h1>FlavorWave</h1>
             </a>
-        </div>
 
-        <!-- Hamburger menü ikon -->
-        <div class="hamburger" onclick="toggleMenu()">
-            <span></span>
-            <span></span>
-            <span></span>
-        </div>
-    </nav>
-
-    <!-- Hamburger menü tartalma -->
-    <div class="menubar" id="menubar">
-        <ul>
-            <li><a href="kategoria.php">Menü</a></li>
-            <?php if (isset($_SESSION["jog_szint"]) && $_SESSION["jog_szint"] == 1): ?>
-                <li><a href="admin_felulet.php">Admin felület</a></li>
-            <?php endif; ?>
-            <li><a href="kosar.php">Kosár</a></li>
-            <?php if (isset($_SESSION["felhasznalo_nev"])): ?>
-                <li><a href="kijelentkezes.php">Kijelentkezés</a></li>
-            <?php else: ?>
-                <li><a href="bejelentkezes.php">Bejelentkezés</a></li>
-            <?php endif; ?>
-            <li><a href="rendelesek_megtekintes.php">Rendeléseim</a></li>
-        </ul>
-    </div>
-    <div class="container" style="padding-top: 150px;">
-        <h1 style="text-align:center">Visszajelzés</h1>
-        <?php if (isset($_SESSION['uzenet'])) {
-            echo "<p class='alert alert-info'>" . $_SESSION['uzenet'] . "</p>";
-            unset($_SESSION['uzenet']);
-        } ?>
-        <form method="POST" action="visszajelzesek.php">
-            <label for="megelegedettseg">Mennyire elégedett? (1-5 csillag)</label>
-            <div class="rating">
-                <span class="star" data-value="1">&#9733;</span>
-                <span class="star" data-value="2">&#9733;</span>
-                <span class="star" data-value="3">&#9733;</span>
-                <span class="star" data-value="4">&#9733;</span>
-                <span class="star" data-value="5">&#9733;</span>
+            <!-- Középen a kategóriák (és Admin felület, ha jogosult) -->
+            <div class="navbar-center">
+                <a href="kategoria.php">Menü</a>
+                <a href="rendeles_megtekintes.php" class="order-btn">Rendeléseim</a>
+                <?php if (isset($_SESSION["jog_szint"]) && $_SESSION["jog_szint"] == 1): ?>
+                    <a href="admin_felulet.php">Admin felület</a>
+                <?php endif; ?>
+                <?php if (isset($_SESSION["jog_szint"]) && $_SESSION["jog_szint"] == 2): ?>
+                    <a href="dolgozoi_felulet.php">Dolgozoi felulet</a>
+                <?php endif; ?>
             </div>
-            <input type="hidden" id="megelegedettseg" name="megelegedettseg" required>
 
-            <label for="visszajelzes">Visszajelzés szövege</label>
-            <textarea id="visszajelzes" name="visszajelzes" rows="5" required ></textarea>
-            <br>
-            <div class="g-recaptcha" data-sitekey="6Lf0bsoqAAAAADgj9B0eBgXozNmq1q2vYqEMXzvb"></div>
-            <br>
-            <button type="submit">Küldés</button>
-        </form>
-    </div>
+            <!-- Jobb oldalon a gombok -->
+            <div class="navbar-buttons">
+                <?php if (isset($_SESSION["felhasznalo_nev"])): ?>
+                    <a href="kijelentkezes.php" class="login-btn">Kijelentkezés</a>
+                <?php else: ?>
+                    <a href="bejelentkezes.php" class="login-btn">Bejelentkezés</a>
+                <?php endif; ?>
+                
+                <a href="kosar.php" class="cart-btn">
+                    <i class='fas fa-shopping-cart cart-icon'></i> Kosár
+                </a>
+            </div>
 
-    <hr>
-    </hr>
+            <!-- Hamburger menü ikon -->
+            <div class="hamburger" onclick="toggleMenu()">
+                <span></span>
+                <span></span>
+                <span></span>
+            </div>
+        </nav>
 
-    <div class="container">
-        <h2 style="text-align:center">Mit mondanak rólunk?</h2>
-        <?php if (count($velemenyek) >= 3): ?>
-            <div class="row">
-                <?php foreach ($velemenyek as $row): ?>
-                    <div class="col-md-4">
-                        <div class="card">
-                            <div class="card-body">
-                                <p class="card-text">"<?php echo htmlspecialchars($row['velemeny_szoveg']); ?>"</p>
-                                <p class="card-subtitle">- <?php echo htmlspecialchars($row['felhasznalo_nev']); ?></p>
-                                <p class="card-text">Értékelés: <?php echo str_repeat("⭐", $row['ertekeles']); ?></p>
+        <!-- Hamburger menü tartalma -->
+        <div class="menubar" id="menubar">
+            <ul>
+                <li><a href="kategoria.php">Menü</a></li>
+                <?php if (isset($_SESSION["jog_szint"]) && $_SESSION["jog_szint"] == 1): ?>
+                    <li><a href="admin_felulet.php">Admin felület</a></li>
+                <?php endif; ?>
+                <li><a href="kosar.php">Kosár</a></li>
+                <?php if (isset($_SESSION["felhasznalo_nev"])): ?>
+                    <li><a href="kijelentkezes.php">Kijelentkezés</a></li>
+                <?php else: ?>
+                    <li><a href="bejelentkezes.php">Bejelentkezés</a></li>
+                <?php endif; ?>
+                <li><a href="rendelesek_megtekintes.php">Rendeléseim</a></li>
+            </ul>
+        </div>
+
+
+    <br><br><br> <br>
+    <!-- Feedback Form Section -->
+    <section class="feedback-section">
+        <div class="container">
+            <h1>Küldd el a véleményed!</h1>
+            <?php if (isset($_SESSION['uzenet'])): ?>
+                <p class="alert"><?php echo htmlspecialchars($_SESSION['uzenet']); ?></p>
+                <?php unset($_SESSION['uzenet']); ?>
+            <?php endif; ?>
+            <form method="POST" action="visszajelzesek.php" class="feedback-form">
+                <div class="form-group">
+                    <label for="megelegedettseg">Mennyire elégedett? (1-5 csillag)</label>
+                    <div class="rating">
+                        <span class="star" data-value="1">★</span>
+                        <span class="star" data-value="2">★</span>
+                        <span class="star" data-value="3">★</span>
+                        <span class="star" data-value="4">★</span>
+                        <span class="star" data-value="5">★</span>
+                    </div>
+                    <input type="hidden" id="megelegedettseg" name="megelegedettseg" required>
+                </div>
+                <div class="form-group">
+                    <label for="visszajelzes">Visszajelzés szövege</label>
+                    <textarea id="visszajelzes" name="visszajelzes" rows="5" required placeholder="Írd meg a véleményed..."></textarea>
+                </div>
+                <div class="form-group">
+                    <div class="recaptcha-wrapper">
+                        <div class="g-recaptcha" data-sitekey="6Lf0bsoqAAAAADgj9B0eBgXozNmq1q2vYqEMXzvb" data-theme="dark"></div>
+                    </div>
+                </div>
+                <button type="submit" class="feedback-btn">Küldés</button>
+            </form>
+        </div>
+    </section>
+
+    <!-- Feedback Display Section -->
+    <section class="feedback-display">
+        <div class="container">
+            <h2>Mit mondanak rólunk?</h2>
+            <?php if (count($velemenyek) >= 3): ?>
+                <div class="feedback-grid">
+                    <?php foreach ($velemenyek as $row): ?>
+                        <div class="feedback-card">
+                            <div class="feedback-content">
+                                <p class="feedback-text">"<?php echo htmlspecialchars($row['velemeny_szoveg']); ?>"</p>
+                                <p class="feedback-author">- <?php echo htmlspecialchars($row['felhasznalo_nev']); ?></p>
+                                <p class="feedback-rating">Értékelés: <?php echo str_repeat("⭐", $row['ertekeles']); ?></p>
                             </div>
                         </div>
-                    </div>
-                <?php endforeach; ?>
-            </div>
-        <?php else: ?>
-            <p class="text-muted">Légy az elsők között, aki visszajelzést küld!</p>
-        <?php endif; ?>
-    </div>
+                    <?php endforeach; ?>
+                </div>
+            <?php else: ?>
+                <p class="text-muted">Légy az elsők között, aki visszajelzést küld!</p>
+            <?php endif; ?>
+        </div>
+    </section>
+    <script src="../js/navbar.js"></script>
 </body>
-
 </html>

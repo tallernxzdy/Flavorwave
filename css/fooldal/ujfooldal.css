@@ -14,20 +14,17 @@
 }
 
 body {
-    background: linear-gradient(135deg, var(--primary-beige), var(--light-gray));
+    background-color: var(--primary-beige); /* Változtatás */
     color: var(--dark-black);
     font-family: 'Poppins', sans-serif;
     line-height: 1.6;
     overflow-x: hidden;
 }
 
-
-
-
 /* Feedback */
 .feedback-section {
     padding: 3rem;
-    background: var(--light-gray);
+    background: var(--primary-beige);
     text-align: center;
 }
 
@@ -39,6 +36,7 @@ body {
     text-decoration: none;
     font-weight: 600;
     transition: var(--transition);
+    font-size: 1rem;
 }
 
 .primary-bttn:hover {
@@ -47,132 +45,37 @@ body {
     transform: translateY(-3px);
 }
 
-
-
-
-
-/* section */
-/* Why Us Section */
-.why-us {
-padding: 80px 50px 50px 50px;
-background: var(--dark-black); /* Matches your dark theme */
-text-align: center;
-position: relative; /* For the beige line positioning */
-}
-
-.why-us h3 {
-font-size: 2rem; /* Slightly larger for modernity */
-font-weight: 800;
-margin-bottom: 40px;
-color: var(--primary-beige); /* Beige for consistency */
-text-transform: uppercase;
-letter-spacing: 2px;
-text-shadow: 2px 2px 5px var(--shadow-color);
-}
-
-.features {
-display: flex;
-justify-content: center;
-gap: 50px;
-flex-wrap: wrap;
-}
-
-.feature {
-text-align: center;
-width: 220px; /* Slightly wider for balance */
-transition: var(--transition);
-}
-
-.feature:hover {
-transform: translateY(-10px); /* Hover effect for interactivity */
-}
-
-.feature .icon {
-font-size: 3rem; /* Larger icons */
-color: var(--accent-gold); /* Gold instead of orange to match theme */
-margin-bottom: 15px;
-animation: pulse 2s infinite ease-in-out;
-display: inline-block;
-}
-
-.feature p {
-font-size: 1.2rem; /* Slightly larger text */
-color: var(--primary-beige); /* Beige text */
-font-weight: 600;
-}
-
-/* Beige Line Before Footer */
-.why-us::after {
-content: '';
-position: absolute;
-bottom: 0;
-left: 50%;
-transform: translateX(-50%);
-width: 80%; /* Wide but not full-width for style */
-height: 4px; /* Thicker for visibility */
-background: var(--primary-beige);
-box-shadow: 0 2px 10px rgba(245, 232, 199, 0.5); /* Subtle glow */
-}
-
-/* Pulse Animation (already in your code, just ensuring it's defined) */
-@keyframes pulse {
-0% { transform: scale(1); }
-50% { transform: scale(1.1); }
-100% { transform: scale(1); }
-}
-
-/* Footer */
-.footer {
-    background: var(--dark-black);
-    color: var(--primary-beige);
-    padding: 3rem 2rem;
-    text-align: center;
-}
-
-.footer-links {
-    list-style: none;
-    display: flex;
-    justify-content: center;
-    gap: 2rem;
-    margin-bottom: 1.5rem;
-}
-
-.footer-links a {
-    color: var(--accent-gold);
-    text-decoration: none;
-    font-weight: 600;
-    transition: var(--transition);
-}
-
-.footer-links a:hover {
-    color: var(--primary-beige);
-    transform: translateY(-3px);
-}
-
-.footer-socials a {
-    color: var(--primary-beige);
-    margin: 0 1.5rem;
-    font-size: 2rem;
-    transition: var(--transition);
-}
-
-.footer-socials a:hover {
-    color: var(--accent-gold);
-    transform: scale(1.2);
-}
-
-@keyframes fadeIn {
-    from { opacity: 0; }
-    to { opacity: 1; }
-}
-
 @media (max-width: 768px) {
-    nav { padding: 1rem; }
-    .navbar-center, .navbar-buttons { display: none; }
-    .hamburger { display: block; }
-    .menubar.active { display: block; }
-    .hero-content h1 { font-size: 3rem; }
-    .hero-content p { font-size: 1.2rem; }
-    .sliders-container { flex-direction: column; }
-    .prev, .next, .shaker-prev, .shaker-next { padding: 0.8rem; }
+    .feedback-section {
+        padding: 2rem 1rem;
+    }
+
+    .primary-bttn {
+        padding: 0.75rem 1.5rem;
+        border-radius: 20px;
+        font-size: 0.9rem;
+    }
+}
+
+@media (max-width: 576px) {
+    .feedback-section {
+        padding: 1.5rem 0.5rem;
+    }
+
+    .primary-bttn {
+        padding: 0.6rem 1.2rem;
+        border-radius: 15px;
+        font-size: 0.8rem;
+    }
+}
+
+@media (max-width: 320px) {
+    .feedback-section {
+        padding: 1rem 0.25rem;
+    }
+
+    .primary-bttn {
+        padding: 0.5rem 1rem;
+        font-size: 0.7rem;
+    }
 }

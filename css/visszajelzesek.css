@@ -1,85 +1,455 @@
+/* Globális stílusok */
 body {
     background-color: #121212;
-    color: #e0e0e0;
+    color: var(--primary-beige, #f5e8c7);
     font-family: 'Poppins', sans-serif;
+    margin: 0;
 }
 
-.container {
-    background-color: #1e1e1e;
-    padding: 20px;
+/* Változók a konzisztens színekhez */
+:root {
+    --dark-black: #121212;
+    --primary-beige: #f5e8c7;
+    --accent-gold: #d4a373;
+    --shadow-color: rgba(0, 0, 0, 0.5);
+    --transition: all 0.3s ease;
+}
+
+/* Feedback Form Section */
+.feedback-section {
+    background: var(--dark-black);
+    padding: clamp(2rem, 5vw, 4rem) clamp(1rem, 3vw, 2rem);
+    text-align: center;
+    animation: fadeIn 1s ease-in-out;
+}
+
+.feedback-section .container {
+    background: #1e1e1e;
+    padding: clamp(1.5rem, 3vw, 2rem);
+    border-radius: 20px;
+    box-shadow: 0 10px 30px var(--shadow-color);
+    border: 2px solid var(--accent-gold);
+}
+
+.feedback-section h1 {
+    color: var(--accent-gold);
+    font-size: clamp(1.5rem, 4vw, 2.5rem);
+    font-weight: 800;
+    text-transform: uppercase;
+    letter-spacing: 2px;
+    text-shadow: 2px 2px 5px var(--shadow-color);
+    margin-bottom: clamp(1rem, 2vw, 1.5rem);
+}
+
+.feedback-form {
+    max-width: 600px;
+    margin: 0 auto;
+    display: flex;
+    flex-direction: column;
+    gap: clamp(1rem, 2vw, 1.5rem);
+}
+
+.form-group {
+    display: flex;
+    flex-direction: column;
+    text-align: left;
+}
+
+.form-group label {
+    font-size: clamp(0.9rem, 1.5vw, 1.1rem);
+    font-weight: 600;
+    margin-bottom: clamp(0.3rem, 0.5vw, 0.5rem);
+    color: var(--primary-beige);
+}
+
+.form-group textarea {
+    background: var(--primary-beige);
+    color: var(--dark-black);
+    border: 2px solid var(--accent-gold);
     border-radius: 10px;
-    box-shadow: 0 4px 8px rgba(0, 0, 0, 0.3);
+    padding: clamp(0.5rem, 1vw, 0.8rem);
+    font-size: clamp(0.8rem, 1.5vw, 1rem);
+    font-weight: 500;
+    transition: var(--transition);
+    box-shadow: 0 2px 10px var(--shadow-color);
+    min-height: clamp(100px, 20vw, 150px);
+    resize: none;
 }
 
-h1, h2 {
-    color: #ffffff;
+.form-group textarea:focus {
+    outline: none;
+    border-color: var(--primary-beige);
+    box-shadow: 0 5px 15px rgba(245, 232, 199, 0.3);
 }
 
-p {
-    color: #b0b0b0;
-}
-
-form {
-    background-color: #1e1e1e;
-    padding: 20px;
-    border-radius: 10px;
-}
-
-input, select, textarea {
-    background-color: #2c2c2c;
-    color: #ffffff;
-    border: 1px solid #444;
-    padding: 10px;
-    border-radius: 5px;
-    width: 100%;
-}
-
-button {
-    background-color: #6200ea;
-    color: #ffffff;
-    padding: 10px 15px;
-    border: none;
-    border-radius: 5px;
-    cursor: pointer;
-    transition: background 0.3s;
-}
-
-button:hover {
-    background-color: #3700b3;
-}
-
-.card {
-    background-color: #1e1e1e;
-    border: none;
-    color: #e0e0e0;
-}
-
-.alert {
-    background-color: #2c2c2c;
-    color: #ffcc00;
-    border: 1px solid #ffeb3b;
-}
-
-.text-muted {
-    color: #757575 !important;
-}
-
+/* Csillagos értékelés */
 .rating {
-    font-size: 2em;
+    font-size: clamp(1.5rem, 3vw, 2rem);
     color: #ccc;
     cursor: pointer;
+    display: flex;
+    justify-content: center;
+    gap: 0.5rem;
+    margin: clamp(0.5rem, 1vw, 1rem) 0;
 }
 
 .rating .star {
-    transition: color 0.2s;
+    transition: var(--transition);
 }
 
 .rating .star:hover,
 .rating .star.active {
-    color: #ffcc00;
+    color: var(--accent-gold);
+    animation: pulseStar 0.5s ease-in-out;
 }
 
+@keyframes pulseStar {
+    0% { transform: scale(1); }
+    50% { transform: scale(1.2); }
+    100% { transform: scale(1); }
+}
 
-textarea{
-    resize: none;
+/* reCAPTCHA reszponzív dizájn */
+.recaptcha-wrapper {
+    display: flex;
+    justify-content: center;
+    margin: clamp(0.5rem, 1vw, 1rem) 0;
+    width: 100%;
+}
+
+.g-recaptcha {
+    display: inline-block;
+    transform-origin: center;
+    transform: scale(1); /* Alapértelmezett méret */
+}
+
+/* Küldés gomb */
+.feedback-btn {
+    background: var(--accent-gold);
+    color: var(--dark-black);
+    padding: clamp(0.5rem, 1vw, 0.8rem) clamp(1rem, 2vw, 1.5rem);
+    border: none;
+    border-radius: 50px;
+    font-size: clamp(0.8rem, 1.5vw, 1rem);
+    font-weight: 800;
+    text-transform: uppercase;
+    cursor: pointer;
+    transition: var(--transition);
+    box-shadow: 0 5px 20px rgba(212, 163, 115, 0.5);
+    position: relative;
+    overflow: hidden;
+}
+
+.feedback-btn::before {
+    content: '';
+    position: absolute;
+    top: 50%;
+    left: 50%;
+    width: 0;
+    height: 0;
+    background: rgba(255, 255, 255, 0.3);
+    border-radius: 50%;
+    transform: translate(-50%, -50%);
+    transition: width 0.6s ease, height 0.6s ease;
+    z-index: 0;
+}
+
+.feedback-btn:hover::before {
+    width: 300%;
+    height: 300%;
+}
+
+.feedback-btn:hover {
+    transform: scale(1.05);
+    background: var(--primary-beige);
+    color: var(--dark-black);
+    box-shadow: 0 10px 30px rgba(245, 232, 199, 0.7);
+}
+
+/* Feedback Display Section */
+.feedback-display {
+    background: var(--dark-black);
+    padding: clamp(2rem, 5vw, 4rem) clamp(1rem, 3vw, 2rem);
+    text-align: center;
+}
+
+.feedback-display .container {
+    background: #1e1e1e;
+    padding: clamp(1.5rem, 3vw, 2rem);
+    border-radius: 20px;
+    box-shadow: 0 10px 30px var(--shadow-color);
+    border: 2px solid var(--accent-gold);
+}
+
+.feedback-display h2 {
+    color: var(--accent-gold);
+    font-size: clamp(1.5rem, 4vw, 2rem);
+    font-weight: 800;
+    text-transform: uppercase;
+    letter-spacing: 2px;
+    text-shadow: 2px 2px 5px var(--shadow-color);
+    margin-bottom: clamp(1.5rem, 3vw, 2rem);
+}
+
+.feedback-grid {
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
+    gap: clamp(1rem, 2vw, 1.5rem);
+}
+
+.feedback-card {
+    background: #1e1e1e;
+    border: 2px solid var(--accent-gold);
+    border-radius: 15px;
+    padding: clamp(1rem, 2vw, 1.5rem);
+    box-shadow: 0 5px 20px var(--shadow-color);
+    transition: var(--transition);
+    animation: fadeIn 1s ease-in-out;
+}
+
+.feedback-card:hover {
+    transform: translateY(-5px);
+    box-shadow: 0 10px 30px rgba(212, 163, 115, 0.3);
+}
+
+.feedback-content {
+    text-align: center;
+}
+
+.feedback-text {
+    font-size: clamp(0.9rem, 1.5vw, 1.1rem);
+    color: var(--primary-beige);
+    font-style: italic;
+    margin-bottom: clamp(0.5rem, 1vw, 1rem);
+}
+
+.feedback-author {
+    font-size: clamp(0.8rem, 1.3vw, 1rem);
+    color: var(--accent-gold);
+    font-weight: 600;
+    margin-bottom: clamp(0.3rem, 0.5vw, 0.5rem);
+}
+
+.feedback-rating {
+    font-size: clamp(0.8rem, 1.3vw, 1rem);
+    color: var(--primary-beige);
+}
+
+.feedback-rating .star {
+    color: var(--accent-gold);
+}
+
+/* Üzenetek */
+.alert {
+    background: #2c2c2c;
+    color: var(--accent-gold);
+    border: 1px solid var(--accent-gold);
+    padding: clamp(0.5rem, 1vw, 1rem);
+    border-radius: 10px;
+    margin-bottom: clamp(1rem, 2vw, 1.5rem);
+    text-align: center;
+}
+
+.text-muted {
+    color: #757575 !important;
+    font-size: clamp(0.9rem, 1.5vw, 1.1rem);
+}
+
+/* Animációk */
+@keyframes fadeIn {
+    from { opacity: 0; }
+    to { opacity: 1; }
+}
+
+@keyframes pulseStar {
+    0% { transform: scale(1); }
+    50% { transform: scale(1.2); }
+    100% { transform: scale(1); }
+}
+
+/* Reszponzív töréspontok */
+@media (max-width: 768px) {
+    .feedback-section,
+    .feedback-display {
+        padding: clamp(1.5rem, 4vw, 3rem) clamp(0.8rem, 2vw, 1.5rem);
+    }
+
+    .feedback-section .container,
+    .feedback-display .container {
+        padding: clamp(1rem, 2vw, 1.5rem);
+    }
+
+    .feedback-section h1,
+    .feedback-display h2 {
+        font-size: clamp(1.3rem, 3.5vw, 1.8rem);
+        margin-bottom: clamp(1rem, 2vw, 1.5rem);
+    }
+
+    .feedback-form {
+        gap: clamp(0.8rem, 1.5vw, 1.2rem);
+    }
+
+    .form-group label {
+        font-size: clamp(0.8rem, 1.3vw, 1rem);
+        margin-bottom: clamp(0.2rem, 0.4vw, 0.4rem);
+    }
+
+    .form-group textarea {
+        padding: clamp(0.4rem, 0.8vw, 0.6rem);
+        font-size: clamp(0.75rem, 1.3vw, 0.9rem);
+        min-height: clamp(80px, 18vw, 120px);
+    }
+
+    .rating {
+        font-size: clamp(1.2rem, 2.5vw, 1.8rem);
+    }
+
+    .recaptcha-wrapper {
+        margin: clamp(0.4rem, 0.8vw, 0.8rem) 0;
+    }
+
+    .g-recaptcha {
+        transform: scale(0.9); /* 90%-os méret */
+    }
+
+    .feedback-btn {
+        padding: clamp(0.4rem, 0.8vw, 0.6rem) clamp(0.8rem, 1.5vw, 1.2rem);
+        font-size: clamp(0.75rem, 1.3vw, 0.9rem);
+    }
+
+    .feedback-grid {
+        grid-template-columns: 1fr;
+        gap: clamp(0.8rem, 1.5vw, 1.2rem);
+    }
+
+    .feedback-card {
+        padding: clamp(0.8rem, 1.5vw, 1.2rem);
+    }
+
+    .feedback-text {
+        font-size: clamp(0.8rem, 1.3vw, 1rem);
+    }
+
+    .feedback-author,
+    .feedback-rating {
+        font-size: clamp(0.75rem, 1.2vw, 0.9rem);
+    }
+}
+
+@media (max-width: 480px) {
+    .feedback-section,
+    .feedback-display {
+        padding: clamp(1rem, 3vw, 2rem) clamp(0.6rem, 1.5vw, 1rem);
+    }
+
+    .feedback-section .container,
+    .feedback-display .container {
+        padding: clamp(0.8rem, 1.5vw, 1rem);
+    }
+
+    .feedback-section h1,
+    .feedback-display h2 {
+        font-size: clamp(1.2rem, 3vw, 1.5rem);
+        margin-bottom: clamp(0.8rem, 1.5vw, 1rem);
+    }
+
+    .feedback-form {
+        gap: clamp(0.6rem, 1vw, 1rem);
+    }
+
+    .form-group label {
+        font-size: clamp(0.7rem, 1.2vw, 0.9rem);
+        margin-bottom: clamp(0.15rem, 0.3vw, 0.3rem);
+    }
+
+    .form-group textarea {
+        padding: clamp(0.3rem, 0.6vw, 0.5rem);
+        font-size: clamp(0.7rem, 1.2vw, 0.85rem);
+        min-height: clamp(60px, 15vw, 100px);
+    }
+
+    .rating {
+        font-size: clamp(1rem, 2vw, 1.5rem);
+    }
+
+    .recaptcha-wrapper {
+        margin: clamp(0.3rem, 0.6vw, 0.6rem) 0;
+    }
+
+    .g-recaptcha {
+        transform: scale(0.85); /* 85%-os méret */
+    }
+
+    .feedback-btn {
+        padding: clamp(0.3rem, 0.6vw, 0.5rem) clamp(0.6rem, 1.2vw, 1rem);
+        font-size: clamp(0.7rem, 1.2vw, 0.85rem);
+    }
+
+    .feedback-text {
+        font-size: clamp(0.75rem, 1.2vw, 0.9rem);
+    }
+
+    .feedback-author,
+    .feedback-rating {
+        font-size: clamp(0.7rem, 1vw, 0.85rem);
+    }
+}
+
+@media (max-width: 360px) {
+    .feedback-section,
+    .feedback-display {
+        padding: clamp(0.8rem, 2vw, 1.5rem) clamp(0.5rem, 1vw, 0.8rem);
+    }
+
+    .feedback-section .container,
+    .feedback-display .container {
+        padding: clamp(0.6rem, 1vw, 0.8rem);
+    }
+
+    .feedback-section h1,
+    .feedback-display h2 {
+        font-size: clamp(1rem, 2.5vw, 1.3rem);
+        margin-bottom: clamp(0.6rem, 1vw, 0.8rem);
+    }
+
+    .feedback-form {
+        gap: clamp(0.5rem, 0.8vw, 0.8rem);
+    }
+
+    .form-group label {
+        font-size: clamp(0.65rem, 1vw, 0.8rem);
+        margin-bottom: clamp(0.1rem, 0.2vw, 0.2rem);
+    }
+
+    .form-group textarea {
+        padding: clamp(0.25rem, 0.5vw, 0.4rem);
+        font-size: clamp(0.65rem, 1vw, 0.8rem);
+        min-height: clamp(50px, 12vw, 80px);
+    }
+
+    .rating {
+        font-size: clamp(0.9rem, 1.8vw, 1.3rem);
+    }
+
+    .recaptcha-wrapper {
+        margin: clamp(0.2rem, 0.5vw, 0.5rem) 0;
+    }
+
+    .g-recaptcha {
+        transform: scale(0.77); /* 77%-os méret */
+    }
+
+    .feedback-btn {
+        padding: clamp(0.25rem, 0.5vw, 0.4rem) clamp(0.5rem, 1vw, 0.8rem);
+        font-size: clamp(0.65rem, 1vw, 0.8rem);
+    }
+
+    .feedback-text {
+        font-size: clamp(0.7rem, 1vw, 0.85rem);
+    }
+
+    .feedback-author,
+    .feedback-rating {
+        font-size: clamp(0.65rem, 0.9vw, 0.8rem);
+    }
 }
