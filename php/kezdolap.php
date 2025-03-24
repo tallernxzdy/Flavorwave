@@ -23,7 +23,7 @@ session_start();
     <link rel="stylesheet" href="../css/fooldal/shakek.css">
     <link rel="stylesheet" href="../css/fooldal/whyus.css">
     <link rel="stylesheet" href="../css/footer.css">
-    <!-- <link rel="stylesheet" href="../css/fooldal/nepszeruetelek.css"> -->
+    <link rel="stylesheet" href="../css/fooldal/nepszeruetelek.css">
     <script src="https://unpkg.com/aos@2.3.1/dist/aos.js"></script>
 
     <title>FlavorWave</title>
