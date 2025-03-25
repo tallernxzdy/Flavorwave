@@ -1,25 +1,35 @@
+:root {
+    --primary-beige: #F5E8C7;
+    --dark-black: #1A1A1A;
+    --accent-gold: #D4A373;
+    --transition: all 0.4s ease;
+}
+
 /* Footer */
 .footer {
     background: var(--dark-black);
     color: var(--primary-beige);
-    padding: clamp(1.5rem, 4vw, 3rem) clamp(1rem, 2vw, 2rem); /* Dinamikus padding */
+    padding: clamp(1.5rem, 4vw, 3rem) clamp(1rem, 2vw, 2rem);
     text-align: center;
+    width: 100%;
+    flex-shrink: 0;
+    margin-top: auto;
 }
 
 .footer-links {
     list-style: none;
     display: flex;
     justify-content: center;
-    flex-wrap: wrap; /* Biztosítjuk, hogy a linkek egymás alá kerüljenek, ha nem férnek el */
-    gap: clamp(1rem, 2vw, 2rem); /* Dinamikus gap */
-    margin-bottom: clamp(1rem, 2vw, 1.5rem); /* Dinamikus margó */
+    flex-wrap: wrap;
+    gap: clamp(1rem, 2vw, 2rem);
+    margin-bottom: clamp(1rem, 2vw, 1.5rem);
 }
 
 .footer-links a {
     color: var(--accent-gold);
     text-decoration: none;
     font-weight: 600;
-    font-size: clamp(0.8rem, 1.5vw, 1rem); /* Dinamikus betűméret */
+    font-size: clamp(0.8rem, 1.5vw, 1rem);
     transition: var(--transition);
 }
 
@@ -30,8 +40,8 @@
 
 .footer-socials a {
     color: var(--primary-beige);
-    margin: 0 clamp(0.8rem, 1.5vw, 1.5rem); /* Dinamikus margó */
-    font-size: clamp(1.2rem, 3vw, 2rem); /* Dinamikus ikon méret */
+    margin: 0 clamp(0.8rem, 1.5vw, 1.5rem);
+    font-size: clamp(1.2rem, 3vw, 2rem);
     transition: var(--transition);
 }
 
