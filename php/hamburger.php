@@ -16,8 +16,8 @@ session_start();
     <title>FlavorWave - Hamburgerek</title>
     <link rel="stylesheet" href="../css/navbar.css">
     <link rel="stylesheet" href="../css/footer.css">
-    <link rel="stylesheet" href="../css/kategoriaelemek.css">
-    <link rel="stylesheet" href="../css/menu.css">
+    <!-- <link rel="stylesheet" href="../css/kategoriak.css">
+    <link rel="stylesheet" href="../css/menu.css"> -->
 </head>
 
 <body>
