@@ -1,11 +1,11 @@
 <?php
-session_start(); // Session kezelés
+session_start();
 
 // PHPMailer betöltése
 use PHPMailer\PHPMailer\PHPMailer;
 use PHPMailer\PHPMailer\Exception;
 
-require '../vendor/autoload.php'; // Composer autoload fájl betöltése
+require '../vendor/autoload.php';
 
 // Adatbázis kapcsolat
 $servername = "localhost";
@@ -18,131 +18,135 @@ if ($conn->connect_error) {
     die("Kapcsolódási hiba: " . $conn->connect_error);
 }
 
-// Hibák tárolására szolgáló változó
+// Hibák és sikerüzenetek
 $errors = [];
 $success_message = "";
 
 if ($_SERVER["REQUEST_METHOD"] == "POST") {
-    $felhasznalonev = $_POST['username'];
-    $email = $_POST['email'];
-    $jelszo = $_POST['password'];
-    $tel_szam = $_POST['phone'];
+    // Adatok tisztítása
+    $felhasznalonev = trim($_POST['username']);
+    $email = trim($_POST['email']);
+    $jelszo = trim($_POST['password']);
+    $tel_szam = trim($_POST['phone']);
 
-    // Ellenőrizzük, hogy minden mező ki van-e töltve
+    // Validációk
     if (empty($felhasznalonev)) {
         $errors[] = "A felhasználónév nem lehet üres!";
+    } elseif (strlen($felhasznalonev) < 4) {
+        $errors[] = "A felhasználónévnek legalább 4 karakter hosszúnak kell lennie!";
     }
+
     if (empty($email)) {
         $errors[] = "Az email cím nem lehet üres!";
+    } elseif (!filter_var($email, FILTER_VALIDATE_EMAIL)) {
+        $errors[] = "Érvénytelen email cím formátum!";
     }
+
     if (empty($jelszo)) {
         $errors[] = "A jelszó nem lehet üres!";
+    } elseif (strlen($jelszo) < 8) {
+        $errors[] = "A jelszónak legalább 8 karakter hosszúnak kell lennie!";
+    } elseif (!preg_match("/[0-9]/", $jelszo)) {
+        $errors[] = "A jelszónak tartalmaznia kell legalább egy számot!";
+    } elseif (!preg_match("/[a-zA-Z]/", $jelszo)) {
+        $errors[] = "A jelszónak tartalmaznia kell legalább egy betűt!";
     }
+
     if (empty($tel_szam)) {
         $errors[] = "A telefonszám nem lehet üres!";
+    } elseif (!preg_match("/^(06|\+36)[0-9]{8,9}$/", $tel_szam)) {
+        $errors[] = "Érvénytelen telefonszám! Használj 06 vagy +36 kezdést és 8-9 számjegyet!";
     }
 
-    // Email formátum ellenőrzése
-    if (!filter_var($email, FILTER_VALIDATE_EMAIL)) {
-        $errors[] = "Érvénytelen email cím!";
-    }
-
-    // Telefonszám formátum ellenőrzése (06 vagy +36 kezdetű)
-    if (!preg_match("/^(06|\+36)[0-9]{9}$/", $tel_szam)) {
-        $errors[] = "Érvénytelen telefonszám! A telefonszámnak 06 vagy +36 előtaggal kell kezdődnie, és 9 számjegyből kell állnia.";
-    }
-
-    // Ha nincsenek hibák, akkor próbáljuk meg ellenőrizni, hogy már létezik-e ilyen felhasználó
-    if (count($errors) == 0) {
-        // Ellenőrizzük, hogy a felhasználónév, email cím, és telefonszám már létezik-e
-        $sql = "SELECT * FROM felhasznalo WHERE felhasznalo_nev = ? OR email_cim = ? OR tel_szam = ?";
+    // Ha nincsenek hibák, folytatjuk
+    if (empty($errors)) {
+        // Ellenőrizzük, hogy a felhasználónév/email/tel.szám már létezik-e
+        $sql = "SELECT felhasznalo_nev, email_cim, tel_szam FROM felhasznalo WHERE felhasznalo_nev = ? OR email_cim = ? OR tel_szam = ?";
         $stmt = $conn->prepare($sql);
         $stmt->bind_param("sss", $felhasznalonev, $email, $tel_szam);
         $stmt->execute();
         $result = $stmt->get_result();
 
         if ($result->num_rows > 0) {
-            // Ha van találat, akkor megjelenítjük, hogy miért nem regisztrálhat
             while ($row = $result->fetch_assoc()) {
-                if ($row['felhasznalo_nev'] == $felhasznalonev) {
-                    $errors[] = "Ez a felhasználónév már létezik!";
+                if ($row['felhasznalo_nev'] === $felhasznalonev) {
+                    $errors[] = "Ez a felhasználónév már foglalt!";
+                    break;
                 }
-                if ($row['email_cim'] == $email) {
+                if ($row['email_cim'] === $email) {
                     $errors[] = "Ez az email cím már regisztrálva van!";
+                    break;
                 }
-                if ($row['tel_szam'] == $tel_szam) {
+                if ($row['tel_szam'] === $tel_szam) {
                     $errors[] = "Ez a telefonszám már regisztrálva van!";
+                    break;
                 }
             }
         }
 
-        // Ha nincs hiba, akkor beszúrjuk az új felhasználót
-        if (count($errors) == 0) {
-            // Jelszó hashelése
+        // Ha még mindig nincsenek hibák, regisztráljuk a felhasználót
+        if (empty($errors)) {
             $hashedPassword = password_hash($jelszo, PASSWORD_DEFAULT);
-
+            
             $sql = "INSERT INTO felhasznalo (felhasznalo_nev, email_cim, jelszo, tel_szam) VALUES (?, ?, ?, ?)";
             $stmt = $conn->prepare($sql);
             $stmt->bind_param("ssss", $felhasznalonev, $email, $hashedPassword, $tel_szam);
 
             if ($stmt->execute()) {
-                // Sikeres regisztráció üzenete
                 $success_message = "Sikeres regisztráció! <a href='bejelentkezes.php'>Bejelentkezés</a>";
-
-                // PHPMailer inicializálása
-                $mail = new PHPMailer(true);
-
+                
+                // Email küldése
                 try {
-                    // SMTP beállítások (Gmail példa)
+                    $mail = new PHPMailer(true);
+                    
+                    // SMTP beállítások
                     $mail->isSMTP();
-                    $mail->Host = 'smtp.gmail.com'; // Gmail SMTP szerver
+                    $mail->Host = 'smtp.gmail.com';
                     $mail->SMTPAuth = true;
-                    $mail->Username = 'flavorwavereal@gmail.com'; // A te Gmail címed
-                    $mail->Password = 'awch ocfs ldcr hded'; // Gmail alkalmazás-specifikus jelszó (lásd lent)
+                    $mail->Username = 'flavorwavereal@gmail.com';
+                    $mail->Password = 'awch ocfs ldcr hded';
                     $mail->SMTPSecure = PHPMailer::ENCRYPTION_STARTTLS;
-                    $mail->CharSet = "UTF-8";
                     $mail->Port = 587;
-
-                    // Email beállítások
-                    $mail->setFrom('flavorwavereal@gmail.com', 'FlavorWave');
-                    $mail->addAddress($email, $felhasznalonev); // Címzett
-                    $mail->addReplyTo('flavorwavereal@gmail.com', 'FlavorWave');
-
-                    // Tartalom
-                    $mail->isHTML(false); // Egyszerű szövegként küldjük
                     $mail->CharSet = 'UTF-8';
-                    $mail->Subject = 'Sikeres regisztráció a FlavorWave-en!';
-                    $mail->Body = "Kedves $felhasznalonev!\n\n" .
-                                  "Köszönjük, hogy regisztráltál a FlavorWave oldalán!\n" .
-                                  "Sikeresen létrehoztuk a fiókodat. Mostantól bejelentkezhetsz az alábbi adatokkal:\n" .
-                                  "Felhasználónév: $felhasznalonev\n" .
-                                  "Email: $email\n\n" .
-                                  "Kérjük, tartsd biztonságban a jelszavadat.\n" .
-                                  "Jó étvágyat kívánunk a FlavorWave kínálatához!\n\n" .
-                                  "Üdvözlettel,\n" .
-                                  "A FlavorWave Csapata";
-
-                    // Email küldése
+                    
+                    // Email tartalom
+                    $mail->setFrom('flavorwavereal@gmail.com', 'FlavorWave');
+                    $mail->addAddress($email, $felhasznalonev);
+                    
+                    $mail->isHTML(true);
+                    $mail->Subject = 'Sikeres regisztráció - FlavorWave';
+                    
+                    $mail->Body = "
+                        <h2>Köszönjük, hogy regisztráltál a FlavorWave-nél!</h2>
+                        <p>Az alábbi adatokkal jelentkezhetsz be:</p>
+                        <p><strong>Felhasználónév:</strong> $felhasznalonev</p>
+                        <p><strong>Email cím:</strong> $email</p>
+                        <p>Most már <a href='http://localhost/flavorwave/bejelentkezes.php'>bejelentkezhetsz</a> és elkezdheted a rendelést!</p>
+                        <p>Üdvözlettel,<br>FlavorWave Csapat</p>
+                    ";
+                    
+                    $mail->AltBody = "Köszönjük regisztrációdat!\n\nFelhasználónév: $felhasznalonev\nEmail: $email\n\nBejelentkezés: http://localhost/flavorwave/bejelentkezes.php";
+                    
                     $mail->send();
-                    $success_message .= "<br>Email értesítést küldtünk a megadott címre!";
+                    $success_message .= "<br>Elküldtünk egy megerősítő emailt a megadott címre!";
                 } catch (Exception $e) {
-                    $errors[] = "Hiba történt az email küldése során: {$mail->ErrorInfo}";
+                    // Nem adjuk hozzá a hibát a $errors tömbhöz, mert a regisztráció sikeres volt
+                    // Csak logolhatnánk ezt a hibát
                 }
             } else {
-                $errors[] = "Hiba történt a regisztráció során: " . $stmt->error;
+                $errors[] = "Hiba történt a regisztráció során. Kérjük, próbáld újra később.";
             }
-
-            $stmt->close();
         }
+        
+        $stmt->close();
     }
-
+    
     $conn->close();
 }
 ?>
 
 <!DOCTYPE html>
 <html lang="hu">
-
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
@@ -152,22 +156,20 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.15.4/css/all.min.css">
     <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/css/bootstrap.min.css" rel="stylesheet">
     <link rel="stylesheet" href="../css/regisztracio.css">
-    <link rel="stylesheet" href="../css/style.css">
     <link rel="stylesheet" href="../css/navbar.css">
     <link rel="stylesheet" href="../css/footer.css">
 </head>
-
 <body>
     <nav>
-        <!-- Bal oldalon a logó -->
+        <!-- Navbar tartalom (ugyanaz, mint az eredeti kódban) -->
         <a href="kezdolap.php" class="logo">
             <img src="../kepek/logo.png" alt="Flavorwave Logo">
             <h1>FlavorWave</h1>
         </a>
 
-        <!-- Középen a kategóriák (és Admin felület, ha jogosult) -->
         <div class="navbar-center">
             <a href="kategoria.php">Menü</a>
+            <a href="rendeles_megtekintes.php" class="order-button">Rendeléseim</a>
             <?php if (isset($_SESSION["jog_szint"]) && $_SESSION["jog_szint"] == 1): ?>
                 <a href="admin_felulet.php">Admin felület</a>
             <?php endif; ?>
@@ -176,20 +178,18 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
             <?php endif; ?>
         </div>
 
-        <!-- Jobb oldalon a gombok -->
         <div class="navbar-buttons">
             <?php if (isset($_SESSION["felhasznalo_nev"])): ?>
                 <a href="kijelentkezes.php" class="login-btn">Kijelentkezés</a>
             <?php else: ?>
                 <a href="bejelentkezes.php" class="login-btn">Bejelentkezés</a>
             <?php endif; ?>
-            <a href="rendeles_megtekintes.php" class="order-btn">Rendeléseim</a>
+            
             <a href="kosar.php" class="cart-btn">
-                <i class='fas fa-shopping-cart cart-icon'></i>
+                <i class='fas fa-shopping-cart cart-icon'></i> Kosár
             </a>
         </div>
 
-        <!-- Hamburger menü ikon -->
         <div class="hamburger" onclick="toggleMenu()">
             <span></span>
             <span></span>
@@ -197,7 +197,6 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
         </div>
     </nav>
 
-    <!-- Hamburger menü tartalma -->
     <div class="menubar" id="menubar">
         <ul>
             <li><a href="kategoria.php">Menü</a></li>
@@ -219,30 +218,39 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
 
         <?php if (!empty($errors)): ?>
             <div class="alert alert-danger">
-                <?php echo $errors[0]; ?>
+                <?= htmlspecialchars($errors[0]) ?>
             </div>
         <?php elseif (!empty($success_message)): ?>
             <div class="alert alert-success">
-                <?php echo $success_message; ?>
+                <?= $success_message ?>
             </div>
         <?php endif; ?>
 
-        <form action="" method="POST">
-            <label for="username">Felhasználónév:</label>
-            <input type="text" name="username" id="username">
+        <form method="POST" action="">
+            <div class="form-group">
+                <label for="username">Felhasználónév:</label>
+                <input type="text" id="username" name="username" value="<?= isset($_POST['username']) ? htmlspecialchars($_POST['username']) : '' ?>">
+            </div>
 
-            <label for="email">Email:</label>
-            <input type="email" name="email" id="email">
+            <div class="form-group">
+                <label for="email">Email cím:</label>
+                <input type="email" id="email" name="email" value="<?= isset($_POST['email']) ? htmlspecialchars($_POST['email']) : '' ?>">
+            </div>
 
-            <label for="password">Jelszó:</label>
-            <input type="password" name="password" id="password">
+            <div class="form-group">
+                <label for="password">Jelszó (min. 8 karakter, szám és betű):</label>
+                <input type="password" id="password" name="password">
+            </div>
 
-            <label for="phone">Telefonszám:</label>
-            <input type="tel" name="phone" id="phone">
+            <div class="form-group">
+                <label for="phone">Telefonszám (06 vagy +36 kezdettel):</label>
+                <input type="tel" id="phone" name="phone" value="<?= isset($_POST['phone']) ? htmlspecialchars($_POST['phone']) : '' ?>">
+            </div>
 
-            <button type="submit" class="btn btn-primary">Regisztrálás</button>
+            <button type="submit">Regisztráció</button>
         </form>
-        <p>Van már fiókja? <a href="bejelentkezes.php">Jelentkezzen be itt</a>.</p>
+
+        <p class="form-footer">Már van fiókod? <a href="bejelentkezes.php">Bejelentkezés</a></p>
     </div>
 
     <div class="footer">
@@ -267,5 +275,4 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
     <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/js/bootstrap.bundle.min.js"></script>
     <script src="../js/navbar.js"></script>
 </body>
-
 </html>

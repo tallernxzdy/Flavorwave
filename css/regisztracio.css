@@ -1,47 +1,49 @@
 /* Alapvető stílusok */
 body {
     font-family: 'Poppins', sans-serif;
-    background-color: #F1F8E9;; /* Világos, sárgás háttérszín */
+    background-color: #F5E8C7;
     display: flex;
     flex-direction: column;
-    align-items: center;
-    justify-content: flex-start;
     min-height: 100vh;
     margin: 0;
-    padding-top: 8em; /* Távolság a navbar-tól */
-    padding-bottom: 0; /* Nincs extra padding a footer előtt */
+    padding-top: 100px; /* Navbar magasságának megfelelő padding */
 }
 
 /* Tartalom konténer */
 .container {
-    background-color: #ffffff;
-    padding: 1.5em;
-    max-width: 350px; /* Kisebb szélesség */
+    background-color: #D4A373;
+    padding: 2em;
+    max-width: 350px;
     width: 90%;
     border-radius: 10px;
-    box-shadow: 0 4px 12px rgba(0, 0, 0, 0.1); /* Finom árnyék */
+    box-shadow: 0 4px 12px rgba(0, 0, 0, 0.1);
     text-align: center;
-    margin: 2em auto; /* Távolság a navbar-tól */
-    height: auto; /* Magasság automatikusan igazodik */
+    margin: 2em auto;
 }
 
 h2 {
-    font-size: 1.6em; /* Kisebb méretű címsor */
-    color: red; /* Narancsszín */
-    margin-bottom: 1em; /* Kisebb margó */
+    font-size: 1.6em;
+    color: #1A1A1A;
+    margin-bottom: 1.5em;
     text-shadow: 0 1px 2px rgba(0, 0, 0, 0.1);
 }
 
 form {
     display: flex;
     flex-direction: column;
-    gap: 0.8em; /* Kevesebb távolság az elemek között */
+    gap: 1.2em;
+}
+
+.form-group {
+    display: flex;
+    flex-direction: column;
+    gap: 0.5em;
+    text-align: left;
 }
 
 label {
-    text-align: left;
     font-weight: 600;
-    color: #424242;
+    color: #1A1A1A;
     font-size: 0.9em;
 }
 
@@ -50,68 +52,100 @@ input[type="email"],
 input[type="password"],
 input[type="tel"] {
     width: 100%;
-    padding: 0.6em; /* Kisebb padding */
+    padding: 0.8em;
     border-radius: 5px;
-    border: 1px solid #ddd;
-    font-size: 0.9em; /* Kisebb betűméret */
+    border: 1px solid rgba(0, 0, 0, 0.1);
+    font-size: 0.9em;
     background: #FFFDE7;
-    transition: border-color 0.3s ease;
+    transition: all 0.3s ease;
 }
 
 input[type="text"]:focus,
 input[type="email"]:focus,
 input[type="password"]:focus,
 input[type="tel"]:focus {
-    border-color: #FF7043; /* Narancs fókusz kiemelés */
+    border-color: #1A1A1A;
     outline: none;
+    box-shadow: 0 0 0 2px rgba(26, 26, 26, 0.2);
 }
 
+/* Gomb stílus */
 button {
     width: 100%;
-    padding: 0.6em; /* Kisebb padding */
-    background-color: red; /* Piros háttérszín */
+    padding: 0.8em;
+    background-color: #1A1A1A;
     color: white;
     font-size: 1em;
     font-weight: bold;
     border: none;
     border-radius: 25px;
     cursor: pointer;
-    transition: transform 0.3s ease, box-shadow 0.3s ease;
+    transition: all 0.3s ease;
+    margin-top: 0.5em;
 }
 
 button:hover {
-    background-color: darkred; /* Sötétebb piros hover állapotban */
-    transform: translateY(-3px);
-    box-shadow: 0px 4px 15px rgba(0, 0, 0, 0.2);
+    background-color: darkred;
+    transform: translateY(-2px);
+    box-shadow: 0 4px 8px rgba(0, 0, 0, 0.2);
 }
 
 /* Linkek */
-p a {
-    color: red; /* Narancs szín */
+.form-footer {
+    margin-top: 1.5em;
+}
+
+.form-footer a {
+    color: #1A1A1A;
     text-decoration: none;
     font-weight: bold;
     font-size: 0.9em;
+    transition: all 0.3s ease;
 }
 
-p a:hover {
+.form-footer a:hover {
     text-decoration: underline;
+    color: darkred;
 }
 
+/* Hibaüzenetek és sikerüzenetek */
+.alert {
+    padding: 0.75rem 1.25rem;
+    margin-bottom: 1rem;
+    border: 1px solid transparent;
+    border-radius: 0.25rem;
+    text-align: left;
+}
+
+.alert-danger {
+    color: #721c24;
+    background-color: #f8d7da;
+    border-color: #f5c6cb;
+}
+
+.alert-success {
+    color: #155724;
+    background-color: #d4edda;
+    border-color: #c3e6cb;
+}
 
 /* Reszponzivitás */
 @media (max-width: 768px) {
     .container {
-        padding: 1em;
+        padding: 1.5em;
     }
 
     h2 {
         font-size: 1.4em;
     }
-
-    button {
-        font-size: 0.9em;
-    }
 }
 
-
-
+@media (max-width: 480px) {
+    body {
+        padding-top: 70px;
+    }
+    
+    .container {
+        padding: 1.2em;
+    }
+}

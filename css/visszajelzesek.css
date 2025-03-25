@@ -21,6 +21,7 @@ body {
     padding: clamp(2rem, 5vw, 4rem) clamp(1rem, 3vw, 2rem);
     text-align: center;
     animation: fadeIn 1s ease-in-out;
+    padding-top: 120px;
 }
 
 .feedback-section .container {

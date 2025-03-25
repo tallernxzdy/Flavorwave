@@ -1,41 +1,54 @@
-/* Alapvető stílusok */
+:root {
+    --navbar-height: 100px;
+    --mobile-navbar-height: 70px;
+}
+
+/* Alapvető oldal szerkezet */
 body {
     font-family: 'Poppins', sans-serif;
-    background-color: #F1F8E9; /* Világos, sárgás háttérszín */
+    background-color: #F5E8C7;
     display: flex;
     flex-direction: column;
-    align-items: center;
-    justify-content: flex-start;
     min-height: 100vh;
     margin: 0;
-    padding-top: 8em; /* Távolság a navbar-tól */
-    padding-bottom: 0; /* Nincs extra padding a footer előtt */
+    padding-top: var(--navbar-height);
 }
+
+/* Fő tartalom terület */
+main {
+    flex: 1;
+    padding: 2em 0;
+    width: 100%;
+    background-color: #D4A373;
+}
+
+
 
 /* Tartalom konténer */
 .container {
-    background-color: #ffffff;
+    background-color: #D4A373;
     padding: 1.5em;
-    max-width: 350px; /* Kisebb szélesség */
+    max-width: 350px;
     width: 90%;
     border-radius: 10px;
-    box-shadow: 0 4px 12px rgba(0, 0, 0, 0.1); /* Finom árnyék */
+    box-shadow: 0 4px 12px rgba(0, 0, 0, 0.1);
     text-align: center;
-    margin: 2em auto; /* Távolság a navbar-tól */
-    height: auto; /* Magasság automatikusan igazodik */
+    margin: 2em auto;
+    height: auto;
 }
 
 h2 {
-    font-size: 1.6em; /* Kisebb méretű címsor */
-    color: red; /* Narancsszín */
-    margin-bottom: 1em; /* Kisebb margó */
+    font-size: 1.6em;
+    color: #1A1A1A;
+    margin-bottom: 1em;
     text-shadow: 0 1px 2px rgba(0, 0, 0, 0.1);
 }
 
 form {
     display: flex;
     flex-direction: column;
-    gap: 0.8em; /* Kevesebb távolság az elemek között */
+    gap: 0.8em;
+    background-color: #D4A373;
 }
 
 label {
@@ -50,10 +63,10 @@ input[type="email"],
 input[type="password"],
 input[type="tel"] {
     width: 100%;
-    padding: 0.6em; /* Kisebb padding */
+    padding: 0.6em;
     border-radius: 5px;
     border: 1px solid #ddd;
-    font-size: 0.9em; /* Kisebb betűméret */
+    font-size: 0.9em;
     background: #FFFDE7;
     transition: border-color 0.3s ease;
 }
@@ -62,14 +75,14 @@ input[type="text"]:focus,
 input[type="email"]:focus,
 input[type="password"]:focus,
 input[type="tel"]:focus {
-    border-color: #FF7043; /* Narancs fókusz kiemelés */
+    border-color: #FF7043;
     outline: none;
 }
 
 button {
     width: 100%;
-    padding: 0.6em; /* Kisebb padding */
-    background-color: red; /* Narancssárga átmenet */
+    padding: 0.6em;
+    background-color: #1A1A1A;
     color: white;
     font-size: 1em;
     font-weight: bold;
@@ -77,6 +90,7 @@ button {
     border-radius: 25px;
     cursor: pointer;
     transition: transform 0.3s ease, box-shadow 0.3s ease;
+    margin-bottom: 0.6em;
 }
 
 button:hover {
@@ -86,7 +100,7 @@ button:hover {
 
 /* Linkek */
 p a {
-    color: red; /* Narancs szín */
+    color: #1A1A1A;
     text-decoration: none;
     font-weight: bold;
     font-size: 0.9em;
@@ -101,21 +115,6 @@ p a:hover {
     display: flex;
     justify-content: center;
     margin-top: 0.5em;
-}
-
-/* Reszponzivitás */
-@media (max-width: 768px) {
-    .container {
-        padding: 1em;
-    }
-
-    h2 {
-        font-size: 1.4em;
-    }
-
-    button {
-        font-size: 0.9em;
-    }
 }
 
 /* Jelszó mező stílus */
@@ -139,4 +138,25 @@ p a:hover {
 
 .input_img svg {
     fill: #333;
+}
+
+/* Reszponzivitás */
+@media (max-width: 768px) {
+    .container {
+        padding: 1em;
+    }
+
+    h2 {
+        font-size: 1.4em;
+    }
+
+    button {
+        font-size: 0.9em;
+    }
+}
+
+@media (max-width: 480px) {
+    body {
+        padding-top: var(--mobile-navbar-height);
+    }
 }
