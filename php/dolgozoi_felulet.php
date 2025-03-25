@@ -50,6 +50,9 @@ if (isset($_POST['finished_order'])) {
         if ($stmt->execute()) {
             $message = "A rendelés sikeresen elküldve!";
             $message_type = "success";
+            
+            // Store the order ID in session to display its details
+            $_SESSION['last_completed_order'] = $rendeles_id;
         } else {
             $message = "Hiba történt a rendelés elküldésekor!";
             $message_type = "error";
@@ -60,7 +63,28 @@ if (isset($_POST['finished_order'])) {
     }
 }
 
-
+function getOrderDetails($order_id) {
+    global $conn;
+    $query = "SELECT 
+                megrendeles.id AS rendeles_id,
+                felhasznalo.felhasznalo_nev,
+                etel.nev AS etel_nev,
+                rendeles_tetel.mennyiseg,
+                etel.egyseg_ar,
+                (rendeles_tetel.mennyiseg * etel.egyseg_ar) AS osszesen
+              FROM megrendeles
+              INNER JOIN rendeles_tetel ON rendeles_tetel.rendeles_id = megrendeles.id
+              INNER JOIN etel ON rendeles_tetel.termek_id = etel.id
+              INNER JOIN felhasznalo ON felhasznalo.id = megrendeles.felhasznalo_id
+              WHERE megrendeles.id = ?";
+    
+    $stmt = $conn->prepare($query);
+    $stmt->bind_param("i", $order_id);
+    $stmt->execute();
+    $result = $stmt->get_result();
+    
+    return $result->fetch_all(MYSQLI_ASSOC);
+}
 
 ?>
 
@@ -78,6 +102,7 @@ if (isset($_POST['finished_order'])) {
     <!-- CSS fájok -->
     <link rel="stylesheet" href="../css/navbar.css">
     <link rel="stylesheet" href="../css/fooldal/ujfooldal.css">
+    <link rel="stylesheet" href="../css/dolgozoi_felulet.css">
     <!-- Bootstrap CSS -->
     <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/css/bootstrap.min.css" rel="stylesheet"
         integrity="sha384-QWTKZyjpPEjISv5WaRU9OFeRpok6YctnYmDr5pNlyT2bRjXh0JMhjY6hW+ALEwIH" crossorigin="anonymous">
@@ -158,7 +183,7 @@ if (isset($_POST['finished_order'])) {
         <h1 class="text-center my-4">Dolgozói felület</h1>
 
         <!-- Átvételre váró rendelések -->
-        <div class="card">
+        <div class="card mt-5 mb-5">
             <div class="card-header">
                 <h3>Átvételre váró rendelések</h3>
             </div>
@@ -179,7 +204,7 @@ if (isset($_POST['finished_order'])) {
         </div>
 
         <!-- Folyamatban lévő rendelések -->
-        <div class="card">
+        <div class="card mt-5 mb-5">
             <div class="card-header">
                 <h3>Folyamatban lévő rendelések</h3>
             </div>
@@ -199,7 +224,7 @@ if (isset($_POST['finished_order'])) {
         </div>
 
         <!-- Kész rendelések -->
-        <div class="card">
+        <div class="card mt-5 mb-5">
             <div class="card-header">
                 <h3>Kész rendelések</h3>
             </div>
@@ -242,7 +267,7 @@ if (isset($_POST['finished_order'])) {
     $result = $conn->query($query);
 ?>
 
-    <div class="container mt-5">
+    <div class="container mt-5 mb-5">
         <h3 class="text-center">Kész megrendelések listája</h3>
         <div class="table-responsive">
             <table class="table table-bordered table-striped">
