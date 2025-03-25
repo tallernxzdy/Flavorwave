@@ -273,7 +273,6 @@ session_start();
         <div class="container">
             <h2 class="gallery-title">
                 Népszerű Ételeink
-                <span class="popular-badge">Népszerű</span>
             </h2>
             <div class="food-gallery-grid">
                 <div class="food-card" data-aos="fade-up" data-aos-delay="100">

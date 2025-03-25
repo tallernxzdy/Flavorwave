@@ -151,7 +151,7 @@ $velemenyek = ($result && $result->num_rows > 0) ? $result->fetch_all(MYSQLI_ASS
             <!-- Középen a kategóriák (és Admin felület, ha jogosult) -->
             <div class="navbar-center">
                 <a href="kategoria.php">Menü</a>
-                <a href="rendeles_megtekintes.php" class="order-btn">Rendeléseim</a>
+                <a href="rendeles_megtekintes.php" class="order-button">Rendeléseim</a>
                 <?php if (isset($_SESSION["jog_szint"]) && $_SESSION["jog_szint"] == 1): ?>
                     <a href="admin_felulet.php">Admin felület</a>
                 <?php endif; ?>
@@ -198,9 +198,6 @@ $velemenyek = ($result && $result->num_rows > 0) ? $result->fetch_all(MYSQLI_ASS
             </ul>
         </div>
 
-
-    <br><br><br> <br>
-    <!-- Feedback Form Section -->
     <section class="feedback-section">
         <div class="container">
             <h1>Küldd el a véleményed!</h1>

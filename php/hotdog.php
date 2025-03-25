@@ -32,6 +32,7 @@ session_start();
             <!-- Középen a kategóriák (és Admin felület, ha jogosult) -->
             <div class="navbar-center">
                 <a href="kategoria.php">Menü</a>
+                <a href="rendeles_megtekintes.php" class="order-button">Rendeléseim</a>
                 <?php if (isset($_SESSION["jog_szint"]) && $_SESSION["jog_szint"] == 1): ?>
                     <a href="admin_felulet.php">Admin felület</a>
                 <?php endif; ?>
@@ -47,9 +48,9 @@ session_start();
                 <?php else: ?>
                     <a href="bejelentkezes.php" class="login-btn">Bejelentkezés</a>
                 <?php endif; ?>
-                <a href="rendeles_megtekintes.php" class="order-btn">Rendeléseim</a>
+                
                 <a href="kosar.php" class="cart-btn">
-                    <i class='fas fa-shopping-cart cart-icon'></i>
+                    <i class='fas fa-shopping-cart cart-icon'></i> Kosár
                 </a>
             </div>
 
