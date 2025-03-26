@@ -11,6 +11,39 @@
     --mobile-navbar-height: 70px;
 }
 
+
+
+/* Kosár számláló stílusa */
+.cart-btn {
+    display: flex;
+    align-items: center;
+    gap: 8px;
+    position: relative;
+}
+
+.menubar a {
+    position: relative;
+    display: block;
+}
+
+.cart-count {
+    background-color: #D4A373;
+    color: rgb(0, 0, 0);
+    border-radius: 50%;
+    padding: 2px 8px;
+    font-size: 12px;
+    position: absolute;
+    top: -10px;
+    right: -10px;
+    min-width: 20px;
+    text-align: center;
+}
+
+.menubar .cart-count {
+    top: 5px;
+    right: 5px;
+}
+
 /* Navbar alapstílusok */
 nav {
     display: flex;
