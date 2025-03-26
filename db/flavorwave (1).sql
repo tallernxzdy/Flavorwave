@@ -3,7 +3,7 @@
 -- https://www.phpmyadmin.net/
 --
 -- Gép: 127.0.0.1
--- Létrehozás ideje: 2025. Már 25. 10:24
+-- Létrehozás ideje: 2025. Már 26. 17:58
 -- Kiszolgáló verziója: 10.4.32-MariaDB
 -- PHP verzió: 8.2.12
 
@@ -59,7 +59,6 @@ INSERT INTO `etel` (`id`, `nev`, `egyseg_ar`, `leiras`, `kategoria_id`, `kep_url
 (18, 'Kinley', 500, 'Tonic üdítő', 9, 'kinley.jpg', 80, 'Szénsavas üdítőital', ''),
 (19, '7UP', 500, 'Citrom-lime ízű üdítőital', 9, 'sevenup.jpg', 130, 'Szénsavas üdítőital', ''),
 (20, 'Nestea', 600, 'Jeges tea különböző ízekben', 9, 'nestea.jpg', 70, 'Jeges tea', ''),
-(21, 'Kávék', 800, 'Különféle kávék', 9, '', 50, 'Kávé', ''),
 (22, 'Csokis shake', 900, 'Csokoládés ízű shake', 8, 'csokisshake.jpg', 300, 'Tej, csokoládé, cukor', 'Tej'),
 (23, 'Vaníliás shake', 900, 'Vanília ízű shake', 8, 'vaniliasshake.jpg', 290, 'Tej, vanília, cukor', 'Tej'),
 (24, 'Epres shake', 900, 'Eper ízű shake', 8, 'epresshake.jpg', 280, 'Tej, eper, cukor', 'Tej'),
@@ -83,7 +82,7 @@ INSERT INTO `etel` (`id`, `nev`, `egyseg_ar`, `leiras`, `kategoria_id`, `kep_url
 (42, 'Baconos burger', 2000, 'Baconos és sajtos burger', 3, 'baconburger.jpg', 700, 'Zsemle, marhahús, bacon, sajt, saláta, paradicsom, szószok', 'Glutén, tej'),
 (43, 'Standard burger', 1400, 'Egyszerű burger húspogácsával és zöldségekkel', 3, 'standardburger.jpg', 450, 'Zsemle, marhahús, saláta, paradicsom, szószok', 'Glutén'),
 (72, '1asde', 30, '0', 7, 'afonyasshake.jpeg', 300, 'aer', 'bbb'),
-(73, 'hosszukave', 450, 'A kávé hosszan tartó élménye! Enyhén lágyabb, mégis telt ízvilág, amely tökéletes választás, ha egy hosszabb kávészünetre vágysz.\nÖsszetevők: Espresso, forró víz', 9, 'hosszukave.jpg', 200, 'Espresso, forró víz', 'Nincs ismert allergén'),
+(73, 'Hosszú kávé', 450, 'A kávé hosszan tartó élménye! Enyhén lágyabb, mégis telt ízvilág, amely tökéletes választás, ha egy hosszabb kávészünetre vágysz.\nÖsszetevők: Espresso, forró víz', 9, 'hosszukave.jpg', 200, 'Espresso, forró víz', 'Nincs ismert allergén'),
 (74, 'Espresso', 400, 'Intenzív, karakteres és igazán olasz! Egyetlen korty, amely felébreszti az érzékeket, és energiával tölti fel a nap bármely szakában.', 9, 'espresso.jpg', 100, '100% arabica kávé', 'Nincs ismert allergén'),
 (75, 'Tejeskávé', 500, 'A selymesen lágy tejeskávé tökéletes társ a lassú reggelekhez vagy egy kellemes délutáni beszélgetéshez. Lágy tejhab és gazdag kávé egyensúlya minden kortyban.\r\nÖsszetevők: Espresso, gőzölt tej, tejhab', 9, 'tejeskave.jpg', 150, 'Espresso, gőzölt tej, tejhab', 'Tej (laktóz)');
 
@@ -135,6 +134,19 @@ INSERT INTO `kategoria` (`id`, `kategoria_nev`, `kep_url`) VALUES
 (7, 'Desszertek', ''),
 (8, 'Shakek', ''),
 (9, 'Italok', '');
+
+-- --------------------------------------------------------
+
+--
+-- Tábla szerkezet ehhez a táblához `kuponok`
+--
+
+CREATE TABLE `kuponok` (
+  `id` int(11) NOT NULL,
+  `kategoriaId` int(11) NOT NULL,
+  `leiras` varchar(255) NOT NULL,
+  `szazalek` double NOT NULL
+) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_general_ci;
 
 -- --------------------------------------------------------
 
@@ -239,6 +251,13 @@ ALTER TABLE `kategoria`
   ADD PRIMARY KEY (`id`);
 
 --
+-- A tábla indexei `kuponok`
+--
+ALTER TABLE `kuponok`
+  ADD PRIMARY KEY (`id`),
+  ADD KEY `kategoriaId` (`kategoriaId`);
+
+--
 -- A tábla indexei `megrendeles`
 --
 ALTER TABLE `megrendeles`
@@ -293,6 +312,12 @@ ALTER TABLE `kategoria`
   MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=10;
 
 --
+-- AUTO_INCREMENT a táblához `kuponok`
+--
+ALTER TABLE `kuponok`
+  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT;
+
+--
 -- AUTO_INCREMENT a táblához `megrendeles`
 --
 ALTER TABLE `megrendeles`
@@ -325,6 +350,12 @@ ALTER TABLE `velemenyek`
 --
 ALTER TABLE `etel`
   ADD CONSTRAINT `etel_ibfk_1` FOREIGN KEY (`kategoria_id`) REFERENCES `kategoria` (`id`) ON DELETE CASCADE ON UPDATE CASCADE;
+
+--
+-- Megkötések a táblához `kuponok`
+--
+ALTER TABLE `kuponok`
+  ADD CONSTRAINT `kuponok_ibfk_1` FOREIGN KEY (`kategoriaId`) REFERENCES `kategoria` (`id`) ON DELETE CASCADE ON UPDATE CASCADE;
 
 --
 -- Megkötések a táblához `megrendeles`
