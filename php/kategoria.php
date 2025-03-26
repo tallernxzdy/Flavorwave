@@ -18,6 +18,7 @@ session_start();
     <link rel="stylesheet" href="../css/navbar.css">
     <link rel="stylesheet" href="../css/footer.css">
     <link rel="stylesheet" href="../css/kategoriak.css">
+    <link rel="stylesheet" href="../css/fooldal/ujfooldal.css">
     <script src="https://unpkg.com/aos@2.3.1/dist/aos.js"></script>
 </head>
 

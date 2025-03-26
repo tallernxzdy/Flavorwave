@@ -18,6 +18,7 @@ session_start();
     <link rel="stylesheet" href="../css/footer.css">
     <link rel="stylesheet" href="../css/kategoriaelemek.css">
     <link rel="stylesheet" href="../css/menu.css">
+    <link rel="stylesheet" href="../css/fooldal/ujfooldal.css">
 </head>
 
 <body>

@@ -16,13 +16,10 @@ session_start();
     <title>FlavorWave - Hamburgerek</title>
     <link rel="stylesheet" href="../css/navbar.css">
     <link rel="stylesheet" href="../css/footer.css">
-<<<<<<< HEAD
-    <!-- <link rel="stylesheet" href="../css/kategoriak.css">
-    <link rel="stylesheet" href="../css/menu.css"> -->
-=======
     <link rel="stylesheet" href="../css/hamburger.css">
+    <link rel="stylesheet" href="../css/fooldal/ujfooldal.css">
+    
     <script src="https://unpkg.com/aos@2.3.1/dist/aos.js"></script>
->>>>>>> 8c5bc541f7e5522b5d5a18113c57a96aa8e7eb3b
 </head>
 
 <body>
