@@ -2,8 +2,8 @@
 
 body {
     font-family: 'Poppins', sans-serif;
-    background-color: #f4f4f9;
-    color: #333;
+    background-color: #F5E8C7;
+    color: #1a1a1a;
     min-height: 100vh;
     display: flex;
     flex-direction: column;
@@ -17,7 +17,7 @@ body {
     max-width: 95%;
     margin: 4rem auto;
     padding: 2rem;
-    background: #fff;
+    background: #D4A373;
     border-radius: 12px;
     box-shadow: 0 4px 20px rgba(0, 0, 0, 0.05);
     
@@ -36,12 +36,11 @@ body {
 .cart-header h1 {
     font-size: 2rem;
     font-weight: 600;
-    color: #2c3e50;
     margin: 0;
 }
 
 .cart-header .btn-danger {
-    background-color: #e74c3c;
+    background-color: #1A1A1A;
     border: none;
     padding: 0.5rem 1rem;
     font-size: 0.95rem;
@@ -51,7 +50,7 @@ body {
 }
 
 .cart-header .btn-danger:hover {
-    background-color: #c0392b;
+    background-color: #1A1A1A;
     transform: translateY(-2px);
 }
 
@@ -90,13 +89,11 @@ body {
 .item-name {
     font-size: 1.1rem;
     font-weight: 600;
-    color: #34495e;
     margin: 0;
 }
 
 .item-price {
     font-size: 0.95rem;
-    color: #7f8c8d;
     margin: 0;
 }
 
@@ -108,12 +105,12 @@ body {
 }
 
 .quantity-controls button {
-    background: #ecf0f1;
+    background: #1A1A1A;
     border: none;
     padding: 0.5rem 0.75rem;
     font-size: 1.1rem;
     font-weight: 600;
-    color: #34495e;
+    color: #F5E8C7;
     cursor: pointer;
     border-radius: 6px;
     height: 32px;
@@ -125,7 +122,7 @@ body {
 }
 
 .quantity-controls button:hover {
-    background: #dcdcdc;
+    background: #F5E8C7;
 }
 
 .quantity-controls .quantity {
@@ -133,7 +130,6 @@ body {
     font-weight: 500;
     min-width: 30px;
     text-align: center;
-    color: #2c3e50;
 }
 
 /* Item Total */
@@ -142,12 +138,11 @@ body {
     font-weight: 500;
     min-width: 80px;
     text-align: right;
-    color: #2c3e50;
 }
 
 /* Remove Button */
 .remove-from-cart {
-    background: #e74c3c;
+    background: #1A1A1A;
     color: #fff;
     border: none;
     padding: 0.5rem 1rem;
@@ -163,7 +158,7 @@ body {
 }
 
 .remove-from-cart:hover {
-    background: #c0392b;
+    background: #1A1A1A;
     transform: translateY(-2px);
 }
 
@@ -180,13 +175,12 @@ body {
 .total-label {
     font-size: 1.2rem;
     font-weight: 600;
-    color: #2c3e50;
 }
 
 .total-amount {
     font-size: 1.2rem;
     font-weight: 600;
-    color: #3498db;
+    color: #1A1A1A;
 }
 
 /* Checkout Section */
@@ -196,7 +190,7 @@ body {
 }
 
 .checkout-btn {
-    background-color: #3498db;
+    background-color: #1A1A1A;
     border: none;
     padding: 0.75rem 2rem;
     font-size: 1.1rem;
