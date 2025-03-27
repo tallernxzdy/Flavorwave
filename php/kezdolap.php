@@ -140,7 +140,7 @@ include 'adatbazisra_csatlakozas.php';
                 <div class="text">
                     <h3>25% minden Pizzából!</h3>
                     <p>Csak Ma! Használd a kuponkódunkat: <strong>Pizza25</strong></p>
-                    <a href="#" class="btn">Rendelj most</a>
+                    <a href="../php/pizza.php" class="btn">Rendelj most</a>
                 </div>
                 <div class="image">
                     <img src="../kepek/pizzak/pizza3.jpg" alt="Burger Deal">
@@ -150,7 +150,7 @@ include 'adatbazisra_csatlakozas.php';
                 <div class="text">
                     <h3>Ingyenes Desszert!</h3>
                     <p>Minden 10.000Ft-s rendelés felett egy általad választható desszertet adunk, teljesen ingyen!</p>
-                    <a href="#" class="btn">Kérem a desszertet!</a>
+                    <a href="../php/desszertek.php" class="btn">Kérem a desszertet!</a>
                 </div>
                 <div class="image">
                     <img src="../kepek/desszertek/almaspite.jpeg" alt="Dessert Offer">
@@ -160,7 +160,7 @@ include 'adatbazisra_csatlakozas.php';
                 <div class="text">
                     <h3>Kettőt fizet, hármat kap!</h3>
                     <p>Minden 2 darab megrendelt pizza mellé szabadon választhatsz egy harmadikat. Használd a kuponunkat a beváltáshoz: <strong>PIZZADEAL</strong></p>
-                    <a href="#" class="btn">Ragadd meg az alkalmat</a>
+                    <a href="../php/pizza.php" class="btn">Ragadd meg az alkalmat</a>
                 </div>
                 <div class="image">
                     <img src="../kepek/pizzak/pizza2.jpg" alt="Pizza Deal">

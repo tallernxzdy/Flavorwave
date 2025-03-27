@@ -3,7 +3,7 @@
 -- https://www.phpmyadmin.net/
 --
 -- Gép: 127.0.0.1
--- Létrehozás ideje: 2025. Már 27. 13:22
+-- Létrehozás ideje: 2025. Már 27. 20:35
 -- Kiszolgáló verziója: 10.4.32-MariaDB
 -- PHP verzió: 8.2.12
 
@@ -81,7 +81,6 @@ INSERT INTO `etel` (`id`, `nev`, `egyseg_ar`, `leiras`, `kategoria_id`, `kep_url
 (41, 'Csirke burger', 1800, 'Ropogós csirkés burger', 3, 'csirkeburger.jpg', 600, 'Zsemle, csirkehús, saláta, paradicsom, szószok', 'Glutén'),
 (42, 'Baconos burger', 2000, 'Baconos és sajtos burger', 3, 'baconburger.jpg', 700, 'Zsemle, marhahús, bacon, sajt, saláta, paradicsom, szószok', 'Glutén, tej'),
 (43, 'Standard burger', 1400, 'Egyszerű burger húspogácsával és zöldségekkel', 3, 'standardburger.jpg', 450, 'Zsemle, marhahús, saláta, paradicsom, szószok', 'Glutén'),
-(72, '1asde', 30, '0', 7, 'afonyasshake.jpeg', 300, 'aer', 'bbb'),
 (73, 'Hosszú kávé', 450, 'A kávé hosszan tartó élménye! Enyhén lágyabb, mégis telt ízvilág, amely tökéletes választás, ha egy hosszabb kávészünetre vágysz.\nÖsszetevők: Espresso, forró víz', 9, 'hosszukave.jpg', 200, 'Espresso, forró víz', 'Nincs ismert allergén'),
 (74, 'Espresso', 400, 'Intenzív, karakteres és igazán olasz! Egyetlen korty, amely felébreszti az érzékeket, és energiával tölti fel a nap bármely szakában.', 9, 'espresso.jpg', 100, '100% arabica kávé', 'Nincs ismert allergén'),
 (75, 'Tejeskávé', 500, 'A selymesen lágy tejeskávé tökéletes társ a lassú reggelekhez vagy egy kellemes délutáni beszélgetéshez. Lágy tejhab és gazdag kávé egyensúlya minden kortyban.\r\nÖsszetevők: Espresso, gőzölt tej, tejhab', 9, 'tejeskave.jpg', 150, 'Espresso, gőzölt tej, tejhab', 'Tej (laktóz)');
