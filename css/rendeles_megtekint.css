@@ -6,7 +6,8 @@ body {
     display: flex;
     flex-direction: column;
     min-height: 100vh;
-    background: linear-gradient(135deg, #eceff1, #cfd8dc); /* Lágy gradiens háttér */
+    background: #F5E8C7;
+    color: #1A1A1A;
 }
 
 .container {
@@ -15,14 +16,13 @@ body {
     width: 90%;
     margin: 40px auto;
     padding: 30px;
-    background-color: #ffffff;
+    background-color: #D4A373;
     border-radius: 15px;
     box-shadow: 0 10px 20px rgba(0, 0, 0, 0.15); /* Erősebb árnyék */
 }
 
 #cim {
     text-align: center;
-    color: #1a237e;
     margin-bottom: 35px;
     font-weight: 700; /* Vastagabb betűtípus */
     font-size: 2.5rem;
@@ -34,7 +34,6 @@ body {
 .no-orders, .not-logged-in {
     text-align: center;
     font-size: 1.3rem;
-    color: #555;
     padding: 25px;
     background-color: #f5f5f5;
     border-radius: 10px;
@@ -54,7 +53,7 @@ body {
 
 /* Order Card Styling */
 .order-card {
-    background-color: #ffffff; /* Fehér háttér a kontraszt miatt */
+    background-color: #1A1A1A; /* Fehér háttér a kontraszt miatt */
     border-radius: 15px;
     box-shadow: 0 6px 15px rgba(0, 0, 0, 0.1);
     padding: 25px;
@@ -68,7 +67,7 @@ body {
 }
 
 .order-header {
-    border-bottom: 3px solid #1a237e; /* Vastagabb, színes vonal */
+    border-bottom: 3px solid #1A1A1A; /* Vastagabb, színes vonal */
     padding-bottom: 15px;
     margin-bottom: 20px;
 }
@@ -76,25 +75,22 @@ body {
 .order-header h3 {
     margin: 0;
     font-size: 1.6rem;
-    color: #1a237e;
     font-weight: 700;
 }
 
 .order-header .order-date {
     margin: 10px 0 0;
     font-size: 1rem;
-    color: #757575;
     font-style: italic; /* Dőlt betűs dátum */
 }
 
 .order-details p {
     margin: 15px 0;
     font-size: 1.1rem;
-    color: #333;
+    
 }
 
 .order-details p strong {
-    color: #1a237e;
     font-weight: 700;
 }
 
@@ -114,7 +110,6 @@ body {
 
 .order-details ul li:before {
     content: "•";
-    color: #1a237e;
     position: absolute;
     left: 0;
     font-size: 1.2rem;
@@ -132,15 +127,15 @@ body {
 }
 
 .btn-primary {
-    background-color: #1a237e;
+    background-color: #1A1A1A;
     color: #fff;
-    border: 2px solid #1a237e;
+    border: 2px solid #1A1A1A;
 }
 
 .btn-primary:hover {
-    background-color: #3f51b5;
+    background-color: #1A1A1A;
     transform: translateY(-3px);
-    border-color: #3f51b5;
+    border-color: #1A1A1A;
 }
 
 .btn-secondary {

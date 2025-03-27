@@ -3,7 +3,7 @@
 -- https://www.phpmyadmin.net/
 --
 -- Gép: 127.0.0.1
--- Létrehozás ideje: 2025. Már 26. 17:58
+-- Létrehozás ideje: 2025. Már 27. 13:22
 -- Kiszolgáló verziója: 10.4.32-MariaDB
 -- PHP verzió: 8.2.12
 
@@ -99,16 +99,17 @@ CREATE TABLE `felhasznalo` (
   `jelszo` varchar(255) NOT NULL,
   `tel_szam` varchar(12) NOT NULL,
   `lakcim` varchar(50) NOT NULL,
-  `jog_szint` tinyint(1) NOT NULL DEFAULT 0
+  `jog_szint` tinyint(1) NOT NULL DEFAULT 0,
+  `Teljes_nev` varchar(255) NOT NULL
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_general_ci;
 
 --
 -- A tábla adatainak kiíratása `felhasznalo`
 --
 
-INSERT INTO `felhasznalo` (`id`, `felhasznalo_nev`, `email_cim`, `jelszo`, `tel_szam`, `lakcim`, `jog_szint`) VALUES
-(4, 'main', '13c-borondi@ipari.vein.hu', '$2y$10$61bO5xSX5AjCzX7o1CIEFeaR3MD7gDpI2E.WqB/IB6wKZlAKVfbC.', '06201234568', 'Herend utca 20', 1),
-(5, 'gergodarida', '13c-darida@ipari.vein.hu', '$2y$10$/30eTdd9z9/ZgntyQZEnZ.VrwjmDnP.MsKs7v6Ngfkz8E7KsKqBFa', '+36201234567', '', 2);
+INSERT INTO `felhasznalo` (`id`, `felhasznalo_nev`, `email_cim`, `jelszo`, `tel_szam`, `lakcim`, `jog_szint`, `Teljes_nev`) VALUES
+(4, 'main', '13c-borondi@ipari.vein.hu', '$2y$10$61bO5xSX5AjCzX7o1CIEFeaR3MD7gDpI2E.WqB/IB6wKZlAKVfbC.', '06201234568', 'Herend utca 20', 1, ''),
+(5, 'gergodarida', '13c-darida@ipari.vein.hu', '$2y$10$/30eTdd9z9/ZgntyQZEnZ.VrwjmDnP.MsKs7v6Ngfkz8E7KsKqBFa', '+36201234567', '', 2, '');
 
 -- --------------------------------------------------------
 
@@ -160,15 +161,17 @@ CREATE TABLE `megrendeles` (
   `leadas_megjegyzes` varchar(250) NOT NULL,
   `kezbesites` varchar(50) NOT NULL,
   `leadas_allapota` tinyint(4) NOT NULL,
-  `leadasdatuma` date NOT NULL
+  `leadasdatuma` date NOT NULL,
+  `Fizetesi_mod` tinyint(4) NOT NULL
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_general_ci;
 
 --
 -- A tábla adatainak kiíratása `megrendeles`
 --
 
-INSERT INTO `megrendeles` (`id`, `felhasznalo_id`, `leadas_megjegyzes`, `kezbesites`, `leadas_allapota`, `leadasdatuma`) VALUES
-(14, 4, 'wwewewewewe', 'házhozszállítás', 3, '2025-03-25');
+INSERT INTO `megrendeles` (`id`, `felhasznalo_id`, `leadas_megjegyzes`, `kezbesites`, `leadas_allapota`, `leadasdatuma`, `Fizetesi_mod`) VALUES
+(14, 4, 'wwewewewewe', 'házhozszállítás', 3, '2025-03-25', 0),
+(16, 4, '', 'házhozszállítás', 0, '2025-03-27', 0);
 
 -- --------------------------------------------------------
 
@@ -181,16 +184,18 @@ CREATE TABLE `rendeles_tetel` (
   `rendeles_id` int(11) NOT NULL,
   `termek_id` int(11) NOT NULL,
   `mennyiseg` int(11) NOT NULL,
-  `statusz` tinyint(4) NOT NULL
+  `statusz` tinyint(4) NOT NULL,
+  `Fizetesi_mod` tinyint(4) NOT NULL
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_general_ci;
 
 --
 -- A tábla adatainak kiíratása `rendeles_tetel`
 --
 
-INSERT INTO `rendeles_tetel` (`id`, `rendeles_id`, `termek_id`, `mennyiseg`, `statusz`) VALUES
-(9, 14, 39, 4, 0),
-(10, 14, 9, 1, 0);
+INSERT INTO `rendeles_tetel` (`id`, `rendeles_id`, `termek_id`, `mennyiseg`, `statusz`, `Fizetesi_mod`) VALUES
+(9, 14, 39, 4, 0, 0),
+(10, 14, 9, 1, 0, 0),
+(12, 16, 39, 1, 0, 0);
 
 -- --------------------------------------------------------
 
@@ -204,6 +209,13 @@ CREATE TABLE `tetelek` (
   `etel_id` int(11) NOT NULL,
   `darab` int(11) NOT NULL
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_general_ci;
+
+--
+-- A tábla adatainak kiíratása `tetelek`
+--
+
+INSERT INTO `tetelek` (`id`, `felhasznalo_id`, `etel_id`, `darab`) VALUES
+(38, 4, 9, 1);
 
 -- --------------------------------------------------------
 
@@ -321,19 +333,19 @@ ALTER TABLE `kuponok`
 -- AUTO_INCREMENT a táblához `megrendeles`
 --
 ALTER TABLE `megrendeles`
-  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=15;
+  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=17;
 
 --
 -- AUTO_INCREMENT a táblához `rendeles_tetel`
 --
 ALTER TABLE `rendeles_tetel`
-  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=11;
+  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=13;
 
 --
 -- AUTO_INCREMENT a táblához `tetelek`
 --
 ALTER TABLE `tetelek`
-  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=37;
+  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=39;
 
 --
 -- AUTO_INCREMENT a táblához `velemenyek`
