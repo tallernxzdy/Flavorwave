@@ -3,41 +3,139 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Kapcsolat | Flavorwave</title>
+    <meta http-equiv="X-UA-Compatible" content="ie=edge">
+    <title>Kapcsolat | FlavorWave</title>
+    <link rel="icon" href="../kepek/logo.png" type="image/png">
+    <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@400;600&family=Montserrat:wght@700&display=swap" rel="stylesheet">
+    <link href="https://unpkg.com/aos@2.3.1/dist/aos.css" rel="stylesheet">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.15.4/css/all.min.css">
     <link rel="stylesheet" href="../css/kapcsolatok.css">
 </head>
 <body>
-    <header>
-        <h1>Kapcsolat</h1>
+    <!-- Navbar -->
+    <nav class="navbar">
+        <div class="logo">
+            <a href="../php/kezdolap.php"><img src="../kepek/logo.png" alt="FlavorWave Logo"></a>
+        </div>
+        <div class="nav-title">Kapcsolat</div>
+    </nav>
+
+    <!-- Fejléc -->
+    <header class="header" data-aos="fade-down">
+        <div class="header-content">
+            <h1 class="page-title">Kapcsolat</h1>
+            <div class="header-underline"></div>
+            <p class="header-subtitle">Lépjen velünk kapcsolatba, örömmel segítünk!</p>
+            <a href="#contact-form-section" class="contact-btn">Üzenet küldése</a>
+        </div>
     </header>
 
-    <main>
-        <section>
-            <h2>Elérhetőségek</h2>
-            <p>Ha kérdése van, kérjük, ne habozzon kapcsolatba lépni velünk!</p>
+    <!-- Tartalom -->
+    <main class="content">
+        <!-- 1. Elérhetőségek -->
+        <section class="section contact-info" data-aos="fade-up">
+            <h2>Elérhetőségeink</h2>
+            <div class="title-underline"></div>
+            <p>Ha kérdése van, vagy csak szeretne velünk beszélni, ne habozzon felvenni velünk a kapcsolatot! Csapatunk készséggel áll rendelkezésére.</p>
+            <ul class="contact-details">
+                <li><i class="fas fa-envelope"></i> <strong>E-mail:</strong> <a href="mailto:info@flavorwave.hu">info@flavorwave.hu</a></li>
+                <li><i class="fas fa-phone"></i> <strong>Telefon:</strong> +36 1 234 5678</li>
+                <li><i class="fas fa-map-marker-alt"></i> <strong>Cím:</strong> 1234 Budapest, FlavorWave Központ, Minta utca 12.</li>
+            </ul>
         </section>
 
-        <section class="contact-info">
-            <h3>Elérhetőségek:</h3>
-            <p><strong>E-mail:</strong> <a href="mailto:info@flavorwave.hu">info@flavorwave.hu</a></p>
-            <p><strong>Telefon:</strong> +36 1 234 5678</p>
-            <p><strong>Cím:</strong> 1234 Budapest, Flavorwave Központ, Minta utca 12.</p>
-        </section>
-
-        <section>
+        <!-- 2. Ügyfélszolgálat -->
+        <section class="section customer-service" data-aos="fade-up">
             <h2>Ügyfélszolgálat</h2>
-            <p>Ha bármilyen kérdése van a szolgáltatásainkkal kapcsolatban, ügyfélszolgálatunk készséggel áll rendelkezésére.</p>
-            <p><strong>Ügyfélszolgálati e-mail:</strong> <a href="mailto:support@flavorwave.hu">support@flavorwave.hu</a></p>
+            <div class="title-underline"></div>
+            <p>Ha bármilyen kérdése van a szolgáltatásainkkal, rendelésekkel vagy termékekkel kapcsolatban, ügyfélszolgálatunk örömmel segít Önnek. Írjon nekünk, vagy hívjon minket az alábbi elérhetőségeken!</p>
+            <ul class="contact-details">
+                <li><i class="fas fa-envelope"></i> <strong>Ügyfélszolgálati e-mail:</strong> <a href="mailto:support@flavorwave.hu">support@flavorwave.hu</a></li>
+                <li><i class="fas fa-phone"></i> <strong>Ügyfélszolgálati telefon:</strong> +36 1 987 6543</li>
+            </ul>
         </section>
 
-        <section>
+        <!-- 3. Nyitvatartás -->
+        <section class="section opening-hours" data-aos="fade-up">
             <h2>Nyitvatartás</h2>
-            <p>Hétfőtől péntekig, 9:00-17:00 között állunk rendelkezésére.</p>
+            <div class="title-underline"></div>
+            <p>Ügyfélszolgálatunk az alábbi időpontokban áll rendelkezésére:</p>
+            <ul class="opening-hours-list">
+                <li><strong>Hétfő - Péntek:</strong> 9:00 - 17:00</li>
+                <li><strong>Szombat:</strong> 10:00 - 14:00</li>
+                <li><strong>Vasárnap:</strong> Zárva</li>
+            </ul>
+        </section>
+
+        <!-- 4. Kapcsolatfelvételi űrlap -->
+        <!-- <section class="section contact-form" id="contact-form-section" data-aos="fade-up">
+            <h2>Írjon nekünk!</h2>
+            <div class="title-underline"></div>
+            <p>Ha kérdése van, vagy visszajelzést szeretne adni, töltse ki az alábbi űrlapot, és hamarosan válaszolunk!</p>
+            <form action="../php/kapcsolat_feldolgoz.php" method="POST" class="form">
+                <div class="form-group">
+                    <label for="name">Név:</label>
+                    <input type="text" id="name" name="name" placeholder="Az Ön neve" required>
+                </div>
+                <div class="form-group">
+                    <label for="email">E-mail:</label>
+                    <input type="email" id="email" name="email" placeholder="Az Ön e-mail címe" required>
+                </div>
+                <div class="form-group">
+                    <label for="subject">Tárgy:</label>
+                    <input type="text" id="subject" name="subject" placeholder="Üzenet tárgya" required>
+                </div>
+                <div class="form-group">
+                    <label for="message">Üzenet:</label>
+                    <textarea id="message" name="message" placeholder="Írja ide üzenetét..." required></textarea>
+                </div>
+                <button type="submit" class="submit-btn">Üzenet küldése</button>
+            </form>
+        </section> -->
+
+        <!-- 5. Közösségi média -->
+        <section class="section social-media" data-aos="fade-up">
+            <h2>Kövessen minket!</h2>
+            <div class="title-underline"></div>
+            <p>Maradjon kapcsolatban velünk a közösségi médiában, hogy ne maradjon le a legfrissebb hírekről és ajánlatokról!</p>
+            <div class="social-links">
+                <a href="https://facebook.com/flavorwave" target="_blank"><i class="fab fa-facebook-f"></i></a>
+                <a href="https://instagram.com/flavorwave" target="_blank"><i class="fab fa-instagram"></i></a>
+                <a href="https://twitter.com/flavorwave" target="_blank"><i class="fab fa-twitter"></i></a>
+                <a href="https://youtube.com/flavorwave" target="_blank"><i class="fab fa-youtube"></i></a>
+            </div>
+        </section>
+
+        <!-- 6. Térkép -->
+        <section class="section map" data-aos="fade-up">
+            <h2>Hol talál minket?</h2>
+            <div class="title-underline"></div>
+            <p>Látogasson el hozzánk személyesen, vagy nézze meg, hol található a FlavorWave Központ!</p>
+            <div class="map-container">
+                <iframe src="https://www.google.com/maps/embed?pb=!1m18!1m12!1m3!1d2695.662!2d19.039!3d47.497!2m3!1f0!2f0!3f0!3m2!1i1024!2i768!4f13.1!3m3!1m2!1s0x0%3A0x0!2zNDfCsDI5JzQ5LjciTiAxOcKwMDInMjAuNCJF!5e0!3m2!1shu!2shu!4v1698765432100!5m2!1shu!2shu" width="100%" height="400" style="border:0;" allowfullscreen="" loading="lazy"></iframe>
+            </div>
         </section>
     </main>
 
-    <footer>
-        <p>&copy; 2024 FlavorWave | <a href="../php/kezdolap.php">Vissza a főoldalra</a></p>
+    <!-- Lábléc -->
+    <footer class="footer">
+        <div class="footer-container">
+            <div class="footer-copy">
+                © 2025 FlavorWave - Minden jog fenntartva. | <a href="../php/kezdolap.php">Vissza a főoldalra</a>
+                <a href="#" class="back-to-top"><i class="fas fa-arrow-up"></i> Vissza az elejére</a>
+            </div>
+        </div>
     </footer>
+
+    <script src="https://unpkg.com/aos@2.3.1/dist/aos.js"></script>
+    <script>
+        AOS.init();
+
+        // Vissza az elejére gomb
+        document.querySelector('.back-to-top').addEventListener('click', function(e) {
+            e.preventDefault();
+            window.scrollTo({ top: 0, behavior: 'smooth' });
+        });
+    </script>
 </body>
 </html>

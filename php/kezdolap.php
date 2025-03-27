@@ -117,7 +117,7 @@ include 'adatbazisra_csatlakozas.php';
         <?php else: ?>
             <li><a href="bejelentkezes.php">Bejelentkezés</a></li>
         <?php endif; ?>
-        <li><a href="rendelesek_megtekintes.php">Rendeléseim</a></li>
+        <li><a href="rendeles_megtekintes.php">Rendeléseim</a></li>
     </ul>
 </div>
     <div class="hero">
@@ -128,7 +128,7 @@ include 'adatbazisra_csatlakozas.php';
             <h1>Friss, Forró, Finom</h1>
             <p>Rendelj kedvenc ételeid közül gyorsan és egyszerűen!</p>
             <div class="cta-buttons">
-                <a href="menu.php" class="order-now">Rendelj Most</a>
+                <a href="rendeles_megtekintes.php" class="order-now">Rendelj Most</a>
                 <a href="kategoria.php" class="view-menu">Tekintsd meg a Menüt</a>
             </div>
         </div>

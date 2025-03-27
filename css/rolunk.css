@@ -1,72 +1,444 @@
-body {
-    font-family: Arial, sans-serif;
+/* Alapbeállítások */
+* {
     margin: 0;
     padding: 0;
-    background-color: #fff;
+    box-sizing: border-box;
+}
+
+body {
+    font-family: 'Poppins', sans-serif;
+    background-color: #f5f5f5;
     color: #333;
+    line-height: 1.8;
 }
 
-header {
-    background-color: #d32f2f;
+/* Navbar */
+.navbar {
+    background: #1a1a1a;
+    padding: 20px 30px;
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    position: sticky;
+    top: 0;
+    z-index: 1000;
+    box-shadow: 0 2px 10px rgba(0, 0, 0, 0.2);
+}
+
+.navbar .logo img {
+    height: 45px;
+    transition: transform 0.3s ease;
+}
+
+.navbar .logo img:hover {
+    transform: scale(1.05);
+}
+
+.nav-title {
+    font-family: 'Montserrat', sans-serif;
+    font-size: 1.6rem;
     color: #fff;
-    padding: 20px;
-    text-align: center;
+    text-transform: uppercase;
+    letter-spacing: 1.5px;
+    transition: color 0.3s ease;
 }
 
-nav {
-    background-color: #d32f2f;
-    padding: 10px 0;
-    text-align: center;
+.nav-title:hover {
+    color: #ff9500;
 }
 
-nav a {
+/* Fejléc */
+.header {
+    background: linear-gradient(135deg, #1a1a1a 0%, #2a2a2a 100%);
+    color: #fff;
+    padding: 80px 30px;
+    text-align: center;
+    position: relative;
+    overflow: hidden;
+}
+
+.header:before {
+    content: '';
+    position: absolute;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    background: radial-gradient(circle, rgba(255, 149, 0, 0.1) 0%, transparent 70%);
+    z-index: 0;
+}
+
+.header-content {
+    max-width: 900px;
+    margin: 0 auto;
+    position: relative;
+    z-index: 1;
+}
+
+.page-title {
+    font-family: 'Montserrat', sans-serif;
+    font-size: 3rem;
+    margin-bottom: 20px;
+    text-transform: uppercase;
+    letter-spacing: 2px;
+    text-shadow: 2px 2px 5px rgba(0, 0, 0, 0.3);
+}
+
+.header-underline {
+    width: 80px;
+    height: 3px;
+    background: #ff9500;
+    margin: 0 auto 20px;
+    border-radius: 2px;
+    box-shadow: 0 0 10px rgba(255, 149, 0, 0.5);
+}
+
+.header-subtitle {
+    font-size: 1.3rem;
+    opacity: 0.9;
+    margin-bottom: 30px;
+    font-weight: 400;
+}
+
+.contact-btn {
+    display: inline-block;
+    padding: 14px 40px;
+    background: #ff9500;
     color: #fff;
     text-decoration: none;
-    margin: 0 15px;
-    font-weight: bold;
-    font-size: 18px;
+    border-radius: 30px;
+    font-family: 'Montserrat', sans-serif;
+    font-size: 1.1rem;
+    font-weight: 600;
+    text-transform: uppercase;
+    letter-spacing: 1px;
+    transition: background 0.3s ease, transform 0.3s ease, box-shadow 0.3s ease;
 }
 
-nav a.active {
-    color: white; /* kiemelés */
+.contact-btn:hover {
+    background: #ffaa33;
+    transform: translateY(-3px);
+    box-shadow: 0 5px 15px rgba(255, 149, 0, 0.4);
 }
 
-main {
-    max-width: 800px;
-    margin: 30px auto;
-    padding: 20px;
-    background-color: #f9f9f9;
-    border-radius: 8px;
-    box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+/* Tartalom */
+.content {
+    max-width: 1100px;
+    margin: 0 auto;
+    padding: 50px 30px;
 }
 
-h1, h2, h3 {
-    color: #d32f2f;
+.section {
+    background: #fff;
+    padding: 40px;
+    margin-bottom: 30px;
+    border-radius: 15px;
+    box-shadow: 0 5px 20px rgba(0, 0, 0, 0.1);
+    transition: transform 0.3s ease, box-shadow 0.3s ease;
 }
 
-p {
-    line-height: 1.6;
+.section:hover {
+    transform: translateY(-5px);
+    box-shadow: 0 10px 30px rgba(0, 0, 0, 0.15);
+}
+
+.section h2 {
+    font-family: 'Montserrat', sans-serif;
+    font-size: 2rem;
+    color: #1a1a1a;
     margin-bottom: 15px;
+    text-transform: uppercase;
+    letter-spacing: 1px;
 }
 
-ul {
-    list-style-type: disc;
-    margin-left: 20px;
+.title-underline {
+    width: 60px;
+    height: 4px;
+    background: #ff9500;
+    margin: 0 auto 25px;
+    border-radius: 2px;
+    box-shadow: 0 0 8px rgba(255, 149, 0, 0.3);
 }
 
-ul li {
-    margin-bottom: 10px;
+.section h3 {
+    font-family: 'Montserrat', sans-serif;
+    font-size: 1.5rem;
+    color: #333;
+    margin-top: 30px;
+    margin-bottom: 15px;
+    letter-spacing: 0.5px;
 }
 
-footer {
-    background-color: #d32f2f;
-    color: #fff;
-    text-align: center;
-    padding: 10px 0;
+.section p {
+    margin-bottom: 20px;
+    font-size: 1.1rem;
+    color: #555;
+}
+
+.section ul {
+    list-style: none;
+    padding-left: 0;
+}
+
+.section ul li {
+    position: relative;
+    padding-left: 30px;
+    margin-bottom: 15px;
+    font-size: 1.1rem;
+    color: #555;
+}
+
+.section ul li:before {
+    content: '\f00c'; /* FontAwesome ikon: pipa */
+    font-family: 'Font Awesome 5 Free';
+    font-weight: 900;
+    color: #ff9500;
+    position: absolute;
+    left: 0;
+    top: 5px;
+    font-size: 1.2rem;
+}
+
+.section ul li strong {
+    color: #1a1a1a;
+}
+
+/* Idővonal */
+.timeline-container {
+    position: relative;
     margin-top: 30px;
 }
 
-footer a {
-    color: white;
+.timeline-item {
+    display: flex;
+    align-items: flex-start;
+    margin-bottom: 30px;
+    position: relative;
+}
+
+.timeline-year {
+    font-family: 'Montserrat', sans-serif;
+    font-size: 1.3rem;
+    font-weight: 700;
+    color: #ff9500;
+    min-width: 100px;
+    text-align: right;
+    padding-right: 20px;
+}
+
+.timeline-content {
+    background: #f9f9f9;
+    padding: 20px;
+    border-radius: 10px;
+    flex: 1;
+    position: relative;
+    box-shadow: 0 2px 10px rgba(0, 0, 0, 0.05);
+}
+
+.timeline-content h3 {
+    font-size: 1.3rem;
+    margin-bottom: 10px;
+}
+
+.timeline-content p {
+    font-size: 1rem;
+}
+
+.timeline-item:before {
+    content: '';
+    position: absolute;
+    left: 110px;
+    top: 0;
+    bottom: 0;
+    width: 2px;
+    background: #ff9500;
+    z-index: -1;
+}
+
+.timeline-item:after {
+    content: '';
+    position: absolute;
+    left: 105px;
+    top: 20px;
+    width: 12px;
+    height: 12px;
+    background: #ff9500;
+    border-radius: 50%;
+    box-shadow: 0 0 8px rgba(255, 149, 0, 0.5);
+}
+
+/* CTA gomb */
+.cta-btn {
+    display: inline-block;
+    padding: 14px 40px;
+    background: #ff9500;
+    color: #fff;
     text-decoration: none;
+    border-radius: 30px;
+    font-family: 'Montserrat', sans-serif;
+    font-size: 1.1rem;
+    font-weight: 600;
+    text-transform: uppercase;
+    letter-spacing: 1px;
+    transition: background 0.3s ease, transform 0.3s ease, box-shadow 0.3s ease;
+}
+
+.cta-btn:hover {
+    background: #ffaa33;
+    transform: translateY(-3px);
+    box-shadow: 0 5px 15px rgba(255, 149, 0, 0.4);
+}
+
+/* Lábléc */
+.footer {
+    background: #1a1a1a;
+    color: #fff;
+    padding: 30px;
+    text-align: center;
+    box-shadow: 0 -2px 10px rgba(0, 0, 0, 0.2);
+}
+
+.footer-container {
+    max-width: 1100px;
+    margin: 0 auto;
+}
+
+.footer-copy {
+    font-size: 1rem;
+    opacity: 0.9;
+}
+
+.footer-copy a {
+    color: #ff9500;
+    text-decoration: none;
+    margin-left: 15px;
+    font-weight: 600;
+    transition: color 0.3s ease;
+}
+
+.footer-copy a:hover {
+    color: #ffaa33;
+}
+
+.back-to-top {
+    display: inline-block;
+    margin-left: 15px;
+    color: #ff9500;
+    font-size: 1rem;
+}
+
+.back-to-top i {
+    margin-right: 8px;
+    font-size: 1.2rem;
+    transition: transform 0.3s ease;
+}
+
+.back-to-top:hover {
+    color: #ffaa33;
+}
+
+.back-to-top:hover i {
+    transform: translateY(-3px);
+}
+
+/* Reszponzív dizájn */
+@media (max-width: 768px) {
+    .navbar {
+        padding: 15px 20px;
+    }
+
+    .nav-title {
+        font-size: 1.3rem;
+    }
+
+    .header {
+        padding: 60px 20px;
+    }
+
+    .page-title {
+        font-size: 2.2rem;
+    }
+
+    .header-subtitle {
+        font-size: 1.1rem;
+    }
+
+    .contact-btn,
+    .cta-btn {
+        padding: 12px 30px;
+        font-size: 1rem;
+    }
+
+    .content {
+        padding: 30px 20px;
+    }
+
+    .section {
+        padding: 30px;
+    }
+
+    .section h2 {
+        font-size: 1.7rem;
+    }
+
+    .section h3 {
+        font-size: 1.3rem;
+    }
+
+    .section p,
+    .section ul li {
+        font-size: 1rem;
+    }
+
+    .timeline-item {
+        flex-direction: column;
+    }
+
+    .timeline-year {
+        text-align: left;
+        padding-right: 0;
+        margin-bottom: 10px;
+    }
+
+    .timeline-item:before {
+        left: 5px;
+    }
+
+    .timeline-item:after {
+        left: 0;
+    }
+}
+
+@media (max-width: 480px) {
+    .navbar {
+        padding: 10px 15px;
+    }
+
+    .nav-title {
+        font-size: 1.1rem;
+    }
+
+    .header {
+        padding: 50px 15px;
+    }
+
+    .page-title {
+        font-size: 1.8rem;
+    }
+
+    .header-subtitle {
+        font-size: 1rem;
+    }
+
+    .section {
+        padding: 20px;
+    }
+
+    .section h2 {
+        font-size: 1.5rem;
+    }
+
+    .section h3 {
+        font-size: 1.2rem;
+    }
 }
