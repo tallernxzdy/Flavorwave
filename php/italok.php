@@ -1,6 +1,5 @@
 <?php
 session_start();
-include_once 'navbar.php';
 ?>
 
 <!DOCTYPE html>
@@ -27,7 +26,9 @@ include_once 'navbar.php';
 </head>
 
 <body>
-    <!-- A navbar már include-olva van a navbar.php fájlban -->
+    <?php
+        include './navbar.php';
+    ?>
 
     <div class="content-wrapper">
         <main>

@@ -8,7 +8,7 @@ h1, h3 {
 }
 
 .container {
-    padding-top: 10px;
+    padding-top: 30px;
     margin-top: 20px;
 }
 
@@ -67,10 +67,5 @@ select {
 @media (min-width: 1200px) {
     body {
         padding-top: 10px;
-    }
-
-    nav {
-        padding: 15px 20px;
-        height: 10px;
     }
 }

@@ -1,7 +1,7 @@
 <?php
 session_start();
 include 'adatbazisra_csatlakozas.php';
-include 'navbar.php';
+
 
 $userId = isset($_SESSION['felhasznalo_id']) ? $_SESSION['felhasznalo_id'] : null;
 
@@ -69,6 +69,9 @@ if ($userId) {
     <link rel="stylesheet" href="../css/footer.css">
 </head>
 <body>
+    <?php
+        include './navbar.php';
+    ?>
 
     <div class="container">
         <br><br><br><br>

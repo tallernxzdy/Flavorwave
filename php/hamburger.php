@@ -1,6 +1,5 @@
 <?php
 session_start();
-include 'navbar.php';
 ?>
 
 <!DOCTYPE html>
@@ -26,6 +25,9 @@ include 'navbar.php';
 
 <body>
 
+    <?php
+        include './navbar.php';
+    ?>
 
     <div class="content-wrapper">
         <main>
