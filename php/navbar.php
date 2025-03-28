@@ -1,5 +1,4 @@
 <?php
-session_start();
 include_once 'adatbazisra_csatlakozas.php';
 
 // A getCartItemCount függvényt ide is bemásoljuk, hogy a navbarban használhassuk
@@ -74,18 +73,19 @@ function getCartItemCount($conn) {
         <li><a href="kategoria.php">Menü</a></li>
         <?php if (isset($_SESSION["jog_szint"]) && $_SESSION["jog_szint"] == 1): ?>
             <li><a href="admin_felulet.php">Admin felület</a></li>
-        <?php endif; ?>
+        <?php else: ?>
         <li>
             <a href="kosar.php">
                 Kosár
                 <span class="cart-count"><?php echo getCartItemCount($conn); ?></span>
             </a>
         </li>
-        <?php if (isset($_SESSION["felhasznalo_nev"])): ?>
-            <li><a href="kijelentkezes.php">Kijelentkezés</a></li>
-        <?php else: ?>
-            <li><a href="bejelentkezes.php">Bejelentkezés</a></li>
         <?php endif; ?>
         <li><a href="rendelesek_megtekintes.php">Rendeléseim</a></li>
+        <?php if (isset($_SESSION["felhasznalo_nev"])): ?>
+            <li><a href="kijelentkezes.php">Kijelentkezés</a></li>
+        <?php endif; ?>
+            <li><a href="bejelentkezes.php">Bejelentkezés</a></li>
+        
     </ul>
 </div>
