@@ -367,6 +367,71 @@ body::before {
     transform: translateY(-5px);
 }
 
+/* Footer stílusok */
+.footer {
+    position: relative;
+    z-index: 2; /* A body::before (z-index: 0) fölé helyezzük */
+    background: var(--dark-black);
+    color: var(--primary-beige);
+    padding: clamp(2rem, 3vw, 3rem) 15px;
+    text-align: center;
+}
+
+.footer-container {
+    max-width: 1200px;
+    margin: 0 auto;
+}
+
+.footer-links {
+    list-style: none;
+    padding: 0;
+    margin-bottom: 1.5rem;
+    display: flex;
+    justify-content: center;
+    gap: clamp(1rem, 2vw, 2rem);
+}
+
+.footer-links li {
+    display: inline-block;
+}
+
+.footer-links a {
+    color: var(--primary-beige);
+    font-family: 'Poppins', sans-serif;
+    font-size: clamp(0.9rem, 1.3vw, 1rem);
+    text-decoration: none;
+    transition: var(--transition);
+}
+
+.footer-links a:hover {
+    color: var(--accent-gold);
+    text-decoration: underline;
+}
+
+.footer-socials {
+    margin-bottom: 1.5rem;
+    display: flex;
+    justify-content: center;
+    gap: clamp(1rem, 2vw, 1.5rem);
+}
+
+.footer-socials a {
+    color: var(--primary-beige);
+    font-size: clamp(1.2rem, 2vw, 1.5rem);
+    transition: var(--transition);
+}
+
+.footer-socials a:hover {
+    color: var(--accent-gold);
+    transform: scale(1.2);
+}
+
+.footer-copy {
+    font-family: 'Poppins', sans-serif;
+    font-size: clamp(0.8rem, 1.2vw, 0.9rem);
+    opacity: 0.7;
+}
+
 /* Reszponzivitás */
 @media (max-width: 1024px) {
     .order-card {
