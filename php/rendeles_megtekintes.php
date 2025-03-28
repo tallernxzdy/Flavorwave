@@ -1,4 +1,5 @@
 <?php
+session_start();
 include 'adatbazisra_csatlakozas.php';
 include 'navbar.php';
 
