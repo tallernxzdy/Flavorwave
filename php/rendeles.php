@@ -1,10 +1,9 @@
 <?php
 session_start();
-require '../vendor/autoload.php'; // Elérési út ellenőrzése szükséges
+require '../vendor/autoload.php';
 use PHPMailer\PHPMailer\PHPMailer;
 use PHPMailer\PHPMailer\Exception;
 
-// Innen folytatódik a kódod
 if (!isset($_SESSION['felhasznalo_id'])) {
     header("Location: bejelentkezes.php");
     exit();
@@ -12,7 +11,6 @@ if (!isset($_SESSION['felhasznalo_id'])) {
 
 include './adatbazisra_csatlakozas.php';
 
-// Hibaüzenetek és sikeresség kezelése sessionből
 $errors = $_SESSION['errors'] ?? [];
 unset($_SESSION['errors']);
 $success = $_SESSION['order_success'] ?? false;
@@ -22,7 +20,7 @@ $userId = $_SESSION['felhasznalo_id'];
 
 // Felhasználó adatainak betöltése
 $userData = [];
-$query = "SELECT tel_szam, lakcim FROM felhasznalo WHERE id = ?";
+$query = "SELECT tel_szam, lakcim, Teljes_nev FROM felhasznalo WHERE id = ?";
 $stmt = $conn->prepare($query);
 $stmt->bind_param("i", $userId);
 $stmt->execute();
@@ -49,7 +47,6 @@ while ($row = $result->fetch_assoc()) {
 }
 
 // Rendelés feldolgozása
-// Rendelés feldolgozása
 if ($_SERVER['REQUEST_METHOD'] === 'POST' && isset($_POST['submit'])) {
     if (empty($cartItems)) {
         $errors[] = "A kosár üres, nem lehet leadni a rendelést.";
@@ -58,6 +55,7 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST' && isset($_POST['submit'])) {
         $address = trim($_POST['address'] ?? '');
         $phone = trim($_POST['phone'] ?? '');
         $notes = trim($_POST['notes'] ?? '');
+        $paymentMethod = isset($_POST['payment_method']) ? (int)$_POST['payment_method'] : null;
 
         // Validáció
         $errors = [];
@@ -69,26 +67,28 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST' && isset($_POST['submit'])) {
             $errors[] = "Telefonszám megadása kötelező";
         elseif (!preg_match('/^\+?[0-9]{9,12}$/', $phone))
             $errors[] = "Érvénytelen telefonszám formátum";
+        elseif (!isset($paymentMethod) || ($paymentMethod !== 0 && $paymentMethod !== 1))
+            $errors[] = "Fizetési mód kiválasztása kötelező";
 
         if (empty($errors)) {
             $conn->begin_transaction();
             try {
                 // Felhasználó adatok frissítése
-                $stmt = $conn->prepare("UPDATE felhasznalo SET tel_szam=?, lakcim=? WHERE id=?");
-                $stmt->bind_param("ssi", $phone, $address, $userId);
+                $stmt = $conn->prepare("UPDATE felhasznalo SET tel_szam=?, lakcim=?, Teljes_nev=? WHERE id=?");
+                $stmt->bind_param("sssi", $phone, $address, $name, $userId);
                 $stmt->execute();
 
                 // Rendelés létrehozása
-                $stmt = $conn->prepare("INSERT INTO megrendeles (felhasznalo_id, leadas_megjegyzes, kezbesites, leadas_allapota, leadasdatuma) 
-                                       VALUES (?, ?, 'házhozszállítás', 0, CURDATE())");
-                $stmt->bind_param("is", $userId, $notes);
+                $stmt = $conn->prepare("INSERT INTO megrendeles (felhasznalo_id, leadas_megjegyzes, kezbesites, leadas_allapota, leadasdatuma, Fizetesi_mod) 
+                                       VALUES (?, ?, 'házhozszállítás', 0, CURDATE(), ?)");
+                $stmt->bind_param("isi", $userId, $notes, $paymentMethod);
                 $stmt->execute();
                 $orderId = $conn->insert_id;
 
                 // Tételek hozzáadása
-                $stmt = $conn->prepare("INSERT INTO rendeles_tetel (rendeles_id, termek_id, mennyiseg) VALUES (?, ?, ?)");
+                $stmt = $conn->prepare("INSERT INTO rendeles_tetel (rendeles_id, termek_id, mennyiseg, Fizetesi_mod) VALUES (?, ?, ?, ?)");
                 foreach ($cartItems as $item) {
-                    $stmt->bind_param("iii", $orderId, $item['id'], $item['darab']);
+                    $stmt->bind_param("iiii", $orderId, $item['id'], $item['darab'], $paymentMethod);
                     $stmt->execute();
                 }
 
@@ -102,25 +102,22 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST' && isset($_POST['submit'])) {
                 $result = $stmt->get_result();
                 $userEmail = $result->fetch_assoc()['email_cim'];
 
-
                 $mail = new PHPMailer(true);
 
                 try {
-                    // SMTP beállítások (pl. Gmail)
                     $mail->isSMTP();
-                    $mail->Host = 'smtp.gmail.com'; // SMTP szerver címe
+                    $mail->Host = 'smtp.gmail.com';
                     $mail->SMTPAuth = true;
-                    $mail->Username = 'flavorwavereal@gmail.com'; // A te Gmail címed
-                    $mail->Password = 'awch ocfs ldcr hded'; // Alkalmazás-specifikus jelszó (lásd lent)
+                    $mail->Username = 'flavorwavereal@gmail.com';
+                    $mail->Password = 'awch ocfs ldcr hded';
                     $mail->SMTPSecure = PHPMailer::ENCRYPTION_STARTTLS;
                     $mail->CharSet = "UTF-8";
                     $mail->Port = 587;
 
-                    // Feladó és címzett
                     $mail->setFrom('flavorwavereal@gmail.com', 'FlavorWave');
-                    $mail->addAddress($userEmail, $name); // Felhasználó e-mail címe és neve
+                    $mail->addAddress($userEmail, $name);
 
-                    // E-mail tartalom
+                    $paymentText = $paymentMethod == 0 ? "Készpénz" : "Bankkártya";
                     $mail->isHTML(true);
                     $mail->Subject = 'Rendelés visszaigazolás - FlavorWave';
                     $mail->Body = "
@@ -131,6 +128,7 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST' && isset($_POST['submit'])) {
                             <li><strong>Rendelés azonosító:</strong> #$orderId</li>
                             <li><strong>Szállítási cím:</strong> $address</li>
                             <li><strong>Telefonszám:</strong> $phone</li>
+                            <li><strong>Fizetési mód:</strong> $paymentText</li>
                             <li><strong>Megjegyzés:</strong> " . ($notes ?: 'Nincs') . "</li>
                         </ul>
                         <h3>Rendelt tételek:</h3>
@@ -185,62 +183,9 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST' && isset($_POST['submit'])) {
 </head>
 
 <body>
-<nav>
-            <!-- Bal oldalon a logó -->
-            <a href="kezdolap.php" class="logo">
-                <img src="../kepek/logo.png" alt="Flavorwave Logo">
-                <h1>FlavorWave</h1>
-            </a>
-
-            <!-- Középen a kategóriák (és Admin felület, ha jogosult) -->
-            <div class="navbar-center">
-                <a href="kategoria.php">Menü</a>
-                <a href="rendeles_megtekintes.php" class="order-button">Rendeléseim</a>
-                <?php if (isset($_SESSION["jog_szint"]) && $_SESSION["jog_szint"] == 1): ?>
-                    <a href="admin_felulet.php">Admin felület</a>
-                <?php endif; ?>
-                <?php if (isset($_SESSION["jog_szint"]) && $_SESSION["jog_szint"] == 2): ?>
-                    <a href="dolgozoi_felulet.php">Dolgozoi felulet</a>
-                <?php endif; ?>
-            </div>
-
-            <!-- Jobb oldalon a gombok -->
-            <div class="navbar-buttons">
-                <?php if (isset($_SESSION["felhasznalo_nev"])): ?>
-                    <a href="kijelentkezes.php" class="login-btn">Kijelentkezés</a>
-                <?php else: ?>
-                    <a href="bejelentkezes.php" class="login-btn">Bejelentkezés</a>
-                <?php endif; ?>
-                
-                <a href="kosar.php" class="cart-btn">
-                    <i class='fas fa-shopping-cart cart-icon'></i> Kosár
-                </a>
-            </div>
-
-            <!-- Hamburger menü ikon -->
-            <div class="hamburger" onclick="toggleMenu()">
-                <span></span>
-                <span></span>
-                <span></span>
-            </div>
-        </nav>
-
-        <!-- Hamburger menü tartalma -->
-        <div class="menubar" id="menubar">
-            <ul>
-                <li><a href="kategoria.php">Menü</a></li>
-                <?php if (isset($_SESSION["jog_szint"]) && $_SESSION["jog_szint"] == 1): ?>
-                    <li><a href="admin_felulet.php">Admin felület</a></li>
-                <?php endif; ?>
-                <li><a href="kosar.php">Kosár</a></li>
-                <?php if (isset($_SESSION["felhasznalo_nev"])): ?>
-                    <li><a href="kijelentkezes.php">Kijelentkezés</a></li>
-                <?php else: ?>
-                    <li><a href="bejelentkezes.php">Bejelentkezés</a></li>
-                <?php endif; ?>
-                <li><a href="rendelesek_megtekintes.php">Rendeléseim</a></li>
-            </ul>
-        </div>
+    <?php
+        include './navbar.php';
+    ?>
 
     <div class="modal fade" id="successModal" tabindex="-1" aria-labelledby="successModalLabel" aria-hidden="true">
         <div class="modal-dialog">
@@ -267,17 +212,29 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST' && isset($_POST['submit'])) {
                 <form method="POST">
                     <div class="mb-3">
                         <label for="name" class="form-label">Teljes név</label>
-                        <input type="text" class="form-control" id="name" name="name" required>
+                        <input type="text" class="form-control" id="name" name="name" 
+                               value="<?= htmlspecialchars($userData['Teljes_nev'] ?? '') ?>" required>
                     </div>
                     <div class="mb-3">
                         <label for="address" class="form-label">Szállítási cím</label>
                         <input type="text" class="form-control" id="address" name="address"
-                            value="<?= $userData['lakcim'] ?? '' ?>" required>
+                            value="<?= htmlspecialchars($userData['lakcim'] ?? '') ?>" required>
                     </div>
                     <div class="mb-3">
                         <label for="phone" class="form-label">Telefonszám</label>
                         <input type="tel" class="form-control" id="phone" name="phone"
-                            value="<?= $userData['tel_szam'] ?? '' ?>" required>
+                            value="<?= htmlspecialchars($userData['tel_szam'] ?? '') ?>" required>
+                    </div>
+                    <div class="mb-3">
+                        <label class="form-label">Fizetési mód</label>
+                        <div class="form-check">
+                            <input class="form-check-input" type="radio" name="payment_method" id="cash" value="0" required>
+                            <label class="form-check-label" for="cash">Készpénz</label>
+                        </div>
+                        <div class="form-check">
+                            <input class="form-check-input" type="radio" name="payment_method" id="card" value="1">
+                            <label class="form-check-label" for="card">Bankkártya</label>
+                        </div>
                     </div>
                     <div class="mb-3">
                         <label for="notes" class="form-label">Megjegyzés (opcionális)</label>
@@ -305,9 +262,8 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST' && isset($_POST['submit'])) {
             </div>
         </div>
 
-
         <?php if (!empty($errors)): ?>
-            <div class="alert alert-danger"><?= $errors[0] ?></div>
+            <div class="alert alert-danger"><?= htmlspecialchars($errors[0]) ?></div>
         <?php endif; ?>
 
         <?php if ($success): ?>
@@ -321,10 +277,10 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST' && isset($_POST['submit'])) {
                     });
                 });
             </script>
-
         <?php endif; ?>
     </div>
 
+    <!-- Footer unchanged -->
     <div class="footer">
         <div class="footer-container">
             <ul class="footer-links">
@@ -339,13 +295,13 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST' && isset($_POST['submit'])) {
                 <a href="#"><i class="fab fa-youtube"></i></a>
             </div>
             <div class="footer-copy">
-                &copy; 2025 FlavorWave - Minden jog fenntartva.
+                © 2024 FlavorWave - Minden jog fenntartva.
             </div>
         </div>
     </div>
+
     <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/js/bootstrap.bundle.min.js"></script>
     <script src="../js/navbar.js"></script>
-    
 </body>
 
 </html>

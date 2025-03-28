@@ -209,7 +209,7 @@ include 'adatbazisra_csatlakozas.php';
     <div class="steps-container">
         <div class="step" data-aos="fade-up"><i class="fas fa-utensils"></i> <p>Válassz ételt 🍕</p></div>
         <div class="step" data-aos="fade-up"><i class="fas fa-map-marker-alt"></i> <p>Add meg a címed 📍</p></div>
-        <div class="step" data-aos="fade-up"><i class="fas fa-credit-card"></i> <p>Fizess online vagy készpénzben 💳</p></div>
+        <div class="step" data-aos="fade-up"><i class="fas fa-credit-card"></i> <p>Fizess bankkártyával vagy készpénzben 💳</p></div>
         <div class="step" data-aos="fade-up"><i class="fas fa-smile"></i> <p>Élvezd az ételt 😋</p></div>
     </div>
 
