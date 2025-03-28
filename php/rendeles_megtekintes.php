@@ -1,6 +1,6 @@
 <?php
-session_start();
 include 'adatbazisra_csatlakozas.php';
+include 'navbar.php';
 
 $userId = isset($_SESSION['felhasznalo_id']) ? $_SESSION['felhasznalo_id'] : null;
 
@@ -62,68 +62,15 @@ if ($userId) {
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.15.4/css/all.min.css">
     <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@400;600&display=swap" rel="stylesheet">
     <title>Rendeléseim</title>
-    <link rel="stylesheet" href="../css/rendeles_megtekint.css">
     <link rel="stylesheet" href="../css/navbar.css">
+    <link rel="stylesheet" href="../css/fooldal/ujfooldal.css">
+    <link rel="stylesheet" href="../css/rendeles_megtekint.css">
     <link rel="stylesheet" href="../css/footer.css">
 </head>
 <body>
-<nav>
-            <!-- Bal oldalon a logó -->
-            <a href="kezdolap.php" class="logo">
-                <img src="../kepek/logo.png" alt="Flavorwave Logo">
-                <h1>FlavorWave</h1>
-            </a>
 
-            <!-- Középen a kategóriák (és Admin felület, ha jogosult) -->
-            <div class="navbar-center">
-                <a href="kategoria.php">Menü</a>
-                <a href="rendeles_megtekintes.php" class="order-button">Rendeléseim</a>
-                <?php if (isset($_SESSION["jog_szint"]) && $_SESSION["jog_szint"] == 1): ?>
-                    <a href="admin_felulet.php">Admin felület</a>
-                <?php endif; ?>
-                <?php if (isset($_SESSION["jog_szint"]) && $_SESSION["jog_szint"] == 2): ?>
-                    <a href="dolgozoi_felulet.php">Dolgozoi felulet</a>
-                <?php endif; ?>
-            </div>
-
-            <!-- Jobb oldalon a gombok -->
-            <div class="navbar-buttons">
-                <?php if (isset($_SESSION["felhasznalo_nev"])): ?>
-                    <a href="kijelentkezes.php" class="login-btn">Kijelentkezés</a>
-                <?php else: ?>
-                    <a href="bejelentkezes.php" class="login-btn">Bejelentkezés</a>
-                <?php endif; ?>
-                
-                <a href="kosar.php" class="cart-btn">
-                    <i class='fas fa-shopping-cart cart-icon'></i> Kosár
-                </a>
-            </div>
-
-            <!-- Hamburger menü ikon -->
-            <div class="hamburger" onclick="toggleMenu()">
-                <span></span>
-                <span></span>
-                <span></span>
-            </div>
-        </nav>
-
-        <!-- Hamburger menü tartalma -->
-        <div class="menubar" id="menubar">
-            <ul>
-                <li><a href="kategoria.php">Menü</a></li>
-                <?php if (isset($_SESSION["jog_szint"]) && $_SESSION["jog_szint"] == 1): ?>
-                    <li><a href="admin_felulet.php">Admin felület</a></li>
-                <?php endif; ?>
-                <li><a href="kosar.php">Kosár</a></li>
-                <?php if (isset($_SESSION["felhasznalo_nev"])): ?>
-                    <li><a href="kijelentkezes.php">Kijelentkezés</a></li>
-                <?php else: ?>
-                    <li><a href="bejelentkezes.php">Bejelentkezés</a></li>
-                <?php endif; ?>
-                <li><a href="rendelesek_megtekintes.php">Rendeléseim</a></li>
-            </ul>
-        </div>
     <div class="container">
+        <br><br><br><br>
         <h1 id="cim">Rendeléseim</h1>
 
         <?php if (!$userId): ?>
