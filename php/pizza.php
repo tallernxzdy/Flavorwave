@@ -34,7 +34,6 @@ session_start();
                 <h1 class="page-title">Pizzák</h1>
             </div>
             <?php
-            include './adatbazisra_csatlakozas.php';
 
             $kategoriak_sql = "SELECT * FROM etel WHERE kategoria_id = 4;";
             $kategoriak = adatokLekerdezese($kategoriak_sql);

@@ -105,13 +105,15 @@ if ($userId) {
 
 <body>
     <?php
-        include './navbar.php';
+    include './navbar.php';
     ?>
-    
+
     <div class="cart-container">
         <div class="cart-header">
             <h1>Kosár</h1>
-            <button class="btn btn-danger btn-sm" onclick="clearCart()">Kosár ürítése</button>
+            <?php if (!empty($cartItems)): ?>
+                <button class="btn btn-danger btn-sm" id="clearCartBtn" onclick="clearCart()">Kosár ürítése</button>
+            <?php endif; ?>
         </div>
 
         <?php foreach ($cartItems as $item): ?>
@@ -172,15 +174,15 @@ if ($userId) {
             const totalSpan = cartItem.querySelector('.item-total');
 
             fetch('kosar_mod.php', {
-                method: 'POST',
-                headers: {
-                    'Content-Type': 'application/json',
-                },
-                body: JSON.stringify({
-                    itemId: itemId,
-                    action: action
+                    method: 'POST',
+                    headers: {
+                        'Content-Type': 'application/json',
+                    },
+                    body: JSON.stringify({
+                        itemId: itemId,
+                        action: action
+                    })
                 })
-            })
                 .then(response => response.json())
                 .then(data => {
                     if (data.success) {
@@ -201,12 +203,14 @@ if ($userId) {
             const cartItem = document.querySelector(`.cart-item[data-item-id="${itemId}"]`);
 
             fetch('kosarbol_torles.php', {
-                method: 'POST',
-                headers: {
-                    'Content-Type': 'application/json',
-                },
-                body: JSON.stringify({ itemId: itemId })
-            })
+                    method: 'POST',
+                    headers: {
+                        'Content-Type': 'application/json',
+                    },
+                    body: JSON.stringify({
+                        itemId: itemId
+                    })
+                })
                 .then(response => response.json())
                 .then(data => {
                     if (data.success) {
@@ -217,59 +221,62 @@ if ($userId) {
                 });
         }
 
+        function checkIfCartEmpty() {
+            const cartItems = document.querySelectorAll('.cart-item');
+            const checkoutSection = document.querySelector('.checkout-section');
+            const clearCartBtn = document.getElementById('clearCartBtn');
+
+            if (cartItems.length === 0) {
+                // Ha üres a kosár
+                if (clearCartBtn) {
+                    clearCartBtn.style.display = 'none'; // Elrejtjük a gombot
+                }
+                checkoutSection.innerHTML = `
+            <p class="error">A kosár üres, rendeléshez adjon hozzá termékeket!</p>
+        `;
+            } else {
+                // Ha nem üres a kosár
+                if (clearCartBtn) {
+                    clearCartBtn.style.display = 'inline-block'; // Megjelenítjük a gombot
+                }
+                if (checkoutSection.querySelector('.error')) {
+                    const userId = <?php echo json_encode($userId); ?>;
+                    if (userId) {
+                        checkoutSection.innerHTML = `
+                    <form action="rendeles.php" method="post">
+                        <button class="checkout-btn" type="submit">Rendelés</button>
+                    </form>
+                `;
+                    }
+                }
+            }
+        }
+
+        // Kosár ürítésekor is ellenőrizzük az állapotot
         function clearCart() {
             fetch('kosar_uritese.php', {
-                method: 'POST',
-                headers: {
-                    'Content-Type': 'application/json',
-                }
-            })
+                    method: 'POST',
+                    headers: {
+                        'Content-Type': 'application/json',
+                    }
+                })
                 .then(response => response.json())
                 .then(data => {
                     if (data.success) {
-                        // Remove only cart items (keep layout)
                         document.querySelectorAll('.cart-item').forEach(item => {
                             item.style.opacity = '0';
-                            setTimeout(() => item.remove(), 500); // Smooth fade-out
+                            setTimeout(() => item.remove(), 500);
                         });
 
-                        // Update total price to 0
                         setTimeout(() => {
                             document.querySelector('.total-amount').textContent = '0 Ft';
-                        }, 500);
-
-                        // Show "A kosár üres" message and hide order button
-                        setTimeout(() => {
-                            document.querySelector('.checkout-section').innerHTML = `
-                                <p class="error">A kosár üres, rendeléshez adjon hozzá termékeket!</p>
-                            `;
+                            checkIfCartEmpty(); // Frissítjük a gomb és a checkout szekció állapotát
                         }, 500);
                     } else {
                         alert('Hiba történt a kosár törlése közben. Próbálja újra!');
                     }
                 })
                 .catch(error => console.error('Error:', error));
-        }
-
-        function checkIfCartEmpty() {
-            const cartItems = document.querySelectorAll('.cart-item');
-            const checkoutSection = document.querySelector('.checkout-section');
-            if (cartItems.length === 0) {
-                // Ha üres a kosár, frissítjük a checkout szekciót, hogy csak az üzenet legyen látható
-                checkoutSection.innerHTML = `
-                    <p class="error">A kosár üres, rendeléshez adjon hozzá termékeket!</p>
-                `;
-            } else if (checkoutSection.querySelector('.error')) {
-                // Ha nem üres, de van hibaüzenet, akkor visszaállítjuk a rendelés gombot (csak bejelentkezett felhasználó esetén)
-                const userId = <?php echo json_encode($userId); ?>;
-                if (userId) {
-                    checkoutSection.innerHTML = `
-                        <form action="rendeles.php" method="post">
-                            <button class="checkout-btn" type="submit">Rendelés</button>
-                        </form>
-                    `;
-                }
-            }
         }
 
         // Oldal betöltésekor is ellenőrizzük a kosár állapotát
