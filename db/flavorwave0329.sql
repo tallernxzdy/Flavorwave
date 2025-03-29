@@ -3,7 +3,7 @@
 -- https://www.phpmyadmin.net/
 --
 -- Gép: 127.0.0.1
--- Létrehozás ideje: 2025. Már 27. 20:35
+-- Létrehozás ideje: 2025. Már 29. 10:07
 -- Kiszolgáló verziója: 10.4.32-MariaDB
 -- PHP verzió: 8.2.12
 
@@ -74,7 +74,7 @@ INSERT INTO `etel` (`id`, `nev`, `egyseg_ar`, `leiras`, `kategoria_id`, `kep_url
 (34, 'Fánk', 500, 'Friss, csokoládés fánk', 7, 'fank.jpeg', 300, 'Liszt, cukor, olaj', 'Glutén'),
 (35, 'Brownie', 700, 'Csokoládés brownie', 7, 'brownie.jpeg', 350, 'Csokoládé, liszt, cukor', 'Glutén, tej'),
 (36, 'Almáspite', 600, 'Házi almáspite', 7, 'almaspite.jpeg', 320, 'Liszt, alma, cukor', 'Glutén'),
-(37, 'csokis keksz', 650, 'csokoládé darabos vaníliás keksz', 7, 'csokiskeksz.jpg', 340, 'Liszt, csokoládé, cukor', 'Glutén, tej'),
+(37, 'Csokis keksz', 650, 'csokoládé darabos vaníliás keksz', 7, 'csokiskeksz.jpg', 340, 'Liszt, csokoládé, cukor', 'Glutén, tej'),
 (38, 'Sajtburger', 1500, 'Klasszikus sajtburger sajttal és zöldségekkel', 3, 'sajtburger.jpg', 500, 'Zsemle, marhahús, sajt, saláta, paradicsom, szószok', 'Glutén, tej'),
 (39, 'Dupla sajtburger', 2000, 'Dupla húspogácsás sajtburger', 3, 'duplasajtburger.jpg', 750, 'Zsemle, marhahús, sajt, saláta, paradicsom, szószok', 'Glutén, tej'),
 (40, 'Dupla húsos burger', 2200, 'Extra húsos burger dupla húspogácsával', 3, 'duplahusosburger.jpg', 800, 'Zsemle, marhahús, saláta, paradicsom, szószok', 'Glutén'),
