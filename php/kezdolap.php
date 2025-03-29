@@ -118,7 +118,7 @@ session_start();
             </div>
         </div>
         <p>Ne maradj le! Az ajánlat visszaszámlálás alatt érhető el.</p>
-        <a href="menu.php" class="cta-button primary-bttn">Fedezd fel az ajánlatokat!</a>
+        <a href="kategoria.php" class="cta-button primary-bttn">Fedezd fel az ajánlatokat!</a>
     </section>
 
     <br>
@@ -191,7 +191,7 @@ session_start();
                     <div class="shaker-text">
                         <h3>Epres shake</h3>
                         <p>A gyümölcsök kedvelőinek</p>
-                        <a href="#" class="shaker-btn">Vásárlás</a>
+                        <a href="shakek.php" class="shaker-btn">Vásárlás</a>
                     </div>
                     <div class="shaker-image">
                         <img src="../kepek/shakek/epresshake.jpg" alt="Epres shake">
@@ -201,7 +201,7 @@ session_start();
                     <div class="shaker-text">
                         <h3>Csokis shake</h3>
                         <p>A Csokoládé igazi fanatikusainak, három féle csokival.</p>
-                        <a href="#" class="shaker-btn">Vásárlás</a>
+                        <a href="shakek.php" class="shaker-btn">Vásárlás</a>
                     </div>
                     <div class="shaker-image">
                         <img src="../kepek/shakek/csokisshake.jpg" alt="Csokis Shake">
@@ -211,7 +211,7 @@ session_start();
                     <div class="shaker-text">
                         <h3>Karamellás shake</h3>
                         <p>Az igazán édes szájúaknak</p>
-                        <a href="#" class="shaker-btn">Vásárlás</a>
+                        <a href="shakek.php" class="shaker-btn">Vásárlás</a>
                     </div>
                     <div class="shaker-image">
                         <img src="../kepek/shakek/karamellasshake.jpg" alt="Karamellás shake">
