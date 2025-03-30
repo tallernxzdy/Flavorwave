@@ -53,7 +53,7 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST' && isset($_POST['etel_id'])) {
 
 // Kosár adatainak lekérése
 if ($userId) {
-    // Bejelentkezett felhasználó - adatbázisból lekérjük a kosarat
+    // Bejelentkezett felhasznalo - csak adatbázisból
     $query = "SELECT etel.id, etel.nev, etel.kep_url, etel.egyseg_ar, tetelek.darab, kategoria.kategoria_nev 
               FROM tetelek 
               JOIN etel ON tetelek.etel_id = etel.id 
@@ -67,8 +67,10 @@ if ($userId) {
         $cartItems[] = $row;
         $total += $row['egyseg_ar'] * $row['darab'];
     }
+    
+    // Ha be van jelentkezve, ne nézzük a session kosarat
 } else {
-    // Vendég felhasználó - session-ből lekérjük a kosarat
+    // Vendég felhasznalo - csak session-ből
     if (isset($_SESSION['kosar'])) {
         foreach ($_SESSION['kosar'] as $itemId => $quantity) {
             $query = "SELECT etel.id, etel.nev, etel.egyseg_ar, etel.kep_url, kategoria.kategoria_nev 
