@@ -22,15 +22,14 @@ if (!is_array($etelek)) {
     $message = "<div class='alert alert-warning'>Hiba az ételek lekérdezése során: $etelek</div>";
 }
 
-// felhasználókat lekérdezése a jogosultság megváltoztatásához
-$felhasznalok = []; // Inicializáljuk üres tömbre
+// Felhasználók lekérdezése a jogosultság megváltoztatásához
+$felhasznalok = [];
 $felhasznalokLekerdezese = adatokLekerdezese("SELECT id, felhasznalo_nev, jog_szint FROM felhasznalo");
 if (is_array($felhasznalokLekerdezese)) {
     $felhasznalok = $felhasznalokLekerdezese;
 } else {
     $message = "<div class='alert alert-warning'>Hiba a felhasználók lekérdezése során: $felhasznalokLekerdezese</div>";
 }
-
 
 // Művelet feldolgozása
 if ($_SERVER['REQUEST_METHOD'] === 'POST') {
@@ -46,41 +45,38 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
         $osszetevok = $_POST['osszetevok'];
         $allergenek = $_POST['allergenek'];
 
-        // Kép URL ellenőrzése
-        $kep_url = "";
-        if (isset($_FILES['kepek_url']['name']) && $_FILES['kepek_url']['name'] !== "") {
-            $target_dir = "../kepek/";
-            $uniqueName = basename($_FILES['kepek_url']['name']);
-            $target_file = $target_dir . $uniqueName;
+        $kategoria = adatokLekerdezese("SELECT kategoria_nev FROM kategoria WHERE id = ?", ['i', $kategoria_id]);
+        if (!is_array($kategoria) || empty($kategoria)) {
+            $message = "<div class='alert alert-warning'>Hiba a kategória lekérdezése során!</div>";
+        } else {
+            $kategoria_nev = strtolower($kategoria[0]['kategoria_nev']);
+            $kep_url = "";
+            if (isset($_FILES['kepek_url']['name']) && $_FILES['kepek_url']['name'] !== "") {
+                $target_dir = "../kepek/" . $kategoria_nev . "/";
+                $kep_nev = $_POST['kep_nev'] ?? uniqid();
+                $kiterjesztes = pathinfo($_FILES['kepek_url']['name'], PATHINFO_EXTENSION);
+                $uniqueName = $kep_nev . '.' . $kiterjesztes;
+                $target_file = $target_dir . $uniqueName;
 
-            // Ellenőrizzük, hogy a kép már létezik-e
-            if (file_exists($target_file)) {
-                $kep_url = $uniqueName; // Csak a fájl nevét mentjük
-            } else {
-                // Ha nem létezik, feltöltjük
-                if (move_uploaded_file($_FILES['kepek_url']['tmp_name'], $target_file)) {
-                    $kep_url = $uniqueName; // Csak a fájl nevét mentjük
+                if (file_exists($target_file)) {
+                    $message = "<div class='alert alert-warning'>Ez a képnév már foglalt!</div>";
                 } else {
-                    $message = "<div class='alert alert-warning'>Hiba a kép feltöltése során!</div>";
+                    if (move_uploaded_file($_FILES['kepek_url']['tmp_name'], $target_file)) {
+                        $kep_url = "$kategoria_nev/$uniqueName";
+                    } else {
+                        $message = "<div class='alert alert-warning'>Hiba a kép feltöltése során!</div>";
+                    }
                 }
             }
-        }
 
-        // Ellenőrzés, hogy a név létezik-e már
-        $lekerdezes = "SELECT COUNT(*) as count FROM etel WHERE nev = ?";
-        $result = adatokLekerdezese($lekerdezes, ['s', $nev]);
-        if (is_array($result) && $result[0]['count'] > 0) {
-            $message = "<div class='alert alert-warning'>Ez az étel már létezik!</div>";
-        } else {
-            // Adatbázisba mentés
             $muvelet = "INSERT INTO etel (nev, egyseg_ar, leiras, kategoria_id, kep_url, kaloria, osszetevok, allergenek) VALUES (?, ?, ?, ?, ?, ?, ?, ?)";
-            $parameterek = ['ssisssss', $nev, $egyseg_ar, $leiras, $kategoria_id, $kep_url, $kaloria, $osszetevok, $allergenek];
+            $parameterek = ['ssssssss', $nev, $egyseg_ar, $leiras, $kategoria_id, $kep_url, $kaloria, $osszetevok, $allergenek];
             $result = adatokValtoztatasa($muvelet, $parameterek);
-            $message = "<div class='alert alert-secondary'>$result</div>";
+            $message = "<div class='alert alert-success'>Étel sikeresen hozzáadva!</div>";
         }
     }
 
-    // Szerkesztés
+    // Szerkesztés (képkezelés nélkül)
     if ($operation === 'edit') {
         $id = $_POST['edit_etel'];
         $nev = $_POST['edit_nev'];
@@ -91,60 +87,29 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
         $osszetevok = $_POST['edit_osszetevok'];
         $allergenek = $_POST['edit_allergenek'];
 
-        // Kép URL ellenőrzése
-        $kep_url = "";
-        if (isset($_FILES['edit_kepek_url']['name']) && $_FILES['edit_kepek_url']['name'] !== "") {
-            $target_dir = "../kepek/";
-            $uniqueName = basename($_FILES['edit_kepek_url']['name']);
-            $target_file = $target_dir . $uniqueName;
-
-            // Ellenőrizzük, hogy a kép már létezik-e
-            if (file_exists($target_file)) {
-                $kep_url = $uniqueName; // Csak a fájl nevét mentjük
-            } else {
-                // Ha nem létezik, feltöltjük
-                if (move_uploaded_file($_FILES['edit_kepek_url']['tmp_name'], $target_file)) {
-                    $kep_url = $uniqueName; // Csak a fájl nevét mentjük
-                } else {
-                    $message = "<div class='alert alert-warning'>Hiba a kép feltöltése során!</div>";
-                }
-            }
-        }
-
-        // Adatbázis frissítés
-        if ($kep_url) {
-            $muvelet = "UPDATE etel SET nev = ?, egyseg_ar = ?, leiras = ?, kategoria_id = ?, kep_url = ?, kaloria = ?, osszetevok = ?, allergenek = ? WHERE id = ?";
-            $parameterek = ['ssisssssi', $nev, $egyseg_ar, $leiras, $kategoria_id, $kep_url, $kaloria, $osszetevok, $allergenek, $id];
-        } else {
-            $muvelet = "UPDATE etel SET nev = ?, egyseg_ar = ?, leiras = ?, kategoria_id = ?, kaloria = ?, osszetevok = ?, allergenek = ? WHERE id = ?";
-            $parameterek = ['ssissssi', $nev, $egyseg_ar, $leiras, $kategoria_id, $kaloria, $osszetevok, $allergenek, $id];
-        }
-
+        $muvelet = "UPDATE etel SET nev = ?, egyseg_ar = ?, leiras = ?, kategoria_id = ?, kaloria = ?, osszetevok = ?, allergenek = ? WHERE id = ?";
+        $parameterek = ['sssssssi', $nev, $egyseg_ar, $leiras, $kategoria_id, $kaloria, $osszetevok, $allergenek, $id];
         $result = adatokValtoztatasa($muvelet, $parameterek);
-        $message = "<div class='alert alert-secondary'>$result</div>";
+        $message = "<div class='alert alert-success'>Étel sikeresen szerkesztve!</div>";
     }
 
     // Törlés
     if ($operation === 'delete') {
         $id = $_POST['delete_etel'];
-
-        // Kép törlése, ha létezik
-        $etel = adatokLekerdezese("SELECT kep_url FROM etel WHERE id = $id");
+        $etel = adatokLekerdezese("SELECT kep_url FROM etel WHERE id = ?", ['i', $id]);
         if (is_array($etel) && count($etel) > 0 && !empty($etel[0]['kep_url']) && file_exists("../kepek/" . $etel[0]['kep_url'])) {
             unlink("../kepek/" . $etel[0]['kep_url']);
         }
 
-        // Adatbázisból törlés
-        $result = adatokTorlese("id = $id");
-        $message = "<div class='alert alert-secondary'>$result</div>";
+        $result = adatokTorlese($id);
+        $message = "<div class='alert alert-success'>Étel sikeresen törölve!</div>";
     }
 
-    // admin felület felhasználó szerkesztése:
+    // Felhasználó szerkesztése
     if ($operation === 'edit_user') {
         $userId = $_POST['editUserId'];
         $jogSzint = $_POST['jog_szint'];
-    
-        // Ellenőrizzük, hogy a felhasználó jogosultsági szintje megegyezik-e az újjal
+
         $checkSql = "SELECT jog_szint FROM felhasznalo WHERE id = ?";
         $checkStmt = $conn->prepare($checkSql);
         $checkStmt->bind_param("i", $userId);
@@ -152,59 +117,43 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
         $checkStmt->bind_result($currentJogSzint);
         $checkStmt->fetch();
         $checkStmt->close();
-    
+
         if ($currentJogSzint == $jogSzint) {
             $message = "<div class='alert alert-warning'>A felhasználó már rendelkezik ezzel a jogosultsági szinttel!</div>";
         } else {
             $sql = "UPDATE felhasznalo SET jog_szint = ? WHERE id = ?";
             $stmt = $conn->prepare($sql);
             $stmt->bind_param("ii", $jogSzint, $userId);
-    
+
             if ($stmt->execute()) {
                 $message = "<div class='alert alert-success'>Felhasználó jogosultsága sikeresen frissítve!</div>";
             } else {
                 $message = "<div class='alert alert-danger'>Hiba történt a frissítés során!</div>";
             }
-    
+
             $stmt->close();
         }
     }
 }
-
-
 ?>
 
 <!DOCTYPE html>
 <html lang="hu">
-
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Admin Felület</title>
     <link rel="stylesheet" href="../css/navbar.css">
     <link rel="stylesheet" href="../css/admin_felulet.css">
-    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/css/bootstrap.min.css" rel="stylesheet"
-        integrity="sha384-QWTKZyjpPEjISv5WaRU9OFeRpok6YctnYmDr5pNlyT2bRjXh0JMhjY6hW+ALEwIH" crossorigin="anonymous">
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/css/bootstrap.min.css" rel="stylesheet" integrity="sha384-QWTKZyjpPEjISv5WaRU9OFeRpok6YctnYmDr5pNlyT2bRjXh0JMhjY6hW+ALEwIH" crossorigin="anonymous">
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.15.4/css/all.min.css">
-    <script>
-        if (window.history.replaceState) {
-            window.history.replaceState(null, null, window.location.href);
-        }
-    </script>
 </head>
-
 <body>
-        <?php
-            include './navbar.php';
-        ?>
+    <?php include './navbar.php'; ?>
 
-
-
-
-    <!--  -->
     <div class="container" id="margo_felulre">
         <h1>Admin Felület</h1>
-        <h5>adatbázis műveletek</h5>
+        <h5>Adatbázis műveletek</h5>
         <?php if ($message): ?>
             <?php echo $message; ?>
         <?php endif; ?>
@@ -234,11 +183,12 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
                         </option>
                     <?php endforeach; ?>
                 </select>
-                <input type="file" name="kepek_url" accept="image/*" class="form-control mb-2">
+                <input type="text" name="kep_nev" placeholder="Kép neve (kiterjesztés nélkül)" class="form-control mb-2" required>
+                <input type="file" name="kepek_url" accept="image/*" class="form-control mb-2" required>
                 <button type="submit" data-operation="add" class="btn btn-primary">Hozzáadás</button>
             </div>
 
-            <!-- Szerkesztés űrlap -->
+            <!-- Szerkesztés űrlap (kép nélkül) -->
             <div id="edit-form" class="form-section" style="display:none;">
                 <h3>Szerkesztés</h3>
                 <select name="edit_etel" class="form-select mb-2">
@@ -249,13 +199,13 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
                         </option>
                     <?php endforeach; ?>
                 </select>
-                <input type="text" name="edit_nev" placeholder="Név" class="form-control mb-2">
-                <input type="number" name="edit_egyseg_ar" placeholder="Egységár" class="form-control mb-2">
-                <textarea name="edit_leiras" placeholder="Leírás" class="form-control mb-2"></textarea>
-                <input type="number" name="edit_kaloria" placeholder="Kalória" class="form-control mb-2">
-                <textarea name="edit_osszetevok" placeholder="Összetevők" class="form-control mb-2"></textarea>
-                <textarea name="edit_allergenek" placeholder="Allergének" class="form-control mb-2"></textarea>
-                <select name="edit_kategoria_id" class="form-select mb-2">
+                <input type="text" name="edit_nev" placeholder="Név" class="form-control mb-2" required>
+                <input type="number" name="edit_egyseg_ar" placeholder="Egységár" class="form-control mb-2" required>
+                <textarea name="edit_leiras" placeholder="Leírás" class="form-control mb-2" required></textarea>
+                <input type="number" name="edit_kaloria" placeholder="Kalória" class="form-control mb-2" required>
+                <textarea name="edit_osszetevok" placeholder="Összetevők" class="form-control mb-2" required></textarea>
+                <textarea name="edit_allergenek" placeholder="Allergének" class="form-control mb-2" required></textarea>
+                <select name="edit_kategoria_id" class="form-select mb-2" required>
                     <option value="">Válassz kategóriát</option>
                     <?php foreach ($kategoriak as $kategoria): ?>
                         <option value="<?= htmlspecialchars($kategoria['id']) ?>">
@@ -263,7 +213,6 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
                         </option>
                     <?php endforeach; ?>
                 </select>
-                <input type="file" name="edit_kepek_url" accept="image/*" class="form-control mb-2">
                 <button type="submit" data-operation="edit" class="btn btn-primary">Szerkesztés</button>
             </div>
 
@@ -283,23 +232,20 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
         </form>
     </div>
 
-
-
-    <!-- admin felület felhasználó szerkesztése -->
+    <!-- Felhasználó szerkesztése -->
     <div class="container mt-5">
         <h2>Felhasználó szerkesztése</h2>
-            <table class="table table-bordered">
-                <thead>
-                    <tr>
-                        <th>Felhasználónév</th>
-                        <th>Jogosultság</th>
-                        <th>Művelet</th>
-                    </tr>
-                </thead>
-                <tbody>
+        <table class="table table-bordered">
+            <thead>
+                <tr>
+                    <th>Felhasználónév</th>
+                    <th>Jogosultság</th>
+                    <th>Művelet</th>
+                </tr>
+            </thead>
+            <tbody>
                 <?php foreach ($felhasznalok as $felhasznalo): ?>
                     <tr>
-                        <!-- megszövegesítése a táblában a -->
                         <td><?= htmlspecialchars($felhasznalo['felhasznalo_nev']) ?></td>
                         <td>
                             <?php
@@ -320,31 +266,24 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
                         </td>
                         <td>
                             <?php if ($felhasznalo['jog_szint'] != 1): ?>
-                                <button class="btn btn-primary" onclick="editUser(<?= $felhasznalo['id'] ?>)">Változtatás</button>
+                                <button class="btn btn-primary" onclick="editUser(<?= $felhasznalo['id'] ?>, <?= $felhasznalo['jog_szint'] ?>)">Változtatás</button>
                             <?php else: ?>
                                 <button class="btn btn-secondary" disabled>Változtatás</button>
                             <?php endif; ?>
                         </td>
                     </tr>
                 <?php endforeach; ?>
-                </tbody>
-            </table>
+            </tbody>
+        </table>
     </div>
 
-
-    <!-- dolgozói felületre ugrás -->
+    <!-- Dolgozói felületre ugrás -->
     <br>
     <div class="d-grid gap-2 col-6 mx-auto">
         <a class="btn btn-secondary" href="dolgozoi_felulet.php">Dolgozói felület</a>
     </div>
 
-
-
-
-
-
     <!-- Modal a jogosultság módosításához -->
-
     <div class="modal fade" id="editUserModal" tabindex="-1" aria-labelledby="editUserModalLabel" aria-hidden="true">
         <div class="modal-dialog">
             <div class="modal-content">
@@ -355,7 +294,7 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
                 <div class="modal-body">
                     <form id="editUserForm" method="POST">
                         <input type="hidden" name="editUserId" id="editUserId">
-                        <input type="hidden" name="currentJogSzint" id="currentJogSzint"> <!-- Új hidden mező -->
+                        <input type="hidden" name="currentJogSzint" id="currentJogSzint">
                         <input type="hidden" name="operation" value="edit_user">
                         <div class="form-group">
                             <label>Felhasználói jogosultságra váltás:</label>
@@ -375,45 +314,8 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
         </div>
     </div>
 
-
-    <!-- javascript a felhasználó szerkesztésére -->
-    <script>
-        function editUser(userId, currentJogSzint) {
-            document.getElementById('editUserId').value = userId;
-            document.getElementById('currentJogSzint').value = currentJogSzint; // Aktuális jogosultsági szint beállítása
-            const editUserModal = new bootstrap.Modal(document.getElementById('editUserModal'));
-            editUserModal.show();
-        }
-
-        function saveUserChanges() {
-            const currentJogSzint = parseInt(document.getElementById('currentJogSzint').value, 10); // Számmá alakítás
-            const selectedRadio = document.querySelector('input[name="jog_szint"]:checked');
-
-            if (!selectedRadio) {
-                alert("Kérjük, válasszon jogosultsági szintet!");
-                return;
-            }
-
-            const selectedJogSzint = parseInt(selectedRadio.value, 10); // Számmá alakítás
-
-            if (currentJogSzint === selectedJogSzint) {
-                alert("A felhasználó már rendelkezik ezzel a jogosultsági szinttel!");
-                return;
-            }
-
-            document.getElementById('editUserForm').submit();
-        }
-    </script>
-
-    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/js/bootstrap.bundle.min.js"></script>
-    <script src="../js/navbar.js"></script>
-</body>
-</html>
-
-
-    <!-- Megerősítés Modal a gomb lenyomásakor -->
-    <div class="modal fade" id="confirmationModal" tabindex="-1" aria-labelledby="confirmationModalLabel"
-        aria-hidden="true">
+    <!-- Megerősítés Modal -->
+    <div class="modal fade" id="confirmationModal" tabindex="-1" aria-labelledby="confirmationModalLabel" aria-hidden="true">
         <div class="modal-dialog">
             <div class="modal-content">
                 <div class="modal-header">
@@ -431,63 +333,137 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
         </div>
     </div>
 
-
+    <!-- JavaScript -->
     <script>
-
-
-        document.getElementById('operation').addEventListener('change', function () {
-            const sections = document.querySelectorAll('.form-section');
-
-            // Elrejt minden szekciót és eltávolítja a 'required' attribútumokat
-            sections.forEach(section => {
-                section.style.display = 'none';
-                const inputs = section.querySelectorAll('[required]');
-                inputs.forEach(input => input.removeAttribute('required'));
+        document.addEventListener('DOMContentLoaded', function () {
+            // Műveletváltás űrlap megjelenítése
+            document.getElementById('operation').addEventListener('change', function () {
+                const sections = document.querySelectorAll('.form-section');
+                sections.forEach(section => {
+                    section.style.display = 'none';
+                });
+                if (this.value) {
+                    const activeSection = document.getElementById(this.value + '-form');
+                    activeSection.style.display = 'block';
+                }
             });
 
-            // Megjeleníti a kiválasztott szekciót, és hozzáadja a 'required' attribútumokat
-            if (this.value) {
-                const activeSection = document.getElementById(this.value + '-form');
-                activeSection.style.display = 'block';
-                const inputs = activeSection.querySelectorAll('[data-required]');
-                inputs.forEach(input => input.setAttribute('required', 'required'));
-            }
-        });
-
-
-        // Modalh ablakhoz js
-
-        document.addEventListener('DOMContentLoaded', function () {
+            // Modal megerősítés és valós idejű input ellenőrzés
             const confirmationModal = new bootstrap.Modal(document.getElementById('confirmationModal'));
             const confirmActionButton = document.getElementById('confirmAction');
             let currentOperation = null;
 
-            // Gombok eseménykezelője
             document.querySelectorAll('[data-operation]').forEach(button => {
                 button.addEventListener('click', function (event) {
                     event.preventDefault();
                     currentOperation = this.getAttribute('data-operation');
+                    const activeForm = document.getElementById(currentOperation + '-form');
+
+                    if (activeForm && activeForm.style.display !== 'none') {
+                        const requiredInputs = activeForm.querySelectorAll('input[required], textarea[required], select[required]');
+                        const fileInput = activeForm.querySelector('input[type="file"]');
+                        const kepNevInput = activeForm.querySelector(currentOperation === 'add' ? 'input[name="kep_nev"]' : null);
+                        let isValid = true;
+
+                        requiredInputs.forEach(input => {
+                            if (!input.value.trim()) {
+                                isValid = false;
+                                input.classList.add('is-invalid');
+                            } else {
+                                input.classList.remove('is-invalid');
+                            }
+                        });
+
+                        if (fileInput && fileInput.files.length > 0 && kepNevInput && !kepNevInput.value.trim()) {
+                            isValid = false;
+                            kepNevInput.classList.add('is-invalid');
+                        } else if (kepNevInput) {
+                            kepNevInput.classList.remove('is-invalid');
+                        }
+
+                        if (!isValid) {
+                            return;
+                        }
+                    } else {
+                        console.log('Nincs aktív űrlap, vagy nem látható:', activeForm);
+                        return;
+                    }
+
                     confirmationModal.show();
                 });
             });
 
-            // Megerősítés gomb eseménykezelője
             confirmActionButton.addEventListener('click', function () {
                 confirmationModal.hide();
                 if (currentOperation) {
-                    // Beállítjuk a művelet típusát a hidden inputba
                     document.getElementById('operation').value = currentOperation;
-                    // Elküldjük a formot
                     document.getElementById('adminForm').submit();
                 }
             });
+
+            // Valós idejű ellenőrzés az input mezőkre
+            const allInputs = document.querySelectorAll('input[required], textarea[required], select[required]');
+            allInputs.forEach(input => {
+                input.addEventListener('input', function () {
+                    if (this.value.trim()) {
+                        this.classList.remove('is-invalid');
+                    } else {
+                        this.classList.add('is-invalid');
+                    }
+                });
+            });
+
+            // Kategóriák szerinti fájlfeltöltés (csak hozzáadáshoz)
+            const addKategoriaSelect = document.querySelector('select[name="kategoria_id"]');
+            const addFileInput = document.querySelector('input[name="kepek_url"]');
+
+            if (addKategoriaSelect && addFileInput) {
+                addKategoriaSelect.addEventListener('change', function () {
+                    const selectedOption = this.options[this.selectedIndex];
+                    const kategoriaNev = selectedOption.textContent.trim().toLowerCase();
+                    if (kategoriaNev) {
+                        addFileInput.setAttribute('accept', `image/${kategoriaNev}/*`);
+                    } else {
+                        addFileInput.setAttribute('accept', 'image/*');
+                    }
+                });
+            }
         });
+
+        // Felhasználó szerkesztés modal
+        function editUser(userId, currentJogSzint) {
+            document.getElementById('editUserId').value = userId;
+            document.getElementById('currentJogSzint').value = currentJogSzint;
+            const editUserModal = new bootstrap.Modal(document.getElementById('editUserModal'));
+            editUserModal.show();
+        }
+
+        function saveUserChanges() {
+            const currentJogSzint = parseInt(document.getElementById('currentJogSzint').value, 10);
+            const selectedRadio = document.querySelector('input[name="jog_szint"]:checked');
+
+            if (!selectedRadio) {
+                alert("Kérjük, válasszon jogosultsági szintet!");
+                return;
+            }
+
+            const selectedJogSzint = parseInt(selectedRadio.value, 10);
+
+            if (currentJogSzint === selectedJogSzint) {
+                alert("A felhasználó már rendelkezik ezzel a jogosultsági szinttel!");
+                return;
+            }
+
+            document.getElementById('editUserForm').submit();
+        }
+
+        // History replace state (űrlap újraküldés megakadályozása)
+        if (window.history.replaceState) {
+            window.history.replaceState(null, null, window.location.href);
+        }
     </script>
 
-    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/js/bootstrap.bundle.min.js"
-        integrity="sha384-YvpcrYf0tY3lHB60NNkmXc5s9fDVZLESaAA55NDzOxhy9GkcIdslK1eN7N6jIeHz"
-        crossorigin="anonymous"></script>
+    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/js/bootstrap.bundle.min.js" integrity="sha384-YvpcrYf0tY3lHB60NNkmXc5s9fDVZLESaAA55NDzOxhy9GkcIdslK1eN7N6jIeHz" crossorigin="anonymous"></script>
     <script src="../js/navbar.js"></script>
 </body>
-
 </html>

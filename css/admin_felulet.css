@@ -171,3 +171,7 @@ label{
 /* @media(min-width: 480x) {
     
 } */
+
+.is-invalid {
+    border-color: #e64616 !important;
+}

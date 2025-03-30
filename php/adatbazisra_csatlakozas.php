@@ -63,21 +63,19 @@ function adatokValtoztatasa($muvelet, $parameterek) {
 }
 
 // SQL function törléshez:
-function adatokTorlese($muvelet, $parameterek = []) {
+function adatokTorlese($id) {
     global $conn;
     if (!$conn) {
         return "Nincs aktív adatbázis kapcsolat.";
     }
 
-    $stmt = $conn->prepare($muvelet);
+    $sql = "DELETE FROM etel WHERE id = ?";
+    $stmt = $conn->prepare($sql);
     if (!$stmt) {
         return "Hiba a lekérdezés előkészítésekor: " . $conn->error;
     }
 
-    if (!empty($parameterek)) {
-        $stmt->bind_param(...$parameterek);
-    }
-
+    $stmt->bind_param("i", $id);
     if (!$stmt->execute()) {
         return "Hiba a lekérdezés végrehajtásakor: " . $stmt->error;
     }
