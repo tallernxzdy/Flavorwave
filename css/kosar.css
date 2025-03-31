@@ -1,321 +1,383 @@
-@import url('https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;600&display=swap');
+/* Változók a konzisztens színekhez (kategoria.css-ből átvéve, de csak a content-wrapper számára) */
+.content-wrapper {
+    --light-bg: #f5e8c7; /* Kosár tartalma */
+    --dark-bg: #e6d7a8; /* Sötétebb bézs háttér */
+    --text-dark: #2e2e2e;
+    --accent-gold: #d4a373;
+    --shadow-color: rgba(0, 0, 0, 0.1);
+    --button-hover: #b5895a; /* Sötétebb árnyalat a hoverhez */
+    --transition: all 0.3s ease;
+}
 
-body {
-    font-family: 'Poppins', sans-serif;
-    background-color: #F5E8C7;
-    color: #1a1a1a;
+/* Csak a content-wrapper és alatta lévő elemeket érinti */
+.content-wrapper {
+    background: var(--dark-bg);
+    padding-top: clamp(80px, 10vw, 100px);
     min-height: 100vh;
     display: flex;
     flex-direction: column;
-    justify-content: space-between;
-    padding-top: 60px;
+    position: relative;
+    overflow: hidden;
 }
 
-/* Cart Container Styling */
-.cart-container {
-    width: 1200px;
-    max-width: 95%;
-    margin: 4rem auto;
-    padding: 2rem;
-    background: #D4A373;
-    border-radius: 12px;
-    box-shadow: 0 4px 20px rgba(0, 0, 0, 0.05);
-    
+.content-wrapper main {
+    padding: clamp(1.5rem, 4vw, 3rem) clamp(0.8rem, 2vw, 1.5rem);
+    flex: 1;
+    position: relative;
+    z-index: 1;
 }
 
-/* Cart Header Styling */
-.cart-header {
+/* Kosár konténer */
+.content-wrapper .cart-container {
+    max-width: 1400px;
+    margin: 0 auto;
+    padding: clamp(1.5rem, 3vw, 2rem);
+    background: var(--light-bg); /* Bézs, világosabb, mint a háttér */
+    border-radius: 20px;
+    box-shadow: 0 10px 30px var(--shadow-color);
+    animation: fadeIn 0.8s ease-in-out;
+}
+
+@keyframes fadeIn {
+    0% { opacity: 0; transform: translateY(20px); }
+    100% { opacity: 1; transform: translateY(0); }
+}
+
+/* Cím stílus */
+.content-wrapper .cart-header {
     display: flex;
     justify-content: space-between;
     align-items: center;
-    margin-bottom: 1.5rem;
-    border-bottom: 1px solid #dcdcdc;
-    padding-bottom: 1rem;
+    margin-bottom: clamp(2rem, 4vw, 3rem);
 }
 
-.cart-header h1 {
-    font-size: 2rem;
+.content-wrapper .cart-header h1 {
+    font-family: 'Poppins', sans-serif;
+    font-size: clamp(2.5rem, 6vw, 4rem);
+    font-weight: 800;
+    text-transform: uppercase;
+    letter-spacing: 3px;
+    color: var(--accent-gold);
+    text-shadow: 0 3px 10px rgba(212, 163, 115, 0.4), 0 0 20px rgba(212, 163, 115, 0.2);
+    position: relative;
+    animation: slideIn 1s ease-in-out;
+}
+
+.content-wrapper .cart-header h1::after {
+    content: '';
+    position: absolute;
+    bottom: -10px;
+    left: 50%;
+    transform: translateX(-50%);
+    width: 60%;
+    height: 4px;
+    background: var(--accent-gold);
+    border-radius: 2px;
+    box-shadow: 0 2px 10px rgba(212, 163, 115, 0.5);
+}
+
+@keyframes slideIn {
+    0% { opacity: 0; transform: translateX(-20px); }
+    100% { opacity: 1; transform: translateX(0); }
+}
+
+.content-wrapper .clear-cart-btn {
+    background: var(--accent-gold);
+    color: var(--text-dark);
+    padding: clamp(0.6rem, 1.2vw, 1rem) clamp(1.2rem, 2.5vw, 2rem);
+    border-radius: 30px;
+    font-size: clamp(0.9rem, 1.6vw, 1.1rem);
     font-weight: 600;
-    margin: 0;
-}
-
-.cart-header .btn-danger {
-    background-color: #1A1A1A;
+    font-family: 'Poppins', sans-serif;
+    text-transform: uppercase;
     border: none;
-    padding: 0.5rem 1rem;
-    font-size: 0.95rem;
-    font-weight: 600;
-    border-radius: 8px;
-    transition: background-color 0.3s ease, transform 0.2s ease;
+    cursor: pointer;
+    transition: var(--transition);
+    box-shadow: 0 5px 15px var(--shadow-color);
 }
 
-.cart-header .btn-danger:hover {
-    background-color: #1A1A1A;
-    transform: translateY(-2px);
+.content-wrapper .clear-cart-btn:hover {
+    background: var(--button-hover);
+    transform: translateY(-3px);
+    box-shadow: 0 8px 20px rgba(212, 163, 115, 0.4);
 }
 
-/* Cart Item Styling */
-.cart-item {
+/* Kosár elemek */
+.content-wrapper .cart-item {
     display: flex;
     justify-content: space-between;
     align-items: center;
-    padding: 1.5rem 0;
-    border-bottom: 1px solid #dcdcdc;
-    gap: 1rem;
-    transition: opacity 0.3s ease;
+    background: var(--light-bg);
+    border-radius: 15px;
+    padding: clamp(1rem, 2vw, 1.5rem);
+    margin-bottom: clamp(1rem, 2vw, 1.5rem);
+    box-shadow: 0 5px 15px var(--shadow-color);
+    transition: var(--transition);
 }
 
-.cart-item img {
-    width: 80px;
-    height: 80px;
+.content-wrapper .cart-item:hover {
+    transform: translateY(-5px);
+    box-shadow: 0 10px 25px rgba(212, 163, 115, 0.2);
+}
+
+/* Kép és információk */
+.content-wrapper .item-details {
+    display: flex;
+    align-items: center;
+    gap: clamp(1rem, 2vw, 1.5rem);
+    flex: 2;
+}
+
+.content-wrapper .item-details img {
+    width: 100px;
+    height: 100px;
     object-fit: cover;
-    border-radius: 8px;
-    box-shadow: 0 2px 5px rgba(0, 0, 0, 0.1);
+    border-radius: 10px;
+    border: 2px solid var(--accent-gold);
+    transition: var(--transition);
 }
 
-.item-details {
+.content-wrapper .item-details img:hover {
+    transform: scale(1.05);
+}
+
+.content-wrapper .item-info {
+    display: flex;
+    flex-direction: column;
+    gap: 0.5rem;
+}
+
+.content-wrapper .item-name {
+    font-family: 'Poppins', sans-serif;
+    font-size: clamp(1.2rem, 2vw, 1.5rem);
+    font-weight: 600;
+    color: var(--text-dark);
+}
+
+.content-wrapper .item-price {
+    font-family: 'Poppins', sans-serif;
+    font-size: clamp(0.9rem, 1.5vw, 1.1rem);
+    color: var(--text-dark);
+    font-weight: 400;
+}
+
+/* Mennyiség vezérlők */
+.content-wrapper .quantity-controls {
     display: flex;
     align-items: center;
     gap: 1rem;
     flex: 1;
-}
-
-.item-info {
-    display: flex;
-    flex-direction: column;
     justify-content: center;
 }
 
-.item-name {
-    font-size: 1.1rem;
-    font-weight: 600;
-    margin: 0;
-}
-
-.item-price {
-    font-size: 0.95rem;
-    margin: 0;
-}
-
-/* Quantity Controls */
-.quantity-controls {
-    display: flex;
-    align-items: center;
-    gap: 0.75rem;
-}
-
-.quantity-controls button {
-    background: #1A1A1A;
+.content-wrapper .quantity-btn {
+    background: var(--accent-gold);
+    color: var(--text-dark);
     border: none;
-    padding: 0.5rem 0.75rem;
-    font-size: 1.1rem;
+    border-radius: 50%;
+    width: 35px;
+    height: 35px;
+    font-size: clamp(1rem, 1.6vw, 1.2rem);
     font-weight: 600;
-    color: #F5E8C7;
+    font-family: 'Poppins', sans-serif;
     cursor: pointer;
-    border-radius: 6px;
-    height: 32px;
-    width: 32px;
-    display: flex;
-    align-items: center;
-    justify-content: center;
-    transition: background-color 0.3s ease;
+    transition: var(--transition);
+    box-shadow: 0 3px 10px var(--shadow-color);
 }
 
-.quantity-controls button:hover {
-    background: #F5E8C7;
+.content-wrapper .quantity-btn:hover {
+    background: var(--button-hover);
+    transform: scale(1.1);
+    box-shadow: 0 5px 15px rgba(212, 163, 115, 0.3);
 }
 
-.quantity-controls .quantity {
-    font-size: 1rem;
-    font-weight: 500;
-    min-width: 30px;
+.content-wrapper .quantity {
+    font-family: 'Poppins', sans-serif;
+    font-size: clamp(1.1rem, 1.8vw, 1.3rem);
+    font-weight: 600;
+    color: var(--accent-gold);
+}
+
+/* Összeg (item-total) és Törlés gomb szétválasztása */
+.content-wrapper .item-total {
+    font-family: 'Poppins', sans-serif;
+    font-size: clamp(1rem, 1.6vw, 1.2rem);
+    font-weight: 600;
+    color: var(--text-dark);
+    flex: 1;
     text-align: center;
+    margin-right: clamp(1rem, 2vw, 1.5rem);
 }
 
-/* Item Total */
-.item-total {
-    font-size: 1rem;
-    font-weight: 500;
-    min-width: 80px;
-    text-align: right;
-}
-
-/* Remove Button */
-.remove-from-cart {
-    background: #1A1A1A;
-    color: #fff;
-    border: none;
-    padding: 0.5rem 1rem;
-    font-size: 0.9rem;
+.content-wrapper .remove-btn {
+    background: var(--accent-gold);
+    color: var(--text-dark);
+    padding: clamp(0.5rem, 1vw, 0.8rem) clamp(1rem, 2vw, 1.5rem);
+    border-radius: 25px;
+    font-size: clamp(0.9rem, 1.5vw, 1.1rem);
     font-weight: 600;
+    font-family: 'Poppins', sans-serif;
+    text-transform: uppercase;
+    border: none;
     cursor: pointer;
-    border-radius: 6px;
-    height: 32px;
-    display: flex;
-    align-items: center;
-    justify-content: center;
-    transition: background-color 0.3s ease, transform 0.2s ease;
+    transition: var(--transition);
+    box-shadow: 0 5px 15px var(--shadow-color);
+    flex: 1;
+    max-width: 150px;
 }
 
-.remove-from-cart:hover {
-    background: #1A1A1A;
-    transform: translateY(-2px);
+.content-wrapper .remove-btn:hover {
+    background: var(--button-hover);
+    transform: translateY(-3px);
+    box-shadow: 0 8px 20px rgba(212, 163, 115, 0.4);
 }
 
-/* Total Section */
-.total-section {
+/* Összeg szekció */
+.content-wrapper .total-section {
     display: flex;
     justify-content: space-between;
     align-items: center;
-    padding: 1.5rem 0;
-    border-top: 1px solid #dcdcdc;
-    margin-top: 1rem;
+    margin-top: clamp(2rem, 3vw, 2.5rem);
+    padding: clamp(1rem, 2vw, 1.5rem);
+    background: var(--light-bg);
+    border-radius: 15px;
+    box-shadow: 0 5px 15px var(--shadow-color);
 }
 
-.total-label {
-    font-size: 1.2rem;
+.content-wrapper .total-label,
+.content-wrapper .total-amount {
+    font-family: 'Poppins', sans-serif;
+    font-size: clamp(1.2rem, 2vw, 1.5rem);
     font-weight: 600;
+    color: var(--text-dark);
 }
 
-.total-amount {
-    font-size: 1.2rem;
-    font-weight: 600;
-    color: #1A1A1A;
+.content-wrapper .total-amount {
+    color: var(--accent-gold);
 }
 
-/* Checkout Section */
-.checkout-section {
-    text-align: right;
-    margin-top: 2rem;
-}
-
-.checkout-btn {
-    background-color: #1A1A1A;
-    border: none;
-    padding: 0.75rem 2rem;
-    font-size: 1.1rem;
-    font-weight: 600;
-    color: #fff;
-    border-radius: 8px;
-    transition: background-color 0.3s ease, transform 0.2s ease;
-}
-
-.checkout-btn:hover {
-    background-color: #2980b9;
-    transform: translateY(-2px);
-}
-
-.error {
-    color: #1a1a1a;
-    font-size: 1rem;
+/* Pénztár szekció */
+.content-wrapper .checkout-section {
+    margin-top: clamp(2rem, 3vw, 2.5rem);
     text-align: center;
-    margin: 1rem 0;
 }
 
-.login-prompt {
-    color: #7f8c8d;
-    font-size: 1rem;
-    text-align: center;
-    margin-bottom: 1rem;
-}
-
-.login-btn {
-    display: inline-block;
-    background-color: #3498db;
-    color: #fff;
-    padding: 0.75rem 1.5rem;
-    font-size: 1rem;
+.content-wrapper .checkout-btn,
+.content-wrapper .login-btn {
+    background: var(--accent-gold);
+    color: var(--text-dark);
+    padding: clamp(0.8rem, 1.5vw, 1.2rem) clamp(1.5rem, 3vw, 2rem);
+    border-radius: 30px;
+    font-size: clamp(1rem, 1.8vw, 1.2rem);
     font-weight: 600;
+    font-family: 'Poppins', sans-serif;
+    text-transform: uppercase;
     text-decoration: none;
-    border-radius: 8px;
-    transition: background-color 0.3s ease, transform 0.2s ease;
+    transition: var(--transition);
+    box-shadow: 0 5px 15px var(--shadow-color);
+    border: none;
+    cursor: pointer;
 }
 
-.login-btn:hover {
-    background-color: #2980b9;
-    transform: translateY(-2px);
+.content-wrapper .checkout-btn:hover,
+.content-wrapper .login-btn:hover {
+    background: var(--button-hover);
+    transform: translateY(-3px);
+    box-shadow: 0 8px 20px rgba(212, 163, 115, 0.4);
 }
 
-/* Responsive Design */
-@media (max-width: 768px) {
-    .cart-container {
-        margin: 2rem 1rem;
-        padding: 1.5rem;
-    }
+.content-wrapper .error,
+.content-wrapper .login-prompt {
+    font-family: 'Poppins', sans-serif;
+    font-size: clamp(0.9rem, 1.5vw, 1.1rem);
+    color: var(--text-dark);
+    margin-bottom: clamp(1rem, 2vw, 1.5rem);
+}
 
-    .cart-header h1 {
-        font-size: 1.5rem;
-    }
-
-    .cart-item {
+/* Reszponzivitás */
+@media (max-width: 1024px) {
+    .content-wrapper .cart-item {
         flex-direction: column;
-        align-items: flex-start;
-        gap: 1rem;
-        padding: 1rem 0;
+        text-align: center;
+        padding: clamp(0.8rem, 1.5vw, 1.2rem);
     }
 
-    .item-details {
-        width: 100%;
-    }
-
-    .item-details img {
-        width: 60px;
-        height: 60px;
-    }
-
-    .quantity-controls {
+    .content-wrapper .item-details,
+    .content-wrapper .quantity-controls,
+    .content-wrapper .item-total,
+    .content-wrapper .remove-btn {
         margin: 0.5rem 0;
-    }
-
-    .item-total {
-        text-align: left;
         width: 100%;
     }
 
-    .remove-from-cart {
-        width: 100%;
-        text-align: center;
+    .content-wrapper .quantity-controls {
+        justify-content: center;
     }
 
-    .total-section {
+    .content-wrapper .total-section,
+    .content-wrapper .cart-header {
         flex-direction: column;
-        align-items: flex-start;
-        gap: 0.5rem;
-    }
-
-    .checkout-section {
         text-align: center;
     }
 
-    .checkout-btn,
-    .login-btn {
-        width: 100%;
-        padding: 0.75rem;
+    .content-wrapper .cart-header h1 {
+        margin-bottom: clamp(1rem, 2vw, 1.5rem);
+    }
+}
+
+@media (max-width: 768px) {
+    .content-wrapper .cart-header h1 {
+        font-size: clamp(2rem, 5vw, 2.5rem);
+    }
+
+    .content-wrapper .cart-item img {
+        width: 80px;
+        height: 80px;
+    }
+
+    .content-wrapper .item-name {
+        font-size: clamp(1rem, 1.8vw, 1.2rem);
+    }
+
+    .content-wrapper .checkout-btn,
+    .content-wrapper .login-btn {
+        padding: clamp(0.6rem, 1.2vw, 0.9rem) clamp(1.2rem, 2.5vw, 1.8rem);
+        font-size: clamp(0.9rem, 1.6vw, 1.1rem);
     }
 }
 
 @media (max-width: 480px) {
-    .cart-header {
-        flex-direction: column;
-        align-items: flex-start;
-        gap: 1rem;
+    .content-wrapper .cart-header h1 {
+        font-size: clamp(1.5rem, 4vw, 2rem);
     }
 
-    .cart-header .btn-danger {
-        width: 100%;
-        text-align: center;
+    .content-wrapper .cart-item {
+        padding: clamp(0.6rem, 1vw, 0.9rem);
     }
 
-    .item-name {
-        font-size: 1rem;
+    .content-wrapper .cart-item img {
+        width: 60px;
+        height: 60px;
     }
 
-    .item-price {
-        font-size: 0.85rem;
+    .content-wrapper .item-name {
+        font-size: clamp(0.9rem, 1.5vw, 1.1rem);
     }
 
-    .total-label,
-    .total-amount {
-        font-size: 1rem;
+    .content-wrapper .quantity-btn {
+        width: 30px;
+        height: 30px;
+        font-size: clamp(0.9rem, 1.4vw, 1.1rem);
+    }
+
+    .content-wrapper .remove-btn {
+        padding: clamp(0.4rem, 0.8vw, 0.6rem) clamp(0.8rem, 1.5vw, 1.2rem);
+        font-size: clamp(0.8rem, 1.3vw, 1rem);
+    }
+
+    .content-wrapper .checkout-btn,
+    .content-wrapper .login-btn {
+        padding: clamp(0.5rem, 1vw, 0.8rem) clamp(1rem, 2vw, 1.5rem);
+        font-size: clamp(0.8rem, 1.4vw, 1rem);
     }
 }

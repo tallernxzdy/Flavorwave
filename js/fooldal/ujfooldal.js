@@ -61,55 +61,55 @@
 
 
         // Quiz
-        const questions = document.querySelectorAll('.quiz-question');
-        const resultCard = document.querySelector('.quiz-result-card');
-        const recommendedFood = document.getElementById('recommended-food');
-        const foodImage = document.getElementById('food-image');
-        const orderLink = document.getElementById('order-link');
-        let currentQuestion = 0;
-        let answers = {};
+        // const questions = document.querySelectorAll('.quiz-question');
+        // const resultCard = document.querySelector('.quiz-result-card');
+        // const recommendedFood = document.getElementById('recommended-food');
+        // const foodImage = document.getElementById('food-image');
+        // const orderLink = document.getElementById('order-link');
+        // let currentQuestion = 0;
+        // let answers = {};
 
-        questions[currentQuestion].classList.add('active');
+        // questions[currentQuestion].classList.add('active');
 
-        document.querySelectorAll('.quiz-options button').forEach(button => {
-            button.addEventListener('click', () => {
-                const key = button.getAttribute('data-type') || button.getAttribute('data-spice') || button.getAttribute('data-cheese');
-                answers[key] = button.textContent;
+        // document.querySelectorAll('.quiz-options button').forEach(button => {
+        //     button.addEventListener('click', () => {
+        //         const key = button.getAttribute('data-type') || button.getAttribute('data-spice') || button.getAttribute('data-cheese');
+        //         answers[key] = button.textContent;
 
-                questions[currentQuestion].classList.remove('active');
-                currentQuestion++;
+        //         questions[currentQuestion].classList.remove('active');
+        //         currentQuestion++;
 
-                if (currentQuestion < questions.length) {
-                    questions[currentQuestion].classList.add('active');
-                } else {
-                    resultCard.classList.add('active');
-                    showResult();
-                }
-            });
-        });
+        //         if (currentQuestion < questions.length) {
+        //             questions[currentQuestion].classList.add('active');
+        //         } else {
+        //             resultCard.classList.add('active');
+        //             showResult();
+        //         }
+        //     });
+        // });
 
-        function showResult() {
-            let result = '';
-            let imageSrc = '';
+        // function showResult() {
+        //     let result = '';
+        //     let imageSrc = '';
 
-            if (answers['type'] === 'Húsos') {
-                if (answers['spice'] === 'Csípős') result = 'Spicy Meat Lover';
-                else if (answers['cheese'] === 'Extra') result = 'Meat & Cheese Deluxe';
-                else result = 'Classic Pepperoni';
-                imageSrc = '../kepek/pizza4.jpg';
-            } else if (answers['type'] === 'Zöldséges') {
-                if (answers['spice'] === 'Csípős') result = 'Spicy Veggie';
-                else result = 'Garden Fresh';
-                imageSrc = '../kepek/pizza2.jpg';
-            } else {
-                result = answers['cheese'] === 'Extra' ? 'Four Cheese Bliss' : 'Margherita';
-                imageSrc = '../kepek/pizza2.jpg';
-            }
+        //     if (answers['type'] === 'Húsos') {
+        //         if (answers['spice'] === 'Csípős') result = 'Spicy Meat Lover';
+        //         else if (answers['cheese'] === 'Extra') result = 'Meat & Cheese Deluxe';
+        //         else result = 'Classic Pepperoni';
+        //         imageSrc = '../kepek/pizza4.jpg';
+        //     } else if (answers['type'] === 'Zöldséges') {
+        //         if (answers['spice'] === 'Csípős') result = 'Spicy Veggie';
+        //         else result = 'Garden Fresh';
+        //         imageSrc = '../kepek/pizza2.jpg';
+        //     } else {
+        //         result = answers['cheese'] === 'Extra' ? 'Four Cheese Bliss' : 'Margherita';
+        //         imageSrc = '../kepek/pizza2.jpg';
+        //     }
 
-            recommendedFood.textContent = result;
-            foodImage.src = imageSrc;
-            orderLink.href = '#order';
-        }
+        //     recommendedFood.textContent = result;
+        //     foodImage.src = imageSrc;
+        //     orderLink.href = '#order';
+        // }
 
 
 

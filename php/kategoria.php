@@ -59,7 +59,7 @@ session_start();
                 <div class="flex-col" data-aos="fade-up" data-aos-delay="300">
                     <a href="hotdog.php" class="menu__option">
                         <div class="image-wrapper">
-                            <img src="../kepek/hot-dogok/simahotdog.jpg" alt="Hot-dogok">
+                            <img src="../kepek/hotdogok/simahotdog.jpg" alt="Hot-dogok">
                         </div>
                         <h2>Hot-dogok</h2>
                         <div class="title-underline"></div>

@@ -142,94 +142,10 @@ session_start();
     <br>
     <br>
 
-    <div class="quiz-wrapper">
-        <div class="quiz-container">
-            <h1>Nem tudod milyen pizzát válassz?</h1>
-            <p>Mi segítünk! Csak válassz tetszésnek megfelelő alapanyagot!</p>
-            <div class="quiz-question active">
-                <i class="fas fa-pizza-slice"></i>
-                <h2>Milyen pizzát szeretnél?</h2>
-                <div class="quiz-options">
-                    <button data-type="meat">Húsos</button>
-                    <button data-type="veggie">Zöldséges</button>
-                    <button data-type="cheese">Sajtos</button>
-                </div>
-            </div>
-            <div class="quiz-question">
-                <i class="fas fa-pepper-hot"></i>
-                <h2>Mennyire szereted a csípőset?</h2>
-                <div class="quiz-options">
-                    <button data-spice="mild">Enyhén</button>
-                    <button data-spice="medium">Közepesen</button>
-                    <button data-spice="hot">Nagyon</button>
-                </div>
-            </div>
-            <div class="quiz-question">
-                <i class="fas fa-cheese"></i>
-                <h2>Mennyi sajtot szeretnél?</h2>
-                <div class="quiz-options">
-                    <button data-cheese="light">Kevés</button>
-                    <button data-cheese="normal">Normál</button>
-                    <button data-cheese="extra">Extra</button>
-                </div>
-            </div>
-            <div class="quiz-result-card">
-                <h2>Az ajánlott ételed:</h2>
-                <p id="recommended-food"></p>
-                <div class="image-container">
-                    <img id="food-image" src="../kepek/pizzak/pizza2.jpg" alt="Ajánlott étel">
-                </div>
-                <a id="order-link" href="#">Megrendelem!</a>
-            </div>
-        </div>
-    </div>
 
-    <div class="shaker-master-container">
-        <div class="shaker-master">
-            <div class="shaker-slides">
-                <div class="shaker-slide">
-                    <div class="shaker-text">
-                        <h3>Epres shake</h3>
-                        <p>A gyümölcsök kedvelőinek</p>
-                        <a href="shakek.php" class="shaker-btn">Vásárlás</a>
-                    </div>
-                    <div class="shaker-image">
-                        <img src="../kepek/shakek/epresshake.jpg" alt="Epres shake">
-                    </div>
-                </div>
-                <div class="shaker-slide">
-                    <div class="shaker-text">
-                        <h3>Csokis shake</h3>
-                        <p>A Csokoládé igazi fanatikusainak, három féle csokival.</p>
-                        <a href="shakek.php" class="shaker-btn">Vásárlás</a>
-                    </div>
-                    <div class="shaker-image">
-                        <img src="../kepek/shakek/csokisshake.jpg" alt="Csokis Shake">
-                    </div>
-                </div>
-                <div class="shaker-slide">
-                    <div class="shaker-text">
-                        <h3>Karamellás shake</h3>
-                        <p>Az igazán édes szájúaknak</p>
-                        <a href="shakek.php" class="shaker-btn">Vásárlás</a>
-                    </div>
-                    <div class="shaker-image">
-                        <img src="../kepek/shakek/karamellasshake.jpg" alt="Karamellás shake">
-                    </div>
-                </div>
-            </div>
-            <button class="shaker-prev"><i class="fas fa-chevron-left"></i></button>
-            <button class="shaker-next"><i class="fas fa-chevron-right"></i></button>
-        </div>
-        <div class="shaker-dots">
-            <div class="shaker-dot active"></div>
-            <div class="shaker-dot"></div>
-            <div class="shaker-dot"></div>
-        </div>
-    </div>
 
-    <!-- Új szekció: Népszerű Ételeink Galériája -->
-    <section class="popular-foods-gallery">
+<!-- Új szekció: Népszerű Ételeink Galériája -->
+<section class="popular-foods-gallery">
         <div class="container">
             <h2 class="gallery-title">
                 Népszerű Ételeink
@@ -289,6 +205,96 @@ session_start();
             </div>
         </div>
     </section>
+
+
+
+    <!-- <div class="quiz-wrapper">
+        <div class="quiz-container">
+            <h1>Nem tudod milyen pizzát válassz?</h1>
+            <p>Mi segítünk! Csak válassz tetszésnek megfelelő alapanyagot!</p>
+            <div class="quiz-question active">
+                <i class="fas fa-pizza-slice"></i>
+                <h2>Milyen pizzát szeretnél?</h2>
+                <div class="quiz-options">
+                    <button data-type="meat">Húsos</button>
+                    <button data-type="veggie">Zöldséges</button>
+                    <button data-type="cheese">Sajtos</button>
+                </div>
+            </div>
+            <div class="quiz-question">
+                <i class="fas fa-pepper-hot"></i>
+                <h2>Mennyire szereted a csípőset?</h2>
+                <div class="quiz-options">
+                    <button data-spice="mild">Enyhén</button>
+                    <button data-spice="medium">Közepesen</button>
+                    <button data-spice="hot">Nagyon</button>
+                </div>
+            </div>
+            <div class="quiz-question">
+                <i class="fas fa-cheese"></i>
+                <h2>Mennyi sajtot szeretnél?</h2>
+                <div class="quiz-options">
+                    <button data-cheese="light">Kevés</button>
+                    <button data-cheese="normal">Normál</button>
+                    <button data-cheese="extra">Extra</button>
+                </div>
+            </div>
+            <div class="quiz-result-card">
+                <h2>Az ajánlott ételed:</h2>
+                <p id="recommended-food"></p>
+                <div class="image-container">
+                    <img id="food-image" src="../kepek/pizzak/pizza2.jpg" alt="Ajánlott étel">
+                </div>
+                <a id="order-link" href="#">Megrendelem!</a>
+            </div>
+        </div>
+    </div> -->
+
+    <div class="shaker-master-container">
+        <div class="shaker-master">
+            <div class="shaker-slides">
+                <div class="shaker-slide">
+                    <div class="shaker-text">
+                        <h3>Epres shake</h3>
+                        <p>A gyümölcsök kedvelőinek</p>
+                        <a href="shakek.php" class="shaker-btn">Vásárlás</a>
+                    </div>
+                    <div class="shaker-image">
+                        <img src="../kepek/shakek/epresshake.jpg" alt="Epres shake">
+                    </div>
+                </div>
+                <div class="shaker-slide">
+                    <div class="shaker-text">
+                        <h3>Csokis shake</h3>
+                        <p>A Csokoládé igazi fanatikusainak, három féle csokival.</p>
+                        <a href="shakek.php" class="shaker-btn">Vásárlás</a>
+                    </div>
+                    <div class="shaker-image">
+                        <img src="../kepek/shakek/csokisshake.jpg" alt="Csokis Shake">
+                    </div>
+                </div>
+                <div class="shaker-slide">
+                    <div class="shaker-text">
+                        <h3>Karamellás shake</h3>
+                        <p>Az igazán édes szájúaknak</p>
+                        <a href="shakek.php" class="shaker-btn">Vásárlás</a>
+                    </div>
+                    <div class="shaker-image">
+                        <img src="../kepek/shakek/karamellasshake.jpg" alt="Karamellás shake">
+                    </div>
+                </div>
+            </div>
+            <button class="shaker-prev"><i class="fas fa-chevron-left"></i></button>
+            <button class="shaker-next"><i class="fas fa-chevron-right"></i></button>
+        </div>
+        <div class="shaker-dots">
+            <div class="shaker-dot active"></div>
+            <div class="shaker-dot"></div>
+            <div class="shaker-dot"></div>
+        </div>
+    </div>
+
+    
 
     <div class="feedback-section">
         <?php if (isset($_SESSION['felhasznalo_id'])): ?>
