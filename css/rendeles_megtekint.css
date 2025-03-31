@@ -234,23 +234,25 @@ body::before {
 
 /* Állapotjelző (a részletekben, az "Állapot" szöveg helyett) */
 .order-card .order-details p:first-child {
-    background: var(--accent-gold);
+    background: linear-gradient(45deg, var(--accent-gold), var(--deep-gold));
     color: var(--dark-black);
-    padding: 0.5rem 1.2rem;
-    border-radius: 20px;
+    padding: 0.4rem 1rem; /* Kisebb padding, hogy ne legyen túl nagy */
+    border-radius: 25px; /* Több lekerekítés, hogy lágyabb legyen */
     font-size: clamp(0.8rem, 1.2vw, 1rem);
-    font-weight: 700;
-    font-family: 'Montserrat', sans-serif;
-    box-shadow: 0 0 15px var(--accent-gold);
+    font-weight: 600; /* Kissé csökkentett vastagság, hogy ne legyen túl domináns */
+    font-family: 'Poppins', sans-serif; /* Egységes betűtípus a többi szöveggel */
+    box-shadow: 0 2px 10px rgba(0, 0, 0, 0.1); /* Finomabb árnyék, kevésbé harsány */
     text-align: center;
     margin-bottom: 1rem;
-    transition: var(--transition);
     display: inline-block;
+    transition: var(--transition);
+    border: 1px solid rgba(212, 163, 115, 0.5); /* Finom keret az eleganciáért */
 }
 
 .order-card:hover .order-details p:first-child {
-    background: var(--deep-gold);
-    box-shadow: 0 0 25px var(--deep-gold);
+    background: linear-gradient(45deg, var(--deep-gold), var(--accent-gold)); /* Fordított gradiens hover esetén */
+    box-shadow: 0 4px 15px rgba(212, 163, 115, 0.2); /* Kisebb, lágyabb árnyék hover esetén */
+    transform: translateY(-2px); /* Kis emelés hover esetén */
 }
 
 .order-card .order-details ul {
@@ -261,17 +263,16 @@ body::before {
 
 .order-card .order-details ul li {
     position: relative;
-    padding-left: 30px;
+    padding-left: 25px; /* Csökkentettük a bal oldali paddingot, hogy szorosabban illeszkedjen */
     margin-bottom: 0.75rem;
     font-family: 'Poppins', sans-serif;
     font-size: clamp(0.85rem, 1.2vw, 0.95rem);
     color: var(--dark-black);
     opacity: 0.9;
     transition: var(--transition);
-}
-
-.order-card .order-details ul li:hover {
-    color: var(--deep-gold);
+    line-height: 1.2; /* Egységes sor magasság, hogy minden szöveg egy vonalban legyen */
+    display: flex; /* Flexbox használata, hogy egy sorba rendezzük */
+    align-items: center; /* Vertikális középre igazítás */
 }
 
 .order-card .order-details ul li::before {
@@ -281,16 +282,20 @@ body::before {
     color: var(--accent-gold);
     position: absolute;
     left: 0;
-    top: 5px;
+    top: 50%; /* Középre igazítjuk vertikálisan */
+    transform: translateY(-50%); /* Korrigáljuk a középre igazítást */
     font-size: 0.9rem;
     transition: var(--transition);
 }
 
 .order-card .order-details ul li:hover::before {
     color: var(--deep-gold);
-    transform: scale(1.2);
+    transform: translateY(-50%) scale(1.2); /* Hover esetén is megőrizzük a középre igazítást */
 }
 
+.order-card .order-details ul li:hover {
+    color: var(--deep-gold);
+}
 /* Vissza gomb (Bootstrap helyett saját dizájn) */
 .back-button {
     display: inline-block;
