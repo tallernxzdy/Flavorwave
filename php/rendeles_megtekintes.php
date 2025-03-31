@@ -67,6 +67,7 @@ if ($userId) {
     <link rel="stylesheet" href="../css/fooldal/ujfooldal.css">
     <link rel="stylesheet" href="../css/rendeles_megtekint.css">
     <link rel="stylesheet" href="../css/footer.css">
+    
 </head>
 <body>
     <?php
