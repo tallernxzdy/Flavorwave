@@ -2,7 +2,6 @@
 session_start();
 include 'adatbazisra_csatlakozas.php';
 
-
 $userId = isset($_SESSION['felhasznalo_id']) ? $_SESSION['felhasznalo_id'] : null;
 
 // Állapotok leképezése
@@ -14,10 +13,16 @@ $status_map = [
     4 => "Lemondva"
 ];
 
+// Fizetési módok leképezése
+$payment_map = [
+    0 => "Készpénz",
+    1 => "Bankkártya",
+];
+
 if ($userId) {
     // Lekérdezzük a felhasználó rendeléseit és a hozzájuk tartozó tételeket
     $orders = adatokLekerdezese(
-        "SELECT m.id, m.leadasdatuma, m.leadas_allapota, m.kezbesites, m.leadas_megjegyzes,
+        "SELECT m.id, m.leadasdatuma, m.leadas_allapota, m.kezbesites, m.leadas_megjegyzes, m.Fizetesi_mod,
                 rt.termek_id, rt.mennyiseg, e.nev AS termek_nev, e.egyseg_ar
          FROM megrendeles m
          LEFT JOIN rendeles_tetel rt ON m.id = rt.rendeles_id
@@ -38,6 +43,7 @@ if ($userId) {
                 'leadas_allapota' => $status_map[$order['leadas_allapota']] ?? "Ismeretlen",
                 'kezbesites' => $order['kezbesites'],
                 'leadas_megjegyzes' => $order['leadas_megjegyzes'],
+                'fizetesi_mod' => $payment_map[$order['Fizetesi_mod']] ?? "Ismeretlen",
                 'items' => []
             ];
         }
@@ -96,6 +102,7 @@ if ($userId) {
                         <div class="order-details">
                             <p><strong>Állapot:</strong> <?php echo htmlspecialchars($order['leadas_allapota']); ?></p>
                             <p><strong>Kézbesítés módja:</strong> <?php echo htmlspecialchars($order['kezbesites']); ?></p>
+                            <p><strong>Fizetési mód:</strong> <?php echo htmlspecialchars($order['fizetesi_mod']); ?></p>
                             <p><strong>Megjegyzés:</strong> <?php echo htmlspecialchars($order['leadas_megjegyzes']); ?></p>
                             <p><strong>Rendelt tételek:</strong></p>
                             <ul>
