@@ -364,27 +364,39 @@ html, body {
     z-index: 1003;
 }
 
+/* Toast stílusa */
 .custom-toast {
     background: var(--light-bg);
     border: 2px solid var(--accent-gold);
     border-radius: 10px;
     box-shadow: 0 5px 15px rgba(0, 0, 0, 0.2);
-    display: none;
+    display: flex; 
+    justify-content: space-between; 
+    align-items: center; 
     padding: 10px;
+    display: none; 
 }
 
+/* Toast test (szöveg) */
 .toast-body {
     font-family: 'Poppins', sans-serif;
     font-size: clamp(0.9rem, 1.2vw, 1rem);
     color: var(--text-dark);
+    margin: 0; 
+    flex-grow: 1; 
 }
 
+/* Bezárás gomb */
 .btn-close {
     background: none;
     border: none;
     font-size: 1rem;
     color: var(--text-dark);
     cursor: pointer;
+    padding: 0 5px; 
+    line-height: 1; 
+    display: flex; 
+    align-items: center; 
 }
 
 /* Ha nincs étel a kategóriában */

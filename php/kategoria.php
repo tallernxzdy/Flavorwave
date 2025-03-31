@@ -69,7 +69,7 @@ session_start();
                 <div class="flex-col" data-aos="fade-up" data-aos-delay="400">
                     <a href="koretek.php" class="menu__option">
                         <div class="image-wrapper">
-                            <img src="../kepek/koretek/hasabburgonya.jpg" alt="Köretek">
+                            <img src="../kepek/Köretek/hasabburgonya.jpg" alt="Köretek">
                         </div>
                         <h2>Köretek</h2>
                         <div class="title-underline"></div>
