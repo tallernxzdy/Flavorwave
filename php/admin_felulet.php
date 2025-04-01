@@ -8,6 +8,51 @@ if (!isset($_SESSION['felhasznalo_id']) || $_SESSION['jog_szint'] != 1) {
     exit;
 }
 
+// API mód - Csak GET kérések kezelése
+if (isset($_GET['action']) && $_GET['action'] === 'get_etel' && $_SERVER['REQUEST_METHOD'] === 'GET') {
+    // Jogosultság ellenőrzése
+    if (!isset($_SESSION['felhasznalo_id']) || $_SESSION['jog_szint'] != 1) {
+        http_response_code(403);
+        exit(json_encode(['error' => 'Nincs jogosultság!']));
+    }
+
+    if (!isset($_GET['id']) || !is_numeric($_GET['id'])) {
+        http_response_code(400);
+        exit(json_encode(['error' => 'Érvénytelen ID!']));
+    }
+
+    $id = (int)$_GET['id'];
+
+    try {
+        $stmt = $conn->prepare("SELECT * FROM etel WHERE id = ?");
+        $stmt->bind_param("i", $id);
+        $stmt->execute();
+        $result = $stmt->get_result();
+        
+        if ($result->num_rows === 0) {
+            http_response_code(404);
+            exit(json_encode(['error' => 'Étel nem található!']));
+        }
+        
+        $etel = $result->fetch_assoc();
+        header('Content-Type: application/json');
+        exit(json_encode($etel));
+        
+    } catch (Exception $e) {
+        http_response_code(500);
+        exit(json_encode(['error' => 'Adatbázis hiba: ' . $e->getMessage()]));
+    }
+}
+
+// Alap admin felület további része (eredeti kód)
+// Jogosultság ellenőrzése
+if (!isset($_SESSION['felhasznalo_id']) || $_SESSION['jog_szint'] != 1) {
+    header('Location: bejelentkezes.php');
+    exit;
+}
+
+
+
 $message = "";
 
 // Kategóriák lekérdezése
@@ -191,7 +236,7 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
             <!-- Szerkesztés űrlap (kép nélkül) -->
             <div id="edit-form" class="form-section" style="display:none;">
                 <h3>Szerkesztés</h3>
-                <select name="edit_etel" class="form-select mb-2">
+                <select name="edit_etel" class="form-select mb-2" id="editEtelSelect">
                     <option value="">Válassz ételt</option>
                     <?php foreach ($etelek as $etel): ?>
                         <option value="<?= htmlspecialchars($etel['id']) ?>">
@@ -335,6 +380,38 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
 
     <!-- JavaScript -->
     <script>
+    // A szerkesztési űrlap select elemének figyelése
+    document.querySelector('select[name="edit_etel"]').addEventListener('change', function() {
+        const etelId = this.value;
+        if (!etelId) return;
+
+        // A fetch URL-t módosítsd erre
+        fetch(`admin_felulet.php?action=get_etel&id=${etelId}`)
+            .then(response => {
+                if (!response.ok) throw new Error('Hiba a lekérdezésben');
+                return response.json();
+            })
+            .then(data => {
+                // Mezők feltöltése
+                document.querySelector('input[name="edit_nev"]').value = data.nev;
+                document.querySelector('input[name="edit_egyseg_ar"]').value = data.egyseg_ar;
+                document.querySelector('textarea[name="edit_leiras"]').value = data.leiras;
+                document.querySelector('input[name="edit_kaloria"]').value = data.kaloria;
+                document.querySelector('textarea[name="edit_osszetevok"]').value = data.osszetevok;
+                document.querySelector('textarea[name="edit_allergenek"]').value = data.allergenek;
+                
+                // Kategória beállítása
+                const kategoriaSelect = document.querySelector('select[name="edit_kategoria_id"]');
+                Array.from(kategoriaSelect.options).forEach(option => {
+                    option.selected = (option.value == data.kategoria_id);
+                });
+            })
+            .catch(error => {
+                console.error('Hiba:', error);
+                alert('Nem sikerült betölteni az étel adatait');
+            });
+    });
+
         document.addEventListener('DOMContentLoaded', function () {
             // Műveletváltás űrlap megjelenítése
             document.getElementById('operation').addEventListener('change', function () {
