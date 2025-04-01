@@ -23,6 +23,7 @@ session_start();
     <link rel="stylesheet" href="../css/fooldal/whyus.css">
     <link rel="stylesheet" href="../css/footer.css">
     <link rel="stylesheet" href="../css/fooldal/nepszeruetelek.css">
+    <link rel="stylesheet" href="../css/fooldal/feedback.css">
     <link rel="stylesheet" href="../css/navbar.css">
     
     <script src="https://unpkg.com/aos@2.3.1/dist/aos.js"></script>
@@ -184,7 +185,7 @@ session_start();
                             <span class="star">★</span>
                             <span class="star">★</span>
                             <span class="star">★</span>
-                            <span class="star">☆</span>
+                            <span class="star">★</span>
                         </div>
                         <a href="pizza.php" class="order-btn">Rendelés</a>
                     </div>
