@@ -18,15 +18,19 @@
 }
 
 /* Alapstílusok */
+html, body {
+    height: 100%;
+}
+
 body {
+    display: flex;
+    flex-direction: column;
     background: linear-gradient(145deg, var(--primary-beige), var(--light-gray));
     color: var(--dark-black);
     font-family: 'Poppins', sans-serif;
     line-height: 1.6;
     overflow-x: hidden;
     position: relative;
-    
-    
 }
 
 body::before {
@@ -47,6 +51,8 @@ body::before {
     padding: clamp(2rem, 4vw, 4rem) 15px;
     max-width: 1400px;
     margin: 0 auto;
+    flex: 1;
+    padding-bottom: 100px;
 }
 
 /* Cím */
@@ -161,7 +167,7 @@ body::before {
 }
 
 .order-card:hover {
-    transform: translateY(-10px) ;
+    transform: translateY(-10px);
     box-shadow: 0 20px 50px rgba(212, 163, 115, 0.4);
     border: 1px solid var(--accent-gold);
 }
@@ -236,23 +242,23 @@ body::before {
 .order-card .order-details p:first-child {
     background: linear-gradient(45deg, var(--accent-gold), var(--deep-gold));
     color: var(--dark-black);
-    padding: 0.4rem 1rem; /* Kisebb padding, hogy ne legyen túl nagy */
-    border-radius: 25px; /* Több lekerekítés, hogy lágyabb legyen */
+    padding: 0.4rem 1rem;
+    border-radius: 25px;
     font-size: clamp(0.8rem, 1.2vw, 1rem);
-    font-weight: 600; /* Kissé csökkentett vastagság, hogy ne legyen túl domináns */
-    font-family: 'Poppins', sans-serif; /* Egységes betűtípus a többi szöveggel */
-    box-shadow: 0 2px 10px rgba(0, 0, 0, 0.1); /* Finomabb árnyék, kevésbé harsány */
+    font-weight: 600;
+    font-family: 'Poppins', sans-serif;
+    box-shadow: 0 2px 10px rgba(0, 0, 0, 0.1);
     text-align: center;
     margin-bottom: 1rem;
     display: inline-block;
     transition: var(--transition);
-    border: 1px solid rgba(212, 163, 115, 0.5); /* Finom keret az eleganciáért */
+    border: 1px solid rgba(212, 163, 115, 0.5);
 }
 
 .order-card:hover .order-details p:first-child {
-    background: linear-gradient(45deg, var(--deep-gold), var(--accent-gold)); /* Fordított gradiens hover esetén */
-    box-shadow: 0 4px 15px rgba(212, 163, 115, 0.2); /* Kisebb, lágyabb árnyék hover esetén */
-    transform: translateY(-2px); /* Kis emelés hover esetén */
+    background: linear-gradient(45deg, var(--deep-gold), var(--accent-gold));
+    box-shadow: 0 4px 15px rgba(212, 163, 115, 0.2);
+    transform: translateY(-2px);
 }
 
 .order-card .order-details ul {
@@ -263,40 +269,41 @@ body::before {
 
 .order-card .order-details ul li {
     position: relative;
-    padding-left: 25px; /* Csökkentettük a bal oldali paddingot, hogy szorosabban illeszkedjen */
+    padding-left: 25px;
     margin-bottom: 0.75rem;
     font-family: 'Poppins', sans-serif;
     font-size: clamp(0.85rem, 1.2vw, 0.95rem);
     color: var(--dark-black);
     opacity: 0.9;
     transition: var(--transition);
-    line-height: 1.2; /* Egységes sor magasság, hogy minden szöveg egy vonalban legyen */
-    display: flex; /* Flexbox használata, hogy egy sorba rendezzük */
-    align-items: center; /* Vertikális középre igazítás */
+    line-height: 1.2;
+    display: flex;
+    align-items: center;
 }
 
 .order-card .order-details ul li::before {
-    content: '\f805'; /* FontAwesome ikon: kör */
+    content: '\f805';
     font-family: 'Font Awesome 5 Free';
     font-weight: 900;
     color: var(--accent-gold);
     position: absolute;
     left: 0;
-    top: 50%; /* Középre igazítjuk vertikálisan */
-    transform: translateY(-50%); /* Korrigáljuk a középre igazítást */
+    top: 50%;
+    transform: translateY(-50%);
     font-size: 0.9rem;
     transition: var(--transition);
 }
 
 .order-card .order-details ul li:hover::before {
     color: var(--deep-gold);
-    transform: translateY(-50%) scale(1.2); /* Hover esetén is megőrizzük a középre igazítást */
+    transform: translateY(-50%) scale(1.2);
 }
 
 .order-card .order-details ul li:hover {
     color: var(--deep-gold);
 }
-/* Vissza gomb (Bootstrap helyett saját dizájn) */
+
+/* Vissza gomb */
 .back-button {
     display: inline-block;
     background: var(--dark-black);
@@ -316,6 +323,7 @@ body::before {
     margin: 2rem auto;
     display: block;
     text-align: center;
+    border: none;
 }
 
 .back-button::before {
@@ -340,7 +348,7 @@ body::before {
     transform: translateY(-5px);
 }
 
-/* Bejelentkezés gomb (Bootstrap helyett saját dizájn) */
+/* Bejelentkezés gomb */
 .not-logged-in .btn-primary {
     display: inline-block;
     background: var(--dark-black);
@@ -356,6 +364,9 @@ body::before {
     box-shadow: 0 5px 20px rgba(0, 0, 0, 0.4);
     position: relative;
     overflow: hidden;
+    border: none;
+    width: fit-content;
+    margin: 0 auto;
 }
 
 .not-logged-in .btn-primary::before {
@@ -378,6 +389,20 @@ body::before {
     color: var(--dark-black);
     box-shadow: 0 10px 40px rgba(212, 163, 115, 0.6);
     transform: translateY(-5px);
+}
+
+/* Bootstrap gomb stílusok felülírása */
+.btn-primary, .btn-secondary {
+    border: none;
+    outline: none;
+}
+
+/* Footer */
+.footer {
+    position: relative;
+    bottom: 0;
+    width: 100%;
+    margin-top: auto;
 }
 
 /* Reszponzivitás */
@@ -427,6 +452,10 @@ body::before {
         padding: clamp(0.6rem, 1.2vw, 1rem) clamp(1.2rem, 2.5vw, 2rem);
         font-size: clamp(0.9rem, 1.6vw, 1.1rem);
     }
+    
+    .container {
+        padding-bottom: 80px;
+    }
 }
 
 @media (max-width: 480px) {
@@ -458,6 +487,10 @@ body::before {
     .not-logged-in .btn-primary {
         padding: clamp(0.5rem, 1vw, 0.8rem) clamp(1rem, 2vw, 1.5rem);
         font-size: clamp(0.8rem, 1.5vw, 1rem);
+    }
+    
+    .container {
+        padding-bottom: 60px;
     }
 }
 
