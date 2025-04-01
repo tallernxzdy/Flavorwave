@@ -46,7 +46,11 @@ session_start();
             <h1>Friss, Forró, Finom</h1>
             <p>Rendelj kedvenc ételeid közül gyorsan és egyszerűen!</p>
             <div class="cta-buttons">
-                <a href="rendeles_megtekintes.php" class="order-now">Rendelj Most</a>
+                <?php if (!isset($_SESSION['felhasznalo_id'])): ?>
+                    <a href="regisztracio.php" class="order-now">Regisztrálj most</a>
+                <?php else: ?>
+                    <a href="rendeles_megtekintes.php" class="order-now">Tekintsd meg a rendeléseidet</a>
+                <?php endif; ?>
                 <a href="kategoria.php" class="view-menu">Tekintsd meg a Menüt</a>
             </div>
         </div>
@@ -144,8 +148,8 @@ session_start();
 
 
 
-<!-- Új szekció: Népszerű Ételeink Galériája -->
-<section class="popular-foods-gallery">
+    <!-- Új szekció: Népszerű Ételeink Galériája -->
+    <section class="popular-foods-gallery">
         <div class="container">
             <h2 class="gallery-title">
                 Népszerű Ételeink
@@ -287,6 +291,10 @@ session_start();
         <button class="shaker-prev"><i class="fas fa-chevron-left"></i></button>
         <button class="shaker-next"><i class="fas fa-chevron-right"></i></button>
     </div>
+<<<<<<< HEAD
+
+
+=======
     <div class="shaker-dots">
         <div class="shaker-dot active"></div>
         <div class="shaker-dot"></div>
@@ -294,6 +302,7 @@ session_start();
     </div>
 </div>
     
+>>>>>>> 5c186d721909cae0ba476fa86b16275fce198bc2
 
     <div class="feedback-section">
         <?php if (isset($_SESSION['felhasznalo_id'])): ?>

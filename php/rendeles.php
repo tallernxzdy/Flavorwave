@@ -211,17 +211,17 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST' && isset($_POST['submit'])) {
             <div class="col-md-6">
                 <form method="POST">
                     <div class="mb-3">
-                        <label for="name" class="form-label">Teljes név</label>
+                        <label for="name" class="form-label">Teljes név:</label>
                         <input type="text" class="form-control" id="name" name="name" 
                                value="<?= htmlspecialchars($userData['Teljes_nev'] ?? '') ?>" required>
                     </div>
                     <div class="mb-3">
-                        <label for="address" class="form-label">Szállítási cím</label>
+                        <label for="address" class="form-label">Szállítási cím (Irányítószám, Utca, Házszám):</label>
                         <input type="text" class="form-control" id="address" name="address"
                             value="<?= htmlspecialchars($userData['lakcim'] ?? '') ?>" required>
                     </div>
                     <div class="mb-3">
-                        <label for="phone" class="form-label">Telefonszám</label>
+                        <label for="phone" class="form-label">Telefonszám:</label>
                         <input type="tel" class="form-control" id="phone" name="phone"
                             value="<?= htmlspecialchars($userData['tel_szam'] ?? '') ?>" required>
                     </div>
