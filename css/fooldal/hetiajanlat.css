@@ -104,12 +104,18 @@
     text-transform: uppercase;
     transition: var(--transition);
     position: relative;
-    box-shadow: 0 4px 15px rgba(212, 163, 115, 0.4);
+    overflow: hidden;
+    box-shadow: 0 5px 20px rgba(212, 163, 115, 0.5);
     z-index: 1;
     display: inline-block;
     white-space: normal;
     text-align: center;
     width: fit-content;
+}
+
+/* Hozzáadjuk a ::before elemet, majd rögtön eltávolítjuk */
+.cta-button.primary-bttn::before {
+    content: none; /* Eltávolítjuk a kör alakú effektet */
 }
 
 .cta-button.primary-bttn:hover {
@@ -136,8 +142,8 @@
 
     .cta-button.primary-bttn {
         width: fit-content;
-        padding: clamp(0.6rem, 1.2vw, 0.9rem) clamp(1rem, 2vw, 1.5rem); /* Nagyobb padding */
-        font-size: clamp(0.9rem, 1.6vw, 1.2rem); /* Nagyobb betűméret */
+        padding: clamp(0.6rem, 1.2vw, 0.9rem) clamp(1rem, 2vw, 1.5rem);
+        font-size: clamp(0.9rem, 1.6vw, 1.2rem);
     }
 }
 
@@ -169,8 +175,8 @@
 
     .cta-button.primary-bttn {
         width: fit-content;
-        padding: clamp(0.5rem, 1vw, 0.8rem) clamp(0.8rem, 1.5vw, 1.2rem); /* Nagyobb padding */
-        font-size: clamp(0.8rem, 1.4vw, 1.1rem); /* Nagyobb betűméret */
+        padding: clamp(0.5rem, 1vw, 0.8rem) clamp(0.8rem, 1.5vw, 1.2rem);
+        font-size: clamp(0.8rem, 1.4vw, 1.1rem);
     }
 }
 

@@ -19,7 +19,6 @@ session_start();
     <link rel="stylesheet" href="../css/fooldal/kupon.css">
     <link rel="stylesheet" href="../css/fooldal/hetiajanlat.css">
     <link rel="stylesheet" href="../css/fooldal/rendeles_lepesek.css">
-    <link rel="stylesheet" href="../css/fooldal/etelajanlo.css">
     <link rel="stylesheet" href="../css/fooldal/shakek.css">
     <link rel="stylesheet" href="../css/fooldal/whyus.css">
     <link rel="stylesheet" href="../css/footer.css">
