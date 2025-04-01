@@ -94,11 +94,16 @@ if ($_SERVER['REQUEST_METHOD'] == 'POST') {
     exit();
 }
 
-// Vélemények lekérdezése
+// Vélemények lekérdezése (hibakezeléssel)
 $sql = "SELECT felhasznalo_nev, velemeny_szoveg, ertekeles FROM velemenyek 
         INNER JOIN felhasznalo ON velemenyek.felhasznalo_id = felhasznalo.id 
         ORDER BY velemenyek.id DESC";
 $result = $conn->query($sql);
+
+if (!$result) {
+    die("Hiba a vélemények lekérdezésekor: " . $conn->error);
+}
+
 $velemenyek = ($result && $result->num_rows > 0) ? $result->fetch_all(MYSQLI_ASSOC) : [];
 ?>
 
@@ -182,14 +187,19 @@ $velemenyek = ($result && $result->num_rows > 0) ? $result->fetch_all(MYSQLI_ASS
     <section class="feedback-display">
         <div class="container">
             <h2>Mit mondanak rólunk?</h2>
-            <?php if (count($velemenyek) >= 3): ?>
+            <?php if (count($velemenyek) > 0): ?>
                 <div class="feedback-grid">
                     <?php foreach ($velemenyek as $row): ?>
                         <div class="feedback-card">
                             <div class="feedback-content">
                                 <p class="feedback-text">"<?php echo htmlspecialchars($row['velemeny_szoveg']); ?>"</p>
                                 <p class="feedback-author">- <?php echo htmlspecialchars($row['felhasznalo_nev']); ?></p>
-                                <p class="feedback-rating">Értékelés: <?php echo str_repeat("⭐", $row['ertekeles']); ?></p>
+                                <div class="feedback-rating">
+                                    Értékelés: 
+                                    <?php for ($i = 0; $i < $row['ertekeles']; $i++): ?>
+                                        <span class="star">⭐</span>
+                                    <?php endfor; ?>
+                                </div>
                             </div>
                         </div>
                     <?php endforeach; ?>

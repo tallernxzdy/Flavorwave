@@ -1,44 +1,60 @@
 /* Globális stílusok */
 body {
-    background-color: #121212;
-    color: var(--primary-beige, #f5e8c7);
+    background-color: var(--primary-beige, #F5E8C7);
+    color: var(--dark-black, #1A1A1A);
     font-family: 'Poppins', sans-serif;
     margin: 0;
+    display: flex;
+    flex-direction: column;
+    min-height: 100vh;
+    padding-top: var(--navbar-height, 100px);
 }
 
 /* Változók a konzisztens színekhez */
 :root {
-    --dark-black: #121212;
-    --primary-beige: #f5e8c7;
-    --accent-gold: #d4a373;
-    --shadow-color: rgba(0, 0, 0, 0.5);
-    --transition: all 0.3s ease;
+    --navbar-height: 100px;
+    --mobile-navbar-height: 70px;
+    --primary-beige: #F5E8C7;
+    --dark-black: #1A1A1A;
+    --accent-gold: #D4A373;
+    --shadow-color: rgba(0, 0, 0, 0.2);
+    --light-gray: #E8D5B5;
+    --transition: all 0.4s ease;
+    --card-background: #FFFFFF;
+    --card-border: #E0B05A; /* Világos arany border */
+    --hover-gold: #D8A24F; /* Finom arany hover */
+    --highlight-orange: #F48C28; /* Élénk narancssárga kiemelés */
+    --deep-gold: #C68E2F; /* Mélyebb, prémium arany */
+    --vibrant-cream: #FDF2D0; /* Élénkebb krémszín */
+    --glow-gold: rgba(224, 176, 90, 0.5); /* Glow effekt */
 }
 
 /* Feedback Form Section */
 .feedback-section {
-    background: var(--dark-black);
+    background: var(--vibrant-cream);
     padding: clamp(2rem, 5vw, 4rem) clamp(1rem, 3vw, 2rem);
     text-align: center;
     animation: fadeIn 1s ease-in-out;
-    padding-top: 120px;
 }
 
 .feedback-section .container {
-    background: #1e1e1e;
+    background: var(--card-background);
     padding: clamp(1.5rem, 3vw, 2rem);
-    border-radius: 20px;
-    box-shadow: 0 10px 30px var(--shadow-color);
-    border: 2px solid var(--accent-gold);
+    border-radius: 25px;
+    box-shadow: 0 15px 40px var(--shadow-color);
+    border: 3px solid var(--deep-gold);
 }
 
 .feedback-section h1 {
-    color: var(--accent-gold);
-    font-size: clamp(1.5rem, 4vw, 2.5rem);
+    color: var(--dark-black);
+    font-size: clamp(1.8rem, 5vw, 3rem);
     font-weight: 800;
     text-transform: uppercase;
-    letter-spacing: 2px;
-    text-shadow: 2px 2px 5px var(--shadow-color);
+    letter-spacing: 3px;
+    background: linear-gradient(45deg, var(--deep-gold), var(--highlight-orange));
+    -webkit-background-clip: text;
+    background-clip: text;
+    color: transparent;
     margin-bottom: clamp(1rem, 2vw, 1.5rem);
 }
 
@@ -60,33 +76,41 @@ body {
     font-size: clamp(0.9rem, 1.5vw, 1.1rem);
     font-weight: 600;
     margin-bottom: clamp(0.3rem, 0.5vw, 0.5rem);
-    color: var(--primary-beige);
+    color: var(--deep-gold);
+    text-transform: uppercase;
+    letter-spacing: 1px;
+    transition: var(--transition);
+}
+
+.form-group label:hover {
+    color: var(--highlight-orange);
 }
 
 .form-group textarea {
-    background: var(--primary-beige);
+    background: var(--vibrant-cream);
     color: var(--dark-black);
-    border: 2px solid var(--accent-gold);
-    border-radius: 10px;
+    border: 2px solid var(--deep-gold);
+    border-radius: 15px;
     padding: clamp(0.5rem, 1vw, 0.8rem);
     font-size: clamp(0.8rem, 1.5vw, 1rem);
     font-weight: 500;
     transition: var(--transition);
-    box-shadow: 0 2px 10px var(--shadow-color);
+    box-shadow: 0 5px 15px var(--shadow-color);
     min-height: clamp(100px, 20vw, 150px);
     resize: none;
 }
 
 .form-group textarea:focus {
     outline: none;
-    border-color: var(--primary-beige);
-    box-shadow: 0 5px 15px rgba(245, 232, 199, 0.3);
+    border-color: var(--highlight-orange);
+    box-shadow: 0 0 20px var(--glow-gold), 0 5px 15px var(--shadow-color);
+    transform: scale(1.02);
 }
 
 /* Csillagos értékelés */
 .rating {
     font-size: clamp(1.5rem, 3vw, 2rem);
-    color: #ccc;
+    color: var(--light-gray);
     cursor: pointer;
     display: flex;
     justify-content: center;
@@ -100,14 +124,8 @@ body {
 
 .rating .star:hover,
 .rating .star.active {
-    color: var(--accent-gold);
+    color: var(--highlight-orange);
     animation: pulseStar 0.5s ease-in-out;
-}
-
-@keyframes pulseStar {
-    0% { transform: scale(1); }
-    50% { transform: scale(1.2); }
-    100% { transform: scale(1); }
 }
 
 /* reCAPTCHA reszponzív dizájn */
@@ -121,12 +139,12 @@ body {
 .g-recaptcha {
     display: inline-block;
     transform-origin: center;
-    transform: scale(1); /* Alapértelmezett méret */
+    transform: scale(1);
 }
 
 /* Küldés gomb */
 .feedback-btn {
-    background: var(--accent-gold);
+    background: linear-gradient(45deg, var(--deep-gold), var(--highlight-orange));
     color: var(--dark-black);
     padding: clamp(0.5rem, 1vw, 0.8rem) clamp(1rem, 2vw, 1.5rem);
     border: none;
@@ -136,7 +154,7 @@ body {
     text-transform: uppercase;
     cursor: pointer;
     transition: var(--transition);
-    box-shadow: 0 5px 20px rgba(212, 163, 115, 0.5);
+    box-shadow: 0 8px 25px var(--glow-gold);
     position: relative;
     overflow: hidden;
 }
@@ -148,7 +166,7 @@ body {
     left: 50%;
     width: 0;
     height: 0;
-    background: rgba(255, 255, 255, 0.3);
+    background: rgba(255, 255, 255, 0.4);
     border-radius: 50%;
     transform: translate(-50%, -50%);
     transition: width 0.6s ease, height 0.6s ease;
@@ -156,39 +174,40 @@ body {
 }
 
 .feedback-btn:hover::before {
-    width: 300%;
-    height: 300%;
+    width: 400%;
+    height: 400%;
 }
 
 .feedback-btn:hover {
-    transform: scale(1.05);
-    background: var(--primary-beige);
-    color: var(--dark-black);
-    box-shadow: 0 10px 30px rgba(245, 232, 199, 0.7);
+    transform: scale(1.1);
+    box-shadow: 0 12px 40px var(--glow-gold);
 }
 
 /* Feedback Display Section */
 .feedback-display {
-    background: var(--dark-black);
+    background: var(--primary-beige);
     padding: clamp(2rem, 5vw, 4rem) clamp(1rem, 3vw, 2rem);
     text-align: center;
 }
 
 .feedback-display .container {
-    background: #1e1e1e;
+    background: var(--card-background);
     padding: clamp(1.5rem, 3vw, 2rem);
-    border-radius: 20px;
-    box-shadow: 0 10px 30px var(--shadow-color);
-    border: 2px solid var(--accent-gold);
+    border-radius: 25px;
+    box-shadow: 0 15px 40px var(--shadow-color);
+    border: 3px solid var(--deep-gold);
 }
 
 .feedback-display h2 {
-    color: var(--accent-gold);
-    font-size: clamp(1.5rem, 4vw, 2rem);
+    color: var(--dark-black);
+    font-size: clamp(1.8rem, 5vw, 3rem);
     font-weight: 800;
     text-transform: uppercase;
-    letter-spacing: 2px;
-    text-shadow: 2px 2px 5px var(--shadow-color);
+    letter-spacing: 3px;
+    background: linear-gradient(45deg, var(--deep-gold), var(--highlight-orange));
+    -webkit-background-clip: text;
+    background-clip: text;
+    color: transparent;
     margin-bottom: clamp(1.5rem, 3vw, 2rem);
 }
 
@@ -196,67 +215,100 @@ body {
     display: grid;
     grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
     gap: clamp(1rem, 2vw, 1.5rem);
+    padding: clamp(1rem, 2vw, 1.5rem);
+    background: var(--vibrant-cream);
+    border-radius: 20px;
+    box-shadow: inset 0 0 25px rgba(0, 0, 0, 0.1);
 }
 
 .feedback-card {
-    background: #1e1e1e;
-    border: 2px solid var(--accent-gold);
-    border-radius: 15px;
+    background: linear-gradient(135deg, var(--card-background), var(--vibrant-cream));
+    border: 2px solid var(--card-border);
+    border-radius: 20px;
     padding: clamp(1rem, 2vw, 1.5rem);
-    box-shadow: 0 5px 20px var(--shadow-color);
+    box-shadow: 0 8px 25px var(--shadow-color);
     transition: var(--transition);
-    animation: fadeIn 1s ease-in-out;
+    animation: slideUp 0.8s ease-out;
+    overflow: hidden;
+    position: relative;
+}
+
+.feedback-card::before {
+    content: '';
+    position: absolute;
+    top: -10px;
+    left: -10px;
+    right: -10px;
+    bottom: -10px;
+    border-radius: 22px;
+    background: linear-gradient(45deg, var(--deep-gold), var(--highlight-orange));
+    z-index: -1;
+    opacity: 0;
+    transition: opacity 0.4s ease;
+}
+
+.feedback-card:hover::before {
+    opacity: 0.3;
 }
 
 .feedback-card:hover {
     transform: translateY(-5px);
-    box-shadow: 0 10px 30px rgba(212, 163, 115, 0.3);
+    box-shadow: 0 15px 40px var(--glow-gold);
 }
 
 .feedback-content {
     text-align: center;
+    position: relative;
+    z-index: 1;
 }
 
 .feedback-text {
     font-size: clamp(0.9rem, 1.5vw, 1.1rem);
-    color: var(--primary-beige);
+    color: var(--dark-black);
     font-style: italic;
     margin-bottom: clamp(0.5rem, 1vw, 1rem);
+    background: linear-gradient(45deg, var(--dark-black), var(--highlight-orange));
+    -webkit-background-clip: text;
+    background-clip: text;
+    color: transparent;
+    transition: var(--transition);
+}
+
+.feedback-text:hover {
+    text-shadow: 0 0 15px var(--glow-gold);
 }
 
 .feedback-author {
     font-size: clamp(0.8rem, 1.3vw, 1rem);
-    color: var(--accent-gold);
+    color: var(--deep-gold);
     font-weight: 600;
     margin-bottom: clamp(0.3rem, 0.5vw, 0.5rem);
+    text-transform: uppercase;
+    letter-spacing: 1px;
 }
 
 .feedback-rating {
     font-size: clamp(0.8rem, 1.3vw, 1rem);
-    color: var(--primary-beige);
+    color: var(--dark-black);
 }
 
 .feedback-rating .star {
-    color: var(--accent-gold);
-}
-
-/* Üzenetek */
-.alert {
-    background: #2c2c2c;
-    color: var(--accent-gold);
-    border: 1px solid var(--accent-gold);
-    padding: clamp(0.5rem, 1vw, 1rem);
-    border-radius: 10px;
-    margin-bottom: clamp(1rem, 2vw, 1.5rem);
-    text-align: center;
-}
-
-.text-muted {
-    color: #757575 !important;
-    font-size: clamp(0.9rem, 1.5vw, 1.1rem);
+    color: var(--highlight-orange);
+    animation: pulseStar 0.6s infinite alternate;
 }
 
 /* Animációk */
+@keyframes slideUp {
+    from {
+        opacity: 0;
+        transform: translateY(20px);
+    }
+    to {
+        opacity: 1;
+        transform: translateY(0);
+    }
+}
+
 @keyframes fadeIn {
     from { opacity: 0; }
     to { opacity: 1; }
@@ -264,8 +316,26 @@ body {
 
 @keyframes pulseStar {
     0% { transform: scale(1); }
-    50% { transform: scale(1.2); }
+    50% { transform: scale(1.15); }
     100% { transform: scale(1); }
+}
+
+/* Üzenetek */
+.alert {
+    background: var(--vibrant-cream);
+    color: var(--deep-gold);
+    border: 2px solid var(--highlight-orange);
+    padding: clamp(0.5rem, 1vw, 1rem);
+    border-radius: 15px;
+    margin-bottom: clamp(1rem, 2vw, 1.5rem);
+    text-align: center;
+    animation: fadeIn 1s ease-in-out;
+    box-shadow: 0 5px 15px var(--shadow-color);
+}
+
+.text-muted {
+    color: #757575 !important;
+    font-size: clamp(0.9rem, 1.5vw, 1.1rem);
 }
 
 /* Reszponzív töréspontok */
@@ -282,22 +352,15 @@ body {
 
     .feedback-section h1,
     .feedback-display h2 {
-        font-size: clamp(1.3rem, 3.5vw, 1.8rem);
-        margin-bottom: clamp(1rem, 2vw, 1.5rem);
+        font-size: clamp(1.5rem, 4vw, 2rem);
     }
 
-    .feedback-form {
+    .feedback-form,
+    .feedback-grid {
         gap: clamp(0.8rem, 1.5vw, 1.2rem);
     }
 
-    .form-group label {
-        font-size: clamp(0.8rem, 1.3vw, 1rem);
-        margin-bottom: clamp(0.2rem, 0.4vw, 0.4rem);
-    }
-
     .form-group textarea {
-        padding: clamp(0.4rem, 0.8vw, 0.6rem);
-        font-size: clamp(0.75rem, 1.3vw, 0.9rem);
         min-height: clamp(80px, 18vw, 120px);
     }
 
@@ -305,35 +368,13 @@ body {
         font-size: clamp(1.2rem, 2.5vw, 1.8rem);
     }
 
-    .recaptcha-wrapper {
-        margin: clamp(0.4rem, 0.8vw, 0.8rem) 0;
-    }
-
     .g-recaptcha {
-        transform: scale(0.9); /* 90%-os méret */
+        transform: scale(0.9);
     }
 
     .feedback-btn {
         padding: clamp(0.4rem, 0.8vw, 0.6rem) clamp(0.8rem, 1.5vw, 1.2rem);
         font-size: clamp(0.75rem, 1.3vw, 0.9rem);
-    }
-
-    .feedback-grid {
-        grid-template-columns: 1fr;
-        gap: clamp(0.8rem, 1.5vw, 1.2rem);
-    }
-
-    .feedback-card {
-        padding: clamp(0.8rem, 1.5vw, 1.2rem);
-    }
-
-    .feedback-text {
-        font-size: clamp(0.8rem, 1.3vw, 1rem);
-    }
-
-    .feedback-author,
-    .feedback-rating {
-        font-size: clamp(0.75rem, 1.2vw, 0.9rem);
     }
 }
 
@@ -351,21 +392,9 @@ body {
     .feedback-section h1,
     .feedback-display h2 {
         font-size: clamp(1.2rem, 3vw, 1.5rem);
-        margin-bottom: clamp(0.8rem, 1.5vw, 1rem);
-    }
-
-    .feedback-form {
-        gap: clamp(0.6rem, 1vw, 1rem);
-    }
-
-    .form-group label {
-        font-size: clamp(0.7rem, 1.2vw, 0.9rem);
-        margin-bottom: clamp(0.15rem, 0.3vw, 0.3rem);
     }
 
     .form-group textarea {
-        padding: clamp(0.3rem, 0.6vw, 0.5rem);
-        font-size: clamp(0.7rem, 1.2vw, 0.85rem);
         min-height: clamp(60px, 15vw, 100px);
     }
 
@@ -373,26 +402,13 @@ body {
         font-size: clamp(1rem, 2vw, 1.5rem);
     }
 
-    .recaptcha-wrapper {
-        margin: clamp(0.3rem, 0.6vw, 0.6rem) 0;
-    }
-
     .g-recaptcha {
-        transform: scale(0.85); /* 85%-os méret */
+        transform: scale(0.85);
     }
 
     .feedback-btn {
         padding: clamp(0.3rem, 0.6vw, 0.5rem) clamp(0.6rem, 1.2vw, 1rem);
         font-size: clamp(0.7rem, 1.2vw, 0.85rem);
-    }
-
-    .feedback-text {
-        font-size: clamp(0.75rem, 1.2vw, 0.9rem);
-    }
-
-    .feedback-author,
-    .feedback-rating {
-        font-size: clamp(0.7rem, 1vw, 0.85rem);
     }
 }
 
@@ -410,21 +426,9 @@ body {
     .feedback-section h1,
     .feedback-display h2 {
         font-size: clamp(1rem, 2.5vw, 1.3rem);
-        margin-bottom: clamp(0.6rem, 1vw, 0.8rem);
-    }
-
-    .feedback-form {
-        gap: clamp(0.5rem, 0.8vw, 0.8rem);
-    }
-
-    .form-group label {
-        font-size: clamp(0.65rem, 1vw, 0.8rem);
-        margin-bottom: clamp(0.1rem, 0.2vw, 0.2rem);
     }
 
     .form-group textarea {
-        padding: clamp(0.25rem, 0.5vw, 0.4rem);
-        font-size: clamp(0.65rem, 1vw, 0.8rem);
         min-height: clamp(50px, 12vw, 80px);
     }
 
@@ -432,25 +436,12 @@ body {
         font-size: clamp(0.9rem, 1.8vw, 1.3rem);
     }
 
-    .recaptcha-wrapper {
-        margin: clamp(0.2rem, 0.5vw, 0.5rem) 0;
-    }
-
     .g-recaptcha {
-        transform: scale(0.77); /* 77%-os méret */
+        transform: scale(0.77);
     }
 
     .feedback-btn {
         padding: clamp(0.25rem, 0.5vw, 0.4rem) clamp(0.5rem, 1vw, 0.8rem);
         font-size: clamp(0.65rem, 1vw, 0.8rem);
-    }
-
-    .feedback-text {
-        font-size: clamp(0.7rem, 1vw, 0.85rem);
-    }
-
-    .feedback-author,
-    .feedback-rating {
-        font-size: clamp(0.65rem, 0.9vw, 0.8rem);
     }
 }
