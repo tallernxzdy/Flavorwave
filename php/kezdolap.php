@@ -165,7 +165,7 @@ session_start();
                             <span class="star">★</span>
                             <span class="star">★</span>
                         </div>
-                        <a href="kategoria.php" class="order-btn">Rendelés</a>
+                        <a href="pizza.php" class="order-btn">Rendelés</a>
                     </div>
                 </div>
                 <div class="food-card" data-aos="fade-up" data-aos-delay="200">
@@ -182,7 +182,7 @@ session_start();
                             <span class="star">★</span>
                             <span class="star">☆</span>
                         </div>
-                        <a href="kategoria.php" class="order-btn">Rendelés</a>
+                        <a href="pizza.php" class="order-btn">Rendelés</a>
                     </div>
                 </div>
                 <div class="food-card" data-aos="fade-up" data-aos-delay="300">
@@ -199,7 +199,7 @@ session_start();
                             <span class="star">★</span>
                             <span class="star">★</span>
                         </div>
-                        <a href="kategoria.php" class="order-btn">Rendelés</a>
+                        <a href="desszertek.php" class="order-btn">Rendelés</a>
                     </div>
                 </div>
             </div>

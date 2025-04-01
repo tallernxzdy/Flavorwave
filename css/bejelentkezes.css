@@ -1,12 +1,18 @@
 :root {
     --navbar-height: 100px;
     --mobile-navbar-height: 70px;
+    --primary-beige: #F5E8C7;
+    --dark-black: #1A1A1A;
+    --accent-gold: #D4A373;
+    --shadow-color: rgba(0, 0, 0, 0.1);
+    --light-gray: #E8D5B5;
+    --transition: all 0.4s ease;
 }
 
 /* Alapvető oldal szerkezet */
 body {
     font-family: 'Poppins', sans-serif;
-    background-color: #F5E8C7;
+    background-color: var(--primary-beige);
     display: flex;
     flex-direction: column;
     min-height: 100vh;
@@ -17,45 +23,90 @@ body {
 /* Fő tartalom terület */
 main {
     flex: 1;
-    padding: 2em 0;
+    padding: clamp(1.5rem, 4vw, 3rem) clamp(0.8rem, 2vw, 1.5rem);
     width: 100%;
-    background-color: #D4A373;
+    background: linear-gradient(145deg, var(--light-gray), var(--primary-beige));
 }
 
-
-
-/* Tartalom konténer */
+/* Tartalom konténer - Szolid, de menő dizájn */
 .container {
-    background-color: #D4A373;
-    padding: 1.5em;
-    max-width: 350px;
+    background: rgba(255, 255, 255, 0.95);
+    padding: clamp(1.5rem, 3vw, 2rem);
+    max-width: 400px;
     width: 90%;
-    border-radius: 10px;
-    box-shadow: 0 4px 12px rgba(0, 0, 0, 0.1);
+    border-radius: 20px;
+    box-shadow: 0 10px 30px var(--shadow-color);
     text-align: center;
-    margin: 2em auto;
+    margin: clamp(2rem, 4vw, 3rem) auto;
     height: auto;
+    border: 2px solid var(--accent-gold);
+    backdrop-filter: blur(5px);
+    position: relative;
+}
+
+/* Finom gradient díszítés */
+.container::after {
+    content: '';
+    position: absolute;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    background: linear-gradient(135deg, rgba(212, 163, 115, 0.1), rgba(245, 232, 199, 0.1));
+    border-radius: 18px;
+    z-index: -1;
+    transition: var(--transition);
+}
+
+.container:hover::after {
+    opacity: 0.5;
 }
 
 h2 {
-    font-size: 1.6em;
-    color: #1A1A1A;
-    margin-bottom: 1em;
-    text-shadow: 0 1px 2px rgba(0, 0, 0, 0.1);
+    font-size: clamp(1.4rem, 2.5vw, 1.8rem);
+    font-weight: 600;
+    color: var(--dark-black);
+    margin-bottom: 1.2em;
+    text-shadow: 0 1px 3px rgba(0, 0, 0, 0.05);
+    position: relative;
+}
+
+h2::after {
+    content: '';
+    position: absolute;
+    bottom: -8px;
+    left: 50%;
+    transform: translateX(-50%);
+    width: 40px;
+    height: 3px;
+    background: var(--accent-gold);
+    border-radius: 2px;
+    transition: var(--transition);
+}
+
+h2:hover::after {
+    width: 60px;
 }
 
 form {
     display: flex;
     flex-direction: column;
-    gap: 0.8em;
-    background-color: #D4A373;
+    gap: clamp(0.8rem, 1.5vw, 1rem);
+    background: transparent;
 }
 
 label {
     text-align: left;
-    font-weight: 600;
-    color: #424242;
-    font-size: 0.9em;
+    font-weight: 500;
+    color: var(--dark-black);
+    font-size: clamp(0.9rem, 1.2vw, 1rem);
+    opacity: 0.9;
+    transition: var(--transition);
+}
+
+label:hover {
+    opacity: 1;
+    color: var(--accent-gold);
 }
 
 input[type="text"],
@@ -63,58 +114,96 @@ input[type="email"],
 input[type="password"],
 input[type="tel"] {
     width: 100%;
-    padding: 0.6em;
-    border-radius: 5px;
-    border: 1px solid #ddd;
-    font-size: 0.9em;
-    background: #FFFDE7;
-    transition: border-color 0.3s ease;
+    padding: clamp(0.7rem, 1.2vw, 0.9rem);
+    border-radius: 12px;
+    border: 1px solid var(--light-gray);
+    font-size: clamp(0.9rem, 1.2vw, 1rem);
+    background: rgba(255, 255, 255, 0.8);
+    transition: var(--transition);
+    box-shadow: inset 0 2px 8px rgba(0, 0, 0, 0.05);
 }
 
 input[type="text"]:focus,
 input[type="email"]:focus,
 input[type="password"]:focus,
 input[type="tel"]:focus {
-    border-color: #FF7043;
+    border-color: var(--accent-gold);
     outline: none;
+    box-shadow: 0 0 15px rgba(212, 163, 115, 0.2), inset 0 2px 8px rgba(0, 0, 0, 0.05);
+    transform: translateY(-2px);
 }
 
 button {
     width: 100%;
-    padding: 0.6em;
-    background-color: #1A1A1A;
-    color: white;
-    font-size: 1em;
-    font-weight: bold;
+    padding: clamp(0.7rem, 1.3vw, 1rem);
+    background: var(--accent-gold);
+    color: var(--dark-black);
+    font-size: clamp(0.9rem, 1.5vw, 1.1rem);
+    font-weight: 600;
     border: none;
     border-radius: 25px;
     cursor: pointer;
-    transition: transform 0.3s ease, box-shadow 0.3s ease;
-    margin-bottom: 0.6em;
+    transition: var(--transition);
+    box-shadow: 0 5px 15px rgba(212, 163, 115, 0.3);
+    position: relative;
+    overflow: hidden;
+}
+
+button::before {
+    content: '';
+    position: absolute;
+    top: 0;
+    left: 0;
+    width: 0;
+    height: 100%;
+    background: rgba(26, 26, 26, 0.1);
+    transition: var(--transition);
+    z-index: 1;
 }
 
 button:hover {
     transform: translateY(-3px);
-    box-shadow: 0px 4px 15px rgba(0, 0, 0, 0.2);
+    box-shadow: 0 8px 25px rgba(212, 163, 115, 0.4);
+}
+
+button:hover::before {
+    width: 100%;
 }
 
 /* Linkek */
 p a {
-    color: #1A1A1A;
+    color: var(--accent-gold);
     text-decoration: none;
-    font-weight: bold;
-    font-size: 0.9em;
+    font-weight: 500;
+    font-size: clamp(0.8rem, 1.1vw, 0.9rem);
+    position: relative;
+    transition: var(--transition);
+}
+
+p a::after {
+    content: '';
+    position: absolute;
+    width: 0;
+    height: 1px;
+    bottom: -2px;
+    left: 0;
+    background: var(--dark-black);
+    transition: var(--transition);
 }
 
 p a:hover {
-    text-decoration: underline;
+    color: var(--dark-black);
+}
+
+p a:hover::after {
+    width: 100%;
 }
 
 /* reCAPTCHA stílus */
 .g-recaptcha {
     display: flex;
     justify-content: center;
-    margin-top: 0.5em;
+    margin-top: clamp(0.8rem, 1.5vw, 1rem);
 }
 
 /* Jelszó mező stílus */
@@ -130,33 +219,67 @@ p a:hover {
 
 .input_img {
     position: absolute;
-    right: 10px;
+    right: 12px;
     top: 50%;
     transform: translateY(-50%);
     cursor: pointer;
+    transition: var(--transition);
 }
 
 .input_img svg {
-    fill: #333;
+    fill: var(--dark-black);
+    transition: var(--transition);
+}
+
+.input_img:hover svg {
+    fill: var(--accent-gold);
 }
 
 /* Reszponzivitás */
 @media (max-width: 768px) {
     .container {
-        padding: 1em;
+        padding: clamp(1rem, 2vw, 1.5rem);
+        max-width: 350px;
     }
 
     h2 {
-        font-size: 1.4em;
+        font-size: clamp(1.2rem, 2vw, 1.5rem);
     }
 
     button {
-        font-size: 0.9em;
+        font-size: clamp(0.8rem, 1.4vw, 1rem);
     }
 }
 
 @media (max-width: 480px) {
     body {
         padding-top: var(--mobile-navbar-height);
+    }
+
+    .container {
+        max-width: 300px;
+        margin: clamp(1.5rem, 3vw, 2rem) auto;
+        padding: clamp(0.8rem, 1.5vw, 1rem);
+    }
+
+    h2 {
+        font-size: clamp(1rem, 1.8vw, 1.3rem);
+    }
+
+    button {
+        padding: clamp(0.6rem, 1vw, 0.8rem);
+        font-size: clamp(0.7rem, 1.3vw, 0.9rem);
+    }
+
+    label {
+        font-size: clamp(0.8rem, 1.1vw, 0.9rem);
+    }
+
+    input[type="text"],
+    input[type="email"],
+    input[type="password"],
+    input[type="tel"] {
+        padding: clamp(0.5rem, 0.9vw, 0.7rem);
+        font-size: clamp(0.8rem, 1.1vw, 0.9rem);
     }
 }
