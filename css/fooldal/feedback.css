@@ -3,6 +3,7 @@
     padding: 3rem;
     background: var(--primary-beige);
     text-align: center;
+    background: var(--dark-black)
 }
 
 .primary-bttn {

@@ -299,8 +299,7 @@ session_start();
     </div>
 </div>
     
-
-    <div class="feedback-section">
+<div class="feedback-section">
         <?php if (isset($_SESSION['felhasznalo_id'])): ?>
             <a href="visszajelzesek.php" class="primary-bttn">Küldd el a véleményed!</a>
         <?php else: ?>
@@ -308,7 +307,10 @@ session_start();
         <?php endif; ?>
     </div>
 
+    
+
     <section class="why-us">
+
         <h3>Miért minket válassz?</h3>
         <div class="features">
             <div class="feature">

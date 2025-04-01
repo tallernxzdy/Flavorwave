@@ -44,7 +44,7 @@ session_start();
                     <div class="flex-col">
                         <div class="menu__option" data-aos="fade-up" data-aos-delay="' . (100 * (array_search($k, $kategoriak) + 1)) . '">
                             <div class="image-wrapper">
-                                <img src="../kepek/Koretek/' . htmlspecialchars($k['kep_url']) . '" alt="' . htmlspecialchars($k['nev']) . '">
+                                <img src="../kepek/Köretek/' . htmlspecialchars($k['kep_url']) . '" alt="' . htmlspecialchars($k['nev']) . '">
                             </div>
                             <h2>' . htmlspecialchars($k['nev']) . '</h2>
                             <div class="title-underline"></div>
@@ -59,7 +59,7 @@ session_start();
                                 <button type="button" class="custom-close-btn" onclick="closeCustomModal(\'modal-' . htmlspecialchars($k['id']) . '\')">×</button>
                             </div>
                             <div class="custom-modal-body">
-                                <img src="../kepek/Koretek/' . htmlspecialchars($k['kep_url']) . '" class="img-fluid mb-3" alt="' . htmlspecialchars($k['nev']) . '">
+                                <img src="../kepek/Köretek/' . htmlspecialchars($k['kep_url']) . '" class="img-fluid mb-3" alt="' . htmlspecialchars($k['nev']) . '">
                                 <p><strong>Kalória:</strong> ' . htmlspecialchars($k['kaloria']) . ' kcal</p>
                                 <p><strong>Összetevők:</strong> ' . htmlspecialchars($k['osszetevok']) . '</p>
                                 <p><strong>Allergének:</strong> ' . htmlspecialchars($k['allergenek']) . '</p>
