@@ -100,7 +100,7 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
                     $conn->commit();
                     
                     // Redirect to cart page to show merged cart
-                    header('Location: kosar.php');
+                    header('Location: kezdolap.php');
                     exit();
 
                 } catch (Exception $e) {
