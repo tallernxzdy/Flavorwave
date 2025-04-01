@@ -6,7 +6,18 @@
     position: relative;
     padding: 2rem;
     overflow: visible;
-    /* Nincs háttér, ahogy kérted */
+}
+
+/* Változók a konzisztens színekhez */
+:root {
+    --dark-black: #121212;
+    --primary-beige: #f5e8c7;
+    --accent-gold: #d4a373;
+    --shadow-color: rgba(0, 0, 0, 0.5);
+    --transition: all 0.3s ease;
+    --strawberry-pink: #FF6F91; /* Rózsaszín az epres shake-hez */
+    --chocolate-brown: #8B4513; /* Barna a csokis shake-hez */
+    --caramel-beige: #D2B48C; /* Bézs a karamellás shake-hez */
 }
 
 .shaker-master {
@@ -51,7 +62,6 @@
 }
 
 .shaker-text h3 {
-    color: var(--accent-gold);
     font-size: clamp(1.2rem, 3.5vw, 2.8rem);
     font-weight: 800;
     text-transform: uppercase;
@@ -68,11 +78,10 @@
     margin-bottom: clamp(0.8rem, 1.5vw, 2rem);
     line-height: 1.4;
     word-wrap: break-word;
+    color: var(--primary-beige);
 }
 
 .shaker-btn {
-    background: var(--accent-gold);
-    color: var(--dark-black);
     padding: clamp(0.5rem, 1.2vw, 1.2rem) clamp(0.8rem, 2vw, 2.5rem);
     border-radius: 50px;
     text-decoration: none;
@@ -82,12 +91,13 @@
     transition: var(--transition);
     position: relative;
     overflow: hidden;
-    box-shadow: 0 5px 20px rgba(212, 163, 115, 0.5);
+    box-shadow: 0 5px 20px rgba(0, 0, 0, 0.3);
     z-index: 1;
     display: inline-block;
     white-space: normal;
     line-height: 1.2;
     text-align: center;
+    color: var(--dark-black);
 }
 
 .shaker-btn::before {
@@ -111,7 +121,44 @@
 
 .shaker-btn:hover {
     transform: scale(1.1);
-    box-shadow: 0 10px 30px rgba(212, 163, 115, 0.7);
+    box-shadow: 0 10px 30px rgba(0, 0, 0, 0.4);
+}
+
+/* Egyedi színek a slide-okhoz */
+.strawberry-slide .shaker-text h3 {
+    color: var(--strawberry-pink);
+}
+
+.strawberry-slide .shaker-btn {
+    background: var(--strawberry-pink);
+}
+
+.strawberry-slide .shaker-btn:hover {
+    background: #FF8CAB; /* Világosabb rózsaszín hoverhez */
+}
+
+.chocolate-slide .shaker-text h3 {
+    color: var(--chocolate-brown);
+}
+
+.chocolate-slide .shaker-btn {
+    background: var(--chocolate-brown);
+}
+
+.chocolate-slide .shaker-btn:hover {
+    background: #A0522D; /* Világosabb barna hoverhez */
+}
+
+.caramel-slide .shaker-text h3 {
+    color: var(--caramel-beige);
+}
+
+.caramel-slide .shaker-btn {
+    background: var(--caramel-beige);
+}
+
+.caramel-slide .shaker-btn:hover {
+    background: #DEB887; /* Világosabb bézs hoverhez */
 }
 
 .shaker-image {
@@ -181,10 +228,6 @@
     box-shadow: 0 2px 10px var(--shadow-color);
 }
 
-.shaker-dot:hover {
-    /* Nincs hover effekt, ahogy a Coupon Slider-ben */
-}
-
 .shaker-dot.active {
     background: var(--accent-gold);
     transform: scale(1.4);
@@ -198,7 +241,7 @@
 
     .shaker-slides {
         min-height: 500px;
-        padding-bottom: 3rem; /* Kevesebb hely, hogy közelebb legyen a sliderhez */
+        padding-bottom: 3rem;
     }
 
     .shaker-slide {
@@ -234,7 +277,7 @@
 
     .shaker-prev, .shaker-next {
         top: auto;
-        bottom: -1.5rem; /* Közelebb a sliderhez, de nem érinti */
+        bottom: -1.5rem;
         transform: none;
         background: var(--accent-gold);
         color: var(--dark-black);
@@ -260,7 +303,7 @@
     }
 
     .shaker-dots {
-        margin-top: 2.5rem; /* Közelebb a sliderhez, de a nyilak alatt */
+        margin-top: 2.5rem;
     }
 
     .shaker-dot {
@@ -277,7 +320,7 @@
 
     .shaker-slides {
         min-height: 450px;
-        padding-bottom: 2.5rem; /* Kevesebb hely, hogy közelebb legyen a sliderhez */
+        padding-bottom: 2.5rem;
     }
 
     .shaker-slide {
@@ -306,11 +349,11 @@
     .shaker-prev, .shaker-next {
         padding: 0.8rem;
         font-size: 1.2rem;
-        bottom: -2rem; 
+        bottom: -2rem;
     }
 
     .shaker-dots {
-        margin-top: 3rem; 
+        margin-top: 3rem;
     }
 
     .shaker-dot {
