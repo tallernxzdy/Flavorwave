@@ -37,6 +37,13 @@ body {
     font-weight: 600;
     transition: var(--transition);
     font-size: 1rem;
+    position: relative;
+    overflow: hidden;
+}
+
+/* Hozzáadjuk a ::before elemet, majd rögtön eltávolítjuk */
+.primary-bttn::before {
+    content: none; /* Eltávolítjuk a kör alakú effektet */
 }
 
 .primary-bttn:hover {
@@ -45,6 +52,7 @@ body {
     transform: translateY(-3px);
 }
 
+/* Reszponzív töréspontok */
 @media (max-width: 768px) {
     .feedback-section {
         padding: 2rem 1rem;
