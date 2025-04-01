@@ -255,50 +255,54 @@ session_start();
     </div> -->
 
     <div class="shaker-master-container">
-        <div class="shaker-master">
-            <div class="shaker-slides">
-                <div class="shaker-slide">
-                    <div class="shaker-text">
-                        <h3>Epres shake</h3>
-                        <p>A gyümölcsök kedvelőinek</p>
-                        <a href="shakek.php" class="shaker-btn">Vásárlás</a>
-                    </div>
-                    <div class="shaker-image">
-                        <img src="../kepek/shakek/epresshake.jpg" alt="Epres shake">
-                    </div>
+    <div class="shaker-master">
+        <div class="shaker-slides">
+            <div class="shaker-slide strawberry-slide">
+                <div class="shaker-text">
+                    <h3>Epres shake</h3>
+                    <p>A gyümölcsök kedvelőinek</p>
+                    <a href="shakek.php" class="shaker-btn">Vásárlás</a>
                 </div>
-                <div class="shaker-slide">
-                    <div class="shaker-text">
-                        <h3>Csokis shake</h3>
-                        <p>A Csokoládé igazi fanatikusainak, három féle csokival.</p>
-                        <a href="shakek.php" class="shaker-btn">Vásárlás</a>
-                    </div>
-                    <div class="shaker-image">
-                        <img src="../kepek/shakek/csokisshake.jpg" alt="Csokis Shake">
-                    </div>
-                </div>
-                <div class="shaker-slide">
-                    <div class="shaker-text">
-                        <h3>Karamellás shake</h3>
-                        <p>Az igazán édes szájúaknak</p>
-                        <a href="shakek.php" class="shaker-btn">Vásárlás</a>
-                    </div>
-                    <div class="shaker-image">
-                        <img src="../kepek/shakek/karamellasshake.jpg" alt="Karamellás shake">
-                    </div>
+                <div class="shaker-image">
+                    <img src="../kepek/shakek/epresshake.jpg" alt="Epres shake">
                 </div>
             </div>
-            <button class="shaker-prev"><i class="fas fa-chevron-left"></i></button>
-            <button class="shaker-next"><i class="fas fa-chevron-right"></i></button>
+            <div class="shaker-slide chocolate-slide">
+                <div class="shaker-text">
+                    <h3>Csokis shake</h3>
+                    <p>A Csokoládé igazi fanatikusainak, három féle csokival.</p>
+                    <a href="shakek.php" class="shaker-btn">Vásárlás</a>
+                </div>
+                <div class="shaker-image">
+                    <img src="../kepek/shakek/csokisshake.jpg" alt="Csokis Shake">
+                </div>
+            </div>
+            <div class="shaker-slide caramel-slide">
+                <div class="shaker-text">
+                    <h3>Karamellás shake</h3>
+                    <p>Az igazán édes szájúaknak</p>
+                    <a href="shakek.php" class="shaker-btn">Vásárlás</a>
+                </div>
+                <div class="shaker-image">
+                    <img src="../kepek/shakek/karamellasshake.jpg" alt="Karamellás shake">
+                </div>
+            </div>
         </div>
-        <div class="shaker-dots">
-            <div class="shaker-dot active"></div>
-            <div class="shaker-dot"></div>
-            <div class="shaker-dot"></div>
-        </div>
+        <button class="shaker-prev"><i class="fas fa-chevron-left"></i></button>
+        <button class="shaker-next"><i class="fas fa-chevron-right"></i></button>
     </div>
+<<<<<<< HEAD
 
 
+=======
+    <div class="shaker-dots">
+        <div class="shaker-dot active"></div>
+        <div class="shaker-dot"></div>
+        <div class="shaker-dot"></div>
+    </div>
+</div>
+    
+>>>>>>> 5c186d721909cae0ba476fa86b16275fce198bc2
 
     <div class="feedback-section">
         <?php if (isset($_SESSION['felhasznalo_id'])): ?>
