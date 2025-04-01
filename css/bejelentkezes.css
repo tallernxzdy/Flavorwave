@@ -170,6 +170,9 @@ button:hover::before {
     width: 100%;
 }
 
+p {
+    padding-top: 30px;
+}
 /* Linkek */
 p a {
     color: var(--accent-gold);

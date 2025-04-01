@@ -15,16 +15,17 @@ session_start();
     <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@400;600;800&display=swap" rel="stylesheet">
     <link href="https://unpkg.com/aos@2.3.1/dist/aos.css" rel="stylesheet">
     <link rel="stylesheet" href="../css/fooldal/ujfooldal.css">
-    <link rel="stylesheet" href="../css/navbar.css">
     <link rel="stylesheet" href="../css/fooldal/hero.css">
     <link rel="stylesheet" href="../css/fooldal/kupon.css">
     <link rel="stylesheet" href="../css/fooldal/hetiajanlat.css">
     <link rel="stylesheet" href="../css/fooldal/rendeles_lepesek.css">
-    <link rel="stylesheet" href="../css/fooldal/etelajanlo.css">
     <link rel="stylesheet" href="../css/fooldal/shakek.css">
     <link rel="stylesheet" href="../css/fooldal/whyus.css">
     <link rel="stylesheet" href="../css/footer.css">
     <link rel="stylesheet" href="../css/fooldal/nepszeruetelek.css">
+    <link rel="stylesheet" href="../css/fooldal/feedback.css">
+    <link rel="stylesheet" href="../css/navbar.css">
+    
     <script src="https://unpkg.com/aos@2.3.1/dist/aos.js"></script>
 
     <title>FlavorWave</title>
@@ -184,7 +185,7 @@ session_start();
                             <span class="star">★</span>
                             <span class="star">★</span>
                             <span class="star">★</span>
-                            <span class="star">☆</span>
+                            <span class="star">★</span>
                         </div>
                         <a href="pizza.php" class="order-btn">Rendelés</a>
                     </div>
@@ -291,10 +292,6 @@ session_start();
         <button class="shaker-prev"><i class="fas fa-chevron-left"></i></button>
         <button class="shaker-next"><i class="fas fa-chevron-right"></i></button>
     </div>
-<<<<<<< HEAD
-
-
-=======
     <div class="shaker-dots">
         <div class="shaker-dot active"></div>
         <div class="shaker-dot"></div>
@@ -302,7 +299,6 @@ session_start();
     </div>
 </div>
     
->>>>>>> 5c186d721909cae0ba476fa86b16275fce198bc2
 
     <div class="feedback-section">
         <?php if (isset($_SESSION['felhasznalo_id'])): ?>

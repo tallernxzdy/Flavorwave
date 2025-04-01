@@ -1,0 +1,66 @@
+/* Feedback */
+.feedback-section {
+    padding: 3rem;
+    background: var(--primary-beige);
+    text-align: center;
+}
+
+.primary-bttn {
+    background: var(--dark-black);
+    color: var(--primary-beige);
+    padding: 1rem 2rem;
+    border-radius: 30px;
+    text-decoration: none;
+    font-weight: 600;
+    transition: var(--transition);
+    font-size: 1rem;
+    position: relative;
+    overflow: hidden; /* Megtartjuk, ha más effektusok miatt szükséges */
+}
+
+/* Biztosítjuk, hogy ne legyen kör alakú effekt */
+.primary-bttn::before {
+    content: none; /* Explicit eltávolítás, hogy biztosan ne legyen kör effekt */
+}
+
+.primary-bttn:hover {
+    background: var(--accent-gold);
+    color: var(--dark-black);
+    transform: translateY(-3px);
+}
+
+/* Reszponzív töréspontok */
+@media (max-width: 768px) {
+    .feedback-section {
+        padding: 2rem 1rem;
+    }
+
+    .primary-bttn {
+        padding: 0.75rem 1.5rem;
+        border-radius: 20px;
+        font-size: 0.9rem;
+    }
+}
+
+@media (max-width: 576px) {
+    .feedback-section {
+        padding: 1.5rem 0.5rem;
+    }
+
+    .primary-bttn {
+        padding: 0.6rem 1.2rem;
+        border-radius: 15px;
+        font-size: 0.8rem;
+    }
+}
+
+@media (max-width: 320px) {
+    .feedback-section {
+        padding: 1rem 0.25rem;
+    }
+
+    .primary-bttn {
+        padding: 0.5rem 1rem;
+        font-size: 0.7rem;
+    }
+}

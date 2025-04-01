@@ -69,10 +69,11 @@ if ($userId) {
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.15.4/css/all.min.css">
     <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@400;600&display=swap" rel="stylesheet">
     <title>Rendeléseim</title>
-    <link rel="stylesheet" href="../css/navbar.css">
+    <link rel="icon" href="../kepek/logo.png" type="image/png">
     <link rel="stylesheet" href="../css/fooldal/ujfooldal.css">
     <link rel="stylesheet" href="../css/rendeles_megtekint.css">
     <link rel="stylesheet" href="../css/footer.css">
+    <link rel="stylesheet" href="../css/navbar.css">
     
 </head>
 <body>

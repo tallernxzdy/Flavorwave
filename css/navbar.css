@@ -82,8 +82,10 @@ nav {
 .logo h1 {
     color: var(--primary-beige);
     font-size: 2.3rem;
-    font-weight: 800;
+    font-weight: bold !important;
+    width: 252px !important;
     letter-spacing: 2px;
+    margin-bottom: 0;
 }
 
 /* Középen a menüpontok */

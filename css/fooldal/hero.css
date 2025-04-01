@@ -63,8 +63,8 @@
     font-size: 1.2rem;
     transition: var(--transition);
     /*white-space: nowrap;  Ezt eltávolítjuk */
-    min-width: 180px; /* Állítsunk be egy minimum szélességet a gomboknak */
-    text-align: center; /* A szöveg középre igazítása a gombon belül */
+    min-width: 180px; 
+    text-align: center; 
 }
 
 .order-now {
