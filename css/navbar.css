@@ -1,4 +1,4 @@
-@import url('https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;600&display=swap');
+@import url('https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;600;700&display=swap');
 
 :root {
     --primary-beige: #F5E8C7;
@@ -6,50 +6,25 @@
     --accent-gold: #D4A373;
     --shadow-color: rgba(0, 0, 0, 0.3);
     --light-gray: #E8D5B5;
-    --transition: all 0.4s ease;
-    --navbar-height: 100px;
+    --transition: all 0.3s ease;
+    --navbar-height: 90px;
     --mobile-navbar-height: 70px;
 }
 
-
-
-/* Kosár számláló stílusa */
-.cart-btn {
-    display: flex;
-    align-items: center;
-    gap: 8px;
-    position: relative;
+/* Alap stílusok */
+* {
+    margin: 0;
+    padding: 0;
+    box-sizing: border-box;
+    font-family: 'Poppins', sans-serif;
 }
 
-.menubar a {
-    position: relative;
-    display: block;
-}
-
-.cart-count {
-    background-color: #D4A373;
-    color: rgb(0, 0, 0);
-    border-radius: 50%;
-    padding: 2px 8px;
-    font-size: 12px;
-    position: absolute;
-    top: -10px;
-    right: -10px;
-    min-width: 20px;
-    text-align: center;
-}
-
-.menubar .cart-count {
-    top: 5px;
-    right: 5px;
-}
-
-/* Navbar alapstílusok */
+/* Navbar konténer */
 nav {
     display: flex;
     justify-content: space-between;
     align-items: center;
-    padding: 15px 40px;
+    padding: 0 40px;
     background: var(--dark-black);
     position: fixed;
     top: 0;
@@ -57,22 +32,20 @@ nav {
     width: 100%;
     height: var(--navbar-height);
     z-index: 1000;
-    box-shadow: 0 2px 10px var(--shadow-color);
-    transition: height 0.3s ease;
+    box-shadow: 0 2px 15px var(--shadow-color);
 }
 
-/* Logó és felirat bal oldalon */
+/* Logó rész */
 .logo {
     display: flex;
     align-items: center;
     text-decoration: none;
-    gap: 1rem;
+    gap: 15px;
 }
 
 .logo img {
-    height: 50px;
-    margin-right: 12px;
-    transition: transform 0.5s ease;
+    height: 45px;
+    transition: var(--transition);
 }
 
 .logo:hover img {
@@ -81,14 +54,14 @@ nav {
 
 .logo h1 {
     color: var(--primary-beige);
-    font-size: 2.3rem;
-    font-weight: bold !important;
-    width: 252px !important;
-    letter-spacing: 2px;
-    margin-bottom: 0;
+    font-size: 1.8rem;
+    font-weight: 700;
+    letter-spacing: 1px;
+    white-space: nowrap;
+    margin: 0px;
 }
 
-/* Középen a menüpontok */
+/* Középső menü */
 .navbar-center {
     display: flex;
     gap: 25px;
@@ -102,11 +75,10 @@ nav {
     color: var(--primary-beige);
     font-size: 1.1rem;
     font-weight: 600;
-    padding: 0.7rem 1.5rem;
+    padding: 10px 20px;
     border-radius: 30px;
     transition: var(--transition);
-    -webkit-text-stroke: 0.5px rgba(26, 26, 26, 0.8);
-    text-stroke: 0.5px rgba(26, 26, 26, 0.8);
+    white-space: nowrap;
 }
 
 .navbar-center a:hover {
@@ -114,7 +86,6 @@ nav {
     color: var(--dark-black);
     transform: translateY(-3px);
     box-shadow: 0 5px 15px var(--shadow-color);
-    -webkit-text-stroke: 0;
 }
 
 /* Jobb oldali gombok */
@@ -126,107 +97,87 @@ nav {
 
 .navbar-buttons a {
     text-decoration: none;
-    padding: 0.7rem 1.5rem;
+    padding: 10px 20px;
     font-size: 1rem;
     font-weight: 600;
     border-radius: 30px;
     transition: var(--transition);
     color: var(--primary-beige);
-    -webkit-text-stroke: 0.5px rgba(26, 26, 26, 0.8);
-    text-stroke: 0.5px rgba(26, 26, 26, 0.8);
+    white-space: nowrap;
 }
 
-.login-btn {
+.login-btn, .profile-btn {
     background: var(--accent-gold);
     color: var(--dark-black) !important;
-    -webkit-text-stroke: 0 !important;
-    text-stroke: 0 !important;
-    text-shadow: none !important;
+    font-weight: 700;
 }
 
-.login-btn:hover {
-    background: var(--accent-gold);
-    color: var(--dark-black) !important;
+.login-btn:hover, .profile-btn:hover {
     transform: translateY(-3px);
     box-shadow: 0 5px 15px var(--shadow-color);
-    -webkit-text-stroke: none;
-    text-stroke: none;
-}
-
-.order-button {
-    background: transparent;
-}
-
-.order-button:hover {
-    background: var(--accent-gold);
-    color: var(--dark-black);
-    transform: translateY(-3px);
-    box-shadow: 0 5px 15px var(--shadow-color);
-    -webkit-text-stroke: 0;
 }
 
 .cart-btn {
     display: flex;
     align-items: center;
-    padding: 0.7rem 1.5rem;
-    background: transparent;
+    position: relative;
+    padding: 10px 20px;
 }
 
 .cart-icon {
-    font-size: 20px;
+    font-size: 1.2rem;
     margin-right: 8px;
 }
 
 .cart-btn:hover {
     background: var(--accent-gold);
     color: var(--dark-black);
-    transform: translateY(-3px);
-    box-shadow: 0 5px 15px var(--shadow-color);
-    -webkit-text-stroke: 0;
 }
 
-.profile-btn {
-    background: var(--accent-gold);
-    color: var(--dark-black) !important;
-    -webkit-text-stroke: 0 !important;
-    text-stroke: 0 !important;
-    text-shadow: none !important;
-  }
-  
-  .profile-btn:hover {
-    background: var(--accent-gold);
-    color: var(--dark-black) !important;
-    transform: translateY(-3px);
-    box-shadow: 0 5px 15px var(--shadow-color);
-    -webkit-text-stroke: none;
-    text-stroke: none;
-  }
+
+.cart-count {
+        background-color: #D4A373;
+        color: rgb(0, 0, 0);
+        border-radius: 50%;
+        padding: 2px 8px;
+        font-size: 12px;
+        position: absolute;
+        top: -10px;
+        right: -10px;
+        min-width: 20px;
+        text-align: center;
+    }
+.menubar .cart-count {
+        position: static;
+        margin-left: 8px;
+        display: inline-block;
+        vertical-align: middle;
+        top: 0;
+        right: 0;
+    }
 
 /* Hamburger menü ikon */
 .hamburger {
     display: none;
     flex-direction: column;
-    gap: 5px;
+    justify-content: space-between;
+    width: 32px;
+    height: 24px;
     cursor: pointer;
-    padding: 10px;
-    border-radius: 5px;
-    transition: background 0.3s ease;
+    z-index: 1001;
 }
 
 .hamburger span {
-    width: 28px;
-    height: 3px;
+    width: 100%;
+    height: 4px;
     background: var(--primary-beige);
     border-radius: 2px;
-    transition: all 0.3s ease;
-}
-
-.hamburger:hover {
-    background: rgba(255, 255, 255, 0.1);
+    transition: var(--transition);
+    transform-origin: left center;
 }
 
 .hamburger.active span:nth-child(1) {
-    transform: rotate(45deg) translate(6px, 6px);
+    transform: rotate(45deg) translate(1px, -1px);
 }
 
 .hamburger.active span:nth-child(2) {
@@ -234,29 +185,26 @@ nav {
 }
 
 .hamburger.active span:nth-child(3) {
-    transform: rotate(-45deg) translate(6px, -6px);
+    transform: rotate(-45deg) translate(1px, 1px);
 }
 
 /* Hamburger menü tartalma */
 .menubar {
-    display: none;
     position: fixed;
     top: var(--navbar-height);
     left: 0;
     width: 100%;
     background: var(--dark-black);
-    padding: 20px;
-    box-shadow: 0 4px 15px var(--shadow-color);
+    padding: 20px 0;
+    box-shadow: 0 10px 20px var(--shadow-color);
     z-index: 999;
-    opacity: 0;
-    transform: translateY(-20px);
-    transition: opacity 0.3s ease, transform 0.3s ease;
+    display: none;
+    max-height: calc(100vh - var(--navbar-height));
+    overflow-y: auto;
 }
 
 .menubar.active {
     display: block;
-    opacity: 1;
-    transform: translateY(0);
 }
 
 .menubar ul {
@@ -264,88 +212,103 @@ nav {
     display: flex;
     flex-direction: column;
     align-items: center;
+    gap: 15px;
 }
 
 .menubar li {
-    margin: 10px 0;
     width: 100%;
-    max-width: 300px;
+    text-align: center;
 }
 
 .menubar a {
-    text-decoration: none;
+    display: block;
+    padding: 15px 20px;
     color: var(--primary-beige);
+    text-decoration: none;
     font-size: 1.1rem;
     font-weight: 600;
-    padding: 1rem;
-    display: block;
-    border-radius: 30px;
-    text-align: center;
     transition: var(--transition);
-    -webkit-text-stroke: 0.5px rgba(26, 26, 26, 0.8);
-    text-stroke: 0.5px rgba(26, 26, 26, 0.8);
 }
 
 .menubar a:hover {
     background: var(--accent-gold);
     color: var(--dark-black);
-    -webkit-text-stroke: 0;
+}
+
+/* Profil gomb a menüben */
+.menubar .profile-menu-item {
+    background: var(--dark-black);
+    margin-top: 10px;
+}
+
+.menubar .profile-menu-item a {
+    background: var(--accent-gold);
+    color: var(--dark-black) !important;
+    font-weight: 700;
+    border-radius: 30px;
+    margin: 0 auto;
+    max-width: 200px;
+}
+
+.menubar .profile-menu-item a:hover {
+    transform: translateY(-3px);
+    box-shadow: 0 5px 15px var(--shadow-color);
 }
 
 /* Reszponzív stílusok */
-@media (max-width: 1200px) {
-    nav {
-        padding: 15px 25px;
-    }
-
-    .logo img {
-        height: 40px;
-    }
-
-    .logo {
-        font-size: 1.6rem;
-    }
-
-    .navbar-center,
-    .navbar-buttons {
-        display: none;
-    }
-
+@media (max-width: 1240px) {
     .hamburger {
         display: flex;
+    }
+    
+    .navbar-center, .navbar-buttons {
+        display: none;
+    }
+    
+    nav {
+        padding: 0 30px;
+    }
+}
+
+@media (max-width: 768px) {
+    nav {
+        height: var(--mobile-navbar-height);
+        padding: 0 20px;
+    }
+    
+    .logo img {
+        height: 35px;
+    }
+    
+    .logo h1 {
+        font-size: 1.5rem;
+    }
+    
+    .menubar {
+        top: var(--mobile-navbar-height);
     }
 }
 
 @media (max-width: 480px) {
     nav {
-        height: var(--mobile-navbar-height);
-        padding: 10px 15px;
+        padding: 0 15px;
     }
-
-    .logo img {
-        height: 30px;
-    }
-
-    .logo {
-        font-size: 1.4rem;
-    }
-
+    
     .logo h1 {
-        display: none;
+        font-size: 1.3rem;
     }
-
-    .hamburger span {
-        width: 24px;
-        height: 2px;
-    }
-
-    .menubar {
-        top: var(--mobile-navbar-height);
-        padding: 15px;
-    }
-
+    
     .menubar a {
+        padding: 12px 15px;
         font-size: 1rem;
-        padding: 10px;
+    }
+    
+    .hamburger {
+        width: 28px;
+        height: 20px;
+    }
+    
+    .hamburger span {
+        height: 3px;
     }
 }

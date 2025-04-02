@@ -3,7 +3,6 @@ if (session_status() === PHP_SESSION_NONE) {
     session_start();
 }
 
-
 if (!isset($conn)) {
     include_once 'adatbazisra_csatlakozas.php';
 }
@@ -79,14 +78,17 @@ function getCartItemCount($conn) {
 <div class="menubar" id="menubar">
     <ul>
         <li><a href="kategoria.php">Menü</a></li>
+        <li><a href="rendeles_megtekintes.php">Rendeléseim</a></li>
         <?php if (isset($_SESSION["jog_szint"]) && $_SESSION["jog_szint"] == 1): ?>
             <li><a href="admin_felulet.php">Admin felület</a></li>
         <?php endif; ?>
-        <li><a href="rendelesek_megtekintes.php">Rendeléseim</a></li>
+        <?php if (isset($_SESSION["jog_szint"]) && $_SESSION["jog_szint"] == 2): ?>
+            <li><a href="dolgozoi_felulet.php">Dolgozoi felület</a></li>
+        <?php endif; ?>
         <?php if (isset($_SESSION["felhasznalo_nev"])): ?>
             <li><a href="kijelentkezes.php">Kijelentkezés</a></li>
         <?php else: ?>
-            <li><a href="bejelentkezes.php" class="login-btn">Bejelentkezés</a></li>
+            <li><a href="bejelentkezes.php">Bejelentkezés</a></li>
         <?php endif; ?>
         <li>
             <a href="kosar.php">
@@ -94,6 +96,10 @@ function getCartItemCount($conn) {
                 <span class="cart-count"><?php echo getCartItemCount($conn); ?></span>
             </a>
         </li>
-        
+        <li class="profile-menu-item">
+            <a href="profil_megtekintes.php">
+                <i class="fas fa-user"></i> Profil
+            </a>
+        </li>
     </ul>
 </div>
