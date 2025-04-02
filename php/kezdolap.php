@@ -52,7 +52,7 @@ session_start();
                 <?php else: ?>
                     <a href="rendeles_megtekintes.php" class="order-now">Tekintsd meg a rendeléseidet</a>
                 <?php endif; ?>
-                <a href="kategoria.php" class="view-menu">Tekintsd meg a Menüt</a>
+                <a href="kategoria.php" class="view-menu">Ugorj a menüre</a>
             </div>
         </div>
     </div>
