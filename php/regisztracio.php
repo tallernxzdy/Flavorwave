@@ -180,12 +180,12 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
         <form method="POST" action="">
             <div class="form-group">
                 <label for="username">Felhasználónév:</label>
-                <input type="text" id="username" name="username" value="<?= isset($_POST['username']) ? htmlspecialchars($_POST['username']) : '' ?>">
+                <input type="text" id="username" name="username" value="<?= (!empty($errors) && isset($_POST['username'])) ? htmlspecialchars($_POST['username']) : '' ?>">
             </div>
 
             <div class="form-group">
                 <label for="email">Email cím:</label>
-                <input type="email" id="email" name="email" value="<?= isset($_POST['email']) ? htmlspecialchars($_POST['email']) : '' ?>">
+                <input type="email" id="email" name="email" value="<?= (!empty($errors) && isset($_POST['email'])) ? htmlspecialchars($_POST['email']) : '' ?>">
             </div>
 
             <div class="form-group">
@@ -195,7 +195,7 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
 
             <div class="form-group">
                 <label for="phone">Telefonszám (06 vagy +36 kezdettel):</label>
-                <input type="tel" id="phone" name="phone" value="<?= isset($_POST['phone']) ? htmlspecialchars($_POST['phone']) : '' ?>">
+                <input type="tel" id="phone" name="phone" value="<?= (!empty($errors) && isset($_POST['phone'])) ? htmlspecialchars($_POST['phone']) : '' ?>">
             </div>
 
             <button type="submit">Regisztráció</button>
