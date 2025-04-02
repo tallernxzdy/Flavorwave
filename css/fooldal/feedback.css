@@ -16,12 +16,12 @@
     transition: var(--transition);
     font-size: 1rem;
     position: relative;
-    overflow: hidden; /* Megtartjuk, ha más effektusok miatt szükséges */
+    overflow: hidden;
 }
 
-/* Biztosítjuk, hogy ne legyen kör alakú effekt */
+
 .primary-bttn::before {
-    content: none; /* Explicit eltávolítás, hogy biztosan ne legyen kör effekt */
+    content: none; 
 }
 
 .primary-bttn:hover {
