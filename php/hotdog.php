@@ -17,7 +17,7 @@ session_start();
     <title>FlavorWave - Hot-dog</title>
     <link rel="stylesheet" href="../css/navbar.css">
     <link rel="stylesheet" href="../css/footer.css">
-    <link rel="stylesheet" href="../css/hamburger.css"> <!-- A "Hamburgerek" oldal CSS-ét használjuk -->
+    <link rel="stylesheet" href="../css/kategoriaelemek.css">
     <link rel="stylesheet" href="../css/fooldal/ujfooldal.css">
     <script src="../js/cart.js"></script>
 
@@ -32,7 +32,7 @@ session_start();
     <div class="content-wrapper">
         <main>
             <div class="title-container">
-                <h1 class="page-title">Hot-dogok</h1>
+                <h1 class="page-title" id="cim">Hot-dogok</h1>
             </div>
             <?php
 

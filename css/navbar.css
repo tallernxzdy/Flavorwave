@@ -185,6 +185,23 @@ nav {
     -webkit-text-stroke: 0;
 }
 
+.profile-btn {
+    background: var(--accent-gold);
+    color: var(--dark-black) !important;
+    -webkit-text-stroke: 0 !important;
+    text-stroke: 0 !important;
+    text-shadow: none !important;
+  }
+  
+  .profile-btn:hover {
+    background: var(--accent-gold);
+    color: var(--dark-black) !important;
+    transform: translateY(-3px);
+    box-shadow: 0 5px 15px var(--shadow-color);
+    -webkit-text-stroke: none;
+    text-stroke: none;
+  }
+
 /* Hamburger menü ikon */
 .hamburger {
     display: none;

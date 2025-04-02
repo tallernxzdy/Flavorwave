@@ -17,7 +17,7 @@ session_start();
     <title>FlavorWave - Köretek</title>
     <link rel="stylesheet" href="../css/navbar.css">
     <link rel="stylesheet" href="../css/footer.css">
-    <link rel="stylesheet" href="../css/hamburger.css"> <!-- A "Hamburgerek" oldal CSS-ét használjuk -->
+    <link rel="stylesheet" href="../css/kategoriaelemek.css">
     <link rel="stylesheet" href="../css/fooldal/ujfooldal.css">
     
     <script src="https://unpkg.com/aos@2.3.1/dist/aos.js"></script>
@@ -31,7 +31,7 @@ session_start();
     <div class="content-wrapper">
         <main>
             <div class="title-container">
-                <h1 class="page-title">Köretek</h1>
+                <h1 class="page-title" id="cim">Köretek</h1>
             </div>
             <?php
 

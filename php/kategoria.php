@@ -30,7 +30,7 @@ session_start();
     <div class="content-wrapper">
         <main>
             <div class="title-container">
-                <h1 class="page-title">Kategóriák</h1>
+                <h1 class="page-title" id="cim">Kategóriák</h1>
             </div>
             <div class="flex-grid">
                 <div class="flex-col" data-aos="fade-up" data-aos-delay="100">

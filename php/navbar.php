@@ -1,10 +1,13 @@
 <?php
+if (session_status() === PHP_SESSION_NONE) {
+    session_start();
+}
 
-use function PHPSTORM_META\elementType;
 
-include_once 'adatbazisra_csatlakozas.php';
+if (!isset($conn)) {
+    include_once 'adatbazisra_csatlakozas.php';
+}
 
-// A getCartItemCount függvényt ide is bemásoljuk, hogy a navbarban használhassuk
 function getCartItemCount($conn) {
     $itemCount = 0;
 
@@ -55,10 +58,12 @@ function getCartItemCount($conn) {
         <?php else: ?>
             <a href="bejelentkezes.php" class="login-btn">Bejelentkezés</a>
         <?php endif; ?>
-        
         <a href="kosar.php" class="cart-btn">
             <i class='fas fa-shopping-cart cart-icon'></i> Kosár
             <span class="cart-count"><?php echo getCartItemCount($conn); ?></span>
+        </a>
+        <a href="profil_megtekintes.php" class="profile-btn">
+            <i class="fas fa-user"></i>
         </a>
     </div>
 

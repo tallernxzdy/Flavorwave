@@ -16,7 +16,7 @@ session_start();
     <title>FlavorWave - Hamburgerek</title>
     <link rel="stylesheet" href="../css/navbar.css">
     <link rel="stylesheet" href="../css/footer.css">
-    <link rel="stylesheet" href="../css/hamburger.css">
+    <link rel="stylesheet" href="../css/kategoriaelemek.css">
     <link rel="stylesheet" href="../css/fooldal/ujfooldal.css">
     <script src="../js/cart.js"></script>
     
@@ -32,7 +32,7 @@ session_start();
     <div class="content-wrapper">
         <main>
             <div class="title-container">
-                <h1 class="page-title">Hamburgerek</h1>
+                <h1 class="page-title" id="cim">Hamburgerek</h1>
             </div>
             <?php
 

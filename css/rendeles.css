@@ -60,7 +60,7 @@ textarea.form-control {
 }
 
 .btn-primary:hover {
-    background-color: #2980b9;
+    background-color: #2e2e2e;
     transform: translateY(-2px);
 }
 
@@ -104,6 +104,7 @@ textarea.form-control {
     border: 1px solid #f5c6cb;
     font-size: 0.95rem;
     font-weight: 400;
+    padding-top: 30px;
 }
 
 .error p {
@@ -117,8 +118,8 @@ textarea.form-control {
 }
 
 .modal-header {
-    background: #3498db;
-    color: #fff;
+    background: #e6d7a8;
+    color: #2e2e2e;
     border-top-left-radius: 12px;
     border-top-right-radius: 12px;
 }
@@ -143,7 +144,7 @@ textarea.form-control {
 }
 
 .modal-footer .btn-primary:hover {
-    background-color: #2980b9;
+    background-color: #e6d7a8;
 }
 
 /* Responsive Adjustments */

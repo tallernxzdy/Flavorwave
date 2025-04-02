@@ -1,11 +1,15 @@
 <?php
-// Az adatbázis kapcsolat létrehozása
-$conn = new mysqli('localhost', 'root', '', 'flavorwave');
-
-// Ellenőrizzük, hogy sikerült-e a kapcsolat
-if ($conn->connect_errno != 0) {
-    die("Az adatbázis kapcsolódás nem sikerült: " . $conn->connect_error);
-}
+    if (!isset($conn) || !($conn instanceof mysqli) || $conn->connect_errno != 0) {
+        $conn = new mysqli('localhost', 'root', '', 'flavorwave');
+        
+        // Ellenőrizzük, hogy sikerült-e a kapcsolat
+        if ($conn->connect_errno != 0) {
+            die("Az adatbázis kapcsolódás nem sikerült: " . $conn->connect_error);
+        }
+        
+        // Karakterkódolás beállítása
+        $conn->set_charset("utf8mb4");
+    }
 
 // SQL function lekérdezésekhez:
 function adatokLekerdezese($muvelet, $parameterek = []) {
