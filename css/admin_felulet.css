@@ -158,6 +158,17 @@ html body {
     background-color: var(--gomb_szin_mellek_hover);
 }
 
+.form-select option {
+    background-color: black; /* Példa: aranysárga háttér */
+    color: white; /* Szöveg színe */
+}
+
+.form-select {
+    background-color: black !important; 
+    color: white !important; 
+}
+
+
 #margo_felulre{
     margin-top: 30px;
 }
@@ -175,3 +186,4 @@ label{
 .is-invalid {
     border-color: #e64616 !important;
 }
+

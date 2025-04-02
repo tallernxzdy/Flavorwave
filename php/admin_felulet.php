@@ -252,14 +252,31 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
                 <input type="number" name="edit_kaloria" placeholder="Kalória" class="form-control mb-2" required>
                 <textarea name="edit_osszetevok" placeholder="Összetevők" class="form-control mb-2" required></textarea>
                 <textarea name="edit_allergenek" placeholder="Allergének" class="form-control mb-2" required></textarea>
-                <select name="edit_kategoria_id" class="form-select mb-2" required>
+                
+
+                <!-- Legördülő lista helye -->
+
+                <!-- <select name="edit_kategoria_id" class="form-select mb-2" required>
                     <option value="">Válassz kategóriát</option>
                     <?php foreach ($kategoriak as $kategoria): ?>
                         <option value="<?= htmlspecialchars($kategoria['id']) ?>">
                             <?= htmlspecialchars($kategoria['kategoria_nev']) ?>
                         </option>
                     <?php endforeach; ?>
-                </select>
+                </select> -->
+
+                <!-- figyelmeztető a törléssel kapcsolatban -->
+                <div class="alert alert-warning" role="alert">
+                    <h4 class="alert-heading">Figyelem!</h4>
+                    <p>Rossz kategóriába töltött kép esetén: 
+                    <hr>
+                    <p class="mb-0">Kérem, hogy kezdje előről a műveletet,
+                            és törölje az elrontott kategória mappából a képet, valamint törölje az adatbázisba felvitt adatokat a "Törlés" adatbázis műveletekkel.</span>
+                    </div>
+
+
+                
+
                 <button type="submit" data-operation="edit" class="btn btn-primary">Szerkesztés</button>
             </div>
 
@@ -282,7 +299,7 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
     <!-- Felhasználó szerkesztése -->
     <div class="container mt-5">
         <h2>Felhasználó szerkesztése</h2>
-        <table class="table table-bordered">
+        <table class="table table-dark table-bordered">
             <thead>
                 <tr>
                     <th>Felhasználónév</th>

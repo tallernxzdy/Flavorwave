@@ -130,32 +130,33 @@ function getOrderDetails($order_id) {
         <h1 class="text-center my-4">Dolgozói felület</h1>
 
         <!-- Átvételre váró rendelések -->
-        <div class="card mt-5 mb-5">
-            <div class="card-header">
+        <div class="card bg-warning mt-5 mb-5">
+            <div class="card-header bg-dark text-white">
                 <h3>Átvételre váró rendelések</h3>
             </div>
-            <div class="card-body">
+            <div class="card-body bg-light">
                 <form method="POST" action="dolgozoi_felulet.php">
                     <select name="order_id" class="form-select mb-3">
                         <option>Kérlek válassz egy menüt</option>
                         <?php foreach (rendeleseLekerdezese(0) as $order) { ?>
-                            <option value="<?= $order['id'] ?>">Rendelés #<?= $order['id'] ?> -
-                                <?= htmlspecialchars($order['felhasznalo_nev']) ?></option>
+                            <option value="<?= $order['id'] ?>">Rendelés #<?= $order['id'] ?> - <?= htmlspecialchars($order['felhasznalo_nev']) ?></option>
                         <?php } ?>
                     </select>
                     <input type="hidden" name="new_status" value="1">
-                    <button type="submit" name="update_status" class="btn btn-custom btn-info">Készítésre
-                        áthelyezés</button>
+                    <button type="submit" name="update_status" class="btn btn-custom btn-info">
+                        Készítésre áthelyezés
+                    </button>
                 </form>
             </div>
         </div>
 
+
         <!-- Folyamatban lévő rendelések -->
-        <div class="card mt-5 mb-5">
-            <div class="card-header">
+        <div class="card bg-warning mt-5 mb-5">
+            <div class="card-header bg-dark text-white">
                 <h3>Folyamatban lévő rendelések</h3>
             </div>
-            <div class="card-body">
+            <div class="card-body bg-light">
                 <form method="POST" action="dolgozoi_felulet.php">
                     <select name="order_id" class="form-select mb-3">
                         <option>Kérlek válassz egy menüt</option>
@@ -171,11 +172,11 @@ function getOrderDetails($order_id) {
         </div>
 
         <!-- Kész rendelések -->
-        <div class="card mt-5 mb-5">
-            <div class="card-header">
+        <div class="card bg-warning mt-5 mb-5">
+            <div class="card-header bg-dark text-white">
                 <h3>Kész rendelések</h3>
             </div>
-            <div class="card-body">
+            <div class="card-body bg-light">
                 <form method="POST" action="dolgozoi_felulet.php">
                     <select name="order_id" class="form-select mb-3">
                         <option>Kérlek válassz egy menüt</option>
