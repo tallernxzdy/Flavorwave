@@ -160,5 +160,36 @@ function handleImageUpload($categoryId, $uploadedFile, $kepNev) {
 
 
 
+function renameImageFile($oldPath, $newName) {
+    $baseDir = '../kepek/';
+    $extension = pathinfo($oldPath, PATHINFO_EXTENSION);
+    
+    // Régi fájl elérési útjai
+    $oldFullPath = $baseDir . $oldPath;
+    $oldOsszeskepPath = $baseDir . 'osszeskep/' . basename($oldPath);
+
+    // Új fájlnevek
+    $newFileName = preg_replace('/[^a-z0-9\-_]/i', '', $newName) . '.' . $extension;
+    $newCategoryPath = dirname($oldFullPath) . '/' . $newFileName;
+    $newOsszeskepPath = $baseDir . 'osszeskep/' . $newFileName;
+
+    // Fájlok átnevezése
+    if (rename($oldFullPath, $newCategoryPath) && rename($oldOsszeskepPath, $newOsszeskepPath)) {
+        return dirname($oldPath) . '/' . $newFileName;
+    }
+    return false;
+}
+
+function deleteImageFiles($imagePath) {
+    $baseDir = '../kepek/';
+    $mainPath = $baseDir . $imagePath;
+    $osszeskepPath = $baseDir . 'osszeskep/' . basename($imagePath);
+    
+    if (file_exists($mainPath)) unlink($mainPath);
+    if (file_exists($osszeskepPath)) unlink($osszeskepPath);
+}
+
+
+
 
 ?>

@@ -149,39 +149,79 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
 
     // Szerkesztés (képkezelés nélkül)
     if ($operation === 'edit') {
-        $id = $_POST['edit_etel'];
-        $nev = $_POST['edit_nev'];
-        $egyseg_ar = $_POST['edit_egyseg_ar'];
-        $leiras = $_POST['edit_leiras'];
-        $kategoria_id = $_POST['edit_kategoria_id'];
-        $kaloria = $_POST['edit_kaloria'];
-        $osszetevok = $_POST['edit_osszetevok'];
-        $allergenek = $_POST['edit_allergenek'];
+    $id = $_POST['edit_etel'];
+    $nev = $_POST['edit_nev'];
+    $egyseg_ar = $_POST['edit_egyseg_ar'];
+    $leiras = $_POST['edit_leiras'];
+    $kategoria_id = $_POST['edit_kategoria_id'];
+    $kaloria = $_POST['edit_kaloria'];
+    $osszetevok = $_POST['edit_osszetevok'];
+    $allergenek = $_POST['edit_allergenek'];
 
-        $muvelet = "UPDATE etel SET nev = ?, egyseg_ar = ?, leiras = ?, kategoria_id = ?, kaloria = ?, osszetevok = ?, allergenek = ? WHERE id = ?";
-        $parameterek = ['sssssssi', $nev, $egyseg_ar, $leiras, $kategoria_id, $kaloria, $osszetevok, $allergenek, $id];
-        $result = adatokValtoztatasa($muvelet, $parameterek);
-        $message = "<div class='alert alert-success'>Étel sikeresen szerkesztve!</div>";
-
-        if (!empty($_FILES['edit_kepek_url']['name'])) {
-            // Régi kép törlése
-            if (!empty($etel['kep_url'])) {
-                $oldImagePath = "../kepek/" . $etel['kep_url'];
-                $oldImageName = basename($oldImagePath);
-                
-                if (file_exists($oldImagePath)) unlink($oldImagePath);
-                if (file_exists("../kepek/osszeskep/" . $oldImageName)) unlink("../kepek/osszeskep/" . $oldImageName);
+    if (!empty($_POST['rename_kep'])) {
+        if ($_POST['kep_muvelet'] === 'atnevezes' && !empty($_POST['uj_kep_nev'])) {
+            // Kép átnevezése
+            $newKepUrl = renameImageFile($oldKepUrl, $_POST['uj_kep_nev']);
+            if ($newKepUrl) {
+                $kep_url = $newKepUrl;
             }
-            
+        } elseif ($_POST['kep_muvelet'] === 'ujKep' && !empty($_FILES['edit_kepek_url']['name'])) {
             // Új kép feltöltése
-            $kepNev = $_POST['edit_kep_nev'] ?? uniqid();
-            $kep_url = handleImageUpload($kategoria_id, $_FILES['edit_kepek_url'], $kepNev);
-            
-            // Adatbázis frissítés
-            $muvelet = "UPDATE etel SET kep_url = ? WHERE id = ?";
-            adatokValtoztatasa($muvelet, ['si', $kep_url, $id]);
+            if (!empty($oldKepUrl)) {
+                deleteImageFiles($oldKepUrl);
+            }
+            $kep_url = handleImageUpload($kategoria_id, $_FILES['edit_kepek_url'], 
+                $_POST['uj_kep_nev'] ?? pathinfo($_FILES['edit_kepek_url']['name'], PATHINFO_FILENAME));
         }
     }
+
+    // Régi képek adatainak lekérdezése
+    $etel = adatokLekerdezese("SELECT kep_url, kategoria_id FROM etel WHERE id = ?", ['i', $id]);
+    $oldKepUrl = $etel[0]['kep_url'] ?? '';
+    $oldKategoriaId = $etel[0]['kategoria_id'] ?? null;
+
+    // Alapértelmezettként a régi kép URL marad
+    $kep_url = $oldKepUrl;
+
+    // 1. Eset: Kép átnevezése
+    if (!empty($_POST['rename_kep']) && !empty($_POST['uj_kep_nev'])) {
+        if (!empty($oldKepUrl)) {
+            $newKepUrl = renameImageFile($oldKepUrl, $_POST['uj_kep_nev']);
+            if ($newKepUrl) {
+                $kep_url = $newKepUrl;
+            } else {
+                $message = "<div class='alert alert-danger'>Hiba a kép átnevezésekor!</div>";
+            }
+        }
+    }
+    // 2. Eset: Új kép feltöltése
+    elseif (!empty($_FILES['edit_kepek_url']['name'])) {
+        // Régi kép törlése
+        if (!empty($oldKepUrl)) {
+            deleteImageFiles($oldKepUrl);
+        }
+        
+        // Új kép feltöltése
+        $kepNev = $_POST['uj_kep_nev'] ?? pathinfo($_FILES['edit_kepek_url']['name'], PATHINFO_FILENAME);
+        $kep_url = handleImageUpload($kategoria_id, $_FILES['edit_kepek_url'], $kepNev);
+        
+        if (!$kep_url) {
+            $message = "<div class='alert alert-danger'>Hiba az új kép feltöltésekor!</div>";
+        }
+    }
+    
+    // Egyéb adatok frissítése
+    $muvelet = "UPDATE etel SET nev = ?, egyseg_ar = ?, leiras = ?, kategoria_id = ?, kaloria = ?, osszetevok = ?, allergenek = ?, kep_url = ? WHERE id = ?";
+    $parameterek = ['ssssssssi', $nev, $egyseg_ar, $leiras, $kategoria_id, $kaloria, $osszetevok, $allergenek, $kep_url, $id];
+    $result = adatokValtoztatasa($muvelet, $parameterek);
+    
+    $message = $result === 'Sikeres művelet!' 
+        ? "<div class='alert alert-success'>Sikeres szerkesztés!</div>"
+        : "<div class='alert alert-danger'>Hiba történt: $result</div>";
+}
+
+
+
 
     // Törlés
     if ($operation === 'delete') {
@@ -304,6 +344,74 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
                         </option>
                     <?php endforeach; ?>
                 </select>
+                    <!-- Képkezelés rész -->
+    <div class="mb-3" id="kepSzerkesztesDiv">
+        <div class="form-check mb-2">
+            <input class="form-check-input" type="checkbox" name="rename_kep" id="renameKep">
+            <label class="form-check-label" for="renameKep">Kép módosítása</label>
+        </div>
+        
+        <div id="kepModositasDiv" style="display:none;">
+            <div class="form-check mb-2">
+                <input class="form-check-input" type="radio" name="kep_muvelet" id="atnevezes" value="atnevezes" checked>
+                <label class="form-check-label" for="atnevezes">Meglévő kép átnevezése</label>
+            </div>
+            
+            <div id="ujKepNevDiv">
+                <input type="text" name="uj_kep_nev" placeholder="Új képnév (kiterjesztés nélkül)" class="form-control mb-2">
+            </div>
+            
+            <div class="form-check mb-2">
+                <input class="form-check-input" type="radio" name="kep_muvelet" id="ujKep" value="ujKep">
+                <label class="form-check-label" for="ujKep">Új kép feltöltése</label>
+            </div>
+            
+            <div id="ujKepFeltoltesDiv" style="display:none;">
+                <input type="file" name="edit_kepek_url" accept="image/*" class="form-control mb-2">
+                <small class="text-muted">A régi kép törlődni fog!</small>
+            </div>
+        </div>
+        
+        <div id="currentKepInfo" class="mt-2"></div>
+    </div>
+
+    <!-- Egyéb mezők... -->
+</div>
+
+    <script>
+    // Fő checkbox kezelése
+    document.getElementById('renameKep').addEventListener('change', function() {
+        const kepModositasDiv = document.getElementById('kepModositasDiv');
+        kepModositasDiv.style.display = this.checked ? 'block' : 'none';
+        
+        if (!this.checked) {
+            // Reseteljük a mezőket ha kikapcsolják
+            document.getElementById('ujKepNevDiv').querySelector('input').value = '';
+            document.getElementById('ujKepFeltoltesDiv').querySelector('input').value = '';
+        }
+    });
+
+    // Rádió gombok kezelése
+    document.querySelectorAll('input[name="kep_muvelet"]').forEach(radio => {
+        radio.addEventListener('change', function() {
+            const ujKepNevDiv = document.getElementById('ujKepNevDiv');
+            const ujKepFeltoltesDiv = document.getElementById('ujKepFeltoltesDiv');
+            
+            if (this.value === 'atnevezes') {
+                ujKepNevDiv.style.display = 'block';
+                ujKepFeltoltesDiv.style.display = 'none';
+                ujKepFeltoltesDiv.querySelector('input').value = ''; // Töröljük a fájlmezőt
+            } else {
+                ujKepNevDiv.style.display = 'none';
+                ujKepFeltoltesDiv.style.display = 'block';
+                ujKepNevDiv.querySelector('input').value = ''; // Töröljük a név mezőt
+            }
+        });
+    });
+    </script>
+    
+
+
                 <input type="text" name="edit_nev" placeholder="Név" class="form-control mb-2" required>
                 <input type="number" name="edit_egyseg_ar" placeholder="Egységár" class="form-control mb-2" required>
                 <textarea name="edit_leiras" placeholder="Leírás" class="form-control mb-2" required></textarea>
@@ -331,6 +439,7 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
                     <p class="mb-0">Kérem, hogy kezdje előről a műveletet,
                             és törölje az elrontott kategória mappából a képet, valamint törölje az adatbázisba felvitt adatokat a "Törlés" adatbázis műveletekkel.</span>
                 </div>
+                
 
 
                 
@@ -457,6 +566,28 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
 
     <!-- JavaScript -->
     <script>
+
+
+
+    // javascript a pillanatnyi kép megjelenéséhez
+    document.querySelector('select[name="edit_etel"]').addEventListener('change', function() {
+        const etelId = this.value;
+        fetch(`admin_felulet.php?action=get_etel&id=${etelId}`)
+            .then(response => response.json())
+            .then(data => {
+                const kepInfoDiv = document.getElementById('currentKepInfo');
+                if (data.kep_url) {
+                    kepInfoDiv.innerHTML = `
+                        <strong>Aktuális kép:</strong><br>
+                        <img src="../kepek/${data.kep_url}" style="max-height: 100px;" class="img-thumbnail mt-2"><br>
+                        <small>${data.kep_url}</small>
+                    `;
+                } else {
+                    kepInfoDiv.innerHTML = '<div class="text-muted">Nincs kép</div>';
+                }
+            });
+    });
+
     // A szerkesztési űrlap select elemének figyelése
     document.querySelector('select[name="edit_etel"]').addEventListener('change', function() {
         const etelId = this.value;
