@@ -122,4 +122,43 @@ function rendeleseLekerdezese($allapot) {
         return [];
     }
 }
+
+function handleImageUpload($categoryId, $uploadedFile, $kepNev) {
+    $baseDir = '../kepek/';
+    
+    // Kötelező mappák ellenőrzése/létrehozása
+    if (!file_exists($baseDir . 'osszeskep/')) {
+        mkdir($baseDir . 'osszeskep/', 0755, true);
+    }
+    
+    $categoryDir = $baseDir . $categoryId . '/';
+    if (!file_exists($categoryDir)) {
+        mkdir($categoryDir, 0755, true);
+    }
+
+    // Fájlnév és kiterjesztés kezelése
+    $extension = strtolower(pathinfo($uploadedFile['name'], PATHINFO_EXTENSION));
+    $baseFileName = preg_replace('/[^a-z0-9\-_]/i', '', $kepNev); // Biztonságos fájlnév
+    $fileName = $baseFileName . '.' . $extension;
+    
+    // Ellenőrizzük, hogy létezik-e már ilyen nevű fájl (bármilyen kiterjesztéssel)
+    $existingFiles = glob($categoryDir . $baseFileName . '.*');
+    if (!empty($existingFiles)) {
+        return false; // Már létezik ilyen nevű fájl
+    }
+    
+    // Fájl mozgatása
+    $targetPath = $categoryDir . $fileName;
+    if (move_uploaded_file($uploadedFile['tmp_name'], $targetPath)) {
+        // Másolat készítése az osszeskep mappába
+        copy($targetPath, $baseDir . 'osszeskep/' . $fileName);
+        return "$categoryId/$fileName";
+    }
+    
+    return false;
+}
+
+
+
+
 ?>

@@ -2,6 +2,10 @@
 session_start();
 include 'adatbazisra_csatlakozas.php';
 
+$message = "";
+$operation = "";
+
+
 // Jogosultság ellenőrzése
 if (!isset($_SESSION['felhasznalo_id']) || $_SESSION['jog_szint'] != 1) {
     header('Location: bejelentkezes.php');
@@ -89,37 +93,59 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
         $kaloria = $_POST['kaloria'];
         $osszetevok = $_POST['osszetevok'];
         $allergenek = $_POST['allergenek'];
+    
+        $kep_url = "";
+        if (!empty($_FILES['kepek_url']['name'])) {
+            $kepNev = $_POST['kep_nev'] ?? pathinfo($_FILES['kepek_url']['name'], PATHINFO_FILENAME);
+            $kep_url = handleImageUpload($kategoria_id, $_FILES['kepek_url'], $kepNev);
+            
+            if ($kep_url === false) {
+                $message = "<div class='alert alert-warning'>Már létezik ilyen nevű kép! Kérjük válassz másik nevet.</div>";
+            } elseif (!$kep_url) {
+                $message = "<div class='alert alert-warning'>Hiba a kép feltöltése során!</div>";
+            }
+        }
 
         $kategoria = adatokLekerdezese("SELECT kategoria_nev FROM kategoria WHERE id = ?", ['i', $kategoria_id]);
         if (!is_array($kategoria) || empty($kategoria)) {
             $message = "<div class='alert alert-warning'>Hiba a kategória lekérdezése során!</div>";
         } else {
-            $kategoria_nev = strtolower($kategoria[0]['kategoria_nev']);
             $kep_url = "";
-            if (isset($_FILES['kepek_url']['name']) && $_FILES['kepek_url']['name'] !== "") {
-                $target_dir = "../kepek/" . $kategoria_nev . "/";
-                $kep_nev = $_POST['kep_nev'] ?? uniqid();
-                $kiterjesztes = pathinfo($_FILES['kepek_url']['name'], PATHINFO_EXTENSION);
-                $uniqueName = $kep_nev . '.' . $kiterjesztes;
-                $target_file = $target_dir . $uniqueName;
-
-                if (file_exists($target_file)) {
-                    $message = "<div class='alert alert-warning'>Ez a képnév már foglalt!</div>";
+            
+            // Képfeltöltés kezelése
+            if (!empty($_FILES['kepek_url']['name'])) {
+                // Ellenőrizzük a fájl típusát
+                $allowedTypes = ['image/jpeg', 'image/png', 'image/gif'];
+                $fileType = $_FILES['kepek_url']['type'];
+                
+                if (!in_array($fileType, $allowedTypes)) {
+                    $message = "<div class='alert alert-warning'>Csak JPG, PNG vagy GIF formátumú képek tölthetők fel!</div>";
                 } else {
-                    if (move_uploaded_file($_FILES['kepek_url']['tmp_name'], $target_file)) {
-                        $kep_url = "$kategoria_nev/$uniqueName";
-                    } else {
-                        $message = "<div class='alert alert-warning'>Hiba a kép feltöltése során!</div>";
+                    // Kép nevének meghatározása
+                    $kepNev = $_POST['kep_nev'] ?? uniqid();
+                    
+                    // Kép feltöltése és elérési út generálása
+                    $kep_url = handleImageUpload($kategoria_id, $_FILES['kepek_url'], $kepNev);
+                    
+                    if (!$kep_url) {
+                        $message = "<div class='alert alert-warning'>Hiba történt a kép feltöltése során!</div>";
                     }
                 }
             }
-
+    
+            // Adatbázisba mentés
             $muvelet = "INSERT INTO etel (nev, egyseg_ar, leiras, kategoria_id, kep_url, kaloria, osszetevok, allergenek) VALUES (?, ?, ?, ?, ?, ?, ?, ?)";
             $parameterek = ['ssssssss', $nev, $egyseg_ar, $leiras, $kategoria_id, $kep_url, $kaloria, $osszetevok, $allergenek];
             $result = adatokValtoztatasa($muvelet, $parameterek);
-            $message = "<div class='alert alert-success'>Étel sikeresen hozzáadva!</div>";
+            
+            if ($result === 'Sikeres művelet!') {
+                $message = "<div class='alert alert-success'>Étel sikeresen hozzáadva!</div>";
+            } else {
+                $message = "<div class='alert alert-warning'>Hiba történt az étel hozzáadása során: " . $result . "</div>";
+            }
         }
     }
+
 
     // Szerkesztés (képkezelés nélkül)
     if ($operation === 'edit') {
@@ -136,16 +162,48 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
         $parameterek = ['sssssssi', $nev, $egyseg_ar, $leiras, $kategoria_id, $kaloria, $osszetevok, $allergenek, $id];
         $result = adatokValtoztatasa($muvelet, $parameterek);
         $message = "<div class='alert alert-success'>Étel sikeresen szerkesztve!</div>";
+
+        if (!empty($_FILES['edit_kepek_url']['name'])) {
+            // Régi kép törlése
+            if (!empty($etel['kep_url'])) {
+                $oldImagePath = "../kepek/" . $etel['kep_url'];
+                $oldImageName = basename($oldImagePath);
+                
+                if (file_exists($oldImagePath)) unlink($oldImagePath);
+                if (file_exists("../kepek/osszeskep/" . $oldImageName)) unlink("../kepek/osszeskep/" . $oldImageName);
+            }
+            
+            // Új kép feltöltése
+            $kepNev = $_POST['edit_kep_nev'] ?? uniqid();
+            $kep_url = handleImageUpload($kategoria_id, $_FILES['edit_kepek_url'], $kepNev);
+            
+            // Adatbázis frissítés
+            $muvelet = "UPDATE etel SET kep_url = ? WHERE id = ?";
+            adatokValtoztatasa($muvelet, ['si', $kep_url, $id]);
+        }
     }
 
     // Törlés
     if ($operation === 'delete') {
         $id = $_POST['delete_etel'];
         $etel = adatokLekerdezese("SELECT kep_url FROM etel WHERE id = ?", ['i', $id]);
-        if (is_array($etel) && count($etel) > 0 && !empty($etel[0]['kep_url']) && file_exists("../kepek/" . $etel[0]['kep_url'])) {
-            unlink("../kepek/" . $etel[0]['kep_url']);
+        
+        if (is_array($etel) && !empty($etel[0]['kep_url'])) {
+            $kepPath = "../kepek/" . $etel[0]['kep_url'];
+            $kepName = basename($kepPath);
+            
+            // Fő kép törlése
+            if (file_exists($kepPath)) {
+                unlink($kepPath);
+            }
+            
+            // Másolat törlése az osszeskep-ből
+            $osszeskepPath = "../kepek/osszeskep/" . $kepName;
+            if (file_exists($osszeskepPath)) {
+                unlink($osszeskepPath);
+            }
         }
-
+        
         $result = adatokTorlese($id);
         $message = "<div class='alert alert-success'>Étel sikeresen törölve!</div>";
     }
@@ -252,18 +310,18 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
                 <input type="number" name="edit_kaloria" placeholder="Kalória" class="form-control mb-2" required>
                 <textarea name="edit_osszetevok" placeholder="Összetevők" class="form-control mb-2" required></textarea>
                 <textarea name="edit_allergenek" placeholder="Allergének" class="form-control mb-2" required></textarea>
-                
-
+                <input type="text" name="edit_kep_nev" placeholder="Új kép neve (opcionális)" class="form-control mb-2">
+                <input type="file" name="edit_kepek_url" accept="image/*" class="form-control mb-2">
+   
                 <!-- Legördülő lista helye -->
-
-                <!-- <select name="edit_kategoria_id" class="form-select mb-2" required>
+                <select name="edit_kategoria_id" class="form-select mb-2" required>
                     <option value="">Válassz kategóriát</option>
                     <?php foreach ($kategoriak as $kategoria): ?>
                         <option value="<?= htmlspecialchars($kategoria['id']) ?>">
                             <?= htmlspecialchars($kategoria['kategoria_nev']) ?>
                         </option>
                     <?php endforeach; ?>
-                </select> -->
+                </select>
 
                 <!-- figyelmeztető a törléssel kapcsolatban -->
                 <div class="alert alert-warning" role="alert">
@@ -272,7 +330,7 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
                     <hr>
                     <p class="mb-0">Kérem, hogy kezdje előről a műveletet,
                             és törölje az elrontott kategória mappából a képet, valamint törölje az adatbázisba felvitt adatokat a "Törlés" adatbázis műveletekkel.</span>
-                    </div>
+                </div>
 
 
                 
