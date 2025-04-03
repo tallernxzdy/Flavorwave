@@ -66,7 +66,7 @@ session_start();
                     <a href="../php/pizza.php" class="btn">Rendelj most</a>
                 </div>
                 <div class="image">
-                    <img src="../kepek/pizzak/pizza3.jpg" alt="Burger Deal">
+                    <img src="../kepek/4/pizza3.jpg" alt="Burger Deal">
                 </div>
             </div>
             <div class="slide">
@@ -76,7 +76,7 @@ session_start();
                     <a href="../php/desszertek.php" class="btn">Kérem a desszertet!</a>
                 </div>
                 <div class="image">
-                    <img src="../kepek/desszertek/almaspite.jpeg" alt="Dessert Offer">
+                    <img src="../kepek/7/almaspite.jpeg" alt="Dessert Offer">
                 </div>
             </div>
             <div class="slide">
@@ -86,7 +86,7 @@ session_start();
                     <a href="../php/pizza.php" class="btn">Ragadd meg az alkalmat</a>
                 </div>
                 <div class="image">
-                    <img src="../kepek/pizzak/pizza2.jpg" alt="Pizza Deal">
+                    <img src="../kepek/4/pizza2.jpg" alt="Pizza Deal">
                 </div>
             </div>
         </div>
@@ -112,14 +112,14 @@ session_start();
         </div>
         <div class="sliders-container">
             <div class="image-slider" id="image-slider-1">
-                <img src="../kepek/pizzak/gombaspizza.jpg" alt="Ajánlat 1">
-                <img src="../kepek/pizzak/hawaiipizza.jpg" alt="Ajánlat 2">
-                <img src="../kepek/pizzak/pizza2.jpg" alt="Ajánlat 3">
+                <img src="../kepek/4/gombaspizza.jpg" alt="Ajánlat 1">
+                <img src="../kepek/4/hawaiipizza.jpg" alt="Ajánlat 2">
+                <img src="../kepek/4/pizza2.jpg" alt="Ajánlat 3">
             </div>
             <div class="image-slider" id="image-slider-2">
-                <img src="../kepek/pizzak/margherita.jpg" alt="Ajánlat 4">
-                <img src="../kepek/pizzak/pizza4.jpg" alt="Ajánlat 5">
-                <img src="../kepek/pizzak/sonkaspizza.jpg" alt="Ajánlat 6">
+                <img src="../kepek/4/margherita.jpg" alt="Ajánlat 4">
+                <img src="../kepek/4/pizza4.jpg" alt="Ajánlat 5">
+                <img src="../kepek/4/sonkaspizza.jpg" alt="Ajánlat 6">
             </div>
         </div>
         <p>Ne maradj le! Az ajánlat visszaszámlálás alatt érhető el.</p>
@@ -158,7 +158,7 @@ session_start();
             <div class="food-gallery-grid">
                 <div class="food-card" data-aos="fade-up" data-aos-delay="100">
                     <div class="food-image">
-                        <img src="../kepek/pizzak/margherita.jpg" alt="Margherita Pizza">
+                        <img src="../kepek/4/margherita.jpg" alt="Margherita Pizza">
                     </div>
                     <div class="food-content">
                         <h3>Margherita Pizza</h3>
@@ -175,7 +175,7 @@ session_start();
                 </div>
                 <div class="food-card" data-aos="fade-up" data-aos-delay="200">
                     <div class="food-image">
-                        <img src="../kepek/pizzak/sonkaspizza.jpg" alt="Sonkás Pizza">
+                        <img src="../kepek/4/sonkaspizza.jpg" alt="Sonkás Pizza">
                     </div>
                     <div class="food-content">
                         <h3>Sonkás Pizza</h3>
@@ -192,7 +192,7 @@ session_start();
                 </div>
                 <div class="food-card" data-aos="fade-up" data-aos-delay="300">
                     <div class="food-image">
-                        <img src="../kepek/desszertek/almaspite.jpeg" alt="Almás Pite">
+                        <img src="../kepek/7/almaspite.jpeg" alt="Almás Pite">
                     </div>
                     <div class="food-content">
                         <h3>Almás Pite</h3>
@@ -265,7 +265,7 @@ session_start();
                     <a href="shakek.php" class="shaker-btn">Vásárlás</a>
                 </div>
                 <div class="shaker-image">
-                    <img src="../kepek/shakek/epresshake.jpg" alt="Epres shake">
+                    <img src="../kepek/8/epresshake.jpg" alt="Epres shake">
                 </div>
             </div>
             <div class="shaker-slide chocolate-slide">
@@ -275,7 +275,7 @@ session_start();
                     <a href="shakek.php" class="shaker-btn">Vásárlás</a>
                 </div>
                 <div class="shaker-image">
-                    <img src="../kepek/shakek/csokisshake.jpg" alt="Csokis Shake">
+                    <img src="../kepek/8/csokisshake.jpg" alt="Csokis Shake">
                 </div>
             </div>
             <div class="shaker-slide caramel-slide">
@@ -285,7 +285,7 @@ session_start();
                     <a href="shakek.php" class="shaker-btn">Vásárlás</a>
                 </div>
                 <div class="shaker-image">
-                    <img src="../kepek/shakek/karamellasshake.jpg" alt="Karamellás shake">
+                    <img src="../kepek/8/karamellasshake.jpg" alt="Karamellás shake">
                 </div>
             </div>
         </div>
