@@ -36,7 +36,7 @@ session_start();
                 <div class="flex-col" data-aos="fade-up" data-aos-delay="100">
                     <a href="hamburger.php" class="menu__option">
                         <div class="image-wrapper">
-                            <img src="../kepek/hamburgerek/standardburger.jpg" alt="Hamburgerek">
+                            <img src="../kepek/3/standardburger.jpg" alt="Hamburgerek">
                         </div>
                         <div class="popular-label">Népszerű</div>
                         <h2>Hamburgerek</h2>
@@ -48,7 +48,7 @@ session_start();
                     <a href="pizza.php" class="menu__option">
                         
                         <div class="image-wrapper">
-                            <img src="../kepek/pizzak/pizza.jpg" alt="Pizzák">
+                            <img src="../kepek/4/pizza.jpg" alt="Pizzák">
                         </div>
                         <div class="popular-label">Népszerű</div>
                         <h2>Pizzák</h2>
@@ -59,7 +59,7 @@ session_start();
                 <div class="flex-col" data-aos="fade-up" data-aos-delay="300">
                     <a href="hotdog.php" class="menu__option">
                         <div class="image-wrapper">
-                            <img src="../kepek/hot-dogok/simahotdog.jpg" alt="Hot-dogok">
+                            <img src="../kepek/5/simahotdog.jpg" alt="Hot-dogok">
                         </div>
                         <h2>Hot-dogok</h2>
                         <div class="title-underline"></div>
@@ -69,7 +69,7 @@ session_start();
                 <div class="flex-col" data-aos="fade-up" data-aos-delay="400">
                     <a href="koretek.php" class="menu__option">
                         <div class="image-wrapper">
-                            <img src="../kepek/Köretek/hasabburgonya.jpg" alt="Köretek">
+                            <img src="../kepek/6/hasabburgonya.jpg" alt="Köretek">
                         </div>
                         <h2>Köretek</h2>
                         <div class="title-underline"></div>
@@ -79,7 +79,7 @@ session_start();
                 <div class="flex-col" data-aos="fade-up" data-aos-delay="500">
                     <a href="desszertek.php" class="menu__option">
                         <div class="image-wrapper">
-                            <img src="../kepek/desszertek/almaspite.jpeg" alt="Desszertek">
+                            <img src="../kepek/7/almaspite.jpeg" alt="Desszertek">
                         </div>
                         <h2>Desszertek</h2>
                         <div class="title-underline"></div>
@@ -89,7 +89,7 @@ session_start();
                 <div class="flex-col" data-aos="fade-up" data-aos-delay="600">
                     <a href="shakek.php" class="menu__option">
                         <div class="image-wrapper">
-                            <img src="../kepek/shakek/vaniliasshake.jpg" alt="Shakek">
+                            <img src="../kepek/8/vaniliasshake.jpg" alt="Shakek">
                         </div>
                         <h2>Shakek</h2>
                         <div class="title-underline"></div>
@@ -99,7 +99,7 @@ session_start();
                 <div class="flex-col" data-aos="fade-up" data-aos-delay="700">
                     <a href="italok.php" class="menu__option">
                         <div class="image-wrapper">
-                            <img src="../kepek/italok/fanta.jpg" alt="Italok">
+                            <img src="../kepek/9/fanta.jpg" alt="Italok">
                         </div>
                         <h2>Italok</h2>
                         <div class="title-underline"></div>

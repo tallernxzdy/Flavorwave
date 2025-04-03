@@ -45,11 +45,10 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST' && isset($_POST['etel_id'])) {
 
 // Kosár adatainak lekérése
 if ($userId) {
-    $query = "SELECT etel.id, etel.nev, etel.kep_url, etel.egyseg_ar, tetelek.darab, kategoria.kategoria_nev 
-              FROM tetelek 
-              JOIN etel ON tetelek.etel_id = etel.id 
-              JOIN kategoria ON etel.kategoria_id = kategoria.id 
-              WHERE tetelek.felhasznalo_id = ?";
+    $query = "SELECT etel.id, etel.nev, etel.kep_url, etel.egyseg_ar, tetelek.darab, etel.kategoria_id 
+          FROM tetelek 
+          JOIN etel ON tetelek.etel_id = etel.id 
+          WHERE tetelek.felhasznalo_id = ?";
     $stmt = $conn->prepare($query);
     $stmt->bind_param("i", $userId);
     $stmt->execute();
@@ -61,10 +60,9 @@ if ($userId) {
 } else {
     if (isset($_SESSION['kosar'])) {
         foreach ($_SESSION['kosar'] as $itemId => $quantity) {
-            $query = "SELECT etel.id, etel.nev, etel.egyseg_ar, etel.kep_url, kategoria.kategoria_nev 
-                      FROM etel 
-                      JOIN kategoria ON etel.kategoria_id = kategoria.id 
-                      WHERE etel.id = ?";
+            $query = "SELECT etel.id, etel.nev, etel.egyseg_ar, etel.kep_url, etel.kategoria_id 
+          FROM etel 
+          WHERE etel.id = ?";
             $stmt = $conn->prepare($query);
             $stmt->bind_param("i", $itemId);
             $stmt->execute();
@@ -112,7 +110,7 @@ if ($userId) {
                 <?php foreach ($cartItems as $item): ?>
                     <div class="cart-item" data-item-id="<?= $item['id'] ?>">
                         <div class="item-details">
-                            <img src="../kepek/<?= htmlspecialchars($item['kategoria_nev']) ?>/<?= htmlspecialchars($item['kep_url']) ?>" alt="<?= htmlspecialchars($item['nev']) ?>">
+                            <img src="../kepek/<?= htmlspecialchars($item['kategoria_id']) ?>/<?= htmlspecialchars($item['kep_url']) ?>" alt="<?= htmlspecialchars($item['nev']) ?>">
                             <div class="item-info">
                                 <span class="item-name"><?= htmlspecialchars($item['nev']) ?></span>
                                 <span class="item-price" data-price="<?= $item['egyseg_ar'] ?>">Ár: <?= $item['egyseg_ar'] ?> Ft</span>
@@ -239,19 +237,19 @@ if ($userId) {
 
         function updateCartCount() {
             fetch('get_cart_count.php', {
-                method: 'GET',
-                headers: {
-                    'Content-Type': 'application/json',
-                }
-            })
-            .then(response => response.json())
-            .then(data => {
-                const cartCountElement = document.querySelector('.cart-count');
-                if (cartCountElement) {
-                    cartCountElement.textContent = data.count || 0;
-                }
-            })
-            .catch(error => console.error('Hiba a kosár számláló frissítésekor:', error));
+                    method: 'GET',
+                    headers: {
+                        'Content-Type': 'application/json',
+                    }
+                })
+                .then(response => response.json())
+                .then(data => {
+                    const cartCountElement = document.querySelector('.cart-count');
+                    if (cartCountElement) {
+                        cartCountElement.textContent = data.count || 0;
+                    }
+                })
+                .catch(error => console.error('Hiba a kosár számláló frissítésekor:', error));
         }
 
         function checkIfCartEmpty() {
