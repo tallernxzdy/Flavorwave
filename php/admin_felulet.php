@@ -344,38 +344,70 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
                         </option>
                     <?php endforeach; ?>
                 </select>
-                    <!-- Képkezelés rész -->
-    <div class="mb-3" id="kepSzerkesztesDiv">
-        <div class="form-check mb-2">
-            <input class="form-check-input" type="checkbox" name="rename_kep" id="renameKep">
-            <label class="form-check-label" for="renameKep">Kép módosítása</label>
-        </div>
-        
-        <div id="kepModositasDiv" style="display:none;">
-            <div class="form-check mb-2">
-                <input class="form-check-input" type="radio" name="kep_muvelet" id="atnevezes" value="atnevezes" checked>
-                <label class="form-check-label" for="atnevezes">Meglévő kép átnevezése</label>
+            <input type="text" name="edit_nev" placeholder="Név" class="form-control mb-2" required>
+            <input type="number" name="edit_egyseg_ar" placeholder="Egységár" class="form-control mb-2" required>
+            <textarea name="edit_leiras" placeholder="Leírás" class="form-control mb-2" required></textarea>
+            <input type="number" name="edit_kaloria" placeholder="Kalória" class="form-control mb-2" required>
+            <textarea name="edit_osszetevok" placeholder="Összetevők" class="form-control mb-2" required></textarea>
+            <textarea name="edit_allergenek" placeholder="Allergének" class="form-control mb-2" required></textarea>
+            <!-- Legördülő lista helye -->
+            <div class="mb-3" id="kepSzerkesztesDiv">
+                <div class="form-check mb-2">
+                    <input class="form-check-input" type="checkbox" name="rename_kep" id="renameKep">
+                    <label class="form-check-label" for="renameKep">Kép módosítása</label>
+                </div>
+                
+                <div id="kepModositasDiv" style="display:none;">
+                    <div class="form-check mb-2">
+                        <input class="form-check-input" type="radio" name="kep_muvelet" id="atnevezes" value="atnevezes" checked>
+                        <label class="form-check-label" for="atnevezes">Meglévő kép átnevezése</label>
+                    </div>
+                    
+                    <div id="ujKepNevDiv">
+                        <input type="text" name="uj_kep_nev" placeholder="Új képnév (kiterjesztés nélkül)" class="form-control mb-2">
+                    </div>
+                    
+                    <div class="form-check mb-2">
+                        <input class="form-check-input" type="radio" name="kep_muvelet" id="ujKep" value="ujKep">
+                        <label class="form-check-label" for="ujKep">Új kép feltöltése</label>
+                    </div>
+                    
+                    <div id="ujKepFeltoltesDiv" style="display:none;">
+                        <input type="file" name="edit_kepek_url" accept="image/*" class="form-control mb-2">
+                        <small class="text-muted">A régi kép törlődni fog!</small>
+                    </div>
+                </div>
+                
+                <div id="currentKepInfo" class="mt-2"></div>
             </div>
-            
-            <div id="ujKepNevDiv">
-                <input type="text" name="uj_kep_nev" placeholder="Új képnév (kiterjesztés nélkül)" class="form-control mb-2">
-            </div>
-            
-            <div class="form-check mb-2">
-                <input class="form-check-input" type="radio" name="kep_muvelet" id="ujKep" value="ujKep">
-                <label class="form-check-label" for="ujKep">Új kép feltöltése</label>
-            </div>
-            
-            <div id="ujKepFeltoltesDiv" style="display:none;">
-                <input type="file" name="edit_kepek_url" accept="image/*" class="form-control mb-2">
-                <small class="text-muted">A régi kép törlődni fog!</small>
-            </div>
-        </div>
-        
-        <div id="currentKepInfo" class="mt-2"></div>
-    </div>
+            <select name="edit_kategoria_id" class="form-select mb-2" required>
+                <option value="">Válassz kategóriát</option>
+                <?php foreach ($kategoriak as $kategoria): ?>
+                    <option value="<?= htmlspecialchars($kategoria['id']) ?>">
+                        <?= htmlspecialchars($kategoria['kategoria_nev']) ?>
+                    </option>
+                    <?php endforeach; ?>
+                </select>
+                <!-- Képkezelés rész -->
+                <button type="submit" data-operation="edit" class="btn btn-primary">Szerkesztés</button>
 
     <!-- Egyéb mezők... -->
+</div>
+
+<!-- Törlés űrlap -->
+<div id="delete-form" class="form-section" style="display:none;">
+    <h3>Törlés</h3>
+    <select name="delete_etel" class="form-select mb-2" required>
+        <option value="">Válassz ételt</option>
+        <?php foreach ($etelek as $etel): ?>
+            <option value="<?= htmlspecialchars($etel['id']) ?>">
+                <?= htmlspecialchars($etel['nev']) ?>
+            </option>
+        <?php endforeach; ?>
+    </select>
+    <button type="submit" data-operation="delete" class="btn btn-danger">Törlés</button>
+</div>
+</form>
 </div>
 
     <script>
@@ -412,24 +444,8 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
     
 
 
-                <input type="text" name="edit_nev" placeholder="Név" class="form-control mb-2" required>
-                <input type="number" name="edit_egyseg_ar" placeholder="Egységár" class="form-control mb-2" required>
-                <textarea name="edit_leiras" placeholder="Leírás" class="form-control mb-2" required></textarea>
-                <input type="number" name="edit_kaloria" placeholder="Kalória" class="form-control mb-2" required>
-                <textarea name="edit_osszetevok" placeholder="Összetevők" class="form-control mb-2" required></textarea>
-                <textarea name="edit_allergenek" placeholder="Allergének" class="form-control mb-2" required></textarea>
-                <input type="text" name="edit_kep_nev" placeholder="Új kép neve (opcionális)" class="form-control mb-2">
-                <input type="file" name="edit_kepek_url" accept="image/*" class="form-control mb-2">
-   
-                <!-- Legördülő lista helye -->
-                <select name="edit_kategoria_id" class="form-select mb-2" required>
-                    <option value="">Válassz kategóriát</option>
-                    <?php foreach ($kategoriak as $kategoria): ?>
-                        <option value="<?= htmlspecialchars($kategoria['id']) ?>">
-                            <?= htmlspecialchars($kategoria['kategoria_nev']) ?>
-                        </option>
-                    <?php endforeach; ?>
-                </select>
+                
+                
 
                 <!-- figyelmeztető a törléssel kapcsolatban -->
                 <div class="alert alert-warning" role="alert">
@@ -444,24 +460,8 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
 
                 
 
-                <button type="submit" data-operation="edit" class="btn btn-primary">Szerkesztés</button>
-            </div>
+                </div>
 
-            <!-- Törlés űrlap -->
-            <div id="delete-form" class="form-section" style="display:none;">
-                <h3>Törlés</h3>
-                <select name="delete_etel" class="form-select mb-2" required>
-                    <option value="">Válassz ételt</option>
-                    <?php foreach ($etelek as $etel): ?>
-                        <option value="<?= htmlspecialchars($etel['id']) ?>">
-                            <?= htmlspecialchars($etel['nev']) ?>
-                        </option>
-                    <?php endforeach; ?>
-                </select>
-                <button type="submit" data-operation="delete" class="btn btn-danger">Törlés</button>
-            </div>
-        </form>
-    </div>
 
     <!-- Felhasználó szerkesztése -->
     <div class="container mt-5">
