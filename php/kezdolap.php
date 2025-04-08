@@ -99,8 +99,7 @@ session_start();
         <div class="dot"></div>
         <div class="dot"></div>
     </div>
-    <br>
-    <br>
+    
 
     <section id="weekly-deals">
         <h2>Heti Ajánlat Vége:</h2>
@@ -126,8 +125,7 @@ session_start();
         <a href="kategoria.php" class="cta-button primary-bttn">Fedezd fel az ajánlatokat!</a>
     </section>
 
-    <br>
-    <br>
+    
 
     <div class="steps-container">
         <div class="step" data-aos="fade-up"><i class="fas fa-utensils"></i>

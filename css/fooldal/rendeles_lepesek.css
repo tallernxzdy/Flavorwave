@@ -1,14 +1,15 @@
-/* Steps Section */
+/* Steps Section - Frissített változat ugrálás nélkül */
 .steps-container {
     display: flex;
     flex-direction: column;
     align-items: center;
-    gap: clamp(1rem, 2vw, 1.5rem); /* Dinamikus gap */
-    padding: clamp(1rem, 3vw, 2rem) clamp(1rem, 2vw, 3rem); /* Dinamikus padding */
+    gap: clamp(1rem, 2vw, 1.5rem);
+    padding: clamp(1rem, 3vw, 2rem) clamp(1rem, 2vw, 3rem);
     position: relative;
     overflow: hidden;
     width: 100%;
     margin: 0;
+    padding-top: 80px;
 }
 
 .steps-container::before {
@@ -26,24 +27,31 @@
 .step {
     background: var(--dark-black);
     color: var(--primary-beige);
-    padding: clamp(1rem, 2vw, 1.5rem); /* Dinamikus padding */
+    padding: clamp(1rem, 2vw, 1.5rem);
     border-radius: 20px;
     text-align: center;
     width: 100%;
-    max-width: clamp(600px, 90vw, 1100px); /* Dinamikus max-width */
+    max-width: clamp(600px, 90vw, 1100px);
     transition: all 0.5s ease;
     box-shadow: 0 6px 15px var(--shadow-color);
     position: relative;
     z-index: 1;
     border: 2px solid var(--accent-gold);
     opacity: 0;
-    transform: translateY(50px);
+    transform: translateY(20px);
+    /* Fix magasság az animációhoz */
+    min-height: calc(clamp(1rem, 2vw, 1.5rem)*2 + clamp(1.5rem, 4vw, 2rem) + clamp(0.8rem, 1.5vw, 1rem));
+}
+
+.step.show {
+    opacity: 1;
+    transform: translateY(0);
     animation: float 4s infinite ease-in-out;
 }
 
-.step:nth-child(2) { animation-delay: 0.5s; }
-.step:nth-child(3) { animation-delay: 1s; }
-.step:nth-child(4) { animation-delay: 1.5s; }
+.step:nth-child(2).show { animation-delay: 0.3s; }
+.step:nth-child(3).show { animation-delay: 0.6s; }
+.step:nth-child(4).show { animation-delay: 0.9s; }
 
 .step::before {
     content: '';
@@ -71,9 +79,9 @@
 }
 
 .step i {
-    font-size: clamp(1.5rem, 4vw, 2rem); /* Dinamikus ikonméret */
+    font-size: clamp(1.5rem, 4vw, 2rem);
     color: var(--accent-gold);
-    margin-bottom: clamp(0.5rem, 1vw, 0.8rem); /* Dinamikus margó */
+    margin-bottom: clamp(0.5rem, 1vw, 0.8rem);
     transition: transform 0.4s ease, color 0.4s ease;
 }
 
@@ -83,7 +91,7 @@
 }
 
 .step p {
-    font-size: clamp(0.8rem, 1.5vw, 1rem); /* Dinamikus szövegméret */
+    font-size: clamp(0.8rem, 1.5vw, 1rem);
     font-weight: 700;
     color: var(--primary-beige);
     text-shadow: 1px 1px 2px var(--shadow-color);
@@ -94,16 +102,33 @@
     color: var(--accent-gold);
 }
 
+/* Módosított float animáció (ugrálás nélkül) */
+@keyframes float {
+    0%, 100% { 
+        transform: translateY(0) translateX(0); 
+    }
+    50% { 
+        transform: translateY(-8px) translateX(2px); 
+    }
+}
+
+@keyframes gradientShift {
+    0% { background-position: 0% 0%; }
+    50% { background-position: 100% 100%; }
+    100% { background-position: 0% 0%; }
+}
+
 /* Reszponzív töréspontok */
 @media (max-width: 768px) {
     .steps-container {
-        padding: clamp(0.8rem, 2vw, 1.5rem) clamp(0.5rem, 1vw, 1rem); /* Kisebb padding */
+        padding: clamp(0.8rem, 2vw, 1.5rem) clamp(0.5rem, 1vw, 1rem);
         gap: clamp(0.8rem, 1.5vw, 1rem);
     }
 
     .step {
         padding: clamp(0.8rem, 1.5vw, 1rem);
-        max-width: clamp(400px, 90vw, 600px); /* Kisebb max-width */
+        max-width: clamp(400px, 90vw, 600px);
+        min-height: calc(clamp(0.8rem, 1.5vw, 1rem)*2 + clamp(1.2rem, 3.5vw, 1.8rem) + clamp(0.7rem, 1.3vw, 0.9rem));
     }
 
     .step i {
@@ -118,18 +143,19 @@
 
 @media (max-width: 480px) {
     .steps-container {
-        padding: clamp(0.5rem, 1.5vw, 1rem) clamp(0.3rem, 0.8vw, 0.5rem); /* Minimális padding */
+        padding: clamp(0.5rem, 1.5vw, 1rem) clamp(0.3rem, 0.8vw, 0.5rem);
         gap: clamp(0.5rem, 1vw, 0.8rem);
     }
 
     .step {
         padding: clamp(0.6rem, 1vw, 0.8rem);
-        max-width: clamp(300px, 95vw, 400px); /* Még kisebb max-width */
-        border-radius: 15px; /* Kisebb képernyőn kisebb lekerekítés */
+        max-width: clamp(300px, 95vw, 400px);
+        border-radius: 15px;
+        min-height: calc(clamp(0.6rem, 1vw, 0.8rem)*2 + clamp(1rem, 3vw, 1.5rem) + clamp(0.65rem, 1.2vw, 0.85rem));
     }
 
     .step::before {
-        border-radius: 13px; /* Kisebb belső lekerekítés */
+        border-radius: 13px;
     }
 
     .step i {
@@ -140,18 +166,4 @@
     .step p {
         font-size: clamp(0.65rem, 1.2vw, 0.85rem);
     }
-}
-
-/* Floating animation */
-@keyframes float {
-    0% { transform: translateY(0); }
-    50% { transform: translateY(-8px); }
-    100% { transform: translateY(0); }
-}
-
-/* Background gradient animation */
-@keyframes gradientShift {
-    0% { background-position: 0% 0%; }
-    50% { background-position: 100% 100%; }
-    100% { background-position: 0% 0%; }
 }

@@ -1,13 +1,36 @@
-const slides = document.querySelector('.slides');
+const slidesContainer = document.querySelector('.slides');
 const slide = document.querySelectorAll('.slide');
 const prevButton = document.querySelector('.prev');
 const nextButton = document.querySelector('.next');
 const dots = document.querySelectorAll('.dot');
 let currentIndex = 0;
 let autoSlideInterval;
+let maxHeight = 0;
+
+// Calculate maximum height of all slides
+const calculateMaxHeight = () => {
+    maxHeight = 0;
+    slide.forEach(s => {
+        s.style.opacity = '1'; // Temporarily make visible to measure
+        s.style.position = 'relative';
+        if (s.offsetHeight > maxHeight) {
+            maxHeight = s.offsetHeight;
+        }
+        s.style.opacity = '';
+        s.style.position = '';
+    });
+    
+    // Apply max height to all slides and container
+    document.querySelectorAll('.slide').forEach(s => {
+        s.style.height = `${maxHeight}px`;
+    });
+    document.querySelector('.slides').style.minHeight = `${maxHeight}px`;
+};
 
 const updateSlider = () => {
-    slides.style.transform = `translateX(-${currentIndex * 100}%)`;
+    slide.forEach((s, index) => {
+        s.classList.toggle('active', index === currentIndex);
+    });
     dots.forEach((dot, index) => {
         dot.classList.toggle('active', index === currentIndex);
     });
@@ -31,6 +54,18 @@ const stopAutoSlide = () => {
     clearInterval(autoSlideInterval);
 };
 
+// Initialize slider
+window.addEventListener('load', () => {
+    calculateMaxHeight();
+    updateSlider();
+    startAutoSlide();
+});
+
+window.addEventListener('resize', () => {
+    calculateMaxHeight();
+});
+
+// Event listeners
 prevButton.addEventListener('click', () => {
     prevSlide();
     stopAutoSlide();
@@ -52,10 +87,7 @@ dots.forEach((dot, index) => {
     });
 });
 
-// Start automatic sliding on page load
-startAutoSlide();
-
-// Optional: Pause auto-slide on hover
+// Pause on hover
 const slider = document.querySelector('.coupon-slider');
 slider.addEventListener('mouseenter', stopAutoSlide);
 slider.addEventListener('mouseleave', startAutoSlide);
