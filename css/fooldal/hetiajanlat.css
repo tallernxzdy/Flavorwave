@@ -1,4 +1,4 @@
-/* Weekly Deals */
+/* Weekly Deals - Javított hover effekttel */
 #weekly-deals {
     padding: clamp(2rem, 5vw, 4rem) clamp(0.5rem, 1.5vw, 1rem);
     background: var(--dark-black);
@@ -47,10 +47,12 @@
     gap: clamp(0.5rem, 1vw, 1rem);
     justify-content: center;
     max-width: 1200px;
+    padding: 15px;
     margin: 0 auto;
     overflow: hidden;
     position: relative;
     z-index: 1;
+    
 }
 
 .image-slider {
@@ -61,11 +63,13 @@
     overflow: hidden;
     box-shadow: 0 8px 25px var(--shadow-color);
     border: 3px solid var(--accent-gold);
-    transition: transform 0.3s ease;
+    transition: transform 0.3s ease, box-shadow 0.3s ease;
+    transform-style: preserve-3d;
 }
 
 .image-slider:hover {
-    transform: scale(1.03);
+    transform: scale(1.03) translateY(-5px);
+    border: 3px solid var(--accent-gold);
 }
 
 .image-slider img {
@@ -79,10 +83,16 @@
     left: 0;
     opacity: 0;
     transition: opacity 0.5s ease;
+    border: 1px solid transparent;
+}
+
+.image-slider:hover img {
+    border: 1px solid var(--accent-gold);
 }
 
 .image-slider img.active {
     opacity: 1;
+    border: 1px solid transparent;
 }
 
 #weekly-deals p {
@@ -111,11 +121,6 @@
     white-space: normal;
     text-align: center;
     width: fit-content;
-}
-
-/* Hozzáadjuk a ::before elemet, majd rögtön eltávolítjuk */
-.cta-button.primary-bttn::before {
-    content: none; /* Eltávolítjuk a kör alakú effektet */
 }
 
 .cta-button.primary-bttn:hover {
@@ -178,11 +183,4 @@
         padding: clamp(0.5rem, 1vw, 0.8rem) clamp(0.8rem, 1.5vw, 1.2rem);
         font-size: clamp(0.8rem, 1.4vw, 1.1rem);
     }
-}
-
-/* Ensure animations are defined */
-@keyframes pulse {
-    0% { transform: scale(1); }
-    50% { transform: scale(1.05); }
-    100% { transform: scale(1); }
 }

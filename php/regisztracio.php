@@ -121,7 +121,6 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
                         <p>Az alábbi adatokkal jelentkezhetsz be:</p>
                         <p><strong>Felhasználónév:</strong> $felhasznalonev</p>
                         <p><strong>Email cím:</strong> $email</p>
-                        <p>Most már <a href='http://localhost/flavorwave/bejelentkezes.php'>bejelentkezhetsz</a> és elkezdheted a rendelést!</p>
                         <p>Üdvözlettel,<br>FlavorWave Csapat</p>
                     ";
                     
@@ -130,8 +129,7 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
                     $mail->send();
                     $success_message .= "<br>Elküldtünk egy megerősítő emailt a megadott címre!";
                 } catch (Exception $e) {
-                    // Nem adjuk hozzá a hibát a $errors tömbhöz, mert a regisztráció sikeres volt
-                    // Csak logolhatnánk ezt a hibát
+                    echo $e;
                 }
             } else {
                 $errors[] = "Hiba történt a regisztráció során. Kérjük, próbáld újra később.";

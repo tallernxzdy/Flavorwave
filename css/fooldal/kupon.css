@@ -6,12 +6,13 @@
     position: relative;
     padding: 2rem;
     overflow: visible;
+    padding-bottom: 20px;
 }
 
 .slides {
     position: relative;
     height: auto;
-    min-height: 400px;
+    max-height: 400px;
 }
 
 .slide {
@@ -24,6 +25,7 @@
     gap: clamp(1rem, 2vw, 3rem);
     width: 100%;
     min-height: 400px;
+    height: 400;
     position: absolute;
     top: 0;
     left: 0;
@@ -147,7 +149,7 @@
     margin-top: clamp(3rem, 5vw, 4rem);
     position: relative;
     z-index: 2;
-    padding-bottom: 1rem;
+    padding-bottom: 70px;
 }
 
 .dot {
