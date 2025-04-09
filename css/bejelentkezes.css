@@ -227,6 +227,8 @@ p a:hover::after {
     transform: translateY(-50%);
     cursor: pointer;
     transition: var(--transition);
+    user-select: none;
+    z-index: 10;
 }
 
 .input_img svg {
