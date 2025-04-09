@@ -168,6 +168,8 @@ button:hover::before {
     width: 100%;
 }
 
+
+
 /* Linkek */
 .form-footer {
     margin-top: 1.5em;
@@ -222,6 +224,37 @@ button:hover::before {
     color: #155724;
     background-color: rgba(212, 237, 218, 0.8);
     border-color: rgba(195, 230, 203, 0.2);
+}
+
+.input-container {
+    position: relative;
+    width: 100%;
+}
+
+#password {
+    width: 100%;
+    padding-right: 40px; /* Already correct - keeps space for the icon */
+}
+
+.input_img {
+    position: absolute;
+    right: 10px; /* Distance from right edge */
+    top: 50%; /* Center vertically */
+    transform: translateY(-50%); /* Center vertically */
+    cursor: pointer;
+    width: 20px; /* Set a specific width */
+    height: 20px; /* Set a specific height */
+}
+
+.input_img svg {
+    fill: var(--dark-black);
+    transition: var(--transition);
+    width: 100%; /* Make SVG fill the container */
+    height: 100%; /* Make SVG fill the container */
+}
+
+.input_img:hover svg {
+    fill: var(--accent-gold);
 }
 
 /* Reszponzivitás */
