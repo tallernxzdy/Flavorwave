@@ -57,7 +57,7 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
                 $kepNev = preg_replace('/[^a-z0-9\-_]/i', '', $nev);
                 $kep_url = handleImageUpload($kategoria_id, $_FILES['kepek_url'], $kepNev);
                 if ($kep_url === false) {
-                    $message = "<div class='alert alert-warning'>Már létezik ilyen nevű kép! Válassz másik ételnevet.</div>";
+                    $message = "<div class='alert alert-warning'>Már létezik ilyen nevű kép ebben a kategóriában! Válassz másik ételnevet.</div>";
                 } elseif (!$kep_url) {
                     $message = "<div class='alert alert-warning'>Hiba a kép feltöltése során!</div>";
                 }
@@ -69,7 +69,7 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
             $parameterek = ['sisissss', $nev, $egyseg_ar, $leiras, $kategoria_id, $kep_url, $kaloria, $osszetevok, $allergenek];
             $result = adatokValtoztatasa($muvelet, $parameterek);
             $message = $result === 'Sikeres művelet!' 
-                ? "<div class='alert alert-success'>Étel sikeresen hozzáadva!</div>"
+                ? "<div class='alert alert-success'>Étel sikeresen hozzáadva! Oldal újratöltése...</div><script>setTimeout(() => { location.reload(); }, 3000);</script>"
                 : "<div class='alert alert-warning'>Hiba: $result</div>";
         }
     }
@@ -84,55 +84,79 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
         $kaloria = (int)$_POST['edit_kaloria'];
         $osszetevok = $_POST['edit_osszetevok'];
         $allergenek = $_POST['edit_allergenek'];
-
-        $etel = adatokLekerdezese("SELECT nev, kep_url FROM etel WHERE id = ?", ['i', $id]);
-        $oldNev = $etel[0]['nev'] ?? '';
-        $oldKepUrl = $etel[0]['kep_url'] ?? '';
-        $kep_url = $oldKepUrl;
-
-        if (!empty($_FILES['edit_kepek_url']['name'])) {
-            $allowedTypes = ['image/jpeg', 'image/png', 'image/gif'];
-            if (!in_array($_FILES['edit_kepek_url']['type'], $allowedTypes)) {
-                $message = "<div class='alert alert-warning'>Csak JPG, PNG vagy GIF formátumú képek tölthetők fel!</div>";
-            } else {
-                if (!empty($oldKepUrl)) {
-                    deleteImageFiles($oldKepUrl);
-                }
-                $kepNev = preg_replace('/[^a-z0-9\-_]/i', '', $nev);
-                $kep_url = handleImageUpload($kategoria_id, $_FILES['edit_kepek_url'], $kepNev);
-                if (!$kep_url) {
-                    $message = "<div class='alert alert-danger'>Hiba az új kép feltöltésekor!</div>";
+    
+        $etel = adatokLekerdezese("SELECT nev, kep_url, kategoria_id FROM etel WHERE id = ?", ['i', $id]);
+        if (empty($etel)) {
+            $message = "<div class='alert alert-danger'>Étel nem található!</div>";
+        } else {
+            $oldNev = $etel[0]['nev'] ?? '';
+            $oldKepUrl = $etel[0]['kep_url'] ?? '';
+            $oldKategoriaId = $etel[0]['kategoria_id'] ?? null;
+            $kep_url = $oldKepUrl;
+            $kepFeltoltesSikeres = false; // Új változó a képfeltöltés sikerességének jelzésére
+    
+            // Új kép feltöltése
+            if (!empty($_FILES['edit_kepek_url']['name'])) {
+                $allowedTypes = ['image/jpeg', 'image/png', 'image/gif'];
+                if (!in_array($_FILES['edit_kepek_url']['type'], $allowedTypes)) {
+                    $message = "<div class='alert alert-warning'>Csak JPG, PNG vagy GIF formátumú képek tölthetők fel!</div>";
+                } else {
+                    if ($oldKepUrl) {
+                        deleteImageFiles($oldKepUrl, $oldKategoriaId);
+                    }
+                    $kepNev = preg_replace('/[^a-z0-9\-_]/i', '', $nev);
+                    $kep_url = handleImageUpload($kategoria_id, $_FILES['edit_kepek_url'], $kepNev);
+                    if (!$kep_url) {
+                        $message = "<div class='alert alert-danger'>Hiba az új kép feltöltésekor!</div>";
+                    } else {
+                        $kepFeltoltesSikeres = true; // Sikeres képfeltöltés
+                    }
                 }
             }
-        } elseif ($oldKepUrl && $nev !== $oldNev) {
-            $newKepUrl = renameImageFile($oldKepUrl, $nev);
-            if ($newKepUrl) {
-                $kep_url = $newKepUrl;
-            } else {
-                $message = "<div class='alert alert-danger'>Hiba a kép átnevezésekor!</div>";
+            // Név változtatása esetén a kép átnevezése
+            elseif ($oldKepUrl && $nev !== $oldNev) {
+                $newKepUrl = renameImageFile("$oldKategoriaId/$oldKepUrl", $nev);
+                if ($newKepUrl) {
+                    $kep_url = $newKepUrl;
+                } else {
+                    $message = "<div class='alert alert-danger'>Hiba a kép átnevezésekor!</div>";
+                }
             }
-        }
-
-        if (empty($message)) {
-            $muvelet = "UPDATE etel SET nev = ?, egyseg_ar = ?, leiras = ?, kategoria_id = ?, kep_url = ?, kaloria = ?, osszetevok = ?, allergenek = ? WHERE id = ?";
-            $parameterek = ['sisissssi', $nev, $egyseg_ar, $leiras, $kategoria_id, $kep_url, $kaloria, $osszetevok, $allergenek, $id];
-            $result = adatokValtoztatasa($muvelet, $parameterek);
-            $message = $result === 'Sikeres művelet!' 
-                ? "<div class='alert alert-success'>Sikeres szerkesztés!</div>"
-                : "<div class='alert alert-danger'>Hiba: $result</div>";
+            // Kategóriaváltás esetén a kép áthelyezése
+            elseif ($oldKepUrl && $oldKategoriaId != $kategoria_id) {
+                $newKepUrl = moveImageToCategory($oldKategoriaId, $kategoria_id, $oldKepUrl);
+                if ($newKepUrl) {
+                    $kep_url = $newKepUrl;
+                } else {
+                    $message = "<div class='alert alert-danger'>Hiba a kép áthelyezésekor!</div>";
+                }
+            }
+    
+            if (empty($message)) {
+                $muvelet = "UPDATE etel SET nev = ?, egyseg_ar = ?, leiras = ?, kategoria_id = ?, kep_url = ?, kaloria = ?, osszetevok = ?, allergenek = ? WHERE id = ?";
+                $parameterek = ['sisissssi', $nev, $egyseg_ar, $leiras, $kategoria_id, $kep_url, $kaloria, $osszetevok, $allergenek, $id];
+                $result = adatokValtoztatasa($muvelet, $parameterek);
+    
+                // Ha a képfeltöltés sikeres volt VAGY az adatbázis-módosítás sikeres, akkor siker üzenet
+                if ($kepFeltoltesSikeres || $result === 'Sikeres művelet!') {
+                    $message = "<div class='alert alert-success'>Sikeres szerkesztés! Oldal újratöltése...</div><script>setTimeout(() => { location.reload(); }, 3000);</script>";
+                } else {
+                    $message = "<div class='alert alert-danger'>Hiba: " . ($result ?: "Nem történt változás") . "</div>";
+                }
+            }
         }
     }
 
     // Törlés
     if ($operation === 'delete') {
         $id = (int)$_POST['delete_etel'];
-        $etel = adatokLekerdezese("SELECT kep_url FROM etel WHERE id = ?", ['i', $id]);
+        $etel = adatokLekerdezese("SELECT kep_url, kategoria_id FROM etel WHERE id = ?", ['i', $id]);
         if (!empty($etel[0]['kep_url'])) {
-            deleteImageFiles($etel[0]['kep_url']);
+            deleteImageFiles($etel[0]['kep_url'], $etel[0]['kategoria_id']);
         }
         $result = adatokTorlese($id);
         $message = $result === 'Sikeres törlés!' 
-            ? "<div class='alert alert-success'>Étel sikeresen törölve!</div>"
+            ? "<div class='alert alert-success'>Étel sikeresen törölve! Oldal újratöltése...</div><script>setTimeout(() => { location.reload(); }, 3000);</script>"
             : "<div class='alert alert-danger'>Hiba: $result</div>";
     }
 
@@ -153,7 +177,7 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
             $stmt = $conn->prepare("UPDATE felhasznalo SET jog_szint = ? WHERE id = ?");
             $stmt->bind_param("ii", $jogSzint, $userId);
             $message = $stmt->execute() 
-                ? "<div class='alert alert-success'>Felhasználó jogosultsága sikeresen frissítve!</div>"
+                ? "<div class='alert alert-success'>Felhasználó jogosultsága sikeresen frissítve!</div><script>setTimeout(() => { location.reload(); }, 3000);</script>"
                 : "<div class='alert alert-danger'>Hiba történt a frissítés során!</div>";
             $stmt->close();
         }
@@ -369,7 +393,7 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
                 document.querySelector('select[name="edit_kategoria_id"]').value = data.kategoria_id;
                 const kepInfoDiv = document.getElementById('currentKepInfo');
                 kepInfoDiv.innerHTML = data.kep_url 
-                    ? `<strong>Aktuális kép:</strong><br><img src="../kepek/${data.kep_url}" style="max-height: 100px;" class="img-thumbnail mt-2"><br><small>${data.kep_url}</small>`
+                    ? `<strong>Aktuális kép:</strong><br><img src="../kepek/${data.kategoria_id}/${data.kep_url}" style="max-height: 100px;" class="img-thumbnail mt-2"><br><small>${data.kep_url}</small>`
                     : '<div class="text-muted">Nincs kép</div>';
             });
     });

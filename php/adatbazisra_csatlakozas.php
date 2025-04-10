@@ -125,9 +125,11 @@ function rendeleseLekerdezese($allapot) {
 
 function handleImageUpload($categoryId, $uploadedFile, $kepNev) {
     $baseDir = '../kepek/';
+    
     if (!file_exists($baseDir . 'osszeskep/')) {
         mkdir($baseDir . 'osszeskep/', 0755, true);
     }
+    
     $categoryDir = $baseDir . $categoryId . '/';
     if (!file_exists($categoryDir)) {
         mkdir($categoryDir, 0755, true);
@@ -136,16 +138,39 @@ function handleImageUpload($categoryId, $uploadedFile, $kepNev) {
     $extension = strtolower(pathinfo($uploadedFile['name'], PATHINFO_EXTENSION));
     $baseFileName = preg_replace('/[^a-z0-9\-_]/i', '', $kepNev);
     $fileName = $baseFileName . '.' . $extension;
-
-    $existingFiles = glob($categoryDir . $baseFileName . '.*');
-    if (!empty($existingFiles)) {
+    
+    $targetPath = $categoryDir . $fileName;
+    if (file_exists($targetPath)) {
         return false; // Már létezik ilyen nevű fájl
     }
-
-    $targetPath = $categoryDir . $fileName;
+    
     if (move_uploaded_file($uploadedFile['tmp_name'], $targetPath)) {
         copy($targetPath, $baseDir . 'osszeskep/' . $fileName);
-        return "$categoryId/$fileName"; // Relatív útvonal az adatbázishoz
+        return $fileName; // Csak a fájlnevet adjuk vissza
+    }
+    
+    return false;
+}
+
+function moveImageToCategory($oldCategoryId, $newCategoryId, $fileName) {
+    $baseDir = '../kepek/';
+    $oldPath = $baseDir . $oldCategoryId . '/' . $fileName;
+    $newCategoryDir = $baseDir . $newCategoryId . '/';
+    
+    if (!file_exists($newCategoryDir)) {
+        mkdir($newCategoryDir, 0755, true);
+    }
+    
+    $newPath = $newCategoryDir . $fileName;
+    
+    if (file_exists($oldPath) && !file_exists($newPath)) {
+        if (rename($oldPath, $newPath)) {
+            $osszeskepPath = $baseDir . 'osszeskep/' . $fileName;
+            if (file_exists($osszeskepPath)) {
+                copy($newPath, $osszeskepPath);
+            }
+            return $fileName;
+        }
     }
     return false;
 }
@@ -153,34 +178,33 @@ function handleImageUpload($categoryId, $uploadedFile, $kepNev) {
 function renameImageFile($oldPath, $newName) {
     $baseDir = '../kepek/';
     $extension = pathinfo($oldPath, PATHINFO_EXTENSION);
+    $oldFileName = basename($oldPath);
+    $categoryId = strtok($oldPath, '/'); // Kategória ID kinyerése
+    
     $oldFullPath = $baseDir . $oldPath;
-    $oldOsszeskepPath = $baseDir . 'osszeskep/' . basename($oldPath);
+    $oldOsszeskepPath = $baseDir . 'osszeskep/' . $oldFileName;
 
     $newFileName = preg_replace('/[^a-z0-9\-_]/i', '', $newName) . '.' . $extension;
-    $newCategoryPath = dirname($oldFullPath) . '/' . $newFileName;
+    $newCategoryPath = $baseDir . $categoryId . '/' . $newFileName;
     $newOsszeskepPath = $baseDir . 'osszeskep/' . $newFileName;
 
-    if (!file_exists($oldFullPath)) {
-        return false; // Ha a régi fájl nem létezik
-    }
-
-    if (rename($oldFullPath, $newCategoryPath) && rename($oldOsszeskepPath, $newOsszeskepPath)) {
-        return dirname($oldPath) . '/' . $newFileName;
+    if (file_exists($oldFullPath) && !file_exists($newCategoryPath)) {
+        if (rename($oldFullPath, $newCategoryPath)) {
+            if (file_exists($oldOsszeskepPath)) {
+                rename($oldOsszeskepPath, $newOsszeskepPath);
+            }
+            return $newFileName;
+        }
     }
     return false;
 }
 
-function deleteImageFiles($imagePath) {
+function deleteImageFiles($imagePath, $categoryId = null) {
     $baseDir = '../kepek/';
-    $mainPath = $baseDir . $imagePath;
+    $mainPath = $categoryId ? $baseDir . $categoryId . '/' . $imagePath : $baseDir . $imagePath;
     $osszeskepPath = $baseDir . 'osszeskep/' . basename($imagePath);
-
-    if (file_exists($mainPath)) {
-        unlink($mainPath);
-    }
-    if (file_exists($osszeskepPath)) {
-        unlink($osszeskepPath);
-    }
-    return true;
+    
+    if (file_exists($mainPath)) unlink($mainPath);
+    if (file_exists($osszeskepPath)) unlink($osszeskepPath);
 }
 ?>

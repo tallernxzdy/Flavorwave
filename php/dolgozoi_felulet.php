@@ -132,12 +132,12 @@ function getOrderDetails($order_id) {
         <!-- Átvételre váró rendelések -->
         <div class="card bg-warning mt-5 mb-5">
             <div class="card-header bg-dark text-white">
-                <h3>Átvételre váró rendelések</h3>
+                <h3>Friss rendelések</h3>
             </div>
             <div class="card-body bg-light">
                 <form method="POST" action="dolgozoi_felulet.php">
                     <select name="order_id" class="form-select mb-3">
-                        <option>Kérlek válassz egy menüt</option>
+                        <option>Kérlek válassz egy megrendelést</option>
                         <?php foreach (rendeleseLekerdezese(0) as $order) { ?>
                             <option value="<?= $order['id'] ?>">Rendelés #<?= $order['id'] ?> - <?= htmlspecialchars($order['felhasznalo_nev']) ?></option>
                         <?php } ?>
@@ -159,7 +159,7 @@ function getOrderDetails($order_id) {
             <div class="card-body bg-light">
                 <form method="POST" action="dolgozoi_felulet.php">
                     <select name="order_id" class="form-select mb-3">
-                        <option>Kérlek válassz egy menüt</option>
+                        <option>Kérlek válassz egy megrendelést</option>
                         <?php foreach (rendeleseLekerdezese(1) as $order) { ?>
                             <option value="<?= $order['id'] ?>">Rendelés #<?= $order['id'] ?> -
                                 <?= htmlspecialchars($order['felhasznalo_nev']) ?></option>
@@ -179,7 +179,7 @@ function getOrderDetails($order_id) {
             <div class="card-body bg-light">
                 <form method="POST" action="dolgozoi_felulet.php">
                     <select name="order_id" class="form-select mb-3">
-                        <option>Kérlek válassz egy menüt</option>
+                        <option>Kérlek válassz egy megrendelést</option>
                         <?php foreach (rendeleseLekerdezese(2) as $order) { ?>
                             <option value="<?= $order['id'] ?>">Rendelés #<?= $order['id'] ?> -
                                 <?= htmlspecialchars($order['felhasznalo_nev']) ?></option>
