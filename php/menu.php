@@ -222,29 +222,24 @@
 
 
   <!-- Footer -->
-  <footer class="footer">
-    <div class="footer-container">
-      <!-- Footer linkek -->
-      <ul class="footer-links">
-        <li><a href="../html/rolunk.html">Rólunk</a></li>
-        <li><a href="../html/kapcsolat.html">Kapcsolat</a></li>
-        <li><a href="../html/adatvedelem.html">Adatvédelem</a></li>
-      </ul>
-
-      <!-- Social media ikonok -->
-      <div class="footer-socials">
-        <a href="#"><i class="fab fa-facebook"></i></a>
-        <a href="#"><i class="fab fa-instagram"></i></a>
-        <a href="#"><i class="fab fa-twitter"></i></a>
-        <a href="#"><i class="fab fa-youtube"></i></a>
-      </div>
-
-      <!-- Copyright rész -->
-      <div class="footer-copy">
-        &copy; 2024 FlavorWave - Minden jog fenntartva.
-      </div>
-    </div>
-  </footer>
+  <div class="footer">
+            <div class="footer-container">
+                <ul class="footer-links">
+                    <li><a href="../html/rolunk.html">Rólunk</a></li>
+                    <li><a href="../html/kapcsolatok.html">Kapcsolat</a></li>
+                    <li><a href="../html/adatvedelem.html">Adatvédelem</a></li>
+                </ul>
+                <div class="footer-socials">
+                    <a href="https://www.facebook.com/" target="_blank"><i class="fab fa-facebook"></i></a>
+                    <a href="https://www.instagram.com/" target="_blank"><i class="fab fa-instagram"></i></a>
+                    <a href="https://x.com/" target="_blank"><i class="fab fa-twitter"></i></a>
+                    <a href="https://www.youtube.com/" target="_blank"><i class="fab fa-youtube"></i></a>
+                </div>
+                <div class="footer-copy">
+                    © 2024 FlavorWave - Minden jog fenntartva.
+                </div>
+            </div>
+        </div>
   <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/js/bootstrap.bundle.min.js"></script>
   <script src="../js/navbar.js"></script>
 </body>

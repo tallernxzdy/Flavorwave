@@ -218,23 +218,23 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
     </div>
 
     <div class="footer">
-        <div class="footer-container">
-            <ul class="footer-links">
-                <li><a href="../html/rolunk.html">Rólunk</a></li>
-                <li><a href="../html/kapcsolatok.html">Kapcsolat</a></li>
-                <li><a href="../html/adatvedelem.html">Adatvédelem</a></li>
-            </ul>
-            <div class="footer-socials">
-                <a href="#"><i class="fab fa-facebook"></i></a>
-                <a href="#"><i class="fab fa-instagram"></i></a>
-                <a href="#"><i class="fab fa-twitter"></i></a>
-                <a href="#"><i class="fab fa-youtube"></i></a>
-            </div>
-            <div class="footer-copy">
-                © 2025 FlavorWave - Minden jog fenntartva.
+            <div class="footer-container">
+                <ul class="footer-links">
+                    <li><a href="../html/rolunk.html">Rólunk</a></li>
+                    <li><a href="../html/kapcsolatok.html">Kapcsolat</a></li>
+                    <li><a href="../html/adatvedelem.html">Adatvédelem</a></li>
+                </ul>
+                <div class="footer-socials">
+                    <a href="https://www.facebook.com/" target="_blank"><i class="fab fa-facebook"></i></a>
+                    <a href="https://www.instagram.com/" target="_blank"><i class="fab fa-instagram"></i></a>
+                    <a href="https://x.com/" target="_blank"><i class="fab fa-twitter"></i></a>
+                    <a href="https://www.youtube.com/" target="_blank"><i class="fab fa-youtube"></i></a>
+                </div>
+                <div class="footer-copy">
+                    © 2024 FlavorWave - Minden jog fenntartva.
+                </div>
             </div>
         </div>
-    </div>
 
     <script>
         document.getElementById("togglePassword").addEventListener("click", function(event) {
