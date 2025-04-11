@@ -89,7 +89,6 @@ body {
     position: relative;
     z-index: 1;
     border: 1px solid rgba(212, 163, 115, 0.2);
-    /* Eltávolítva a hover effekt */
 }
 
 /* Felhasználói információk */
@@ -109,6 +108,7 @@ body {
     border-bottom: 1px solid rgba(212, 163, 115, 0.2);
     transition: var(--transition);
     position: relative;
+    min-height: 40px; /* Fix minimális magasság az egységesség érdekében */
 }
 
 .info-item:last-child {
@@ -129,6 +129,7 @@ body {
     font-family: 'Montserrat', sans-serif;
     display: flex;
     align-items: center;
+    min-height: 34px; /* Az input és span magasságával szinkronizálva */
 }
 
 .info-label i {
@@ -144,6 +145,13 @@ body {
     font-size: 1rem;
     color: var(--dark-black);
     font-weight: 500;
+    display: inline-block;
+    width: 100%;
+    max-width: 300px; /* Ugyanaz, mint az inputon */
+    min-height: 34px; /* Az input magasságával megegyezik */
+    line-height: 34px; /* Középre igazítja a szöveget függőlegesen */
+    padding: 6px 12px; /* Az input paddingjével azonos */
+    box-sizing: border-box; /* Biztosítja, hogy a padding ne növelje a méretet */
 }
 
 .edit-icon {
@@ -151,6 +159,8 @@ body {
     color: var(--accent-gold);
     transition: var(--transition);
     margin-left: 10px;
+    position: relative;
+    line-height: 34px; /* Az input és span magasságával szinkronizálva */
 }
 
 .edit-icon:hover {
@@ -158,17 +168,19 @@ body {
 }
 
 .edit-input {
-    width: 100%; /* Teljes szélesség */
-    max-width: 300px; /* Korlátozott szélesség az esztétika miatt */
-    display: none; /* Alapértelmezett elrejtés */
+    width: 100%;
+    max-width: 300px; /* Ugyanaz, mint az info-value */
+    display: none;
     border: 1px solid var(--accent-gold);
     border-radius: 5px;
-    padding: 8px;
+    padding: 6px 12px; /* Az info-value paddingjével azonos */
     font-family: 'Poppins', sans-serif;
     font-size: 1rem;
     color: var(--dark-black);
     background-color: white;
     transition: var(--transition);
+    box-sizing: border-box;
+    height: 34px; /* Fix magasság, hogy azonos legyen az info-value-val */
 }
 
 .edit-input:focus {
@@ -291,6 +303,7 @@ body {
     .info-item {
         flex-direction: column;
         align-items: flex-start;
+        min-height: 70px; /* Magasabb mobil nézetben az elrendezés miatt */
     }
 
     .info-label {
@@ -300,12 +313,21 @@ body {
 
     .info-value {
         width: 100%;
-        padding-left: 35px;
+        max-width: none; /* Teljes szélesség mobil nézetben */
+        padding-left: 0;
     }
 
     .edit-input {
-        width: 100%; /* Teljes szélesség mobil nézetben */
-        max-width: none; /* Nincs korlátozás */
+        width: 100%;
+        max-width: none; /* Teljes szélesség mobil nézetben */
+    }
+
+    .edit-icon {
+        position: absolute;
+        right: 0;
+        top: 50%;
+        transform: translateY(-50%);
+        margin-left: 0;
     }
 
     .not-logged-in {

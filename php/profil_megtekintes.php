@@ -10,7 +10,7 @@ if ($logged_in) {
     $stmt->bind_param("i", $_SESSION['felhasznalo_id']);
     $stmt->execute();
     $result = $stmt->get_result();
-    
+
     if ($result->num_rows > 0) {
         $user_data = $result->fetch_assoc();
     }
@@ -28,6 +28,7 @@ if (isset($_GET['success'])) {
 
 <!DOCTYPE html>
 <html lang="hu">
+
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
@@ -38,6 +39,7 @@ if (isset($_GET['success'])) {
     <link rel="stylesheet" href="../css/footer.css">
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css">
 </head>
+
 <body>
     <?php include './navbar.php'; ?>
 
@@ -45,7 +47,7 @@ if (isset($_GET['success'])) {
         <div class="profile-header">
             <h1><i class="fas fa-user-circle"></i> Profil adataim</h1>
         </div>
-        
+
         <div class="profile-content">
             <?php if ($logged_in && $user_data): ?>
                 <?php echo $alert; ?>
@@ -159,29 +161,27 @@ if (isset($_GET['success'])) {
         function toggleEdit(field) {
             const valueSpan = document.getElementById(`${field}_value`);
             const inputField = document.querySelector(`input[name="${field}"]`);
-            
-            console.log(inputField.style.display);
+
+            // Ha az input látható, akkor elrejtjük és mentjük az értéket
             if (inputField.style.display === "block") {
-                
-                valueSpan.style.display = "inline";
                 inputField.style.display = "none";
+                valueSpan.style.display = "inline";
                 valueSpan.textContent = inputField.value || 'Nincs megadva';
-                
-            } else {
+            }
+            // Ha az input el van rejtve, akkor megjelenítjük
+            else {
                 inputField.style.display = "block";
                 valueSpan.style.display = "none";
                 inputField.focus();
-                
             }
         }
 
         function hideInput(field) {
-            
             const valueSpan = document.getElementById(`${field}_value`);
             const inputField = document.querySelector(`input[name="${field}"]`);
-            
-            valueSpan.style.display = "inline";
+
             inputField.style.display = "none";
+            valueSpan.style.display = "inline";
             valueSpan.textContent = inputField.value || 'Nincs megadva';
         }
 
@@ -205,7 +205,9 @@ if (isset($_GET['success'])) {
         }
 
         function submitForm() {
-            document.getElementById('profile-form').onsubmit = function() { return true; }; // Engedélyezzük az űrlap elküldését
+            document.getElementById('profile-form').onsubmit = function() {
+                return true;
+            }; // Engedélyezzük az űrlap elküldését
             document.getElementById('profile-form').submit();
         }
 
@@ -229,4 +231,5 @@ if (isset($_GET['success'])) {
         }
     </script>
 </body>
+
 </html>
