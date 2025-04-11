@@ -8,10 +8,6 @@ if (!isset($_SESSION['felhasznalo_id']) || $_SESSION['jog_szint'] == 0) {
     exit();
 }
 
-
-
-
-
 // Üzenetek inicializálása
 $message = "";
 $message_type = "";
@@ -43,16 +39,14 @@ if (isset($_POST['finished_order'])) {
     $rendeles_id = $_POST['order_id'];
 
     if (!empty($rendeles_id)) {
-        // Frissítsd a rendelés állapotát 3-ra (elküldött állapot)
         $stmt = $conn->prepare("UPDATE megrendeles SET leadas_allapota = 3 WHERE id = ?");
         $stmt->bind_param("i", $rendeles_id);
 
         if ($stmt->execute()) {
             $message = "A rendelés sikeresen elküldve!";
             $message_type = "success";
-            
-            // Store the order ID in session to display its details
-            $_SESSION['last_completed_order'] = $rendeles_id;
+            // Töröljük a kiválasztott rendelést, hogy a táblázat eltűnjön
+            unset($_SESSION['selected_order_id']);
         } else {
             $message = "Hiba történt a rendelés elküldésekor!";
             $message_type = "error";
@@ -63,6 +57,12 @@ if (isset($_POST['finished_order'])) {
     }
 }
 
+// Kiválasztás törlése, ha üresen küldik a formot
+if (isset($_POST['order_id']) && empty($_POST['order_id']) && !isset($_POST['update_status']) && !isset($_POST['finished_order'])) {
+    unset($_SESSION['selected_order_id']);
+}
+
+// Rendelés részleteinek lekérdezése
 function getOrderDetails($order_id) {
     global $conn;
     $query = "SELECT 
@@ -86,11 +86,17 @@ function getOrderDetails($order_id) {
     return $result->fetch_all(MYSQLI_ASSOC);
 }
 
+// Kiválasztott rendelés ID kezelése
+$selected_order_id = null;
+if (isset($_POST['order_id']) && !empty($_POST['order_id'])) {
+    $selected_order_id = $_POST['order_id'];
+    $_SESSION['selected_order_id'] = $selected_order_id; // Mindig frissítjük a SESSION-t, ha van új kiválasztás
+} elseif (isset($_SESSION['selected_order_id']) && !isset($_POST['finished_order'])) {
+    $selected_order_id = $_SESSION['selected_order_id'];
+} else {
+    unset($_SESSION['selected_order_id']); // Biztosítjuk, hogy üres állapotban ne maradjon régi érték
+}
 ?>
-
-
-
-
 
 <!DOCTYPE html>
 <html lang="hu">
@@ -99,7 +105,7 @@ function getOrderDetails($order_id) {
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Dolgozói Felület</title>
-    <!-- CSS fájok -->
+    <!-- CSS fájlok -->
     <link rel="stylesheet" href="../css/navbar.css">
     <link rel="stylesheet" href="../css/fooldal/ujfooldal.css">
     <link rel="stylesheet" href="../css/dolgozoi_felulet.css">
@@ -110,10 +116,6 @@ function getOrderDetails($order_id) {
     <script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
     <!-- Bootstrap JavaScript -->
     <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/js/bootstrap.bundle.min.js" integrity="sha384-YvpcrYf0tY3lHB60NNkmXc5s9fDVZLESaAA55NDzOxhy9GkcIdslK1eN7N6jIeHz" crossorigin="anonymous"></script>
-    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/css/bootstrap.min.css" rel="stylesheet" integrity="sha384-QWTKZyjpPEjISv5WaRU9OFeRpok6YctnYmDr5pNlyT2bRjXh0JMhjY6hW+ALEwIH" crossorigin="anonymous">
-    <script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
-
-    <link rel="stylesheet" href="../css/fooldal/ujfooldal.css">
     <script>
         if (window.history.replaceState) {
             window.history.replaceState(null, null, window.location.href);
@@ -122,9 +124,7 @@ function getOrderDetails($order_id) {
 </head>
 
 <body>
-    <?php
-        include './navbar.php';
-    ?>
+    <?php include './navbar.php'; ?>
 
     <div class="container mt-5">
         <h1 class="text-center my-4">Dolgozói felület</h1>
@@ -136,10 +136,12 @@ function getOrderDetails($order_id) {
             </div>
             <div class="card-body bg-light">
                 <form method="POST" action="dolgozoi_felulet.php">
-                    <select name="order_id" class="form-select mb-3">
-                        <option>Kérlek válassz egy megrendelést</option>
+                    <select name="order_id" id="pending_orders" class="form-select mb-3">
+                        <option value="">Kérlek válassz egy megrendelést</option>
                         <?php foreach (rendeleseLekerdezese(0) as $order) { ?>
-                            <option value="<?= $order['id'] ?>">Rendelés #<?= $order['id'] ?> - <?= htmlspecialchars($order['felhasznalo_nev']) ?></option>
+                            <option value="<?= $order['id'] ?>" <?= isset($selected_order_id) && $selected_order_id == $order['id'] ? 'selected' : '' ?>>
+                                Rendelés #<?= $order['id'] ?> - <?= htmlspecialchars($order['felhasznalo_nev']) ?>
+                            </option>
                         <?php } ?>
                     </select>
                     <input type="hidden" name="new_status" value="1">
@@ -150,7 +152,6 @@ function getOrderDetails($order_id) {
             </div>
         </div>
 
-
         <!-- Folyamatban lévő rendelések -->
         <div class="card bg-warning mt-5 mb-5">
             <div class="card-header bg-dark text-white">
@@ -158,11 +159,12 @@ function getOrderDetails($order_id) {
             </div>
             <div class="card-body bg-light">
                 <form method="POST" action="dolgozoi_felulet.php">
-                    <select name="order_id" class="form-select mb-3">
-                        <option>Kérlek válassz egy megrendelést</option>
+                    <select name="order_id" id="in_progress_orders" class="form-select mb-3">
+                        <option value="">Kérlek válassz egy megrendelést</option>
                         <?php foreach (rendeleseLekerdezese(1) as $order) { ?>
-                            <option value="<?= $order['id'] ?>">Rendelés #<?= $order['id'] ?> -
-                                <?= htmlspecialchars($order['felhasznalo_nev']) ?></option>
+                            <option value="<?= $order['id'] ?>" <?= isset($selected_order_id) && $selected_order_id == $order['id'] ? 'selected' : '' ?>>
+                                Rendelés #<?= $order['id'] ?> - <?= htmlspecialchars($order['felhasznalo_nev']) ?>
+                            </option>
                         <?php } ?>
                     </select>
                     <input type="hidden" name="new_status" value="2">
@@ -178,85 +180,72 @@ function getOrderDetails($order_id) {
             </div>
             <div class="card-body bg-light">
                 <form method="POST" action="dolgozoi_felulet.php">
-                    <select name="order_id" class="form-select mb-3">
-                        <option>Kérlek válassz egy megrendelést</option>
+                    <select name="order_id" id="completed_orders" class="form-select mb-3">
+                        <option value="">Kérlek válassz egy megrendelést</option>
                         <?php foreach (rendeleseLekerdezese(2) as $order) { ?>
-                            <option value="<?= $order['id'] ?>">Rendelés #<?= $order['id'] ?> -
-                                <?= htmlspecialchars($order['felhasznalo_nev']) ?></option>
+                            <option value="<?= $order['id'] ?>" <?= isset($selected_order_id) && $selected_order_id == $order['id'] ? 'selected' : '' ?>>
+                                Rendelés #<?= $order['id'] ?> - <?= htmlspecialchars($order['felhasznalo_nev']) ?>
+                            </option>
                         <?php } ?>
                     </select>
-                    <button type="submit" name="finished_order" class="btn btn-danger-custom btn-danger">Rendelés
-                        Elküldése</button>
+                    <button type="submit" name="finished_order" class="btn btn-danger-custom btn-danger">Rendelés Elküldése</button>
                 </form>
             </div>
         </div>
     </div>
 
-
-
-    <!-- admin felületre ugrás -->
+    <!-- Admin felületre ugrás -->
     <?php
     if (isset($_SESSION['jog_szint']) && $_SESSION['jog_szint'] == 1) {
-    echo '<div class="d-grid gap-2 col-6 mx-auto"> 
-            <a class="btn btn-secondary" href="admin_felulet.php">Admin felület</a> 
-        </div>';
+        echo '<div class="d-grid gap-2 col-6 mx-auto">
+                <a class="btn btn-secondary" href="admin_felulet.php">Admin felület</a>
+              </div>';
     }
     ?>
 
-
-<?php
-    // Megrendelések lekérdezése
-    $query = "SELECT megrendeles.id, rendeles_tetel.mennyiseg, etel.nev 
-    AS etel_nev, etel.egyseg_ar, felhasznalo.felhasznalo_nev FROM megrendeles 
-    INNER JOIN rendeles_tetel ON rendeles_tetel.rendeles_id = megrendeles.id 
-    INNER JOIN etel ON rendeles_tetel.termek_id = etel.id 
-    INNER JOIN felhasznalo ON felhasznalo.id = megrendeles.felhasznalo_id 
-    WHERE leadas_allapota = 3;";
-
-    $result = $conn->query($query);
-?>
-
+    <!-- Kiválasztott rendelés részletei -->
     <div class="container mt-5 mb-5">
-        <h3 class="text-center">Kész megrendelések listája</h3>
-        <div class="table-responsive">
-            <table class="table table-bordered table-striped">
-                <thead class="table-dark">
-                    <tr>
-                        <th>Rendelés ID</th>
-                        <th>Felhasználó</th>
-                        <th>Étel</th>
-                        <th>Mennyiség</th>
-                        <th>Egységár</th>
-                        <th>Összesen</th>
-                    </tr>
-                </thead>
-                <tbody>
-                    <?php
-                    if ($result->num_rows > 0) {
-                        while ($row = $result->fetch_assoc()) {
-                            $osszesen = $row["mennyiseg"] * $row["egyseg_ar"];
-                            echo "<tr>
-                                    <td>{$row['id']}</td>
-                                    <td>{$row['felhasznalo_nev']}</td>
-                                    <td>{$row['etel_nev']}</td>
-                                    <td>{$row['mennyiseg']}</td>
-                                    <td>{$row['egyseg_ar']} Ft</td>
-                                    <td>{$osszesen} Ft</td>
-                                </tr>";
+        <h3 class="text-center">Kiválasztott rendelés részletei</h3>
+        <?php if (!empty($selected_order_id)): ?>
+            <div class="table-responsive">
+                <table class="table table-bordered table-striped">
+                    <thead class="table-dark">
+                        <tr>
+                            <th>Rendelés ID</th>
+                            <th>Felhasználó</th>
+                            <th>Étel</th>
+                            <th>Mennyiség</th>
+                            <th>Egységár</th>
+                            <th>Összesen</th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                        <?php
+                        $order_details = getOrderDetails($selected_order_id);
+                        if (!empty($order_details)) {
+                            foreach ($order_details as $item) {
+                                echo "<tr>
+                                        <td>{$item['rendeles_id']}</td>
+                                        <td>" . htmlspecialchars($item['felhasznalo_nev']) . "</td>
+                                        <td>" . htmlspecialchars($item['etel_nev']) . "</td>
+                                        <td>{$item['mennyiseg']}</td>
+                                        <td>{$item['egyseg_ar']} Ft</td>
+                                        <td>{$item['osszesen']} Ft</td>
+                                      </tr>";
+                            }
+                        } else {
+                            echo "<tr><td colspan='6' class='text-center'>Nincs tétel ehhez a rendeléshez.</td></tr>";
                         }
-                    } else {
-                        echo "<tr><td colspan='6' class='text-center'>Nincs elérhető adat.</td></tr>";
-                    }
-                    ?>
-                </tbody>
-            </table>
-        </div>
+                        ?>
+                    </tbody>
+                </table>
+            </div>
+        <?php else: ?>
+            <p class="text-center">Kérlek, válassz ki egy rendelést a részletek megtekintéséhez.</p>
+        <?php endif; ?>
     </div>
 
-
-
-
-    <!-- megerősítő modal üzenetek-->
+    <!-- Megerősítő modal üzenetek -->
     <div class="container">
         <!-- Üzenetek megjelenítése -->
         <div id="message" class="alert alert-dismissible fade show" role="alert" style="display: none;">
@@ -265,8 +254,7 @@ function getOrderDetails($order_id) {
         </div>
 
         <!-- Megerősítő modal -->
-        <div class="modal fade" id="confirmationModal" tabindex="-1" aria-labelledby="confirmationModalLabel"
-            aria-hidden="true">
+        <div class="modal fade" id="confirmationModal" tabindex="-1" aria-labelledby="confirmationModalLabel" aria-hidden="true">
             <div class="modal-dialog">
                 <div class="modal-content">
                     <div class="modal-header">
@@ -283,114 +271,118 @@ function getOrderDetails($order_id) {
                 </div>
             </div>
         </div>
+    </div>
 
+    <script>
+    $(document).ready(function () {
+        // Három legördülő menü azonosítója
+        const dropdowns = ['#pending_orders', '#in_progress_orders', '#completed_orders'];
 
+        // Ha egy legördülő menüben választanak, a többit alaphelyzetbe állítjuk
+        dropdowns.forEach(function (dropdown) {
+            $(dropdown).on('change', function () {
+                if ($(this).val()) {
+                    // A többi legördülő menü alaphelyzetbe állítása
+                    dropdowns.forEach(function (otherDropdown) {
+                        if (otherDropdown !== dropdown) {
+                            $(otherDropdown).val("");
+                        }
+                    });
 
-        <script>
-            let currentAction = null;
-
-            function openConfirmationModal(action) {
-                currentAction = action;
-                $("#confirmationModal").modal("show");
-            }
-
-            $("#confirmAction").on("click", function () {
-                if (currentAction) {
-                    currentAction();
-                    $("#confirmationModal").modal("hide");
+                    // Űrlap elküldése a kiválasztott rendelés ID-vel
+                    let orderId = $(this).val();
+                    $.post("dolgozoi_felulet.php", { order_id: orderId }, function () {
+                        location.reload(); // Frissítjük az oldalt a táblázat frissítéséhez
+                    });
+                } else {
+                    // Ha üresre állítják, töröljük a kiválasztást
+                    $.post("dolgozoi_felulet.php", { order_id: "" }, function () {
+                        location.reload();
+                    });
                 }
             });
+        });
 
-            function moveToPreparation() {
-                let orderId = $("#pending_orders").val();
+        // Üzenetek kezelése
+        function showMessage(message, type) {
+            $("#message-text").text(message);
+            $("#message").removeClass("alert-success alert-danger").addClass(type === "success" ? "alert-success" : "alert-danger").fadeIn();
+            setTimeout(function () {
+                $("#message").fadeOut();
+            }, 3000);
+        }
 
-                if (!orderId || orderId === "Kérlek válassz egy menüt") {
-                    showMessage("Válassz ki egy rendelést a készítésre áthelyezéshez!", "error");
-                    return;
-                }
-
-                openConfirmationModal(function () {
-                    $.post("dolgozoi_felulet.php",
-                        { update_status: true, order_id: orderId, new_status: 1 },
-                        function (response) {
-                            console.log("Szerver válasz:", response);
-                            if (response.status === "success") {
-                                showMessage(response.message, "success");
-                                location.reload();
-                            } else {
-                                showMessage("Hiba: " + response.message, "error");
-                            }
-                        },
-                        "json"
-                    ).fail(function () {
-                        showMessage("Szerverhiba történt!", "error");
-                    });
+        // Készítésre áthelyezés
+        function moveToPreparation() {
+            let orderId = $("#pending_orders").val();
+            if (!orderId) {
+                showMessage("Válassz ki egy rendelést a készítésre áthelyezéshez!", "error");
+                return;
+            }
+            openConfirmationModal(function () {
+                $.post("dolgozoi_felulet.php", { update_status: true, order_id: orderId, new_status: 1 }, function (response) {
+                    showMessage("A rendelés állapota sikeresen frissítve!", "success");
+                    location.reload();
+                }).fail(function () {
+                    showMessage("Szerverhiba történt!", "error");
                 });
+            });
+        }
+
+        // Kész rendelés
+        function completeOrder() {
+            let orderId = $("#in_progress_orders").val();
+            if (!orderId) {
+                showMessage("Válassz ki egy rendelést a készre jelöléshez!", "error");
+                return;
             }
-
-            function completeOrder() {
-                let orderId = $("#in_progress_orders").val();
-
-                if (!orderId || orderId === "Kérlek válassz egy menüt") {
-                    showMessage("Válassz ki egy rendelést a készre jelöléshez!", "error");
-                    return;
-                }
-
-                openConfirmationModal(function () {
-                    $.post("dolgozoi_felulet.php",
-                        { update_status: true, order_id: orderId, new_status: 2 },
-                        function (response) {
-                            console.log("Szerver válasz:", response);
-                            if (response.status === "success") {
-                                showMessage(response.message, "success");
-                                location.reload();
-                            } else {
-                                showMessage("Hiba: " + response.message, "error");
-                            }
-                        },
-                        "json"
-                    ).fail(function () {
-                        showMessage("Szerverhiba történt!", "error");
-                    });
+            openConfirmationModal(function () {
+                $.post("dolgozoi_felulet.php", { update_status: true, order_id: orderId, new_status: 2 }, function (response) {
+                    showMessage("A rendelés állapota sikeresen frissítve!", "success");
+                    location.reload();
+                }).fail(function () {
+                    showMessage("Szerverhiba történt!", "error");
                 });
+            });
+        }
+
+        // Rendelés elküldése
+        function finishOrder() {
+            let orderId = $("#completed_orders").val();
+            if (!orderId) {
+                showMessage("Válassz ki egy rendelést az elküldéshez!", "error");
+                return;
             }
-
-            function finishOrder() {
-                let orderId = $("#completed_orders").val();
-                if (!orderId) {
-                    showMessage("Válassz ki egy rendelést a törléshez!", "error");
-                    return;
-                }
-
-                openConfirmationModal(function () {
-                    $.post("dolgozoi_felulet.php",
-                        { finished_order: true, order_id: orderId },
-                        function (response) {
-                            if (response.status === "success") {
-                                showMessage(response.message, "success");
-                                location.reload();
-                            } else {
-                                showMessage("Hiba: " + response.message, "error");
-                            }
-                        },
-                        "json"
-                    ).fail(function () {
-                        showMessage("Szerverhiba történt!", "error");
-                    });
+            openConfirmationModal(function () {
+                $.post("dolgozoi_felulet.php", { finished_order: true, order_id: orderId }, function (response) {
+                    showMessage("A rendelés sikeresen elküldve!", "success");
+                    location.reload();
+                }).fail(function () {
+                    showMessage("Szerverhiba történt!", "error");
                 });
+            });
+        }
+
+        // Megerősítő modal
+        let currentAction = null;
+        function openConfirmationModal(action) {
+            currentAction = action;
+            $("#confirmationModal").modal("show");
+        }
+
+        $("#confirmAction").on("click", function () {
+            if (currentAction) {
+                currentAction();
+                $("#confirmationModal").modal("hide");
             }
+        });
 
-            function showMessage(message, type) {
-                $("#message-text").text(message);
-                $("#message").removeClass("alert-success alert-danger").addClass(type === "success" ? "alert-success" : "alert-danger").fadeIn();
-
-                setTimeout(function () {
-                    $("#message").fadeOut();
-                }, 3000);
-            }
-
-        </script>
-
+        // Üzenet megjelenítése, ha van
+        <?php if (!empty($message)): ?>
+            showMessage("<?= htmlspecialchars($message) ?>", "<?= $message_type ?>");
+        <?php endif; ?>
+    });
+    </script>
 </body>
 
 </html>
