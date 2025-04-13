@@ -187,3 +187,36 @@ label{
     border-color: #e64616 !important;
 }
 
+/* Modal ablak stílusai a jobb átláthatóság érdekében */
+.modal-body .form-group {
+    margin-bottom: 1.5rem; /* Nagyobb térköz az elemek között */
+}
+
+.modal-body .form-group p {
+    margin-bottom: 0.5rem;
+    font-size: 1.1rem; /* Kicsit nagyobb betűméret a jelenlegi jogosultságnak */
+}
+
+.modal-body .form-group label {
+    display: flex;
+    align-items: center;
+    font-size: 1rem;
+    padding: 0.5rem;
+    border-radius: 5px;
+    background-color: #f5f5f5; /* Halvány háttér a rádiógombokhoz */
+    margin-bottom: 0.5rem;
+    transition: background-color 0.3s;
+}
+
+.modal-body .form-group label:hover {
+    background-color: #e9ecef; /* Hover hatás */
+}
+
+.modal-body .form-group input[type="radio"] {
+    margin-right: 0.5rem; /* Térköz a rádiógomb és a szöveg között */
+}
+
+.modal-body .form-group input[type="radio"]:disabled + label {
+    background-color: #d3d3d3; /* Letiltott állapot vizuális jelzése */
+    cursor: not-allowed;
+}

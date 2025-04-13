@@ -69,7 +69,7 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
             $parameterek = ['sisissss', $nev, $egyseg_ar, $leiras, $kategoria_id, $kep_url, $kaloria, $osszetevok, $allergenek];
             $result = adatokValtoztatasa($muvelet, $parameterek);
             $message = $result === 'Sikeres művelet!' 
-                ? "<div class='alert alert-success'>Étel sikeresen hozzáadva! Oldal újratöltése...</div><script>setTimeout(() => { location.reload(); }, 3000);</script>"
+                ? "<div class='alert alert-success'>Étel sikeresen hozzáadva! Oldal újratöltése...</div><script>setTimeout(() => { location.reload(); }, 4000);</script>"
                 : "<div class='alert alert-warning'>Hiba: $result</div>";
         }
     }
@@ -139,7 +139,7 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
     
                 // Ha a képfeltöltés sikeres volt VAGY az adatbázis-módosítás sikeres, akkor siker üzenet
                 if ($kepFeltoltesSikeres || $result === 'Sikeres művelet!') {
-                    $message = "<div class='alert alert-success'>Sikeres szerkesztés! Oldal újratöltése...</div><script>setTimeout(() => { location.reload(); }, 3000);</script>";
+                    $message = "<div class='alert alert-success'>Sikeres szerkesztés! Oldal újratöltése...</div><script>setTimeout(() => { location.reload(); }, 4000);</script>";
                 } else {
                     $message = "<div class='alert alert-danger'>Hiba: " . ($result ?: "Nem történt változás") . "</div>";
                 }
@@ -156,7 +156,7 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
         }
         $result = adatokTorlese($id);
         $message = $result === 'Sikeres törlés!' 
-            ? "<div class='alert alert-success'>Étel sikeresen törölve! Oldal újratöltése...</div><script>setTimeout(() => { location.reload(); }, 3000);</script>"
+            ? "<div class='alert alert-success'>Étel sikeresen törölve! Oldal újratöltése...</div><script>setTimeout(() => { location.reload(); }, 4000);</script>"
             : "<div class='alert alert-danger'>Hiba: $result</div>";
     }
 
@@ -177,7 +177,7 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
             $stmt = $conn->prepare("UPDATE felhasznalo SET jog_szint = ? WHERE id = ?");
             $stmt->bind_param("ii", $jogSzint, $userId);
             $message = $stmt->execute() 
-                ? "<div class='alert alert-success'>Felhasználó jogosultsága sikeresen frissítve!</div><script>setTimeout(() => { location.reload(); }, 3000);</script>"
+                ? "<div class='alert alert-success'>A Választott profil jogosultsága sikeresen frissítve! Oldal újratöltése...</div><script>setTimeout(() => { location.reload(); }, 4000);</script>"
                 : "<div class='alert alert-danger'>Hiba történt a frissítés során!</div>";
             $stmt->close();
         }
@@ -342,12 +342,19 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
                         <input type="hidden" name="currentJogSzint" id="currentJogSzint">
                         <input type="hidden" name="operation" value="edit_user">
                         <div class="form-group">
-                            <label>Felhasználói jogosultságra váltás:</label>
-                            <input type="radio" name="jog_szint" value="0">
+                            <p><strong>Jelenlegi jogosultság:</strong> <span id="currentJogSzintText"></span></p>
                         </div>
                         <div class="form-group">
-                            <label>Dolgozói jogosultságra váltás:</label>
-                            <input type="radio" name="jog_szint" value="2">
+                            <label>
+                                <input type="radio" name="jog_szint" value="0" id="jogSzintFelhasznalo">
+                                Felhasználói jogosultság
+                            </label>
+                        </div>
+                        <div class="form-group">
+                            <label>
+                                <input type="radio" name="jog_szint" value="2" id="jogSzintDolgozo">
+                                Dolgozói jogosultság
+                            </label>
                         </div>
                     </form>
                 </div>
@@ -436,6 +443,34 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
     function editUser(userId, currentJogSzint) {
         document.getElementById('editUserId').value = userId;
         document.getElementById('currentJogSzint').value = currentJogSzint;
+
+        // Jelenlegi jogosultság szöveges megjelenítése
+        const jogSzintText = document.getElementById('currentJogSzintText');
+        switch (currentJogSzint) {
+            case 0:
+                jogSzintText.textContent = 'Felhasználó';
+                break;
+            case 2:
+                jogSzintText.textContent = 'Dolgozó';
+                break;
+            default:
+                jogSzintText.textContent = 'Ismeretlen';
+        }
+
+        // Rádiógombok letiltása, ha a jogosultság már be van állítva
+        const felhasznaloRadio = document.getElementById('jogSzintFelhasznalo');
+        const dolgozoRadio = document.getElementById('jogSzintDolgozo');
+        
+        felhasznaloRadio.disabled = (currentJogSzint === 0);
+        dolgozoRadio.disabled = (currentJogSzint === 2);
+
+        // Ha az egyik opció letiltva van, a másikat alapértelmezetten kiválasztjuk
+        if (currentJogSzint === 0) {
+            dolgozoRadio.checked = true;
+        } else if (currentJogSzint === 2) {
+            felhasznaloRadio.checked = true;
+        }
+
         new bootstrap.Modal(document.getElementById('editUserModal')).show();
     }
 
