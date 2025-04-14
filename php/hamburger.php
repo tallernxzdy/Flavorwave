@@ -49,7 +49,13 @@ session_start();
                             </div>
                             <h2>' . htmlspecialchars($k['nev']) . '</h2>
                             <div class="title-underline"></div>
-                            <button class="order-btn details-btn" onclick="openCustomModal(\'modal-' . htmlspecialchars($k['id']) . '\')">Részletek</button>
+                            <p class="price">Ár: ' . htmlspecialchars($k['egyseg_ar']) . ' Ft</p>
+                            <div class="button-container">
+                                <button class="order-btn details-btn" onclick="openCustomModal(\'modal-' . htmlspecialchars($k['id']) . '\')">Részletek</button>
+                                <button class="order-btn add-to-cart" data-item-id="' . htmlspecialchars($k["id"]) . '" data-item="' . htmlspecialchars($k['nev']) . '" data-image="../kepek/3/' . htmlspecialchars($k['kep_url']) . '" onclick="addToCartOnly(\'' . htmlspecialchars($k["id"]) . '\')" title="Kosárba rakás">
+                                    <i class="fas fa-shopping-cart"></i>
+                                </button>
+                            </div>
                         </div>
                     </div>
 
@@ -64,10 +70,9 @@ session_start();
                                 <p><strong>Kalória:</strong> ' . htmlspecialchars($k['kaloria']) . ' kcal</p>
                                 <p><strong>Összetevők:</strong> ' . htmlspecialchars($k['osszetevok']) . '</p>
                                 <p><strong>Allergének:</strong> ' . htmlspecialchars($k['allergenek']) . '</p>
-                                <p><strong>Ár:</strong> ' . htmlspecialchars($k['egyseg_ar']) . ' Ft</p>
+                                <p><strong>Ár:</strong> ' . htmlspecialchars($k['egyseg_ar']) . ' Ft</p> <!-- Ár megjelenítése a modal-ban -->
                             </div>
                             <div class="custom-modal-footer">
-                                <button type="button" class="order-btn add-to-cart" data-item-id="' . htmlspecialchars($k["id"]) . '" data-item="' . htmlspecialchars($k['nev']) . '" data-image="../kepek/hamburgerek/' . htmlspecialchars($k['kep_url']) . '" onclick="addToCartAndClose(\'modal-' . htmlspecialchars($k['id']) . '\', \'' . htmlspecialchars($k["id"]) . '\')">Kosárba rakás</button>
                                 <button type="button" class="order-btn close-btn" onclick="closeCustomModal(\'modal-' . htmlspecialchars($k['id']) . '\')">Bezárás</button>
                             </div>
                         </div>
@@ -116,7 +121,6 @@ session_start();
     </div>
 
     <script src="../js/navbar.js"></script>
-    <script src="../js/kosarSzamlalo.js">
-    </script>
+    <script src="../js/kosarSzamlalo.js"></script>
 </body>
 </html>
