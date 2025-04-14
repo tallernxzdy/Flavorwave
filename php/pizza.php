@@ -19,7 +19,7 @@ session_start();
     <link rel="stylesheet" href="../css/footer.css">
     <link rel="stylesheet" href="../css/kategoriaelemek.css">
     <link rel="stylesheet" href="../css/fooldal/ujfooldal.css">
-    
+    <script src="../js/cart.js"></script>
     <script src="https://unpkg.com/aos@2.3.1/dist/aos.js"></script>
 </head>
 
@@ -41,7 +41,7 @@ session_start();
                 echo '<div class="flex-grid">';
                 foreach ($kategoriak as $k) {
                     echo '
-                                        <div class="flex-col">
+                    <div class="flex-col">
                         <div class="menu__option" data-aos="fade-up" data-aos-delay="' . (100 * (array_search($k, $kategoriak) + 1)) . '">
                             <div class="image-wrapper">
                                 <img src="../kepek/4/' . htmlspecialchars($k['kep_url']) . '" alt="' . htmlspecialchars($k['nev']) . '">
@@ -51,7 +51,7 @@ session_start();
                             <p class="price">Ár: ' . htmlspecialchars($k['egyseg_ar']) . ' Ft</p>
                             <div class="button-container">
                                 <button class="order-btn details-btn" onclick="openCustomModal(\'modal-' . htmlspecialchars($k['id']) . '\')">Részletek</button>
-                                <button class="order-btn add-to-cart" data-item-id="' . htmlspecialchars($k["id"]) . '" data-item="' . htmlspecialchars($k['nev']) . '" data-image="../kepek/3/' . htmlspecialchars($k['kep_url']) . '" onclick="addToCartOnly(\'' . htmlspecialchars($k["id"]) . '\')" title="Kosárba rakás">
+                                <button class="order-btn add-to-cart" data-item-id="' . htmlspecialchars($k["id"]) . '" data-item="' . htmlspecialchars($k['nev']) . '" data-image="../kepek/4/' . htmlspecialchars($k['kep_url']) . '" onclick="addToCartOnly(\'' . htmlspecialchars($k["id"]) . '\')" title="Kosárba rakás">
                                     <i class="fas fa-shopping-cart"></i>
                                 </button>
                             </div>
@@ -69,7 +69,7 @@ session_start();
                                 <p><strong>Kalória:</strong> ' . htmlspecialchars($k['kaloria']) . ' kcal</p>
                                 <p><strong>Összetevők:</strong> ' . htmlspecialchars($k['osszetevok']) . '</p>
                                 <p><strong>Allergének:</strong> ' . htmlspecialchars($k['allergenek']) . '</p>
-                                <p><strong>Ár:</strong> ' . htmlspecialchars($k['egyseg_ar']) . ' Ft</p> <!-- Ár megjelenítése a modal-ban -->
+                                <p><strong>Ár:</strong> ' . htmlspecialchars($k['egyseg_ar']) . ' Ft</p>
                             </div>
                             <div class="custom-modal-footer">
                                 <button type="button" class="order-btn close-btn" onclick="closeCustomModal(\'modal-' . htmlspecialchars($k['id']) . '\')">Bezárás</button>

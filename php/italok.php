@@ -53,7 +53,7 @@ session_start();
                             <p class="price">Ár: ' . htmlspecialchars($k['egyseg_ar']) . ' Ft</p>
                             <div class="button-container">
                                 <button class="order-btn details-btn" onclick="openCustomModal(\'modal-' . htmlspecialchars($k['id']) . '\')">Részletek</button>
-                                <button class="order-btn add-to-cart" data-item-id="' . htmlspecialchars($k["id"]) . '" data-item="' . htmlspecialchars($k['nev']) . '" data-image="../kepek/3/' . htmlspecialchars($k['kep_url']) . '" onclick="addToCartOnly(\'' . htmlspecialchars($k["id"]) . '\')" title="Kosárba rakás">
+                                <button class="order-btn add-to-cart" data-item-id="' . htmlspecialchars($k["id"]) . '" data-item="' . htmlspecialchars($k['nev']) . '" data-image="../kepek/9/' . htmlspecialchars($k['kep_url']) . '" onclick="addToCartOnly(\'' . htmlspecialchars($k["id"]) . '\')" title="Kosárba rakás">
                                     <i class="fas fa-shopping-cart"></i>
                                 </button>
                             </div>
