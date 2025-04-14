@@ -35,113 +35,132 @@ $kategoriak = adatokLekerdezese("SELECT id, kategoria_nev FROM kategoria") ?: []
 $etelek = adatokLekerdezese("SELECT id, nev FROM etel") ?: [];
 $felhasznalok = adatokLekerdezese("SELECT id, felhasznalo_nev, jog_szint FROM felhasznalo") ?: [];
 
+
+
 if ($_SERVER['REQUEST_METHOD'] === 'POST') {
     $operation = $_POST['operation'];
 
     // Hozzáadás
     if ($operation === 'add') {
-        $nev = $_POST['nev'];
-        $egyseg_ar = (int)$_POST['egyseg_ar'];
-        $leiras = $_POST['leiras'];
-        $kategoria_id = (int)$_POST['kategoria_id'];
-        $kaloria = (int)$_POST['kaloria'];
-        $osszetevok = $_POST['osszetevok'];
-        $allergenek = $_POST['allergenek'];
+        $nev = trim($_POST['nev']);
+        $egyseg_ar = isset($_POST['egyseg_ar']) ? (int)$_POST['egyseg_ar'] : null;
+        $leiras = trim($_POST['leiras']);
+        $kategoria_id = isset($_POST['kategoria_id']) ? (int)$_POST['kategoria_id'] : null;
+        $kaloria = isset($_POST['kaloria']) ? (int)$_POST['kaloria'] : null;
+        $osszetevok = trim($_POST['osszetevok']);
+        $allergenek = trim($_POST['allergenek']);
 
-        $kep_url = "";
-        if (!empty($_FILES['kepek_url']['name'])) {
-            $allowedTypes = ['image/jpeg', 'image/png', 'image/gif'];
-            if (!in_array($_FILES['kepek_url']['type'], $allowedTypes)) {
-                $message = "<div class='alert alert-warning'>Csak JPG, PNG vagy GIF formátumú képek tölthetők fel!</div>";
-            } else {
-                $kepNev = preg_replace('/[^a-z0-9\-_]/i', '', $nev);
-                $kep_url = handleImageUpload($kategoria_id, $_FILES['kepek_url'], $kepNev);
-                if ($kep_url === false) {
-                    $message = "<div class='alert alert-warning'>Már létezik ilyen nevű kép ebben a kategóriában! Válassz másik ételnevet.</div>";
-                } elseif (!$kep_url) {
-                    $message = "<div class='alert alert-warning'>Hiba a kép feltöltése során!</div>";
+        // Validáció
+        if ($egyseg_ar < 0 || !is_numeric($egyseg_ar)) {
+            $message = "<div class='alert alert-warning'>Az egységár nem lehet negatív vagy érvénytelen szám!</div>";
+        } elseif ($kaloria < 0 || !is_numeric($kaloria)) {
+            $message = "<div class='alert alert-warning'>A kalória nem lehet negatív vagy érvénytelen szám!</div>";
+        } elseif (empty($nev) || empty($leiras) || empty($osszetevok) || !is_numeric($kategoria_id)) {
+            $message = "<div class='alert alert-warning'>Minden mező kitöltése kötelező, és a kategória érvénytelen!</div>";
+        } else {
+            $kep_url = "";
+            if (!empty($_FILES['kepek_url']['name'])) {
+                $allowedTypes = ['image/jpeg', 'image/png', 'image/gif'];
+                if (!in_array($_FILES['kepek_url']['type'], $allowedTypes)) {
+                    $message = "<div class='alert alert-warning'>Csak JPG, PNG vagy GIF formátumú képek tölthetők fel!</div>";
+                } else {
+                    $kepNev = preg_replace('/[^a-z0-9\-_]/i', '', $nev);
+                    $kep_url = handleImageUpload($kategoria_id, $_FILES['kepek_url'], $kepNev);
+                    if ($kep_url === false) {
+                        $message = "<div class='alert alert-warning'>Már létezik ilyen nevű kép ebben a kategóriában! Válassz másik ételnevet.</div>";
+                    } elseif (!$kep_url) {
+                        $message = "<div class='alert alert-warning'>Hiba a kép feltöltése során!</div>";
+                    }
                 }
             }
-        }
 
-        if (empty($message)) {
-            $muvelet = "INSERT INTO etel (nev, egyseg_ar, leiras, kategoria_id, kep_url, kaloria, osszetevok, allergenek) VALUES (?, ?, ?, ?, ?, ?, ?, ?)";
-            $parameterek = ['sisissss', $nev, $egyseg_ar, $leiras, $kategoria_id, $kep_url, $kaloria, $osszetevok, $allergenek];
-            $result = adatokValtoztatasa($muvelet, $parameterek);
-            $message = $result === 'Sikeres művelet!' 
-                ? "<div class='alert alert-success'>Étel sikeresen hozzáadva! Oldal újratöltése...</div><script>setTimeout(() => { location.reload(); }, 4000);</script>"
-                : "<div class='alert alert-warning'>Hiba: $result</div>";
+            if (empty($message)) {
+                $muvelet = "INSERT INTO etel (nev, egyseg_ar, leiras, kategoria_id, kep_url, kaloria, osszetevok, allergenek) VALUES (?, ?, ?, ?, ?, ?, ?, ?)";
+                $parameterek = ['sisissss', $nev, $egyseg_ar, $leiras, $kategoria_id, $kep_url, $kaloria, $osszetevok, $allergenek];
+                $result = adatokValtoztatasa($muvelet, $parameterek);
+                $message = $result === 'Sikeres művelet!' 
+                    ? "<div class='alert alert-success'>Étel sikeresen hozzáadva! Oldal újratöltése...</div><script>setTimeout(() => { location.reload(); }, 4000);</script>"
+                    : "<div class='alert alert-warning'>Hiba: $result</div>";
+            }
         }
     }
 
     // Szerkesztés
     if ($operation === 'edit') {
         $id = (int)$_POST['edit_etel'];
-        $nev = $_POST['edit_nev'];
-        $egyseg_ar = (int)$_POST['edit_egyseg_ar'];
-        $leiras = $_POST['edit_leiras'];
-        $kategoria_id = (int)$_POST['edit_kategoria_id'];
-        $kaloria = (int)$_POST['edit_kaloria'];
-        $osszetevok = $_POST['edit_osszetevok'];
-        $allergenek = $_POST['edit_allergenek'];
-    
-        $etel = adatokLekerdezese("SELECT nev, kep_url, kategoria_id FROM etel WHERE id = ?", ['i', $id]);
-        if (empty($etel)) {
-            $message = "<div class='alert alert-danger'>Étel nem található!</div>";
+        $nev = trim($_POST['edit_nev']);
+        $egyseg_ar = isset($_POST['edit_egyseg_ar']) ? (int)$_POST['edit_egyseg_ar'] : null;
+        $leiras = trim($_POST['edit_leiras']);
+        $kategoria_id = isset($_POST['edit_kategoria_id']) ? (int)$_POST['edit_kategoria_id'] : null;
+        $kaloria = isset($_POST['edit_kaloria']) ? (int)$_POST['edit_kaloria'] : null;
+        $osszetevok = trim($_POST['edit_osszetevok']);
+        $allergenek = trim($_POST['edit_allergenek']);
+
+        // Validáció
+        if ($egyseg_ar < 0 || !is_numeric($egyseg_ar)) {
+            $message = "<div class='alert alert-warning'>Az egységár nem lehet negatív vagy érvénytelen szám!</div>";
+        } elseif ($kaloria < 0 || !is_numeric($kaloria)) {
+            $message = "<div class='alert alert-warning'>A kalória nem lehet negatív vagy érvénytelen szám!</div>";
+        } elseif (empty($nev) || empty($leiras) || empty($osszetevok) || !is_numeric($kategoria_id)) {
+            $message = "<div class='alert alert-warning'>Minden mező kitöltése kötelező, és a kategória érvénytelen!</div>";
         } else {
-            $oldNev = $etel[0]['nev'] ?? '';
-            $oldKepUrl = $etel[0]['kep_url'] ?? '';
-            $oldKategoriaId = $etel[0]['kategoria_id'] ?? null;
-            $kep_url = $oldKepUrl;
-            $kepFeltoltesSikeres = false; // Új változó a képfeltöltés sikerességének jelzésére
-    
-            // Új kép feltöltése
-            if (!empty($_FILES['edit_kepek_url']['name'])) {
-                $allowedTypes = ['image/jpeg', 'image/png', 'image/gif'];
-                if (!in_array($_FILES['edit_kepek_url']['type'], $allowedTypes)) {
-                    $message = "<div class='alert alert-warning'>Csak JPG, PNG vagy GIF formátumú képek tölthetők fel!</div>";
-                } else {
-                    if ($oldKepUrl) {
-                        deleteImageFiles($oldKepUrl, $oldKategoriaId);
-                    }
-                    $kepNev = preg_replace('/[^a-z0-9\-_]/i', '', $nev);
-                    $kep_url = handleImageUpload($kategoria_id, $_FILES['edit_kepek_url'], $kepNev);
-                    if (!$kep_url) {
-                        $message = "<div class='alert alert-danger'>Hiba az új kép feltöltésekor!</div>";
+            $etel = adatokLekerdezese("SELECT nev, kep_url, kategoria_id FROM etel WHERE id = ?", ['i', $id]);
+            if (empty($etel)) {
+                $message = "<div class='alert alert-danger'>Étel nem található!</div>";
+            } else {
+                $oldNev = $etel[0]['nev'] ?? '';
+                $oldKepUrl = $etel[0]['kep_url'] ?? '';
+                $oldKategoriaId = $etel[0]['kategoria_id'] ?? null;
+                $kep_url = $oldKepUrl;
+                $kepFeltoltesSikeres = false;
+
+                // Új kép feltöltése
+                if (!empty($_FILES['edit_kepek_url']['name'])) {
+                    $allowedTypes = ['image/jpeg', 'image/png', 'image/gif'];
+                    if (!in_array($_FILES['edit_kepek_url']['type'], $allowedTypes)) {
+                        $message = "<div class='alert alert-warning'>Csak JPG, PNG vagy GIF formátumú képek tölthetők fel!</div>";
                     } else {
-                        $kepFeltoltesSikeres = true; // Sikeres képfeltöltés
+                        if ($oldKepUrl) {
+                            deleteImageFiles($oldKepUrl, $oldKategoriaId);
+                        }
+                        $kepNev = preg_replace('/[^a-z0-9\-_]/i', '', $nev);
+                        $kep_url = handleImageUpload($kategoria_id, $_FILES['edit_kepek_url'], $kepNev);
+                        if (!$kep_url) {
+                            $message = "<div class='alert alert-danger'>Hiba az új kép feltöltésekor, lehet, hogy a fájl már létezik!</div>";
+                        } else {
+                            $kepFeltoltesSikeres = true;
+                        }
                     }
                 }
-            }
-            // Név változtatása esetén a kép átnevezése
-            elseif ($oldKepUrl && $nev !== $oldNev) {
-                $newKepUrl = renameImageFile("$oldKategoriaId/$oldKepUrl", $nev);
-                if ($newKepUrl) {
-                    $kep_url = $newKepUrl;
-                } else {
-                    $message = "<div class='alert alert-danger'>Hiba a kép átnevezésekor!</div>";
+                // Név változtatása esetén a kép átnevezése
+                elseif ($oldKepUrl && $nev !== $oldNev) {
+                    $newKepUrl = renameImageFile("$oldKategoriaId/$oldKepUrl", $nev);
+                    if ($newKepUrl) {
+                        $kep_url = $newKepUrl;
+                    } else {
+                        $message = "<div class='alert alert-danger'>Hiba a kép átnevezésekor, lehet, hogy a fájl már létezik!</div>";
+                    }
                 }
-            }
-            // Kategóriaváltás esetén a kép áthelyezése
-            elseif ($oldKepUrl && $oldKategoriaId != $kategoria_id) {
-                $newKepUrl = moveImageToCategory($oldKategoriaId, $kategoria_id, $oldKepUrl);
-                if ($newKepUrl) {
-                    $kep_url = $newKepUrl;
-                } else {
-                    $message = "<div class='alert alert-danger'>Hiba a kép áthelyezésekor!</div>";
+                // Kategóriaváltás esetén a kép áthelyezése
+                elseif ($oldKepUrl && $oldKategoriaId != $kategoria_id) {
+                    $newKepUrl = moveImageToCategory($oldKategoriaId, $kategoria_id, $oldKepUrl);
+                    if ($newKepUrl) {
+                        $kep_url = $newKepUrl;
+                    } else {
+                        $message = "<div class='alert alert-danger'>Hiba a kép áthelyezésekor, lehet, hogy a fájl nem létezik vagy már létezik az új kategóriában!</div>";
+                    }
                 }
-            }
-    
-            if (empty($message)) {
-                $muvelet = "UPDATE etel SET nev = ?, egyseg_ar = ?, leiras = ?, kategoria_id = ?, kep_url = ?, kaloria = ?, osszetevok = ?, allergenek = ? WHERE id = ?";
-                $parameterek = ['sisissssi', $nev, $egyseg_ar, $leiras, $kategoria_id, $kep_url, $kaloria, $osszetevok, $allergenek, $id];
-                $result = adatokValtoztatasa($muvelet, $parameterek);
-    
-                // Ha a képfeltöltés sikeres volt VAGY az adatbázis-módosítás sikeres, akkor siker üzenet
-                if ($kepFeltoltesSikeres || $result === 'Sikeres művelet!') {
-                    $message = "<div class='alert alert-success'>Sikeres szerkesztés! Oldal újratöltése...</div><script>setTimeout(() => { location.reload(); }, 4000);</script>";
-                } else {
-                    $message = "<div class='alert alert-danger'>Hiba: " . ($result ?: "Nem történt változás") . "</div>";
+
+                if (empty($message)) {
+                    $muvelet = "UPDATE etel SET nev = ?, egyseg_ar = ?, leiras = ?, kategoria_id = ?, kep_url = ?, kaloria = ?, osszetevok = ?, allergenek = ? WHERE id = ?";
+                    $parameterek = ['sisissssi', $nev, $egyseg_ar, $leiras, $kategoria_id, $kep_url, $kaloria, $osszetevok, $allergenek, $id];
+                    $result = adatokValtoztatasa($muvelet, $parameterek);
+
+                    if ($kepFeltoltesSikeres || $result === 'Sikeres művelet!') {
+                        $message = "<div class='alert alert-success'>Sikeres szerkesztés! Oldal újratöltése...</div><script>setTimeout(() => { location.reload(); }, 4000);</script>";
+                    } else {
+                        $message = "<div class='alert alert-danger'>Hiba: " . ($result ?: "Nem történt változás") . "</div>";
+                    }
                 }
             }
         }
@@ -183,6 +202,7 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
         }
     }
 }
+
 ?>
 
 <!DOCTYPE html>
@@ -220,13 +240,12 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
             <div id="add-form" class="form-section" style="display:none;">
                 <h3>Hozzáadás</h3>
                 <input type="text" name="nev" placeholder="Név" class="form-control mb-2" required>
-                <input type="number" name="egyseg_ar" placeholder="Egységár" class="form-control mb-2" required>
+                <input type="number" name="egyseg_ar" placeholder="Egységár" class="form-control mb-2" min="0" step="1" onkeydown="blockE(event)" required>
                 <textarea name="leiras" placeholder="Leírás" class="form-control mb-2" required></textarea>
-                <input type="number" name="kaloria" placeholder="Kalória" class="form-control mb-2" required>
+                <input type="number" name="kaloria" placeholder="Kalória" class="form-control mb-2" min="0" step="1" onkeydown="blockE(event)" required>
                 <textarea name="osszetevok" placeholder="Összetevők" class="form-control mb-2" required></textarea>
-                <textarea name="allergenek" placeholder="Allergének" class="form-control mb-2" required></textarea>
-                <select name="kategoria_id" class="form-select mb-2" required>
-                    <option value="">Válassz kategóriát</option>
+                <textarea name="allergenek" placeholder="Allergének" class="form-control mb-2" required></textarea><select name="kategoria_id" class="form-select mb-2" required>
+                <option value="">Válassz kategóriát</option>
                     <?php foreach ($kategoriak as $kategoria): ?>
                         <option value="<?= htmlspecialchars($kategoria['id']) ?>">
                             <?= htmlspecialchars($kategoria['kategoria_nev']) ?>
@@ -249,12 +268,11 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
                     <?php endforeach; ?>
                 </select>
                 <input type="text" name="edit_nev" placeholder="Név" class="form-control mb-2" required>
-                <input type="number" name="edit_egyseg_ar" placeholder="Egységár" class="form-control mb-2" required>
+                <input type="number" name="edit_egyseg_ar" placeholder="Egységár" class="form-control mb-2" min="0" step="1" onkeydown="blockE(event)" required>
                 <textarea name="edit_leiras" placeholder="Leírás" class="form-control mb-2" required></textarea>
-                <input type="number" name="edit_kaloria" placeholder="Kalória" class="form-control mb-2" required>
+                <input type="number" name="edit_kaloria" placeholder="Kalória" class="form-control mb-2" min="0" step="1" onkeydown="blockE(event)" required>
                 <textarea name="edit_osszetevok" placeholder="Összetevők" class="form-control mb-2" required></textarea>
-                <textarea name="edit_allergenek" placeholder="Allergének" class="form-control mb-2" required></textarea>
-                <select name="edit_kategoria_id" class="form-select mb-2" required>
+                <textarea name="edit_allergenek" placeholder="Allergének" class="form-control mb-2" required></textarea><select name="edit_kategoria_id" class="form-select mb-2" required>
                     <option value="">Válassz kategóriát</option>
                     <?php foreach ($kategoriak as $kategoria): ?>
                         <option value="<?= htmlspecialchars($kategoria['id']) ?>">
@@ -486,6 +504,14 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
     if (window.history.replaceState) {
         window.history.replaceState(null, null, window.location.href);
     }
+
+    function blockE(event) {
+    if (event.key === 'e' || event.key === 'E') {
+        event.preventDefault();
+    }
+}
+
+
     </script>
     <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/js/bootstrap.bundle.min.js"></script>
     <script src="../js/navbar.js"></script>
