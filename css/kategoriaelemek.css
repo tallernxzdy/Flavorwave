@@ -129,7 +129,7 @@ html, body {
     transition: var(--transition);
     width: 100%;
     max-width: 300px;
-    height: auto; /* Visszaállítom automatikus magasságra */
+    height: 500px; /* Visszaállítom automatikus magasságra */
     min-height: 380px; /* Minimális magasság biztosítása */
     text-align: center;
     justify-content: space-between;
@@ -205,9 +205,9 @@ html, body {
     font-size: clamp(1.1rem, 1.8vw, 1.4rem);
     font-weight: 700;
     color: var(--text-dark);
-    background: rgba(212, 163, 115, 0.9); /* Aranyszín enyhe átlátszósággal */
+    background: rgba(212, 163, 115, 0.5); /* Aranyszín enyhe átlátszósággal */
     padding: 8px 15px;
-    border-radius: 25px; /* Ovális forma */
+    /* border-radius: 25px; Ovális forma */
     box-shadow: 0 4px 10px rgba(0, 0, 0, 0.2);
     margin: 10px 0 5px 0; /* Több hely a gombok előtt */
     text-align: center;
@@ -735,7 +735,8 @@ html, body {
     }
 
     .content-wrapper .menu__option {
-        min-height: 320px;
+        /* min-height: 320px; */
+        height: 300px;
     }
 
     .content-wrapper .image-wrapper {
@@ -747,13 +748,13 @@ html, body {
     }
 
     .content-wrapper .price {
-        font-size: clamp(0.75rem, 1.2vw, 0.9rem);
+        font-size: clamp(1rem, 1.2vw, 0.9rem);
         padding: 4px 8px;
     }
 
     .content-wrapper .order-btn {
         padding: clamp(0.4rem, 0.8vw, 0.6rem) clamp(0.8rem, 1.5vw, 1.2rem);
-        font-size: clamp(0.7rem, 1.3vw, 0.9rem);
+        font-size: clamp(1rem, 1.3vw, 0.9rem);
     }
 
     .content-wrapper .page-title {
@@ -811,7 +812,8 @@ html, body {
 
 @media (max-width: 360px) {
     .content-wrapper .menu__option {
-        min-height: 300px;
+        /* min-height: 300px; */
+        height: 300px ;
     }
 
     .content-wrapper .image-wrapper {
@@ -823,13 +825,13 @@ html, body {
     }
 
     .content-wrapper .price {
-        font-size: clamp(0.7rem, 1.1vw, 0.8rem);
+        font-size: clamp(1rem, 1.1vw, 0.8rem);
         padding: 3px 6px;
     }
 
     .content-wrapper .order-btn {
         padding: clamp(0.3rem, 0.6vw, 0.5rem) clamp(0.6rem, 1.2vw, 1rem);
-        font-size: clamp(0.6rem, 1.2vw, 0.8rem);
+        font-size: clamp(1rem, 1.2vw, 0.8rem);
     }
 
     .content-wrapper .page-title {
@@ -881,6 +883,6 @@ html, body {
     }
 
     .content-wrapper .order-btn.add-to-cart i {
-        font-size: clamp(0.7rem, 1vw, 0.9rem);
+        font-size: clamp(1rem, 1vw, 0.9rem);
     }
 }

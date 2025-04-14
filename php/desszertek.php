@@ -41,14 +41,20 @@ session_start();
                 echo '<div class="flex-grid">';
                 foreach ($kategoriak as $k) {
                     echo '
-                    <div class="flex-col">
+                                        <div class="flex-col">
                         <div class="menu__option" data-aos="fade-up" data-aos-delay="' . (100 * (array_search($k, $kategoriak) + 1)) . '">
                             <div class="image-wrapper">
                                 <img src="../kepek/7/' . htmlspecialchars($k['kep_url']) . '" alt="' . htmlspecialchars($k['nev']) . '">
                             </div>
                             <h2>' . htmlspecialchars($k['nev']) . '</h2>
                             <div class="title-underline"></div>
-                            <button class="order-btn details-btn" onclick="openCustomModal(\'modal-' . htmlspecialchars($k['id']) . '\')">Részletek</button>
+                            <p class="price">Ár: ' . htmlspecialchars($k['egyseg_ar']) . ' Ft</p>
+                            <div class="button-container">
+                                <button class="order-btn details-btn" onclick="openCustomModal(\'modal-' . htmlspecialchars($k['id']) . '\')">Részletek</button>
+                                <button class="order-btn add-to-cart" data-item-id="' . htmlspecialchars($k["id"]) . '" data-item="' . htmlspecialchars($k['nev']) . '" data-image="../kepek/3/' . htmlspecialchars($k['kep_url']) . '" onclick="addToCartOnly(\'' . htmlspecialchars($k["id"]) . '\')" title="Kosárba rakás">
+                                    <i class="fas fa-shopping-cart"></i>
+                                </button>
+                            </div>
                         </div>
                     </div>
 
@@ -63,10 +69,9 @@ session_start();
                                 <p><strong>Kalória:</strong> ' . htmlspecialchars($k['kaloria']) . ' kcal</p>
                                 <p><strong>Összetevők:</strong> ' . htmlspecialchars($k['osszetevok']) . '</p>
                                 <p><strong>Allergének:</strong> ' . htmlspecialchars($k['allergenek']) . '</p>
-                                <p><strong>Ár:</strong> ' . htmlspecialchars($k['egyseg_ar']) . ' Ft</p>
+                                <p><strong>Ár:</strong> ' . htmlspecialchars($k['egyseg_ar']) . ' Ft</p> <!-- Ár megjelenítése a modal-ban -->
                             </div>
                             <div class="custom-modal-footer">
-                                <button type="button" class="order-btn add-to-cart" data-item-id="' . htmlspecialchars($k["id"]) . '" data-item="' . htmlspecialchars($k['nev']) . '" data-image="../kepek/desszertek/' . htmlspecialchars($k['kep_url']) . '" onclick="addToCartAndClose(\'modal-' . htmlspecialchars($k['id']) . '\', \'' . htmlspecialchars($k["id"]) . '\')">Kosárba rakás</button>
                                 <button type="button" class="order-btn close-btn" onclick="closeCustomModal(\'modal-' . htmlspecialchars($k['id']) . '\')">Bezárás</button>
                             </div>
                         </div>
