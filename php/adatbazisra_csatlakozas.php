@@ -156,23 +156,35 @@ function moveImageToCategory($oldCategoryId, $newCategoryId, $fileName) {
     $baseDir = '../kepek/';
     $oldPath = $baseDir . $oldCategoryId . '/' . $fileName;
     $newCategoryDir = $baseDir . $newCategoryId . '/';
-    
+    $newPath = $newCategoryDir . $fileName;
+    $osszeskepPath = $baseDir . 'osszeskep/' . $fileName;
+
+    // Ellenőrizzük, hogy létezik-e a régi fájl
+    if (!file_exists($oldPath)) {
+        return false; // A fájl nem létezik, nem tudjuk áthelyezni
+    }
+
+    // Hozzuk létre az új kategória mappát, ha nem létezik
     if (!file_exists($newCategoryDir)) {
         mkdir($newCategoryDir, 0755, true);
     }
-    
-    $newPath = $newCategoryDir . $fileName;
-    
-    if (file_exists($oldPath) && !file_exists($newPath)) {
-        if (rename($oldPath, $newPath)) {
-            $osszeskepPath = $baseDir . 'osszeskep/' . $fileName;
-            if (file_exists($osszeskepPath)) {
-                copy($newPath, $osszeskepPath);
-            }
-            return $fileName;
-        }
+
+    // Ellenőrizzük, hogy az új helyen nem létezik-e már a fájl
+    if (file_exists($newPath)) {
+        return false; // Már létezik ilyen nevű fájl az új kategóriában
     }
-    return false;
+
+    // Próbáljuk meg áthelyezni a fájlt
+    if (rename($oldPath, $newPath)) {
+        // Frissítsük az osszeskep mappát
+        if (file_exists($osszeskepPath)) {
+            unlink($osszeskepPath); // Töröljük a régi másolatot
+        }
+        copy($newPath, $osszeskepPath); // Másoljuk az új helyre
+        return $fileName; // Visszaadjuk a fájlnevet
+    }
+
+    return false; // Sikertelen áthelyezés
 }
 
 function renameImageFile($oldPath, $newName) {
