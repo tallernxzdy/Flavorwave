@@ -64,8 +64,7 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
                 if (!in_array($_FILES['kepek_url']['type'], $allowedTypes)) {
                     $message = "<div class='alert alert-warning'>Csak JPG, PNG vagy GIF formátumú képek tölthetők fel!</div>";
                 } else {
-                    $kepNev = preg_replace('/[^a-z0-9\-_]/i', '', $nev);
-                    $kep_url = handleImageUpload($kategoria_id, $_FILES['kepek_url'], $kepNev);
+                    $kep_url = handleImageUpload($kategoria_id, $_FILES['kepek_url'], $nev); // Közvetlenül $nev
                     if ($kep_url === false) {
                         $message = "<div class='alert alert-warning'>Már létezik ilyen nevű kép ebben a kategóriában! Válassz másik ételnevet.</div>";
                     } elseif (!$kep_url) {
@@ -121,10 +120,9 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
                         $message = "<div class='alert alert-warning'>Csak JPG, PNG vagy GIF formátumú képek tölthetők fel!</div>";
                     } else {
                         if ($oldKepUrl) {
-                            deleteImageFiles($oldKepUrl, $oldKategoriaId);
+                            deleteImageFiles($oldKepUrl, $oldKategoriaId); // Töröljük a régi képet
                         }
-                        $kepNev = preg_replace('/[^a-z0-9\-_]/i', '', $nev);
-                        $kep_url = handleImageUpload($kategoria_id, $_FILES['edit_kepek_url'], $kepNev);
+                        $kep_url = handleImageUpload($kategoria_id, $_FILES['edit_kepek_url'], $nev);
                         if (!$kep_url) {
                             $message = "<div class='alert alert-danger'>Hiba az új kép feltöltésekor, lehet, hogy a fájl már létezik!</div>";
                         } else {
@@ -132,8 +130,8 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
                         }
                     }
                 }
-                // Név változtatása esetén a kép átnevezése
-                elseif ($oldKepUrl && $nev !== $oldNev) {
+                // Név változtatása esetén
+                elseif ($oldKepUrl && $nev !== $oldNev && $oldKategoriaId == $kategoria_id) {
                     $newKepUrl = renameImageFile("$oldKategoriaId/$oldKepUrl", $nev);
                     if ($newKepUrl) {
                         $kep_url = $newKepUrl;
@@ -141,11 +139,16 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
                         $message = "<div class='alert alert-danger'>Hiba a kép átnevezésekor, lehet, hogy a fájl már létezik!</div>";
                     }
                 }
-                // Kategóriaváltás esetén a kép áthelyezése
+                // Kategóriaváltás esetén
                 elseif ($oldKepUrl && $oldKategoriaId != $kategoria_id) {
                     $newKepUrl = moveImageToCategory($oldKategoriaId, $kategoria_id, $oldKepUrl);
                     if ($newKepUrl) {
                         $kep_url = $newKepUrl;
+                        // Biztosítjuk, hogy a régi kategóriában ne maradjon fájl
+                        $oldPath = "../kepek/$oldKategoriaId/$oldKepUrl";
+                        if (file_exists($oldPath)) {
+                            unlink($oldPath); // Töröljük, ha még létezik
+                        }
                     } else {
                         $message = "<div class='alert alert-danger'>Hiba a kép áthelyezésekor, lehet, hogy a fájl nem létezik vagy már létezik az új kategóriában!</div>";
                     }
