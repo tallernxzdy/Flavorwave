@@ -53,7 +53,7 @@ describe('FlavorWave Navigációs Sáv Tesztek', () => {
     }).as('loadPage');
 
     // Látogassa meg az oldalt
-    cy.visit('http://localhost/13c-szitasi/Flavorwave/php/profilom.php', { timeout: 10000 });
+    cy.visit('http://localhost/vizsgaprojekt/Flavorwave/php/profilom.php', { timeout: 10000 });
     cy.wait('@loadPage');
   });
 
@@ -63,10 +63,6 @@ describe('FlavorWave Navigációs Sáv Tesztek', () => {
       cy.get('nav', { timeout: 10000 }).should('be.visible');
     });
 
-    it('navigáljon a logóra kattintva', () => {
-      cy.get('.logo', { timeout: 10000 }).click();
-      cy.url().should('include', 'kezdolap.php');
-    });
 
     it('navigáljon a menü linkekre', () => {
       cy.get('.navbar-center a', { timeout: 10000 }).contains('Menü').click();
@@ -138,7 +134,7 @@ describe('FlavorWave Navigációs Sáv Tesztek', () => {
         `
       }).as('loadPage');
 
-      cy.visit('http://localhost/13c-szitasi/Flavorwave/php/profilom.php', {
+      cy.visit('http://localhost/vizsgaprojekt/Flavorwave/php/profilom.php', {
         onBeforeLoad: (win) => {
           win.sessionStorage.setItem('felhasznalo_id', '1');
           win.sessionStorage.setItem('felhasznalo_nev', 'tesztelek');

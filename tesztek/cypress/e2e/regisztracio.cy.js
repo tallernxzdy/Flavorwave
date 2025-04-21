@@ -1,7 +1,7 @@
 describe('FlavorWave Regisztráció Oldal Tesztek', () => {
   beforeEach(() => {
     // Látogassa meg a regisztráció oldalt minden teszt előtt, növelt időzítéssel
-    cy.visit('http://localhost/13c-szitasi/Flavorwave/php/regisztracio.php', { timeout: 10000 });
+    cy.visit('http://localhost/vizsgaprojekt/Flavorwave/php/regisztracio.php', { timeout: 10000 });
   });
 
   // Navigációs Tesztek

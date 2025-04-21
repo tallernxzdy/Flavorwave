@@ -183,7 +183,7 @@ describe('FlavorWave Hamburgerek Kategória Tesztek', () => {
     }).as('loadPage');
 
     // Látogassa meg az oldalt
-    cy.visit('http://localhost/13c-szitasi/Flavorwave/php/kategoriaelemek.php');
+    cy.visit('http://localhost/vizsgaprojekt/Flavorwave/php/kategoriaelemek.php');
     cy.wait('@loadPage');
   });
 

@@ -1,7 +1,7 @@
 describe('FlavorWave Rendeléseim Oldal Tesztek', () => {
   beforeEach(() => {
     // Alapértelmezett várakozási idő növelése
-    cy.visit('http://localhost/13c-szitasi/Flavorwave/php/rendeles_megtekintes.php', { timeout: 10000 }); // 10 másodperc
+    cy.visit('http://localhost/vizsgaprojekt/Flavorwave/php/rendeles_megtekintes.php', { timeout: 10000 }); // 10 másodperc
   });
 
   // Navigációs Tesztek
@@ -67,7 +67,7 @@ describe('FlavorWave Rendeléseim Oldal Tesztek', () => {
           `
         });
       }).as('getNoOrders');
-      cy.visit('http://localhost/13c-szitasi/Flavorwave/php/rendeles_megtekintes.php');
+      cy.visit('http://localhost/vizsgaprojekt/Flavorwave/php/rendeles_megtekintes.php');
       cy.get('.no-orders', { timeout: 10000 }).contains('Úgy tűnik, még nem adtál fel rendelést nálunk.').should('be.visible');
     });
   });

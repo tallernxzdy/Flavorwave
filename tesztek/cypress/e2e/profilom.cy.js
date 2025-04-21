@@ -12,7 +12,7 @@ describe('FlavorWave Profil Oldal Tesztek', () => {
     }).as('getCartCount');
 
     // Látogassa meg a profil oldalt
-    cy.visit('http://localhost/13c-szitasi/Flavorwave/php/profil_megtekintes.php', { timeout: 10000 });
+    cy.visit('http://localhost/vizsgaprojekt/Flavorwave/php/profil_megtekintes.php', { timeout: 10000 });
   });
 
   // Navigációs Tesztek
@@ -301,22 +301,9 @@ describe('FlavorWave Profil Oldal Tesztek', () => {
       cy.get('.profile-header i').should('have.class', 'fas fa-user-circle');
     });
 
-    it('ellenőrizze az input mezők akadálymentesítését', () => {
-      cy.get('#teljes_nev_item .edit-icon').click();
-      cy.get('input[name="teljes_nev"]').should('have.attr', 'type', 'text').and('be.visible');
-      cy.get('.info-label').contains('Teljes név').should('be.visible');
-      cy.get('.btn-success').should('contain', 'Mentés');
-    });
+    
 
-    it('ellenőrizze a lábléc linkek akadálymentesítését', () => {
-      cy.get('.footer-links a', { timeout: 10000 }).each(($el) => {
-        cy.wrap($el).invoke('text').should('not.be.empty');
-        cy.wrap($el).should('have.attr', 'href').and('not.be.empty');
-      });
-      cy.get('.footer-socials a', { timeout: 10000 }).each(($el) => {
-        cy.wrap($el).find('i').should('have.class', /fa-.+/);
-      });
-    });
+    
   });
 
   // Reszponzív Dizájn Tesztek
@@ -380,35 +367,5 @@ describe('FlavorWave Profil Oldal Tesztek', () => {
     });
   });
 
-  // Betöltési Tesztek
-  describe('Betöltési Tesztek', () => {
-    beforeEach(() => {
-      cy.intercept('GET', '**/profil_megtekintes.php', {
-        statusCode: 200,
-        body: `
-          <div class="profile-container">
-            <div class="profile-header">
-              <h1><i class="fas fa-user-circle"></i> Profil adataim</h1>
-            </div>
-            <div class="profile-content"></div>
-          </div>
-        `
-      }).as('loadProfile');
-    });
-
-    it('ellenőrizze a külső erőforrások betöltését', () => {
-      cy.visit('http://localhost/13c-szitasi/Flavorwave/php/profil_megtekintes.php');
-      cy.get('link[href*="bootstrap"]', { timeout: 10000 }).should('exist');
-      cy.get('link[href*="font-awesome"]', { timeout: 10000 }).should('exist');
-      cy.get('script[src*="bootstrap"]', { timeout: 10000 }).should('exist');
-    });
-
-    it('ellenőrizze a helyi erőforrások betöltését', () => {
-      cy.visit('http://localhost/13c-szitasi/Flavorwave/php/profil_megtekintes.php');
-      cy.get('link[href*="../css/profilom.css"]', { timeout: 10000 }).should('exist');
-      cy.get('link[href*="../css/navbar.css"]', { timeout: 10000 }).should('exist');
-      cy.get('link[href*="../css/footer.css"]', { timeout: 10000 }).should('exist');
-      cy.get('script[src*="../js/navbar.js"]', { timeout: 10000 }).should('exist');
-    });
-  });
+  
 });

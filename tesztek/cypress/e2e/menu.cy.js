@@ -1,7 +1,7 @@
 describe('FlavorWave Kategóriák Oldal Tesztek', () => {
   beforeEach(() => {
     // Látogassa meg a kategóriák oldalt minden teszt előtt
-    cy.visit('http://localhost/13c-szitasi/Flavorwave/php/kategoria.php'); // Módosítsd, ha más az URL
+    cy.visit('http://localhost/vizsgaprojekt/Flavorwave/php/kategoria.php'); // Módosítsd, ha más az URL
   });
 
   // Navigációs Tesztek

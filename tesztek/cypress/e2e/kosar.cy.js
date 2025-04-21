@@ -1,7 +1,7 @@
 describe('FlavorWave Kosár Oldal Tesztek (Üres Kosár)', () => {
   beforeEach(() => {
     // Látogassa meg a kosár oldalt minden teszt előtt
-    cy.visit('http://localhost/13c-szitasi/Flavorwave/php/kosar.php', { timeout: 10000 });
+    cy.visit('http://localhost/vizsgaprojekt/Flavorwave/php/kosar.php', { timeout: 10000 });
   });
 
   // Navigációs Tesztek
@@ -45,7 +45,7 @@ describe('FlavorWave Kosár Oldal Tesztek (Üres Kosár)', () => {
     beforeEach(() => {
       // Mockoljuk a bejelentkezett felhasználót és az üres kosarat
       cy.intercept('GET', '**/get_cart_count.php', { statusCode: 200, body: { count: 0 } }).as('getCartCount');
-      cy.visit('http://localhost/13c-szitasi/Flavorwave/php/kosar.php', {
+      cy.visit('http://localhost/vizsgaprojekt/Flavorwave/php/kosar.php', {
         onBeforeLoad: (win) => {
           win.sessionStorage.setItem('felhasznalo_id', '1');
         }
@@ -71,7 +71,7 @@ describe('FlavorWave Kosár Oldal Tesztek (Üres Kosár)', () => {
         `
       }).as('loadCart');
 
-      cy.visit('http://localhost/13c-szitasi/Flavorwave/php/kosar.php');
+      cy.visit('http://localhost/vizsgaprojekt/Flavorwave/php/kosar.php');
       cy.get('.cart-item', { timeout: 10000 }).should('not.exist');
       cy.get('.total-amount').should('contain', '0 Ft');
       cy.get('.checkout-section .error').should('contain', 'A kosár üres, rendeléshez adjon hozzá termékeket!');
@@ -85,7 +85,7 @@ describe('FlavorWave Kosár Oldal Tesztek (Üres Kosár)', () => {
     beforeEach(() => {
       // Mockoljuk az üres vendég kosarat
       cy.intercept('GET', '**/get_cart_count.php', { statusCode: 200, body: { count: 0 } }).as('getCartCount');
-      cy.visit('http://localhost/13c-szitasi/Flavorwave/php/kosar.php', {
+      cy.visit('http://localhost/vizsgaprojekt/Flavorwave/php/kosar.php', {
         onBeforeLoad: (win) => {
           win.sessionStorage.removeItem('felhasznalo_id');
           win.document.cookie = 'guest_cart=; expires=Thu, 01 Jan 1970 00:00:00 GMT; path=/';
@@ -114,7 +114,7 @@ describe('FlavorWave Kosár Oldal Tesztek (Üres Kosár)', () => {
         `
       }).as('loadCart');
 
-      cy.visit('http://localhost/13c-szitasi/Flavorwave/php/kosar.php');
+      cy.visit('http://localhost/vizsgaprojekt/Flavorwave/php/kosar.php');
       cy.get('.cart-item', { timeout: 10000 }).should('not.exist');
       cy.get('.total-amount').should('contain', '0 Ft');
       cy.get('.checkout-section .error').should('contain', 'A kosár üres, rendeléshez adjon hozzá termékeket!');
@@ -144,7 +144,7 @@ describe('FlavorWave Kosár Oldal Tesztek (Üres Kosár)', () => {
         `
       }).as('loadCart');
 
-      cy.visit('http://localhost/13c-szitasi/Flavorwave/php/kosar.php');
+      cy.visit('http://localhost/vizsgaprojekt/Flavorwave/php/kosar.php');
       cy.get('.login-btn').click();
       cy.url().should('include', 'bejelentkezes.php');
     });
@@ -154,7 +154,7 @@ describe('FlavorWave Kosár Oldal Tesztek (Üres Kosár)', () => {
   describe('Hozzáférhetőségi Tesztek', () => {
     beforeEach(() => {
       cy.intercept('GET', '**/get_cart_count.php', { statusCode: 200, body: { count: 0 } }).as('getCartCount');
-      cy.visit('http://localhost/13c-szitasi/Flavorwave/php/kosar.php', {
+      cy.visit('http://localhost/vizsgaprojekt/Flavorwave/php/kosar.php', {
         onBeforeLoad: (win) => {
           win.sessionStorage.removeItem('felhasznalo_id');
           win.document.cookie = 'guest_cart=; expires=Thu, 01 Jan 1970 00:00:00 GMT; path=/';
@@ -183,7 +183,7 @@ describe('FlavorWave Kosár Oldal Tesztek (Üres Kosár)', () => {
         `
       }).as('loadCart');
 
-      cy.visit('http://localhost/13c-szitasi/Flavorwave/php/kosar.php');
+      cy.visit('http://localhost/vizsgaprojekt/Flavorwave/php/kosar.php');
       cy.get('.cart-header h1').should('have.text', 'Kosár').and('be.visible');
       cy.get('.login-btn').should('have.text', 'Bejelentkezés').and('have.attr', 'href', 'bejelentkezes.php');
     });
@@ -219,7 +219,7 @@ describe('FlavorWave Kosár Oldal Tesztek (Üres Kosár)', () => {
         `
       }).as('loadCart');
 
-      cy.visit('http://localhost/13c-szitasi/Flavorwave/php/kosar.php');
+      cy.visit('http://localhost/vizsgaprojekt/Flavorwave/php/kosar.php');
       cy.get('.footer-links a', { timeout: 10000 }).each(($el) => {
         cy.wrap($el).invoke('text').should('not.be.empty');
         cy.wrap($el).should('have.attr', 'href').and('not.be.empty');
@@ -262,7 +262,7 @@ describe('FlavorWave Kosár Oldal Tesztek (Üres Kosár)', () => {
       }).as('loadCart');
 
       cy.viewport('iphone-x');
-      cy.visit('http://localhost/13c-szitasi/Flavorwave/php/kosar.php');
+      cy.visit('http://localhost/vizsgaprojekt/Flavorwave/php/kosar.php');
       cy.get('.cart-header h1', { timeout: 10000 }).should('be.visible');
       cy.get('.total-amount', { timeout: 10000 }).should('be.visible');
       cy.get('.checkout-section .error', { timeout: 10000 }).should('be.visible');
@@ -289,7 +289,7 @@ describe('FlavorWave Kosár Oldal Tesztek (Üres Kosár)', () => {
       }).as('loadCart');
 
       cy.viewport('ipad-2');
-      cy.visit('http://localhost/13c-szitasi/Flavorwave/php/kosar.php');
+      cy.visit('http://localhost/vizsgaprojekt/Flavorwave/php/kosar.php');
       cy.get('.cart-header h1', { timeout: 10000 }).should('be.visible');
       cy.get('.total-amount', { timeout: 10000 }).should('be.visible');
       cy.get('.checkout-section .error', { timeout: 10000 }).should('be.visible');
@@ -321,7 +321,7 @@ describe('FlavorWave Kosár Oldal Tesztek (Üres Kosár)', () => {
         `
       }).as('loadCart');
 
-      cy.visit('http://localhost/13c-szitasi/Flavorwave/php/kosar.php');
+      cy.visit('http://localhost/vizsgaprojekt/Flavorwave/php/kosar.php');
       // Ellenőrizzük, hogy van-e bármilyen külső CSS vagy JS betöltés
 
     });

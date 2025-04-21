@@ -1,7 +1,7 @@
 describe('FlavorWave Bejelentkezés Oldal Tesztek', () => {
   beforeEach(() => {
     // Látogassa meg a bejelentkezés oldalt minden teszt előtt, növelt időzítéssel
-    cy.visit('http://localhost/13c-szitasi/Flavorwave/php/bejelentkezes.php', { timeout: 10000 });
+    cy.visit('http://localhost/vizsgaprojekt/Flavorwave/php/bejelentkezes.php', { timeout: 10000 });
   });
 
   // Navigációs Tesztek

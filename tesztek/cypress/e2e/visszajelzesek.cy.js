@@ -121,7 +121,7 @@ describe('FlavorWave Visszajelzések Oldal Tesztek', () => {
     }).as('loadPage');
 
     // Látogassa meg az oldalt bejelentkezett felhasználóval
-    cy.visit('http://localhost/13c-szitasi/Flavorwave/php/visszajelzesek.php', {
+    cy.visit('http://localhost/vizsgaprojekt/Flavorwave/php/visszajelzesek.php', {
       onBeforeLoad: (win) => {
         win.sessionStorage.setItem('felhasznalo_id', '1');
         win.sessionStorage.setItem('felhasznalo_nev', 'tesztelek');
@@ -167,7 +167,7 @@ describe('FlavorWave Visszajelzések Oldal Tesztek', () => {
         `
       }).as('loadPageNoAuth');
 
-      cy.visit('http://localhost/13c-szitasi/Flavorwave/php/visszajelzesek.php', {
+      cy.visit('http://localhost/vizsgaprojekt/Flavorwave/php/visszajelzesek.php', {
         onBeforeLoad: (win) => {
           win.sessionStorage.clear();
         }
@@ -264,7 +264,7 @@ describe('FlavorWave Visszajelzések Oldal Tesztek', () => {
         `
       }).as('loadPageWithFeedback');
 
-      cy.visit('http://localhost/13c-szitasi/Flavorwave/php/visszajelzesek.php', {
+      cy.visit('http://localhost/vizsgaprojekt/Flavorwave/php/visszajelzesek.php', {
         onBeforeLoad: (win) => {
           win.sessionStorage.setItem('felhasznalo_id', '1');
         }
@@ -331,7 +331,7 @@ describe('FlavorWave Visszajelzések Oldal Tesztek', () => {
         `
       }).as('loadPageWithFeedbacks');
 
-      cy.visit('http://localhost/13c-szitasi/Flavorwave/php/visszajelzesek.php', {
+      cy.visit('http://localhost/vizsgaprojekt/Flavorwave/php/visszajelzesek.php', {
         onBeforeLoad: (win) => {
           win.sessionStorage.setItem('felhasznalo_id', '1');
         }

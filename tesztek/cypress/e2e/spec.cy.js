@@ -1,7 +1,7 @@
 describe('FlavorWave Website Tests', () => {
   beforeEach(() => {
     // Visit the homepage before each test
-    cy.visit('http://localhost/13c-szitasi/Flavorwave/php/kezdolap.php'); // Adjust URL based on your local server
+    cy.visit('http://localhost/vizsgaprojekt/Flavorwave/php/kezdolap.php'); // Adjust URL based on your local server
   });
 
   // Test Navigation
