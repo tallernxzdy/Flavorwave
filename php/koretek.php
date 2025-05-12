@@ -66,6 +66,7 @@ session_start();
                             </div>
                             <div class="custom-modal-body">
                                 <img src="../kepek/6/' . htmlspecialchars($k['kep_url']) . '" class="img-fluid mb-3" alt="' . htmlspecialchars($k['nev']) . '">
+                                <p><strong>Leírás: </strong>'. htmlspecialchars($k['leiras']) . '</p>
                                 <p><strong>Kalória:</strong> ' . htmlspecialchars($k['kaloria']) . ' kcal</p>
                                 <p><strong>Összetevők:</strong> ' . htmlspecialchars($k['osszetevok']) . '</p>
                                 <p><strong>Allergének:</strong> ' . htmlspecialchars($k['allergenek']) . '</p>

@@ -61,32 +61,32 @@ session_start();
         <div class="slides">
             <div class="slide">
                 <div class="text">
-                    <h3>25% minden Pizzából!</h3>
-                    <p>Csak Ma! Használd a kuponkódunkat: <strong>Pizza25</strong></p>
-                    <a href="../php/pizza.php" class="btn">Rendelj most</a>
+                    <h3>Pizza Újdonságok</h3>
+                    <p>A <strong>gomba</strong> szerelmeseinek: ez a pizza telitalálat.</p>
+                    <a href="../php/pizza.php" class="btn">Megkóstolom</a>
                 </div>
                 <div class="image">
-                    <img src="../kepek/4/pizza3.jpg" alt="Burger Deal">
+                    <img src="../kepek/4/gombaspizza.jpg" alt="Burger Deal">
                 </div>
             </div>
             <div class="slide">
                 <div class="text">
-                    <h3>Ingyenes Desszert!</h3>
-                    <p>Minden 10.000Ft-s rendelés felett egy általad választható desszertet adunk, teljesen ingyen!</p>
-                    <a href="../php/desszertek.php" class="btn">Kérem a desszertet!</a>
+                    <h3>Hamburger Újdonságok</h3>
+                    <p><strong>Baconos</strong> hamburger – ahol a ropogós találkozik a szaftossal.</p>
+                    <a href="../php/hamburger.php" class="btn">Megkóstolom</a>
                 </div>
                 <div class="image">
-                    <img src="../kepek/7/almaspite.jpeg" alt="Dessert Offer">
+                    <img src="../kepek/3/baconburger.jpg" alt="Dessert Offer">
                 </div>
             </div>
             <div class="slide">
                 <div class="text">
-                    <h3>Kettőt fizet, hármat kap!</h3>
-                    <p>Minden 2 darab megrendelt pizza mellé szabadon választhatsz egy harmadikat. Használd a kuponunkat a beváltáshoz: <strong>PIZZADEAL</strong></p>
-                    <a href="../php/pizza.php" class="btn">Ragadd meg az alkalmat</a>
+                    <h3>Hot Dog Újdonságok</h3>
+                    <p>Ananászos élmény – csak a Hawaii Hot Dogban!</p>
+                    <a href="../php/hotdog.php" class="btn">Megkóstolom</a>
                 </div>
                 <div class="image">
-                    <img src="../kepek/4/pizza2.jpg" alt="Pizza Deal">
+                    <img src="../kepek/5/hawaii-hot-dog.jpg" alt="Pizza Deal">
                 </div>
             </div>
         </div>
@@ -211,48 +211,7 @@ session_start();
 
 
 
-    <!-- <div class="quiz-wrapper">
-        <div class="quiz-container">
-            <h1>Nem tudod milyen pizzát válassz?</h1>
-            <p>Mi segítünk! Csak válassz tetszésnek megfelelő alapanyagot!</p>
-            <div class="quiz-question active">
-                <i class="fas fa-pizza-slice"></i>
-                <h2>Milyen pizzát szeretnél?</h2>
-                <div class="quiz-options">
-                    <button data-type="meat">Húsos</button>
-                    <button data-type="veggie">Zöldséges</button>
-                    <button data-type="cheese">Sajtos</button>
-                </div>
-            </div>
-            <div class="quiz-question">
-                <i class="fas fa-pepper-hot"></i>
-                <h2>Mennyire szereted a csípőset?</h2>
-                <div class="quiz-options">
-                    <button data-spice="mild">Enyhén</button>
-                    <button data-spice="medium">Közepesen</button>
-                    <button data-spice="hot">Nagyon</button>
-                </div>
-            </div>
-            <div class="quiz-question">
-                <i class="fas fa-cheese"></i>
-                <h2>Mennyi sajtot szeretnél?</h2>
-                <div class="quiz-options">
-                    <button data-cheese="light">Kevés</button>
-                    <button data-cheese="normal">Normál</button>
-                    <button data-cheese="extra">Extra</button>
-                </div>
-            </div>
-            <div class="quiz-result-card">
-                <h2>Az ajánlott ételed:</h2>
-                <p id="recommended-food"></p>
-                <div class="image-container">
-                    <img id="food-image" src="../kepek/pizzak/pizza2.jpg" alt="Ajánlott étel">
-                </div>
-                <a id="order-link" href="#">Megrendelem!</a>
-            </div>
-        </div>
-    </div> -->
-
+    
     <div class="shaker-master-container">
     <div class="shaker-master">
         <div class="shaker-slides">

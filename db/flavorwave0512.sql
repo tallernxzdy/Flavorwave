@@ -3,7 +3,7 @@
 -- https://www.phpmyadmin.net/
 --
 -- Gép: 127.0.0.1
--- Létrehozás ideje: 2025. Már 29. 10:07
+-- Létrehozás ideje: 2025. Máj 12. 11:46
 -- Kiszolgáló verziója: 10.4.32-MariaDB
 -- PHP verzió: 8.2.12
 
@@ -83,7 +83,8 @@ INSERT INTO `etel` (`id`, `nev`, `egyseg_ar`, `leiras`, `kategoria_id`, `kep_url
 (43, 'Standard burger', 1400, 'Egyszerű burger húspogácsával és zöldségekkel', 3, 'standardburger.jpg', 450, 'Zsemle, marhahús, saláta, paradicsom, szószok', 'Glutén'),
 (73, 'Hosszú kávé', 450, 'A kávé hosszan tartó élménye! Enyhén lágyabb, mégis telt ízvilág, amely tökéletes választás, ha egy hosszabb kávészünetre vágysz.\nÖsszetevők: Espresso, forró víz', 9, 'hosszukave.jpg', 200, 'Espresso, forró víz', 'Nincs ismert allergén'),
 (74, 'Espresso', 400, 'Intenzív, karakteres és igazán olasz! Egyetlen korty, amely felébreszti az érzékeket, és energiával tölti fel a nap bármely szakában.', 9, 'espresso.jpg', 100, '100% arabica kávé', 'Nincs ismert allergén'),
-(75, 'Tejeskávé', 500, 'A selymesen lágy tejeskávé tökéletes társ a lassú reggelekhez vagy egy kellemes délutáni beszélgetéshez. Lágy tejhab és gazdag kávé egyensúlya minden kortyban.\r\nÖsszetevők: Espresso, gőzölt tej, tejhab', 9, 'tejeskave.jpg', 150, 'Espresso, gőzölt tej, tejhab', 'Tej (laktóz)');
+(75, 'Tejeskávé', 500, 'A selymesen lágy tejeskávé tökéletes társ a lassú reggelekhez vagy egy kellemes délutáni beszélgetéshez. Lágy tejhab és gazdag kávé egyensúlya minden kortyban.\r\nÖsszetevők: Espresso, gőzölt tej, tejhab', 9, 'tejeskave.jpg', 150, 'Espresso, gőzölt tej, tejhab', 'Tej (laktóz)'),
+(76, 'Hawaii Hot Dog', 1000, 'Ananász, virsli és BBQ szósz egy nyári hangulatú, különleges hot dogban.', 5, 'hawaii-hot-dog.jpg', 550, 'puha kifli, grillezett virsli, ananászkarika, BBQ szósz, petrezselyem', 'Glutén, Szója');
 
 -- --------------------------------------------------------
 
@@ -108,7 +109,10 @@ CREATE TABLE `felhasznalo` (
 
 INSERT INTO `felhasznalo` (`id`, `felhasznalo_nev`, `email_cim`, `jelszo`, `tel_szam`, `lakcim`, `jog_szint`, `Teljes_nev`) VALUES
 (4, 'main', '13c-borondi@ipari.vein.hu', '$2y$10$61bO5xSX5AjCzX7o1CIEFeaR3MD7gDpI2E.WqB/IB6wKZlAKVfbC.', '06201234568', 'Herend utca 20', 1, ''),
-(5, 'gergodarida', '13c-darida@ipari.vein.hu', '$2y$10$/30eTdd9z9/ZgntyQZEnZ.VrwjmDnP.MsKs7v6Ngfkz8E7KsKqBFa', '+36201234567', '', 2, '');
+(5, 'gergodarida', '13c-darida@ipari.vein.hu', '$2y$10$/30eTdd9z9/ZgntyQZEnZ.VrwjmDnP.MsKs7v6Ngfkz8E7KsKqBFa', '+36201234567', '', 2, ''),
+(6, 'robesz', 'robesz0607@gmail.com', '$2y$10$miZDChHctR.Wcxsg/iA4OeGvdOVmIQJqxgyAnc/LcJO1Uq8EZP.Ni', '+36203128120', 'Óvári 5.', 0, 'Csajági Renáta'),
+(7, 'zazi', '13c-szitasi@ipari.vein.hu', '$2y$10$zLT0OiMcdN9FuvtKXX9YYeASCS/DdrqvolT8uowZG7Q3QbHglEGM6', '06201233214', 'Vadvirág utca 5.', 0, 'Szitási Zalán'),
+(8, 'zaza', 'zaza0624@gmail.com', '$2y$10$76SB11ckbSUP9/gHzNjDt.o4mXcM1n/RqI.RoaTOq43VTuy3Q2vtW', '+36304724186', '', 0, '');
 
 -- --------------------------------------------------------
 
@@ -138,19 +142,6 @@ INSERT INTO `kategoria` (`id`, `kategoria_nev`, `kep_url`) VALUES
 -- --------------------------------------------------------
 
 --
--- Tábla szerkezet ehhez a táblához `kuponok`
---
-
-CREATE TABLE `kuponok` (
-  `id` int(11) NOT NULL,
-  `kategoriaId` int(11) NOT NULL,
-  `leiras` varchar(255) NOT NULL,
-  `szazalek` double NOT NULL
-) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_general_ci;
-
--- --------------------------------------------------------
-
---
 -- Tábla szerkezet ehhez a táblához `megrendeles`
 --
 
@@ -170,7 +161,9 @@ CREATE TABLE `megrendeles` (
 
 INSERT INTO `megrendeles` (`id`, `felhasznalo_id`, `leadas_megjegyzes`, `kezbesites`, `leadas_allapota`, `leadasdatuma`, `Fizetesi_mod`) VALUES
 (14, 4, 'wwewewewewe', 'házhozszállítás', 3, '2025-03-25', 0),
-(16, 4, '', 'házhozszállítás', 0, '2025-03-27', 0);
+(16, 4, '', 'házhozszállítás', 3, '2025-03-27', 0),
+(17, 6, '', 'házhozszállítás', 0, '2025-04-01', 1),
+(18, 7, '', 'házhozszállítás', 0, '2025-04-02', 0);
 
 -- --------------------------------------------------------
 
@@ -194,7 +187,15 @@ CREATE TABLE `rendeles_tetel` (
 INSERT INTO `rendeles_tetel` (`id`, `rendeles_id`, `termek_id`, `mennyiseg`, `statusz`, `Fizetesi_mod`) VALUES
 (9, 14, 39, 4, 0, 0),
 (10, 14, 9, 1, 0, 0),
-(12, 16, 39, 1, 0, 0);
+(12, 16, 39, 1, 0, 0),
+(13, 17, 41, 1, 0, 1),
+(14, 17, 27, 1, 0, 1),
+(15, 17, 35, 1, 0, 1),
+(16, 17, 22, 1, 0, 1),
+(17, 17, 14, 1, 0, 1),
+(18, 18, 8, 8, 0, 0),
+(19, 18, 22, 9, 0, 0),
+(20, 18, 14, 8, 0, 0);
 
 -- --------------------------------------------------------
 
@@ -214,7 +215,12 @@ CREATE TABLE `tetelek` (
 --
 
 INSERT INTO `tetelek` (`id`, `felhasznalo_id`, `etel_id`, `darab`) VALUES
-(38, 4, 9, 1);
+(82, 4, 38, 17),
+(83, 4, 39, 3),
+(84, 4, 40, 6),
+(85, 4, 41, 2),
+(86, 4, 43, 2),
+(87, 4, 42, 2);
 
 -- --------------------------------------------------------
 
@@ -235,7 +241,8 @@ CREATE TABLE `velemenyek` (
 --
 
 INSERT INTO `velemenyek` (`id`, `felhasznalo_id`, `velemeny_szoveg`, `ertekeles`, `email_cim`) VALUES
-(31, 4, 'asdff', 4, '13c-borondi@ipari.vein.hu');
+(31, 4, 'asdff', 4, '13c-borondi@ipari.vein.hu'),
+(32, 7, 'afatqwtqagasgqtqfg', 5, '13c-szitasi@ipari.vein.hu');
 
 --
 -- Indexek a kiírt táblákhoz
@@ -260,13 +267,6 @@ ALTER TABLE `felhasznalo`
 --
 ALTER TABLE `kategoria`
   ADD PRIMARY KEY (`id`);
-
---
--- A tábla indexei `kuponok`
---
-ALTER TABLE `kuponok`
-  ADD PRIMARY KEY (`id`),
-  ADD KEY `kategoriaId` (`kategoriaId`);
 
 --
 -- A tábla indexei `megrendeles`
@@ -308,13 +308,13 @@ ALTER TABLE `velemenyek`
 -- AUTO_INCREMENT a táblához `etel`
 --
 ALTER TABLE `etel`
-  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=76;
+  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=77;
 
 --
 -- AUTO_INCREMENT a táblához `felhasznalo`
 --
 ALTER TABLE `felhasznalo`
-  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=6;
+  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=9;
 
 --
 -- AUTO_INCREMENT a táblához `kategoria`
@@ -323,34 +323,28 @@ ALTER TABLE `kategoria`
   MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=10;
 
 --
--- AUTO_INCREMENT a táblához `kuponok`
---
-ALTER TABLE `kuponok`
-  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT;
-
---
 -- AUTO_INCREMENT a táblához `megrendeles`
 --
 ALTER TABLE `megrendeles`
-  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=17;
+  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=19;
 
 --
 -- AUTO_INCREMENT a táblához `rendeles_tetel`
 --
 ALTER TABLE `rendeles_tetel`
-  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=13;
+  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=21;
 
 --
 -- AUTO_INCREMENT a táblához `tetelek`
 --
 ALTER TABLE `tetelek`
-  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=39;
+  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=88;
 
 --
 -- AUTO_INCREMENT a táblához `velemenyek`
 --
 ALTER TABLE `velemenyek`
-  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=32;
+  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=33;
 
 --
 -- Megkötések a kiírt táblákhoz
@@ -361,12 +355,6 @@ ALTER TABLE `velemenyek`
 --
 ALTER TABLE `etel`
   ADD CONSTRAINT `etel_ibfk_1` FOREIGN KEY (`kategoria_id`) REFERENCES `kategoria` (`id`) ON DELETE CASCADE ON UPDATE CASCADE;
-
---
--- Megkötések a táblához `kuponok`
---
-ALTER TABLE `kuponok`
-  ADD CONSTRAINT `kuponok_ibfk_1` FOREIGN KEY (`kategoriaId`) REFERENCES `kategoria` (`id`) ON DELETE CASCADE ON UPDATE CASCADE;
 
 --
 -- Megkötések a táblához `megrendeles`
