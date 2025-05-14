@@ -1,5 +1,10 @@
 {
     "require": {
         "phpmailer/phpmailer": "^6.9"
+    },
+    "require-dev": {
+        "codeception/codeception": "^5.1",
+        "phpunit/phpunit": "^9.6",
+        "mockery/mockery": "^1.6"
     }
 }
